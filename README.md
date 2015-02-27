@@ -33,7 +33,6 @@ The development workflow and build process are loosely based on Yeoman's origina
 
 Does not include revving (yet).
 
-
 ### Components used
 
 - [o-header](http://registry.origami.ft.com/components/o-header)
@@ -41,10 +40,6 @@ Does not include revving (yet).
 - [o-colors](http://registry.origami.ft.com/components/o-colors)
 
 Plus it uses [o-fonts](http://registry.origami.ft.com/components/o-fonts) via the build service.
-
-> todo: include some javascripty components, and ensure it's easy to `require()` them
-
-
 
 <!-- badge URLs -->
 [travis-url]: http://travis-ci.org/callumlocke/origami-product-boilerplate
