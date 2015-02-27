@@ -24,7 +24,7 @@ The development workflow and build process are loosely based on Yeoman's origina
 
 - A basic HTML boilerplate, pieced together from the docs at [origami.ft.com/docs/developer-guide](http://origami.ft.com/docs/developer-guide).
 - Browserify, with sourcemaps
-  - in development mode it uses [watchify] for very fast, incremental rebuilds
+  - in development mode it uses [watchify](https://github.com/substack/watchify) for very fast, incremental rebuilds
 - Ruby Sass, with sourcemaps
 - BrowserSync (like LiveReload but better)
 - Concatenation and minification
