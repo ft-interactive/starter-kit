@@ -18,7 +18,7 @@ The development workflow and build process are loosely based on Yeoman's origina
 - `gulp serve` runs a development server
   - Bonus task: `npm run serve` uses nodemon to run `gulp serve`, and restarts it whenever you edit the gulpfile.
 
-- `gulp build` to build a compressed, deployable app in `dist`
+- `gulp build` builds a compressed, deployable app in `dist`
 
 ## What it includes
 
