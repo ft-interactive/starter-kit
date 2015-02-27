@@ -1,0 +1,9 @@
+{
+  "directory": "bower_components",
+  "registry": {
+    "search": [
+      "http://registry.origami.ft.com",
+      "https://bower.herokuapp.com"
+    ]
+  }
+}

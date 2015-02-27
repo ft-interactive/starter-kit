@@ -1,0 +1,39 @@
+{
+  "devDependencies": {
+    "auto-plug": "^1.0.1",
+    "babelify": "^5.0.3",
+    "browser-sync": "^2.2.1",
+    "browserify": "^9.0.3",
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.1.0",
+    "gulp-cache": "^0.2.8",
+    "gulp-csso": "^1.0.0",
+    "gulp-if": "^1.2.5",
+    "gulp-imagemin": "^2.2.1",
+    "gulp-jshint": "^1.9.2",
+    "gulp-minify-html": "^1.0.0",
+    "gulp-ruby-sass": "^1.0.0-alpha.3",
+    "gulp-size": "^1.2.1",
+    "gulp-sourcemaps": "^1.5.0",
+    "gulp-uglify": "^1.1.0",
+    "gulp-uncss": "^1.0.0",
+    "gulp-useref": "^1.1.1",
+    "gulp-util": "^3.0.4",
+    "jshint-stylish": "^1.0.1",
+    "merge-stream": "^0.1.7",
+    "nodemon": "^1.3.7",
+    "run-sequence": "^1.0.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^2.4.0"
+  },
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "private": true,
+  "scripts": {
+    "serve": "nodemon --watch gulpfile.js --exec 'gulp clean && gulp serve'",
+    "test": "gulp build"
+  }
+}

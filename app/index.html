@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en-GB" class="core">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+  
+    <link rel="shortcut icon" href="//im.ft-static.com/m/icons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="//im.ft-static.com/m/icons/apple-touch-icon.png">
+
+    <title>Origami Demo</title>
+    <!-- <meta name="description" content="Enter a description here!"> -->
+    
+    <!--
+      polyfill web service
+      (see polyfill.io if you want to add extra polyfills to this)
+    -->
+    <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
+    
+    <script>
+      // product-specific cuts-the-mustard test (customise for your needs)
+      var cutsTheMustard = (
+        'querySelector' in document &&
+        'localStorage' in window &&
+        'addEventListener' in window
+      );
+
+      // set the root element to .core or .enhanced as appropriate
+      if (cutsTheMustard) {
+        document.documentElement.className = document.documentElement.className.replace(/\bcore\b/g, 'enhanced');
+      }
+    </script>
+
+    <!-- build:js scripts/top.js -->
+    <script src="scripts/top.bundle.js"></script>
+    <!-- endbuild -->
+
+    <style>
+      .core .o--if-js { display: none !important; }
+      .enhanced .o--if-no-js { display: none !important; }
+    </style>
+
+    <link rel="stylesheet" href="//build.origami.ft.com/bundles/css?modules=o-fonts@^1.6.4">
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+    <header data-o-component="o-header" class="o-header">
+      <div class="o-header__container">
+        <div class="o-header__primary">
+          <div class="o-header__primary__left demo__primary--placeholder">
+            <div class="o-header__logo demo__logo--placeholder">
+              <span>[logo]</span>
+            </div>
+            [primary left]
+          </div>
+          <div class="o-header__primary__center demo__primary--placeholder">
+            [primary center]
+          </div>
+          <div class="o-header__primary__right demo__primary--placeholder">
+            [primary right]
+          </div>
+          <div class="o-header__primary__featured demo__primary--placeholder">
+            [primary featured]
+          </div>
+              </div>
+              <div class="o-header__secondary">
+                <div class="o-header__secondary__left demo__secondary--placeholder">
+            [secondary left]
+          </div>
+          <div class="o-header__secondary__right demo__secondary--placeholder">
+            [secondary right]
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+    <main>
+      CONTENT HERE!
+    </main>
+
+
+    <footer class="o-footer" data-o-component="ft-footer">
+      <nav class="o-footer__row o-footer__col--wide">
+        <h3 class="o-footer__title">Sections</h3>
+        <ul class="o-footer__row o-footer__section-list">
+          <li class="o-footer__link o-footer__section-link o-footer__col"><a href="//www.ft.com">Home</a></li>
+          <li class="o-footer__link o-footer__section-link o-footer__col"><a href="//www.ft.com/world/uk">UK</a></li>
+          <li class="o-footer__link o-footer__section-link o-footer__col"><a href="//www.ft.com/world">World</a></li>
+          <li class="o-footer__link o-footer__section-link o-footer__col"><a href="//www.ft.com/companies">Companies</a></li>
+          <li class="o-footer__link o-footer__section-link o-footer__col"><a href="//www.ft.com/markets">Markets</a></li>
+          <li class="o-footer__link o-footer__section-link o-footer__col"><a href="//www.ft.com/global-economy">Global Economy</a></li>
+          <li class="o-footer__link o-footer__section-link o-footer__col"><a href="//www.ft.com/lex">Lex</a></li>
+          <li class="o-footer__link o-footer__section-link o-footer__col"><a href="//www.ft.com/comment">Comment</a></li>
+          <li class="o-footer__link o-footer__section-link o-footer__col"><a href="//www.ft.com/management">Management</a></li>
+          <li class="o-footer__link o-footer__section-link o-footer__col"><a href="//www.ft.com/personal-finance">Personal Finance</a></li>
+          <li class="o-footer__link o-footer__section-link o-footer__col"><a href="//www.ft.com/life-arts">Life &amp; Arts</a></li>
+        </ul>
+      </nav>
+      <div class="o-footer__row o-footer__link-lists">
+        <nav class="o-footer__col o-footer__link-list">
+          <h3 class="o-footer__title">Services</h3>
+          <ul>
+              <li class="o-footer__link"><a href="//ft.com">Corporate subscriptions</a></li>
+              <li class="o-footer__link"><a href="//ft.com">Syndication</a></li>
+              <li class="o-footer__link"><a href="//ft.com">Conferences</a></li>
+          </ul>
+        </nav>
+        <nav class="o-footer__col o-footer__link-list">
+          
+          <ul>
+              <li class="o-footer__link"><a href="//ft.com">Corporate subscriptions</a></li>
+              <li class="o-footer__link"><a href="//ft.com">Syndication</a></li>
+              <li class="o-footer__link"><a href="//ft.com">Conferences</a></li>
+          </ul>
+        </nav>
+        <nav class="o-footer__col o-footer__link-list">
+          
+          <ul>
+              <li class="o-footer__link"><a href="//ft.com">FT Collection</a></li>
+              <li class="o-footer__link"><a href="//ft.com">Jobs</a></li>
+              <li class="o-footer__link"><a href="//ft.com">Non-exec directors' club</a></li>
+          </ul>
+        </nav>
+        <nav class="o-footer__col o-footer__link-list">
+          <h3 class="o-footer__title">Support</h3>
+          <ul>
+              <li class="o-footer__link"><a href="//ft.com">Help</a></li>
+              <li class="o-footer__link"><a href="//ft.com">About us</a></li>
+              <li class="o-footer__link"><a href="//ft.com">Site tour</a></li>
+          </ul>
+        </nav>
+        <nav class="o-footer__col o-footer__link-list">
+          
+          <ul>
+              <li class="o-footer__link"><a href="//ft.com">Contact us</a></li>
+              <li class="o-footer__link"><a href="//ft.com">Sitemap</a></li>
+          </ul>
+        </nav>
+        <nav class="o-footer__col o-footer__link-list">
+          <h3 class="o-footer__title">Legal &amp; Advertising</h3>
+          <ul>
+              <li class="o-footer__link"><a href="//ft.com">Advertise with the FT</a></li>
+              <li class="o-footer__link"><a href="//ft.com">Terms &amp; conditions</a></li>
+              <li class="o-footer__link"><a href="//ft.com">Cookie &amp; privacy policy</a></li>
+              <li class="o-footer__link"><a href="//ft.com">Copyright</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="o-footer__row o-footer__copyright o-footer__col--wide">
+        <p>&#xA9; THE FINANCIAL TIMES LTD 2014.</p>
+        <p><abbr title="Financial Times">FT</abbr> and 'Financial Times' are trademarks of The Financial Times Ltd.</p>
+      </div>
+      <div class="o-footer__pearson">
+        <div class="o-footer__row o-footer__col--wide">
+          <div class="o-footer__pearson-tagline" aria-label="Always Learning"></div>
+          <div class="o-footer__pearson-logo" aria-label="Pearson"></div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- build:js scripts/main.js -->
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="scripts/main.bundle.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>
