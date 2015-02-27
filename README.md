@@ -1,4 +1,6 @@
-# Origami product boilerplate [![Build Status][travis-image]][travis-url] [![Dependency Status][devdeps-image]][devdeps-url]
+# Origami product boilerplate
+
+[![Build Status][travis-image]][travis-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
 This is an attempt to define a useful starting point for apps using Origami components.
 
