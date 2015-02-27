@@ -49,4 +49,4 @@ Plus it uses [o-fonts](http://registry.origami.ft.com/components/o-fonts) via th
 [travis-image]: https://img.shields.io/travis/callumlocke/origami-product-boilerplate.svg?style=flat-square
 
 [devdeps-url]: https://david-dm.org/callumlocke/origami-product-boilerplate#info=devDependencies
-[devdeps-image]: https://img.shields.io/david/callumlocke/origami-product-boilerplate.svg?style=flat-square
+[devdeps-image]: https://img.shields.io/david/dev/callumlocke/origami-product-boilerplate.svg?style=flat-square
