@@ -87,16 +87,14 @@ gulp.task('scripts', function () {
 gulp.task('jshint', function () {
   return gulp.src('app/scripts/**/*.js')
     .pipe($.jshint())
-    .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.jshint.reporter('fail'));
+    .pipe($.jshint.reporter('jshint-stylish'));
 });
 
 
 // task to lint sass
 gulp.task('scsslint', function () {
   return gulp.src('app/styles/**/*.scss')
-    .pipe($.scssLint({bundleExec: true}))
-    .pipe($.scssLint.failReporter());
+    .pipe($.scssLint({bundleExec: true}));
 });
 
 
