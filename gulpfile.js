@@ -1,6 +1,5 @@
 'use strict';
 
-var $ = require('auto-plug')('gulp');
 var gulp = require('gulp');
 var del = require('del');
 var browserify = require('browserify');
@@ -10,6 +9,7 @@ var runSequence = require('run-sequence');
 var source = require('vinyl-source-stream');
 var vinylBuffer = require('vinyl-buffer');
 var watchify = require('watchify');
+var $ = require('auto-plug')('gulp');
 
 
 var AUTOPREFIXER_BROWSERS = [
@@ -27,25 +27,25 @@ var BROWSERIFY_TRANSFORMS = [
   'babelify'
 ];
 
-// function to get an array of 'bundler' objects to handle browserifying
-// (optionally 'watchy' bundlers)
-var getBundlers = function (watchy) {
+
+// function to get an array of objects that handle browserifying
+var getBundlers = function (useWatchify) {
   return BROWSERIFY_ENTRIES.map(function (entry) {
     var bundler = {
       b: browserify('./app/' + entry, {
         cache: {},
         packageCache: {},
-        fullPaths: watchy,
-        debug: watchy
+        fullPaths: useWatchify,
+        debug: useWatchify
       }),
 
       execute: function () {
         var stream = this.b.bundle()
-          .on('error', $.util.log.bind($.util, 'Browserify Error'))
+          .on('error', $.util.log.bind($.util, 'Browserify error'))
           .pipe(source(entry.replace(/\.js$/, '.bundle.js')));
 
         // skip sourcemap creation if we're in 'serve' mode
-        if (watchy) {
+        if (useWatchify) {
           stream = stream
             .pipe(vinylBuffer())
             .pipe($.sourcemaps.init({loadMaps: true}))
@@ -62,7 +62,7 @@ var getBundlers = function (watchy) {
     });
 
     // upgrade to watchify if we're in 'serve' mode
-    if (watchy) {
+    if (useWatchify) {
       bundler.b = watchify(bundler.b);
       bundler.b.on('update', function () {
         bundler.execute().on('end', browserSync.reload);
@@ -83,12 +83,20 @@ gulp.task('scripts', function () {
 });
 
 
-// task to lint scripts during build
+// task to lint scripts
 gulp.task('jshint', function () {
   return gulp.src('app/scripts/**/*.js')
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
+    .pipe($.jshint.reporter('fail'));
+});
+
+
+// task to lint sass
+gulp.task('scsslint', function () {
+  return gulp.src('app/styles/**/*.scss')
+    .pipe($.scssLint({bundleExec: true}))
+    .pipe($.scssLint.failReporter());
 });
 
 
@@ -119,9 +127,10 @@ gulp.task('copy', function () {
 gulp.task('styles', function () {
   return $.rubySass('app/styles', {
     loadPath: 'bower_components',
-    sourcemap: true
+    sourcemap: true,
+    bundleExec: true
   })
-    .on('error', function (err) { console.error.bind(console, 'Sass error:'); })
+    .on('error', function (err) { $.util.log.bind($.util, 'Sass error'); })
     .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp/styles'))
@@ -193,9 +202,9 @@ gulp.task('serve:dist', ['build'], function () {
 
 
 // task to build the 'dist' version of the site
-gulp.task('build', ['clean'], function (done) {
+gulp.task('build', function (done) {
   runSequence(
-    'jshint',
+    ['clean', 'jshint', 'scsslint'],
     ['styles', 'scripts'],
     ['html', 'images', 'copy'],
   done);

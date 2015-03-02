@@ -1,0 +1,267 @@
+linters:
+
+  # Documentation:
+  # https://github.com/causes/scss-lint/blob/master/lib/scss_lint/linter/README.md
+
+  # "value !important;" not "value!important ;"
+  BangFormat:
+    enabled: true
+    space_before_bang: true
+    space_after_bang: false
+    severity: error
+
+  # "border: 0" not "border: none"
+  BorderZero:
+    enabled: true
+    severity: error
+    convention: zero
+
+  # Allow colors to be used outside of variables
+  ColorVariable:
+    enabled: false
+
+  # "#00ff00" not "green"
+  # (AB: Causes problems with o-colors < 3, because o-colors uses
+  # color names that are also valid CSS color strings)
+  ColorKeyword:
+    enabled: false
+
+  # // not /**/
+  Comment:
+    enabled: false
+
+  # Disallow "@debug"
+  DebugStatement:
+    enabled: true
+    severity: error
+
+  # @extend must come first, then properties, then nested rulesets
+  DeclarationOrder:
+    enabled: true
+
+  # Warn when the same property appears more than once in the same ruleset
+  # This is not a deal breaker, as authors may repeat properties
+  # in the case where both a value and its fallback are needed
+  DuplicateProperty:
+    enabled: true
+
+  # "} else {" not "}\n else {"
+  ElsePlacement:
+    enabled: true
+    style: same_line # or 'new_line'
+
+  # Require an empty line between rulesets
+  EmptyLineBetweenBlocks:
+    enabled: false
+
+  # Disallow empty rulesets
+  EmptyRule:
+    enabled: false
+
+  # Require a newline at the end of the file
+  FinalNewline:
+    enabled: true
+    present: true
+
+  # #aabbcc good, #abc bad. Makes the codebase more searchable
+  HexLength:
+    enabled: true
+    style: long
+    severity: error
+
+  # Require hex colors to be lowercase (if they include any of the letters a-f)
+  HexNotation:
+    enabled: true
+    style: lowercase
+
+  # Hex colors must be actual colors (ie not #ab or #00mm00)
+  HexValidation:
+    enabled: true
+
+  # Disallow using ID Selectors
+  IdSelector:
+    enabled: true
+
+  # "@import 'path/to/partial'" not "@import 'path/to/_partial.scss'"
+  ImportPath:
+    enabled: true
+    leading_underscore: false
+    filename_extension: false
+
+  # Avoid using !important
+  ImportantRule:
+    enabled: true
+
+  # Disable indentation liting since it's done via another task
+  Indentation:
+    enabled: false
+    allow_non_nested_indentation: false
+
+  # 0.1 not .1
+  # (differs from Guardian)
+  LeadingZero:
+    enabled: true
+    style: include_zero
+    severity: error
+
+  # Disallow more than one ruleset with the same selector in the same file
+  MergeableSelector:
+    enabled: false
+
+  # Allow camelcase but forbid non-alphanumeric characters
+  # in mixin, variable and function names.
+  NameFormat:
+    enabled: true
+    convention: '^[a-z_][a-zA-Z0-9_\-]+$'
+    severity: error
+
+  # Thou shall nest 3 levels deep maximum. Not 4, nor 5.
+  # See SelectorDepth for control over the actually maximum authorized depth
+  NestingDepth:
+    enabled: true
+    max_depth: 3
+
+  # @extend %placeholders, don't @extend .a-class
+  PlaceholderInExtend:
+    enabled: true
+    severity: error
+
+  # Allow any number of properties in a ruleset
+  PropertyCount:
+    enabled: false
+
+  # Require properties to be in alphabetical order
+  # (also possible to specify a specific order)
+  # (AB: Alpha seems a bit weird. Rhys had a tool to do this,
+  # maybe we should set the order here and use this tool)
+  PropertySortOrder:
+    enabled: false
+    order: []
+    separate_groups: false
+
+  # Disallow unknown CSS property names
+  PropertySpelling:
+    enabled: true
+    extra_properties:
+      - text-size-adjust
+
+  # ".class, [foo]" not "span.class, div[foo]"
+  QualifyingElement:
+    enabled: true
+    allow_element_with_attribute: false
+    allow_element_with_class: false
+    allow_element_with_id: false
+    severity: error
+
+  # Limit selector depth
+  # We decided to deal with this via peer review in
+  # https://github.com/Financial-Times/ft-origami/issues/243
+  SelectorDepth:
+    enabled: true
+    max_depth: 3
+
+  # Allow lowercase only, but forbid non-alphanumeric characters
+  # in selector names.
+  SelectorFormat:
+    enabled: true
+    convention: '^[a-z0-9_\-]+$'
+    severity: error
+
+  # margin: 1px not margin: 1px 1px 1px 1px;
+  Shorthand:
+    enabled: true
+    severity: error
+
+  # Disallow properties on the same line "margin: 0; padding: 0;"
+  SingleLinePerProperty:
+    enabled: true
+    # enable simple rules to be on a single line "el { margin: 0; }"
+    allow_single_line_rule_sets: true
+    severity: error
+
+  # Rulesets with multiple (comma delimited) selectors
+  # must have each selector on a separate line
+  SingleLinePerSelector:
+    enabled: true
+    severity: error
+
+  # rgb(0, 0, 0) not rgb(0,0,0)
+  SpaceAfterComma:
+    enabled: true
+    severity: error
+
+  # margin: 0px not margin:0px
+  SpaceAfterPropertyColon:
+    enabled: true
+    style: one_space
+    severity: error
+
+  # margin: 0px not margin : 0px
+  # (AB: clearly this should be called NoSpaceAfterPropertyName)
+  SpaceAfterPropertyName:
+    enabled: true
+    severity: error
+
+  # .thing { not .thing{
+  SpaceBeforeBrace:
+    enabled: true
+    style: space
+    allow_single_line_padding: false
+    severity: error
+
+  # rgb(0, 0, 0) not rgb( 0, 0, 0 )
+  SpaceBetweenParens:
+    enabled: true
+    spaces: 0
+    severity: error
+
+  # Use single quotes, not double quotes
+  # (AB: This really doesn't matter IMHO)
+  # Differs from guardian
+  StringQuotes:
+    enabled: false
+
+  # Every property value must end with a semicolon
+  TrailingSemicolon:
+    enabled: true
+    severity: error
+
+  # "margin: .5em;" not "margin: .500em;"
+  TrailingZero:
+    enabled: true
+
+  # No unnecessary fractions: 1 not 1.0
+  UnnecessaryMantissa:
+    enabled: true
+    severity: error
+
+  # Disable this rule to allow parent references such as "& + * {}"
+  UnnecessaryParentReference:
+    enabled: false
+
+  # URLs must not contain domain names
+  # (AB: We may want to use build service or responsive image proxy)
+  UrlFormat:
+    enabled: false
+
+  # url("example.com") not url(example.com)
+  UrlQuotes:
+    enabled: false
+
+  # Allow any property to have literal values
+  VariableForProperty:
+    enabled: false
+
+  # Allow vendor prefixes
+  # (…by disabling the linter that forbids vendor prefixes)
+  # But: ideally products should use autoprefixer or equivalent,
+  # since we might eventually enable this linter.
+  VendorPrefixes:
+    enabled: true
+    severity: warning
+
+  # No units on zero values: 0 not 0px
+  # (AB: it can be useful to express what unit you want
+  # something to be in if its value is ever adjusted away from zero)
+  ZeroUnit:
+    enabled: false

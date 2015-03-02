@@ -2,15 +2,19 @@
 @import 'o-header/main';
 @import 'o-footer/main';
 
+
 body {
-  margin: 0;
   @include oColorsFor(page, background);
+
+  margin: 0;
+  border: 0;
   font-family: 'MetricWeb';
 
   // use flexbox to achieve a 'sticky footer', where supported
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+
   > main {
     flex: 1;
   }
