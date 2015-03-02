@@ -145,7 +145,7 @@ gulp.task('html', function () {
   return gulp.src('app/**/*.html')
     .pipe(assets)
     .pipe($.if('*.js', $.uglify()))
-    .pipe($.if('*.css', $.csso()))
+    .pipe($.if('*.css', $.minifyCss()))
     .pipe(assets.restore())
     .pipe($.useref())
     .pipe($.if('*.html', $.minifyHtml()))
@@ -191,7 +191,7 @@ gulp.task('serve', ['styles'], function (done) {
 });
 
 
-// task to serve up the 'dist' version of the site
+// task to build and serve up the 'dist' directory
 gulp.task('serve:dist', ['build'], function () {
   browserSync({
     notify: false,
