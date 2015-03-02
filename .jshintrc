@@ -1,20 +1,26 @@
 {
-  "node": true,
-  "browser": true,
-  "esnext": true,
-  "bitwise": true,
-  "camelcase": true,
-  "curly": false,
   "eqeqeq": true,
-  "eqnull": true,
+  "forin": true,
+  "freeze": true,
   "immed": true,
-  "indent": 2,
   "newcap": true,
   "noarg": true,
-  "quotmark": "single",
+  "nonbsp": true,
   "undef": true,
   "unused": "vars",
   "strict": true,
-  "node": true,
-  "esnext": true
+  "trailing": true,
+
+  "esnext": true,
+  "expr": true,
+  "gcl": true,
+  "globalstrict": true,
+  "lastsemic": true,
+  "multistr": true,
+  "smarttabs": true,
+  "sub": true,
+
+  "browser": true,
+  "nonstandard": true,
+  "predef": ["require", "module", "exports", "requireText"]
 }

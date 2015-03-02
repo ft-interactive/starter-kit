@@ -1,3 +1,4 @@
+/*global console:true*/
 'use strict';
 
 module.exports = function () {
