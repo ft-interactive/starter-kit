@@ -112,7 +112,7 @@ linters:
   # in mixin, variable and function names.
   NameFormat:
     enabled: true
-    convention: '^[a-z_][a-zA-Z0-9_\-]*$'
+    convention: '^[a-z_][a-zA-Z0-9_\-]+$'
     severity: error
 
   # Thou shall nest 3 levels deep maximum. Not 4, nor 5.

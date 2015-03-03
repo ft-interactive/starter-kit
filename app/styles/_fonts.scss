@@ -1,0 +1,49 @@
+// Uncomment lines below to include more fonts on the page.
+
+////////////////////////////////////////////////////////////////////////
+// METRIC
+// @include oFontsInclude(MetricWeb, $weight: thin, $style: normal);
+// @include oFontsInclude(MetricWeb, $weight: light, $style: normal);
+@include oFontsInclude(MetricWeb, $weight: regular, $style: normal);
+@include oFontsInclude(MetricWeb, $weight: regular, $style: italic);
+// @include oFontsInclude(MetricWeb, $weight: medium, $style: normal);
+// @include oFontsInclude(MetricWeb, $weight: 'semibold', $style: normal);
+@include oFontsInclude(MetricWeb, $weight: bold, $style: normal);
+// @include oFontsInclude(MetricWeb, $weight: bold, $style: italic);
+
+////////////////////////////////////////////////////////////////////////
+// FINANCIER TEXT
+@include oFontsInclude(FinancierTextWeb, $weight: regular, $style: normal);
+@include oFontsInclude(FinancierTextWeb, $weight: regular, $style: italic);
+
+////////////////////////////////////////////////////////////////////////
+// FINANCIER DISPLAY
+// @include oFontsInclude(FinancierDisplayWeb, $weight: regular, $style: normal);
+// @include oFontsInclude(FinancierDisplayWeb, $weight: regular, $style: italic);
+
+////////////////////////////////////////////////////////////////////////
+// BENTON SANS
+// @include oFontsInclude(BentonSans, $weight: light, $style: normal);
+// @include oFontsInclude(BentonSans, $weight: regular, $style: normal);
+// @include oFontsInclude(BentonSans, $weight: bold, $style: normal);
+
+////////////////////////////////////////////////////////////////////////
+// MILLER DISPLAY
+// @include oFontsInclude(MillerDisplay, $weight: regular, $style: normal);
+// @include oFontsInclude(MillerDisplay, $weight: normal, $style: normal);
+// @include oFontsInclude(MillerDisplay, $weight: black, $style: normal);
+
+
+////////////////////////////////////////////////////////////////////////
+// NB. The fonts above are all those listed here, at time of writing:
+// https://github.com/Financial-Times/o-fonts/blob/master/src/scss/_variables.scss
+
+// Quick reference to weight names:
+//   thin      100
+//   light     200
+//   regular   400
+//   normal    400
+//   medium    500
+//   semibold  600
+//   bold      700
+//   black     800

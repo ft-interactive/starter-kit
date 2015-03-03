@@ -1,7 +1,10 @@
+@import 'o-fonts/main';
 @import 'o-colors/main';
 @import 'o-header/main';
 @import 'o-footer/main';
+
 @import 'functions';
+@import 'fonts';
 
 
 body {
@@ -9,7 +12,7 @@ body {
 
   margin: 0;
   border: 0;
-  font-family: 'MetricWeb';
+  font: 12px font(MetricWeb);
 
   // use flexbox to achieve a 'sticky footer', where supported
   display: flex;
