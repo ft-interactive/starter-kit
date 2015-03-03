@@ -5,4 +5,4 @@ node_js:
   - '0.12'
   - 'iojs'
 before_install: 'bundle && npm install --global bower jshint && bower install'
-before_script: 'jshint app/**/*.js && scss-lint app/**/*.scss'
+before_script: 'jshint client/**/*.js && scss-lint client/**/*.scss'
