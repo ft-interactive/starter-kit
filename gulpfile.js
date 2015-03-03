@@ -32,7 +32,7 @@ var BROWSERIFY_TRANSFORMS = [
 var getBundlers = function (useWatchify) {
   return BROWSERIFY_ENTRIES.map(function (entry) {
     var bundler = {
-      b: browserify('./app/' + entry, {
+      b: browserify('./client/' + entry, {
         cache: {},
         packageCache: {},
         fullPaths: useWatchify,
@@ -85,7 +85,7 @@ gulp.task('scripts', function () {
 
 // task to lint scripts
 gulp.task('jshint', function () {
-  return gulp.src('app/scripts/**/*.js')
+  return gulp.src('client/scripts/**/*.js')
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'));
 });
@@ -93,14 +93,14 @@ gulp.task('jshint', function () {
 
 // task to lint sass
 gulp.task('scsslint', function () {
-  return gulp.src('app/styles/**/*.scss')
+  return gulp.src('client/styles/**/*.scss')
     .pipe($.scssLint({bundleExec: true}));
 });
 
 
 // task to compress images during build
 gulp.task('images', function () {
-  return gulp.src('app/images/**/*')
+  return gulp.src('client/images/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
       interlaced: true
@@ -113,8 +113,8 @@ gulp.task('images', function () {
 // task to copy over miscellaneous files
 gulp.task('copy', function () {
   return gulp.src([
-    'app/*',
-    '!app/*.html'
+    'client/*',
+    '!client/*.html'
   ], {
     dot: true
   }).pipe(gulp.dest('dist'));
@@ -123,7 +123,7 @@ gulp.task('copy', function () {
 
 // task to compile stylesheets (during both 'serve' and 'build')
 gulp.task('styles', function () {
-  return $.rubySass('app/styles', {
+  return $.rubySass('client/styles', {
     loadPath: 'bower_components',
     sourcemap: true,
     bundleExec: true
@@ -138,9 +138,9 @@ gulp.task('styles', function () {
 
 // task to minify all HTML, CSS and JS (for build)
 gulp.task('html', function (done) {
-  var assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
+  var assets = $.useref.assets({searchPath: ['.tmp', 'client', '.']});
 
-  return gulp.src('app/**/*.html')
+  return gulp.src('client/**/*.html')
     .pipe(assets)
     .pipe($.if('*.js', $.uglify({
       output: {
@@ -183,7 +183,7 @@ gulp.task('serve', ['styles'], function (done) {
       notify: false,
       // https: true,
       server: {
-        baseDir: ['.tmp', 'app'],
+        baseDir: ['.tmp', 'client'],
         routes: {
           '/bower_components': 'bower_components'
         }
@@ -191,9 +191,9 @@ gulp.task('serve', ['styles'], function (done) {
     });
 
     // refresh browser after other changes
-    gulp.watch(['app/**/*.html'], browserSync.reload);
-    gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', browserSync.reload]);
-    gulp.watch(['app/images/**/*'], browserSync.reload);
+    gulp.watch(['client/**/*.html'], browserSync.reload);
+    gulp.watch(['client/styles/**/*.{scss,css}'], ['styles', browserSync.reload]);
+    gulp.watch(['client/images/**/*'], browserSync.reload);
 
     done();
   });
