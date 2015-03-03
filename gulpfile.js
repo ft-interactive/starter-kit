@@ -24,7 +24,7 @@ var BROWSERIFY_ENTRIES = [
 ];
 
 var BROWSERIFY_TRANSFORMS = [
-  'babelify'
+  'babelify', 'debowerify'
 ];
 
 
