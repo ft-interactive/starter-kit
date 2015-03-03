@@ -59,3 +59,16 @@
 @function color($name) {
   @return oColorsGetPaletteColor($name);
 }
+
+
+
+
+// The `font` function is a shortcut to get the name of an FT font plus fallbacks.
+//
+//   font(FinancierTextWeb); // returns "FinancierTextWeb, serif"
+//
+//   See http://registry.origami.ft.com/components/o-fonts
+
+@function font($name) {
+  @return oFontsGetFontFamilyWithFallbacks($name);
+}
