@@ -2,7 +2,7 @@
   "name": "origami-product-boilerplate",
   "private": true,
   "dependencies": {
-    "moment": "~2.9.0",
+    "normalize.css": "~3.0.2",
     "o-colors": "~2.4.7",
     "o-fonts": "~1.6.4",
     "o-footer": "~3.0.0-beta.3",
