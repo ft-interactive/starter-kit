@@ -10,32 +10,19 @@
     <link rel="apple-touch-icon" href="//im.ft-static.com/m/icons/apple-touch-icon.png">
 
     <title>Origami Product Boilerplate</title>
-    <!-- <meta name="description" content="Enter a description here!"> -->
+    <!-- <meta name="description" content="ENTER A DESCRIPTION HERE"> -->
     
-    <!--
-      polyfill web service
-      (see polyfill.io if you want to add extra polyfills to this)
-    -->
-    <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
-    
-    <script>
-      // product-specific cuts-the-mustard test (customise for your needs)
-      var cutsTheMustard = (
-        'querySelector' in document &&
-        'localStorage' in window &&
-        'addEventListener' in window
-      );
+    <!-- smoosh -->
+    <!-- build:js scripts/top.js -->
+    <script src="scripts/top.js"></script>
+    <!-- endbuild -->
+    <!-- endsmoosh -->
 
-      // set the root element to .core or .enhanced as appropriate
-      if (cutsTheMustard) {
-        document.documentElement.className = document.documentElement.className.replace(/\bcore\b/g, 'enhanced');
-      }
-    </script>
-
-    <style>
-      .core .o--if-js { display: none !important; }
-      .enhanced .o--if-no-js { display: none !important; }
-    </style>
+    <!-- smoosh -->
+    <!-- build:css scripts/top.css -->
+    <link rel="stylesheet" href="styles/top.css">
+    <!-- endbuild -->
+    <!-- endsmoosh -->
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="bower_components/normalize.css/normalize.css">

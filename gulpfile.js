@@ -23,7 +23,8 @@ var BROWSERIFY_ENTRIES = [
 ];
 
 var BROWSERIFY_TRANSFORMS = [
-  'babelify', 'debowerify'
+  'babelify',
+  'debowerify'
 ];
 
 
@@ -136,18 +137,29 @@ gulp.task('styles', function () {
 
 
 // task to minify all HTML, CSS and JS (for build)
-gulp.task('html', function () {
+gulp.task('html', function (done) {
   var assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
 
   return gulp.src('app/**/*.html')
     .pipe(assets)
-    .pipe($.if('*.js', $.uglify()))
+    .pipe($.if('*.js', $.uglify({
+      output: {
+        inline_script: true,
+        beautify: false
+      }
+    })))
     .pipe($.if('*.css', $.minifyCss()))
     .pipe(assets.restore())
     .pipe($.useref())
-    .pipe($.if('*.html', $.minifyHtml()))
     .pipe(gulp.dest('dist'))
-    .pipe($.size({title: 'html'}));
+    .on('end', function () {
+      gulp.src('dist/**/*.html')
+        .pipe($.smoosher())
+        .pipe($.minifyHtml())
+        .pipe(gulp.dest('dist'))
+        .pipe($.size({title: 'html'}))
+        .on('end', done);
+    });
 });
 
 

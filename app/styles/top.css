@@ -1,0 +1,4 @@
+.core .o--if-js,
+.enhanced .o--if-no-js {
+  display: none !important;
+}
