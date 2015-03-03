@@ -19,7 +19,6 @@ var AUTOPREFIXER_BROWSERS = [
 ];
 
 var BROWSERIFY_ENTRIES = [
-  'scripts/top.js',
   'scripts/main.js'
 ];
 
