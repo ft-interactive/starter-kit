@@ -7,20 +7,22 @@ This repo can be used as starting point for new apps. It comes with a couple of 
 The included build system is loosely based on Yeoman's original [webapp generator](https://github.com/yeoman/generator-webapp) and Google's [Web Starter Kit](https://github.com/google/web-starter-kit).
 
 
-## Features
+## What's included
 
-- `serve` and `build` tasks a la Yeoman
-- BrowserSync
-- Bower (configured to use Origami)
-- Browserify (with sourcemaps and incremental rebundles)
-- Ruby Sass (with sourcemaps)
-- JSHint and SCSS-Lint
+- `serve` and `build` tasks (similar to Yeoman)
+- [BrowserSync](http://www.browsersync.io/)
+- [Bower](http://bower.io/) (configured to use Origami)
+- [Browserify](http://browserify.org/)
+- [Ruby Sass](http://sass-lang.com/)
+- [JSHint](http://jshint.com/) and [SCSS-Lint](https://github.com/causes/scss-lint)
+
+Watch-driven rebuilds (during `serve`) are incremental (i.e. fast) and include sourcemaps.
 
 
 ## Documentation
 
 - [Getting started](docs/README.md)
-- [Recipes](docs/recipes/README.md) for common tasks (like adding components)
+- [Recipes](docs/recipes/README.md)
 
 
 ## Primary tasks
