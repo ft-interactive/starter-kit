@@ -12,7 +12,7 @@ $ bower install --save o-header o-footer
 ```
 
 > Notes:
-> - `--save` saves a reference to the new dependencies in your `bower.json`. This is so that when someone else checks out your project and runs `bower install`, they will automatically get the right dependencies.
+> - `--save` puts a reference to these new dependencies in your `bower.json`. This is so that when someone else checks out your project and runs `bower install`, they will automatically get the right dependencies.
 > - You can use the shorthand `-s` instead of `--save` if you prefer.
 > - Look inside `bower_components` to see what's been added. As well as `o-header` and `o-footer`, you may notice several other new components, which are dependencies of the two you installed. Bower figures this all out automatically, based on each component's own `bower.json`.
 
