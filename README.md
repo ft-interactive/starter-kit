@@ -37,8 +37,8 @@ Bonus command: `npm run serve` is another way to run `gulp serve`, with the diff
 - [o-header](http://registry.origami.ft.com/components/o-header)
 - [o-footer](http://registry.origami.ft.com/components/o-footer)
 - [o-colors](http://registry.origami.ft.com/components/o-colors)
+- [o-fonts](http://registry.origami.ft.com/components/o-fonts)
 
-Plus it uses [o-fonts](http://registry.origami.ft.com/components/o-fonts) via the build service.
 
 <!-- badge URLs -->
 [travis-url]: http://travis-ci.org/callumlocke/origami-product-boilerplate
