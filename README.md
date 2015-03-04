@@ -2,7 +2,7 @@
 
 [![Build Status][travis-image]][travis-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
-This repo can be used as starting point for new apps. It comes with a couple of Origami components out of the box, but it should be considered 'delete key friendly'.
+This repo can be used as starting point for new front-end apps that employ Origami components.
 
 The included build system is loosely based on Yeoman's original [webapp generator](https://github.com/yeoman/generator-webapp) and Google's [Web Starter Kit](https://github.com/google/web-starter-kit).
 
