@@ -9,7 +9,7 @@ The included build system is loosely based on Yeoman's original [webapp generato
 
 ## What's included
 
-- `serve` and `build` tasks (similar to Yeoman)
+- `serve` and `build` tasks (similar to [Yeoman](http://yeoman.io/learning/index.html)'s)
 - [BrowserSync](http://www.browsersync.io/)
 - [Bower](http://bower.io/) (configured to use Origami)
 - [Browserify](http://browserify.org/)
