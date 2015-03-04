@@ -1,4 +1,6 @@
 'use strict';
 
-let foo = require('./foo');
-foo();
+onDomReady(function () {
+  // the dom is now ready for querying.
+
+});

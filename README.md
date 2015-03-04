@@ -21,7 +21,7 @@ The included build system is loosely based on Yeoman's original [webapp generato
 2. `npm install && bower install && bundle install`
 3. `gulp serve`
 
-Then you can start editing files in `./app`.
+Then you can start editing files in `./client`. (This is where the main front-end application code lives.)
 
 ## Tasks
 
