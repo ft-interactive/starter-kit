@@ -2,6 +2,7 @@
 
 var gulp = require('gulp');
 var del = require('del');
+var path = require('path');
 var browserify = require('browserify');
 var browserSync = require('browser-sync');
 var mergeStream = require('merge-stream');
@@ -9,8 +10,10 @@ var runSequence = require('run-sequence');
 var source = require('vinyl-source-stream');
 var vinylBuffer = require('vinyl-buffer');
 var watchify = require('watchify');
+var subdir = require('subdir');
 var $ = require('auto-plug')('gulp');
 
+var CLIENT_DIR = path.resolve('client');
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 8',
@@ -64,8 +67,16 @@ var getBundlers = function (useWatchify) {
     // upgrade to watchify if we're in 'serve' mode
     if (useWatchify) {
       bundler.b = watchify(bundler.b);
-      bundler.b.on('update', function () {
+      bundler.b.on('update', function (files) {
+        // re-run the bundler then reload the browser
         bundler.execute().on('end', browserSync.reload);
+
+        // also report any linting errors in the changed file(s)
+        gulp.src(files.filter(function (file) {
+          return subdir(CLIENT_DIR, file); // skip bower/npm modules
+        }))
+          .pipe($.jshint())
+          .pipe($.jshint.reporter('jshint-stylish'));
       });
     }
 
@@ -74,8 +85,7 @@ var getBundlers = function (useWatchify) {
 };
 
 
-// task to do a straightforward browserify bundle
-// (this is just for 'build'; not used during 'serve')
+// task to do a straightforward browserify bundle (build only)
 gulp.task('scripts', function () {
   return mergeStream(getBundlers().map(function (bundler) {
     return bundler.execute();
@@ -83,7 +93,7 @@ gulp.task('scripts', function () {
 });
 
 
-// task to lint scripts
+// task to lint scripts (build only)
 gulp.task('jshint', function () {
   return gulp.src('client/scripts/**/*.js')
     .pipe($.jshint())
@@ -98,7 +108,7 @@ gulp.task('scsslint', function () {
 });
 
 
-// task to compress images during build
+// task to compress images (build only)
 gulp.task('images', function () {
   return gulp.src('client/images/**/*')
     .pipe($.cache($.imagemin({
@@ -110,7 +120,7 @@ gulp.task('images', function () {
 });
 
 
-// task to copy over miscellaneous files
+// task to copy over miscellaneous files (build only)
 gulp.task('copy', function () {
   return gulp.src([
     'client/*',
@@ -192,7 +202,7 @@ gulp.task('serve', ['styles'], function (done) {
 
     // refresh browser after other changes
     gulp.watch(['client/**/*.html'], browserSync.reload);
-    gulp.watch(['client/styles/**/*.{scss,css}'], ['styles', browserSync.reload]);
+    gulp.watch(['client/styles/**/*.{scss,css}'], ['scsslint', 'styles', browserSync.reload]);
     gulp.watch(['client/images/**/*'], browserSync.reload);
 
     done();
