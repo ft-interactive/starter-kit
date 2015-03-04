@@ -1,6 +1,12 @@
 'use strict';
 
+var oHoverable = require('o-hoverable');
+
 onDomReady(function () {
-  // the dom is now ready for querying.
+
+  // Automatically fix hover effects to work on touch devices
+  oHoverable.init();
+
+
 
 });
