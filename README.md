@@ -34,10 +34,13 @@ Bonus command: `npm run serve` is another way to run `gulp serve`, with the diff
 
 ### Components used
 
-- [o-header](http://registry.origami.ft.com/components/o-header)
-- [o-footer](http://registry.origami.ft.com/components/o-footer)
+These Origami components are used as standard:
+
 - [o-colors](http://registry.origami.ft.com/components/o-colors)
+- [o-hoverable](http://registry.origami.ft.com/components/o-hoverable)
 - [o-fonts](http://registry.origami.ft.com/components/o-fonts)
+
+See [recipes](docs/recipes/README.md) for adding other components.
 
 
 <!-- badge URLs -->
