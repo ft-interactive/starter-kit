@@ -53,7 +53,7 @@ That will build your project into a folder named `dist`.
 
 The main differences of the production build are:
 
-- All the HTML, CSS and JavaScript is minified.
+- All the HTML, CSS and JavaScript is minified (and there are no sourcemaps).
 - Adjacent scripts and stylesheets are concatenated into single files.
 - Some short scripts and stylesheets are [smooshed](https://github.com/gabrielflorit/gulp-smoosher) into the HTML (meaning their contents are pulled inline, so they are executed sooner during page load)
 
