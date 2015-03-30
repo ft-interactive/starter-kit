@@ -1,6 +1,6 @@
 'use strict';
 
-var oHoverable = require('o-hoverable');
+import oHoverable from 'o-hoverable';
 
 document.addEventListener('DOMContentLoaded', function () {
 
