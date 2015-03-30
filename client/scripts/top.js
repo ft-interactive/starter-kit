@@ -2,18 +2,18 @@
 
 // global addScript function
 function addScript(src, async, defer) {
-    if (!async && !defer) {
-        document.write('<script src="' + src + '"><\/script>');
-    }
-    else {
-      var script = document.createElement('script');
-      script.src = src;
-      script.async = !!async;
-      if (defer) script.defer = !!defer;
-      var oldScript = document.getElementsByTagName('script')[0];
-      oldScript.parentNode.appendChild(script);
-      return script;
-    }
+  if (!async && !defer) {
+    document.write('<script src="' + src + '"><\/script>');
+  }
+  else {
+    var script = document.createElement('script');
+    script.src = src;
+    script.async = !!async;
+    if (defer) script.defer = !!defer;
+    var oldScript = document.getElementsByTagName('script')[0];
+    oldScript.parentNode.appendChild(script);
+    return script;
+  }
 }
 
 // product-specific cuts-the-mustard test (customise for your needs)
