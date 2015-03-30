@@ -3,7 +3,6 @@
   "private": true,
   "dependencies": {
     "normalize.css": "~3.0.2",
-    "ondomready": "~1.4.0",
     "o-colors": "~2.4.7",
     "o-hoverable": "~1.1.0",
     "o-fonts": "~1.6.4"
