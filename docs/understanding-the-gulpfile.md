@@ -1,3 +1,3 @@
 # Understanding the gulpfile
 
-> coming soon
+> this is a placeholder

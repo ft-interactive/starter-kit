@@ -1,6 +1,15 @@
-# Getting started
+# Documentation
 
-## Preparation
+## Quick start
+
+Just `cd` into an empty directory and run this command:
+
+```sh
+$ curl -L https://raw.githubusercontent.com/callumlocke/init-opb/master/init.js | node
+```
+
+(See [init-opb](https://github.com/callumlocke/init-opb) for what that command does.)
+<!-- 
 
 ### 1. Clone the repo
 
@@ -24,13 +33,13 @@ npm install && bower install && bundle install
 > - `npm install` looks in `package.json`, then sets up a local `node_modules` folder, containing Node packages used for building the project. (This takes a while!)
 > - `bower install` looks in `bower.json`, then sets up a local `bower_components` folder, containing front-end components (mostly JavaScript and CSS things).
 > - `bundle install` looks in `Gemfile` and then ensures your system has the necessary Ruby gems installed.
-
+ -->
 
 ## Developing your application
 
-Open your project directory in your preferred editor. (You can use commands for this: e.g. `subl .` or `atom .`).
+Open your project directory in your preferred editor (e.g. `subl .` or `atom .`).
 
-Then run the following command to begin a development build and start a local web server:
+Then run this command to begin an ongoing development build, and start a local web server:
 
 ```sh
 $ gulp serve
@@ -38,12 +47,12 @@ $ gulp serve
 
 After 5-10 seconds, the site should automatically open in your web browser.
 
-Try editing some files in the `client` folder. Whenever you save one of these files, it will trigger a rebuild of that file, and then reload your web browser when it's ready. This should rarely take more than a few seconds.
+Try editing some files in the `client` folder. Whenever you save one of these files, it will trigger whatever build tasks are necessary, and then reload your web browser when it's ready. This should rarely take more than a few seconds.
 
 When you want to stop working, quit out of `gulp serve` by typing <kbd>CTRL+C</kbd>.
 
 
-### Doing a production build
+### Making a production build
 
 ```sh
 $ gulp build
