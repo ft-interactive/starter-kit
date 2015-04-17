@@ -18,16 +18,16 @@ var CLIENT_DIR = path.resolve('client');
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 8',
   'ff >= 30',
-  'chrome >= 34'
+  'chrome >= 34',
 ];
 
 var BROWSERIFY_ENTRIES = [
-  'scripts/main.js'
+  'scripts/main.js',
 ];
 
 var BROWSERIFY_TRANSFORMS = [
   'babelify',
-  'debowerify'
+  'debowerify',
 ];
 
 
