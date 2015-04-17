@@ -1,5 +1,7 @@
 # Get data from Bertha
 
+## Add a script tag
+
 Add a script tag just before your final script bundle:
 
 ```diff
@@ -15,7 +17,14 @@ Add a script tag just before your final script bundle:
 
 Replace `SPREADSHEET_KEY` with the your Google Spreadsheet key. Also remember to share the spreadsheet so it's visible to @ft.com users (so Bertha can read it).
 
-Then edit your `.jshintrc` to tell JSHint about the new global (so it won't complain when you use it):
+Now you should have the `spreadsheet` global available – try `console.log(spreadsheet);` to see its contents.
+
+> You can use a different name for the global by altering the URL. Just change `d=spreadsheet` to `d=whatever`. (You will need to do this if you use more than one spreadsheet, or if you just want to give it a more meaningful name.)
+
+
+## Configure JSHint
+
+Edit your `.jshintrc` file:
 
 ```diff
    "globals": {
@@ -25,6 +34,4 @@ Then edit your `.jshintrc` to tell JSHint about the new global (so it won't comp
    }
 ```
 
-Now you should have the `spreadsheet` global available – try `console.log(spreadsheet);` to see its contents.
-
-> You can use a different name for the global by altering the URL. Just change `d=spreadsheet` to `d=whatever`. (You will need to do this if you use more than one spreadsheet, or if you just want to give it a more meaningful name.)
+> This tells JSHint about the new global. This stops it complaining that you're using an undefined variable.
