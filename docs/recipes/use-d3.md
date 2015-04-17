@@ -1,6 +1,6 @@
 # Use d3.js
 
-Install it with npm:
+## Install it
 
 ```sh
 $ npm install --save-dev d3
