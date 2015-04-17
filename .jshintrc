@@ -25,6 +25,6 @@
   "predef": ["require", "module", "exports", "requireText"],
 
   "globals": {
-    "onDomReady": true
+
   }
 }

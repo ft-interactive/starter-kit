@@ -44,25 +44,24 @@ Import the styles from the two components by editing `client/styles/main.scss`:
 > A few seconds after saving, your browser should reload, and the header and footer should now be fully styled.
 
 
-## 4. Add the JavaScript
+## 4. Add the JavaScript for o-header
 
-Edit `client/scripts/main.js` to load the JavaScript for o-header, select the `<header>` element from your page, and enhance it:
+Edit `client/scripts/main.js`:
 
 ```diff
- 'use strict';
-
-+const oHeader = require('o-header');
+ import oHoverable from 'o-hoverable';
++import oHeader from 'o-header';
  
- onDomReady(function () {
-   // the dom is now ready for querying.
-
-+  // enhance the header element 
+ document.addEventListener('DOMContentLoaded', function () {
+   oHoverable.init(); // makes hover effects work on touch devices
+   
++  // enhance the header element
 +  const header = document.querySelector('body>header');
 +  new oHeader(header);
-
+ 
  });
 ```
 
-> When your browser reloads, you should find that dropdown menus work in the header.
->
-> NB. there is no JavaScript needed for o-footer.
+> This should make the header's dropdown menus work.
+> 
+> There is no JavaScript for o-footer.

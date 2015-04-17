@@ -36,9 +36,7 @@ Then, in your script, import the template:
 +import exampleTemplate from '../templates/example.hbs';
  
  document.addEventListener('DOMContentLoaded', function () {
- 
-   // Automatically fix hover effects to work on touch devices
-   oHoverable.init();
+   oHoverable.init(); // makes hover effects work on touch devices
  
 +  // do something with a template
 +  document.querySelector('main').innerHTML = exampleTemplate({foo: 'hi'});

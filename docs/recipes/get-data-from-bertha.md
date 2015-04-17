@@ -28,8 +28,6 @@ Edit your `.jshintrc` file:
 
 ```diff
    "globals": {
--     "onDomReady": true
-+     "onDomReady": true,
 +     "spreadsheet": true
    }
 ```
