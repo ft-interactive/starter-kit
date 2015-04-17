@@ -1,4 +1,4 @@
-# Adding o-header and o-footer
+# Add o-header and o-footer
 
 It's fine to be running `gulp serve` while you're doing the following steps. There is no need to quit it; just open a new terminal tab so you can run other commands at the same time.
 

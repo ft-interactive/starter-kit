@@ -1,4 +1,4 @@
-# Adding a new Browserify entry script
+# Add a new Browserify entry script
 
 The `main.js` script is a Browserify entry.
 
