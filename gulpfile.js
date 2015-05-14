@@ -66,12 +66,14 @@ gulp.task('serve', ['watch'], function (done) {
   bs = require('browser-sync').create();
 
   bs.init({
+    files: ['.tmp/**/*', 'client/**/*'],
     server: {
       baseDir: ['.tmp', 'client'],
       routes: {
         '/bower_components': 'bower_components'
       }
-    }
+    },
+    open: false
   }, done);
 });
 
@@ -79,6 +81,7 @@ gulp.task('serve', ['watch'], function (done) {
 // builds and serves up the 'dist' directory
 gulp.task('serve:dist', ['build'], function (done) {
   require('browser-sync').create().init({
+    open: false,
     notify: false,
     server: 'dist'
   }, done);
@@ -86,13 +89,13 @@ gulp.task('serve:dist', ['build'], function (done) {
 
 
 // does browserify and sass/autoprefixer
-gulp.task('preprocess', function (done) {
+gulp.task('preprocess', function () {
   return obt.build(gulp, {
+    buildFolder: '.tmp',
     js: './client/scripts/main.js',
-    sass: './client/styles/main.scss',
     buildJs: 'scripts/main.bundle.js',
-    buildCss: 'styles/main.css',
-    buildFolder: '.tmp'
+    sass: './client/styles/main.scss',
+    buildCss: 'styles/main.css'
   });
 });
 
@@ -112,17 +115,8 @@ gulp.task('verify', function () {
 gulp.task('watch', ['preprocess'], function () {
   // files that need preprocessing
   gulp.watch('./client/**/*.{js,scss}', function () {
-    runSequence(['preprocess', 'verify', 'reload']);
+    runSequence('preprocess', 'verify');
   });
-
-  // everything else
-  gulp.watch(['./client/**/*', '!**/*.{js,scss}'], ['reload']);
-});
-
-
-// does a BrowserSync reload (if you're running 'serve')
-gulp.task('reload', function () {
-  if (bs) bs.reload();
 });
 
 
