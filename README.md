@@ -12,10 +12,11 @@ The included build system is loosely based on Yeoman's original [webapp generato
 - `serve` and `build` tasks (similar to [Yeoman](http://yeoman.io/learning/index.html)'s)
 - [BrowserSync](http://www.browsersync.io/)
 - [Bower](http://bower.io/) (configured to use Origami)
-- [origami-build-tools](https://github.com/Financial-Times/origami-build-tools), which includes:
+- [origami-build-tools](https://github.com/Financial-Times/origami-build-tools), which provides:
     - [Browserify](http://browserify.org/)
-    - [node-sass](https://github.com/sass/node-sass) (fast alternative to Ruby)
-- Linters: [JSHint](http://jshint.com/) and [SCSS-Lint](https://github.com/causes/scss-lint)
+    - [node-sass](https://github.com/sass/node-sass)
+    - [JSHint](http://jshint.com/)
+    - [SCSS-Lint](https://github.com/causes/scss-lint)
 
 Watch-driven rebuilds (during `serve`) are fairly incremental (i.e. fast) and include sourcemaps.
 
