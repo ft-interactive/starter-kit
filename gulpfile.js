@@ -121,6 +121,9 @@ gulp.task('verify', function () {
   // return obt.verify(gulp, {
   //   js: './client/scripts/*.js',
   //   sass: './client/scripts/*.scss',
+  // }).on('error', function (error) {
+  //   console.error(error);
+  //   this.emit('end');
   // });
 
   $.util.log('"verify" task disabled until OBT errors issue resolved');
