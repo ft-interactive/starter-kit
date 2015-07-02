@@ -1,11 +1,12 @@
 /*jshint node:true*/
 'use strict';
 
-var gulp = require('gulp');
-var obt = require('origami-build-tools');
-var del = require('del');
 var runSequence = require('run-sequence');
+var obt = require('origami-build-tools');
 var $ = require('auto-plug')('gulp');
+var gulp = require('gulp');
+var del = require('del');
+
 var bs;
 
 
@@ -73,7 +74,8 @@ gulp.task('serve', ['watch'], function (done) {
         '/bower_components': 'bower_components'
       }
     },
-    open: false
+    open: false,
+    notify: false,
   }, done);
 });
 
@@ -88,14 +90,28 @@ gulp.task('serve:dist', ['build'], function (done) {
 });
 
 
-// does browserify and sass/autoprefixer
-gulp.task('preprocess', function () {
-  return obt.build(gulp, {
+// builds scripts with browserify
+gulp.task('scripts', function () {
+  return obt.build.js(gulp, {
     buildFolder: '.tmp',
     js: './client/scripts/main.js',
     buildJs: 'scripts/main.bundle.js',
+  }).on('error', function (error) {
+    console.error(error);
+    this.emit('end');
+  });
+});
+
+
+// builds stylesheets with sass/autoprefixer
+gulp.task('styles', function () {
+  return obt.build.sass(gulp, {
+    buildFolder: '.tmp',
     sass: './client/styles/main.scss',
-    buildCss: 'styles/main.css'
+    buildCss: 'styles/main.css',
+  }).on('error', function (error) {
+    console.error(error);
+    this.emit('end');
   });
 });
 
@@ -112,10 +128,14 @@ gulp.task('verify', function () {
 
 
 // sets up watching and reloading
-gulp.task('watch', ['preprocess'], function () {
-  // files that need preprocessing
-  gulp.watch('./client/**/*.{js,scss}', function () {
-    runSequence('preprocess', 'verify');
+gulp.task('watch', ['scripts', 'styles'], function () {
+
+  gulp.watch('./client/**/*.scss', function () {
+    runSequence('styles', 'verify');
+  });
+
+  gulp.watch('./client/**/*.{js,hbs}', function () {
+    runSequence('scripts', 'verify');
   });
 });
 
@@ -126,7 +146,7 @@ gulp.task('build', function (done) {
   runSequence(
     'clean',
     'verify',
-    'preprocess',
+    ['scripts', 'styles'],
     ['html', 'images', 'copy'],
   done);
 });

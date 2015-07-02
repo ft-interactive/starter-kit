@@ -6,23 +6,26 @@
 npm install --save-dev handlebars hbsfy
 ```
 
-> This installs [Handlebars](http://handlebarsjs.com/), plus a Browserify transform called [hbsfy](https://github.com/epeli/node-hbsfy), which precompiles `.hbs` files into JavaScript when you import them.
+> After doing this, check that your `package.json` now contains both the new devDependencies.
+> - [handlebars](http://handlebarsjs.com/), the actual template engine
+> - a Browserify transform called [hbsfy](https://github.com/epeli/node-hbsfy), which precompiles `.hbs` files into plain JavaScript (whenever you import them from a `.js` file).
 
 
 ## 2. Edit your gulpfile
 
-Add hbsfy as a transform in your `preprocess` task:
+Add hbsfy as a transform in your `scripts` task:
 
 ```diff
- // does browserify and sass/autoprefixer
- gulp.task('preprocess', function () {
-   return obt.build(gulp, {
+ // builds scripts with browserify
+ gulp.task('scripts', function () {
+   return obt.build.js(gulp, {
      buildFolder: '.tmp',
      js: './client/scripts/main.js',
      buildJs: 'scripts/main.bundle.js',
 +    transforms: [require('hbsfy')],
-     sass: './client/styles/main.scss',
-     buildCss: 'styles/main.css'
+   }).on('error', function (error) {
+     console.error(error);
+     this.emit('end');
    });
  });
 ```
