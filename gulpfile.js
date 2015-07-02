@@ -1,4 +1,3 @@
-/*jshint node:true*/
 'use strict';
 
 var runSequence = require('run-sequence');
@@ -116,15 +115,15 @@ gulp.task('styles', function () {
 });
 
 
-// lints JS files
-gulp.task('jshint', function () {
-  return obt.verify.jsHint(gulp, {
-    jshint: './client/scripts/*.js',
-  }).on('error', function (error) {
-    console.error('\n', error, '\n');
-    this.emit('end');
-  });
-});
+// lints JS files (DISABLED for poor ES6 support; we're going to switch to ESLint)
+// gulp.task('jshint', function () {
+//   return obt.verify.jsHint(gulp, {
+//     jshint: './client/scripts/*.js',
+//   }).on('error', function (error) {
+//     console.error('\n', error, '\n');
+//     this.emit('end');
+//   });
+// });
 
 
 // lints SCSS files
@@ -142,7 +141,7 @@ gulp.task('scsslint', function () {
 gulp.task('watch', function (done) {
   runSequence('clean', ['scripts', 'styles'], function () {
     gulp.watch('./client/**/*.scss', ['styles', 'scsslint']);
-    gulp.watch('./client/**/*.{js,hbs}', ['scripts', 'jshint']);
+    gulp.watch('./client/**/*.{js,hbs}', ['scripts'/*, 'jshint'*/]);
     done();
   });
 });
@@ -152,7 +151,7 @@ gulp.task('watch', function (done) {
 gulp.task('build', function (done) {
 
   runSequence(
-    ['clean', 'scsslint', 'jshint'],
+    ['clean', 'scsslint'/*, 'jshint'*/],
     ['scripts', 'styles', 'copy'],
     ['html', 'images'],
   done);
