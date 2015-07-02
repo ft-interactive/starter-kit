@@ -12,20 +12,20 @@ var bs;
 
 // compresses images (client => dist)
 gulp.task('images', function () {
-  return gulp.src('client/images/**/*')
+  return gulp.src('client/**/*.{jpg,png,gif,svg}')
     .pipe($.imagemin({
       progressive: true,
       interlaced: true
     }))
-    .pipe(gulp.dest('dist/images'));
+    .pipe(gulp.dest('dist'));
 });
 
 
 // copies over miscellaneous files (client => dist)
 gulp.task('copy', function () {
   return gulp.src([
-    'client/*',
-    '!client/*.html'
+    'client/**/*',
+    '!client/**/*.{html,scss,js,jpg,png,gif,svg}', // all handled by other tasks
   ], {
     dot: true
   }).pipe(gulp.dest('dist'));
@@ -127,7 +127,7 @@ gulp.task('verify', function () {
 });
 
 
-// sets up watching and reloading
+// sets up watch-and-rebuild for JS and CSS
 gulp.task('watch', ['scripts', 'styles'], function () {
 
   gulp.watch('./client/**/*.scss', function () {
@@ -146,7 +146,7 @@ gulp.task('build', function (done) {
   runSequence(
     'clean',
     'verify',
-    ['scripts', 'styles'],
-    ['html', 'images', 'copy'],
+    ['scripts', 'styles', 'copy'],
+    ['html', 'images'],
   done);
 });
