@@ -1,5 +1,3 @@
-'use strict';
-
 import oHoverable from 'o-hoverable';
 
 document.addEventListener('DOMContentLoaded', function () {
