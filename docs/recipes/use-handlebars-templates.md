@@ -6,22 +6,47 @@
 npm install --save-dev handlebars hbsfy
 ```
 
-> This installs [Handlebars](http://handlebarsjs.com/), plus a Browserify transform called [hbsfy](https://github.com/epeli/node-hbsfy), which precompiles `.hbs` files into JavaScript when you import them.
+> After doing this, check that your `package.json` now contains both the new devDependencies.
+> - [handlebars](http://handlebarsjs.com/), the actual template engine
+> - a Browserify transform called [hbsfy](https://github.com/epeli/node-hbsfy), which precompiles `.hbs` files into plain JavaScript (whenever you import them from a `.js` file).
 
 
-## Edit gulpfile.js
+## 2. Edit your gulpfile
+
+Add hbsfy as a transform in your `scripts` task:
 
 ```diff
- var BROWSERIFY_TRANSFORMS = [
-   'babelify',
-   'debowerify',
-+  'hbsfy',
- ];
+ // builds scripts with browserify
+ gulp.task('scripts', function () {
+   return obt.build.js(gulp, {
+     buildFolder: '.tmp',
+     js: './client/scripts/main.js',
+     buildJs: 'scripts/main.bundle.js',
++    transforms: [require('hbsfy')],
+   }).on('error', function (error) {
+     console.error(error);
+     this.emit('end');
+   });
+ });
 ```
 
-> You'll need to restart your `gulp serve` after this change – or if you're using `npm run serve`, it will restart automatically.
+Configure `gulp.watch` to rebuild whenever `.hbs` files change:
 
-## Make some templates and use them.
+```diff
+ // sets up watching and reloading
+ gulp.task('watch', ['preprocess'], function () {
+   // files that need preprocessing
+-  gulp.watch('./client/**/*.{js,scss}', function () {
++  gulp.watch('./client/**/*.{js,hbs,scss}', function () {
+     runSequence('preprocess', 'verify');
+   });
+ });
+``` 
+
+> NB. You'll need to restart your `gulp serve` after this change – or if you're using `npm run serve`, it will restart automatically.
+
+
+## 3. Make some templates and use them
 
 Make a new directory `client/templates`, and add a template file, e.g. `example.hbs`:
 
@@ -29,16 +54,17 @@ Make a new directory `client/templates`, and add a template file, e.g. `example.
 <b>{{foo}}</b>
 ```
 
-Then, in your script, import the template:
+Then, in your `main.js`, import the template:
 
 ```diff
  import oHoverable from 'o-hoverable';
 +import exampleTemplate from '../templates/example.hbs';
  
  document.addEventListener('DOMContentLoaded', function () {
-   oHoverable.init(); // makes hover effects work on touch devices
+   // make hover effects work on touch devices
+   oHoverable.init();
  
-+  // do something with a template
++  // do something with the template...
 +  document.querySelector('main').innerHTML = exampleTemplate({foo: 'hi'});
  });
 ```

@@ -9,6 +9,16 @@ $ curl -L https://raw.githubusercontent.com/callumlocke/init-opb/master/init.js 
 ```
 
 (See [init-opb](https://github.com/callumlocke/init-opb) for what that command does.)
+
+
+## Manual start
+
+1. Download a snapshot of this repo, then delete `docs`, `README.md` and `travis.yml`. This will be your starting point.
+2. Run `npm install && bower install && bundle install`
+3. Use the tasks:
+  - Run `npm run serve` to start a watch-driven development server with BrowserSync.
+  - Run `gulp build` to make a production build.
+
 <!-- 
 
 ### 1. Clone the repo
