@@ -116,29 +116,34 @@ gulp.task('styles', function () {
 });
 
 
-// performs linting etc.
-gulp.task('verify', function () {
-  // return obt.verify(gulp, {
-  //   js: './client/scripts/*.js',
-  //   sass: './client/scripts/*.scss',
-  // }).on('error', function (error) {
-  //   console.error(error);
-  //   this.emit('end');
-  // });
+// lints JS files
+gulp.task('jshint', function () {
+  return obt.verify.jsHint(gulp, {
+    jshint: './client/scripts/*.js',
+  }).on('error', function (error) {
+    console.error('\n', error, '\n');
+    this.emit('end');
+  });
+});
 
-  $.util.log('"verify" task disabled until OBT errors issue resolved');
+
+// lints SCSS files
+gulp.task('scsslint', function () {
+  return obt.verify.scssLint(gulp, {
+    sass: './client/styles/*.scss',
+  }).on('error', function (error) {
+    console.error('\n', error, '\n');
+    this.emit('end');
+  });
 });
 
 
 // sets up watch-and-rebuild for JS and CSS
-gulp.task('watch', ['scripts', 'styles'], function () {
-
-  gulp.watch('./client/**/*.scss', function () {
-    runSequence('styles', 'verify');
-  });
-
-  gulp.watch('./client/**/*.{js,hbs}', function () {
-    runSequence('scripts', 'verify');
+gulp.task('watch', function (done) {
+  runSequence('clean', ['scripts', 'styles'], function () {
+    gulp.watch('./client/**/*.scss', ['styles', 'scsslint']);
+    gulp.watch('./client/**/*.{js,hbs}', ['scripts', 'jshint']);
+    done();
   });
 });
 
@@ -147,8 +152,7 @@ gulp.task('watch', ['scripts', 'styles'], function () {
 gulp.task('build', function (done) {
 
   runSequence(
-    'clean',
-    'verify',
+    ['clean', 'scsslint', 'jshint'],
     ['scripts', 'styles', 'copy'],
     ['html', 'images'],
   done);
