@@ -23,7 +23,7 @@
   },
   "private": true,
   "scripts": {
-    "serve": "nodemon --watch gulpfile.js --watch .jshintrc --watch .scss-lint.yml --exec 'gulp clean && gulp serve'",
+    "serve": "nodemon --watch gulpfile.js --watch .scss-lint.yml --exec 'gulp clean && gulp serve'",
     "test": "gulp build"
   }
 }

@@ -2,7 +2,7 @@
 
 [![Build Status][travis-image]][travis-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
-This repo can be used as starting point for new front-end apps that employ Origami components.
+This repo is a starting point for new front-end apps that employ Origami components.
 
 The included build system is loosely based on Yeoman's original [webapp generator](https://github.com/yeoman/generator-webapp) and Google's [Web Starter Kit](https://github.com/google/web-starter-kit).
 
@@ -33,7 +33,7 @@ Watch-driven rebuilds (during `serve`) are fairly incremental (i.e. fast) and in
 
 - `gulp build` — builds a compressed, deployable app in `dist`
 
-Bonus command: `npm run serve` is another way to run `gulp serve`, with the difference that it will automatically restart whenever you edit the gulpfile.
+Bonus command: `npm run serve` is another way to run `gulp serve`, with the added benefit that it will automatically restart whenever you edit the gulpfile.
 
 
 ### Components
