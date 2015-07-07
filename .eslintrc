@@ -1,0 +1,24 @@
+# Configuration guide: http://eslint.org/docs/user-guide/configuring
+# List of rules: http://eslint.org/docs/rules/
+
+parser: 'babel-eslint'
+ecmaFeatures:
+  modules: true
+env:
+  es6: true
+  node: true
+  browser: true
+
+# The following rules are likely to change
+# pending https://github.com/Financial-Times/ft-origami/issues/375
+rules:
+  comma-dangle: 0
+  curly: [2, 'multi-line']
+  no-lone-blocks: 0
+  quotes: [2, 'single']
+  semi: 2
+  no-multi-spaces: 0
+  no-use-before-define: 0
+  new-cap: 0
+  no-loop-func: 0
+  key-spacing: 0

@@ -15,7 +15,7 @@ The included build system is loosely based on Yeoman's original [webapp generato
 - [origami-build-tools](https://github.com/Financial-Times/origami-build-tools), which provides:
     - [Browserify](http://browserify.org/)
     - [node-sass](https://github.com/sass/node-sass)
-    - [JSHint](http://jshint.com/)
+    - [ESLint](http://eslint.org/)
     - [SCSS-Lint](https://github.com/causes/scss-lint)
 
 Watch-driven rebuilds (during `serve`) are fairly incremental (i.e. fast) and include sourcemaps.

@@ -22,14 +22,15 @@ Now you should have the `spreadsheet` global available – try `console.log(spre
 > You can use a different name for the global by altering the URL. Just change `d=spreadsheet` to `d=whatever`. (You will need to do this if you use more than one spreadsheet, or if you just want to give it a more meaningful name.)
 
 
-## Configure JSHint
+## Configure ESLint
 
-Edit your `.jshintrc` file:
+Edit your `.eslintrc` file to add a `globals` section:
 
 ```diff
-   "globals": {
-+     "spreadsheet": true
-   }
++globals:
++  spreadsheet: true
 ```
 
-> This tells JSHint about the new global. This stops it complaining that you're using an undefined variable.
+(Or just add `spreadsheet: true` if there's already a `globals` section there.)
+
+> This tells ESLint about the new `spreadsheet` global variable (which the Bertha script creates). This stops it complaining that you're using an undefined variable.

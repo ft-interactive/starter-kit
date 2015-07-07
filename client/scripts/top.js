@@ -1,5 +1,3 @@
-/*jshint strict:false, unused:false, evil:true*/
-
 // global addScript function
 function addScript(src, async, defer) {
   if (!async && !defer) {
