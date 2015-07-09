@@ -90,7 +90,7 @@ gulp.task('scripts', () => {
     buildFolder: '.tmp',
     js: './client/scripts/main.js',
     buildJs: 'scripts/main.bundle.js',
-  }).on('error', error => {
+  }).on('error', function (error) {
     console.error(error);
     this.emit('end');
   });
