@@ -26,7 +26,7 @@
   },
   "private": true,
   "scripts": {
-    "serve": "nodemon --watch gulpfile.js --watch .scss-lint.yml --exec 'gulp clean && gulp serve'",
+    "start": "nodemon --watch gulpfile.js --watch .scss-lint.yml --exec 'gulp clean && gulp serve'",
     "test": "eslint . && gulp build"
   }
 }
