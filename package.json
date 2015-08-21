@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "auto-plug": "^1.1.0",
-    "babel-core": "^5.8.22",
+    "babel": "^5.8.21",
     "babel-eslint": "^4.0.10",
     "browser-sync": "^2.8.2",
     "debowerify": "^1.3.1",
