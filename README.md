@@ -14,8 +14,6 @@
     - [ESLint](http://eslint.org/)
     - [SCSS-Lint](https://github.com/causes/scss-lint)
 
-Watch-driven rebuilds (during `serve`) are fairly incremental (i.e. fast) and include sourcemaps.
-
 
 ## Documentation
 
