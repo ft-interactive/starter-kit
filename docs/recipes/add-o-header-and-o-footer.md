@@ -46,22 +46,26 @@ Import the styles from the two components by editing `client/styles/main.scss`:
 
 ## 4. Add the JavaScript for o-header
 
-Edit `client/scripts/main.js`:
+Edit `client/scripts/main.js` as follows:
 
 ```diff
  import oHoverable from 'o-hoverable';
+ import FastClick from 'fastclick';
 +import oHeader from 'o-header';
- 
+
  document.addEventListener('DOMContentLoaded', function () {
-   oHoverable.init(); // makes hover effects work on touch devices
-   
+   // make hover effects work on touch devices
+   oHoverable.init();
+ 
+   // remove the 300ms tap delay on mobile browsers
+   FastClick.attach(document.body);
+ 
 +  // enhance the header element
 +  const header = document.querySelector('body>header');
 +  new oHeader(header);
- 
  });
 ```
 
-> This should make the header's dropdown menus work.
+> This addition to your JavaScript should make the header's dropdown menus work.
 > 
-> There is no JavaScript for o-footer.
+> (There is no JavaScript for o-footer.)

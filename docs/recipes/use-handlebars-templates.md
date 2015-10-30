@@ -1,5 +1,7 @@
 # Using Handlebars templates
 
+> THIS DOCUMENTATION IS OUT OF DATE. To be replaced with instructions for working with Webpack (via OBT4).
+
 ## 1. Install dependencies
 
 ```sh

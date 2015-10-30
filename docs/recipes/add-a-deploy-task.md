@@ -9,18 +9,16 @@
 $ npm install --save-dev igdeploy
 ```
 
-# 2. Edit your gulpfile.js
+# 2. Edit gulpfile.babel.js
 
 First, import the igdeploy module:
 
 ```diff
- 'use strict';
-
- var gulp = require('gulp');
- var del = require('del');
-+var igdeploy = require('igdeploy');
- var path = require('path');
- var browserify = require('browserify');
+ import runSequence from 'run-sequence';
+ import obt from 'origami-build-tools';
+ import gulp from 'gulp';
+ import del from 'del';
++import igdeploy from 'igdeploy';
 ```
 
 Then add a new task at the bottom of the file (but **edit this** so the `dest` is something appropriate for your project):
@@ -30,7 +28,7 @@ Then add a new task at the bottom of the file (but **edit this** so the `dest` i
 +gulp.task('deploy', igdeploy.bind(null, {
 +  src: 'dist',
 +  destPrefix: '/var/opt/customer/apps/interactive.ftdata.co.uk/var/www/html',
-+  dest: 'features/YYYY-MM-DD_your-project-name',
++  dest: 'features/YOUR-PROJECT-NAME',
 +  baseURL: 'http://www.ft.com/ig/',
 +}));
 ```

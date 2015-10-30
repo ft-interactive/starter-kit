@@ -13,12 +13,16 @@ $ npm install --save-dev d3
 
 ```diff
  import oHoverable from 'o-hoverable';
+ import FastClick from 'fastclick';
 +import d3 from 'd3';
  
  document.addEventListener('DOMContentLoaded', function () {
-   oHoverable.init(); // makes hover effects work on touch devices
+   // make hover effects work on touch devices
+   oHoverable.init();
+ 
+   // remove the 300ms tap delay on mobile browsers
+   FastClick.attach(document.body);
  
 +  d3.select('main').append('p').text('hello from d3!');
- 
  });
 ```

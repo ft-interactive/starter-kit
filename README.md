@@ -13,7 +13,7 @@ The included build system is loosely based on Yeoman's original [webapp generato
 - [BrowserSync](http://www.browsersync.io/)
 - [Bower](http://bower.io/) (configured to use Origami)
 - [origami-build-tools](https://github.com/Financial-Times/origami-build-tools), which provides:
-    - [Browserify](http://browserify.org/)
+    - [Webpack](https://webpack.github.io/)
     - [node-sass](https://github.com/sass/node-sass)
     - [ESLint](http://eslint.org/)
     - [SCSS-Lint](https://github.com/causes/scss-lint)
