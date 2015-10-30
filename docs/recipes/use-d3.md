@@ -6,8 +6,6 @@
 $ npm install --save-dev d3
 ```
 
-> It's a front-end dependency, so we'd normally use bower. But d3 [doesn't work well](https://github.com/eugeneware/debowerify/issues/19) with debowerify. It works fine with npm though.
-
 
 ## Import it in your scripts and use it
 
