@@ -5,6 +5,8 @@ import del from 'del';
 
 const $ = require('auto-plug')('gulp');
 
+let env = 'development';
+
 // compresses images (client => dist)
 gulp.task('images', () => {
   return gulp.src('client/**/*.{jpg,png,gif,svg}')
@@ -31,15 +33,6 @@ gulp.task('html', done => {
   const assets = $.useref.assets({searchPath: ['.tmp', 'client', '.']});
 
   gulp.src('client/**/*.html')
-    .pipe(assets)
-    .pipe($.if('*.js', $.uglify({
-      output: {
-        inline_script: true, // eslint-disable-line camelcase
-        beautify: false,
-      },
-    })))
-    .pipe($.if('*.css', $.minifyCss()))
-    .pipe(assets.restore())
     .pipe($.useref())
     .pipe(gulp.dest('dist'))
     .on('end', () => {
@@ -84,12 +77,13 @@ gulp.task('serve:dist', ['build'], done => {
 });
 
 
-// builds scripts with browserify
+// builds scripts with webpack
 gulp.task('scripts', () => {
   return obt.build.js(gulp, {
     buildFolder: '.tmp',
     js: './client/scripts/main.js',
     buildJs: 'scripts/main.bundle.js',
+    env: env,
   }).on('error', function (error) {
     console.error(error);
     this.emit('end');
@@ -144,6 +138,7 @@ gulp.task('watch', done => {
 
 // makes a production build (client => dist)
 gulp.task('build', done => {
+  env = 'production';
 
   runSequence(
     ['clean', 'scsslint'/*, 'jshint'*/],
