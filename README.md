@@ -3,6 +3,8 @@
 
 [![Build Status][travis-image]][travis-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
+**[See the dev site for how to use this](http://ft-interactive.github.io/guides/project-starter-kit/)**.
+
 ## What's included
 
 - `serve` and `build` tasks (similar to [Yeoman](http://yeoman.io/learning/index.html)'s)
