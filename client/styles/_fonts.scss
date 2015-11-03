@@ -3,22 +3,22 @@
 ////////////////////////////////////////////////////////////////////////
 // METRIC
 // @include oFontsInclude(MetricWeb, $weight: thin, $style: normal);
-// @include oFontsInclude(MetricWeb, $weight: light, $style: normal);
+@include oFontsInclude(MetricWeb, $weight: light, $style: normal);
 @include oFontsInclude(MetricWeb, $weight: regular, $style: normal);
-@include oFontsInclude(MetricWeb, $weight: regular, $style: italic);
+// @include oFontsInclude(MetricWeb, $weight: regular, $style: italic);
 // @include oFontsInclude(MetricWeb, $weight: medium, $style: normal);
-// @include oFontsInclude(MetricWeb, $weight: 'semibold', $style: normal);
-@include oFontsInclude(MetricWeb, $weight: bold, $style: normal);
+@include oFontsInclude(MetricWeb, $weight: 'semibold', $style: normal);
+// @include oFontsInclude(MetricWeb, $weight: bold, $style: normal);
 // @include oFontsInclude(MetricWeb, $weight: bold, $style: italic);
 
 ////////////////////////////////////////////////////////////////////////
 // FINANCIER TEXT
-@include oFontsInclude(FinancierTextWeb, $weight: regular, $style: normal);
-@include oFontsInclude(FinancierTextWeb, $weight: regular, $style: italic);
+// @include oFontsInclude(FinancierTextWeb, $weight: regular, $style: normal);
+// @include oFontsInclude(FinancierTextWeb, $weight: regular, $style: italic);
 
 ////////////////////////////////////////////////////////////////////////
 // FINANCIER DISPLAY
-// @include oFontsInclude(FinancierDisplayWeb, $weight: regular, $style: normal);
+@include oFontsInclude(FinancierDisplayWeb, $weight: regular, $style: normal);
 // @include oFontsInclude(FinancierDisplayWeb, $weight: regular, $style: italic);
 
 ////////////////////////////////////////////////////////////////////////
