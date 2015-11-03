@@ -7,16 +7,18 @@
     "browser-sync": "^2.9.11",
     "debowerify": "^1.3.1",
     "del": "^2.0.2",
-    "eslint": "^1.7.3",
+    "eslint": "^1.8.0",
     "fastclick": "^1.0.6",
     "gulp": "^3.9.0",
     "gulp-if": "^2.0.0",
     "gulp-imagemin": "^2.4.0",
+    "gulp-minify-css": "^1.2.1",
     "gulp-minify-html": "^1.0.4",
     "gulp-smoosher": "0.0.8",
-    "gulp-useref": "^2.0.0",
+    "gulp-uglify": "^1.4.2",
+    "gulp-useref": "^2.0.1",
     "gulp-util": "^3.0.7",
-    "nodemon": "^1.8.0",
+    "nodemon": "^1.8.1",
     "origami-build-tools": "^4.2.0",
     "run-sequence": "^1.1.4"
   },
@@ -24,12 +26,9 @@
     "node": ">=4 < 5",
     "npm": ">=3 < 4"
   },
-  "eslintConfig": {
-    "extends": "./node_modules/origami-build-tools/.eslintrc"
-  },
   "private": true,
   "scripts": {
-    "build": "eslint . && gulp build",
+    "build": "gulp build",
     "postinstall": "bower install",
     "start": "nodemon --watch gulpfile.babel.js --watch .scss-lint.yml --exec 'gulp clean && gulp serve'",
     "test": "npm run build"

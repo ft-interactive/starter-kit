@@ -1,0 +1,5 @@
+extends: ./node_modules/origami-build-tools/.eslintrc
+env:
+  browser: true
+ecmaFeatures:
+  modules: true

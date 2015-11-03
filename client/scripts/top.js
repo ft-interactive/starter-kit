@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // global addScript function
 function addScript(src, async, defer) {
   if (!async && !defer) {

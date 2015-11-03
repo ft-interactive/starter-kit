@@ -2,10 +2,17 @@ import runSequence from 'run-sequence';
 import obt from 'origami-build-tools';
 import gulp from 'gulp';
 import del from 'del';
+import path from 'path';
 
 const $ = require('auto-plug')('gulp');
-
 let env = 'development';
+
+const webpackEntry = './client/scripts/main.js';
+const webpackOutput = 'scripts/main.bundle.js';
+const otherScripts = [
+  'client/scripts/top.js',
+];
+
 
 // compresses images (client => dist)
 gulp.task('images', () => {
@@ -20,20 +27,25 @@ gulp.task('images', () => {
 
 // copies over miscellaneous files (client => dist)
 gulp.task('copy', () => {
-  return gulp.src([
+  return gulp.src(otherScripts.concat([
     'client/**/*',
     '!client/**/*.{html,scss,js,jpg,png,gif,svg}', // all handled by other tasks
-  ], {dot: true})
+  ]), {dot: true})
     .pipe(gulp.dest('dist'));
 });
 
 
 // minifies all HTML, CSS and JS (.tmp & client => dist)
 gulp.task('html', done => {
-  const assets = $.useref.assets({searchPath: ['.tmp', 'client', '.']});
+  const assets = $.useref.assets({
+    searchPath: ['.tmp', 'client', '.'],
+  });
 
   gulp.src('client/**/*.html')
-    .pipe($.useref())
+    .pipe(assets)
+    .pipe($.if('*.js', $.uglify()))
+    .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
+    .pipe(assets.restore())
     .pipe(gulp.dest('dist'))
     .on('end', () => {
       gulp.src('dist/**/*.html')
@@ -81,8 +93,8 @@ gulp.task('serve:dist', ['build'], done => {
 gulp.task('scripts', () => {
   return obt.build.js(gulp, {
     buildFolder: '.tmp',
-    js: './client/scripts/main.js',
-    buildJs: 'scripts/main.bundle.js',
+    js: webpackEntry,
+    buildJs: webpackOutput,
     env: env,
   }).on('error', function (error) {
     console.error(error);
@@ -104,15 +116,15 @@ gulp.task('styles', () => {
 });
 
 
-// lints JS files (DISABLED for poor ES6 support; we're going to switch to ESLint)
-// gulp.task('jshint', () => {
-//   return obt.verify.jsHint(gulp, {
-//     jshint: './client/scripts/*.js',
-//   }).on('error', function (error) {
-//     console.error('\n', error, '\n');
-//     this.emit('end');
-//   });
-// });
+// lints JS files
+gulp.task('eslint', () => {
+  return obt.verify.esLint(
+    gulp, path.resolve('.eslintrc')
+  ).on('error', function (error) {
+    console.error('\n', error, '\n');
+    this.emit('end');
+  });
+});
 
 
 // lints SCSS files
@@ -130,7 +142,7 @@ gulp.task('scsslint', () => {
 gulp.task('watch', done => {
   runSequence('clean', ['scripts', 'styles'], () => {
     gulp.watch('./client/**/*.scss', ['styles', 'scsslint']);
-    gulp.watch('./client/**/*.{js,hbs}', ['scripts'/*, 'jshint'*/]);
+    gulp.watch('./client/**/*.{js,hbs}', ['scripts', 'eslint']);
     done();
   });
 });
@@ -141,7 +153,7 @@ gulp.task('build', done => {
   env = 'production';
 
   runSequence(
-    ['clean', 'scsslint'/*, 'jshint'*/],
+    ['clean', 'scsslint', 'eslint'],
     ['scripts', 'styles', 'copy'],
     ['html', 'images'],
   done);
