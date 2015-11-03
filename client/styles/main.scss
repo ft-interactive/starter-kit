@@ -12,3 +12,18 @@ body {
   border: 0;
   font-family: oFontsGetFontFamilyWithFallbacks(MetricWeb);
 }
+
+
+.site-header {
+  padding: 18px 0 14px;
+  text-align: center;
+  border-bottom: 1px solid #e9decf;
+
+  > a {
+    opacity: 0.75;
+    &:hover { opacity: 1; }
+  }
+}
+    .masthead {
+      height: 18px;
+    }
