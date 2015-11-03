@@ -5,6 +5,7 @@
     "normalize.css": "~3.0.2",
     "o-colors": ">=2.5.0 <4",
     "o-hoverable": "~1.1.0",
-    "o-fonts": "~1.6.4"
+    "o-fonts": "~1.6.4",
+    "o-footer": "~4.0.0"
   }
 }

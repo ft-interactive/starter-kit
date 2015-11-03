@@ -1,6 +1,5 @@
 # Recipes
 
-- [Add o-header and o-footer](add-o-header-and-o-footer.md)
 - [Use Handlebars templates](use-handlebars-templates.md)
 - [Use d3.js](use-d3.md)
 - [Get data from Bertha](get-data-from-bertha.md)
