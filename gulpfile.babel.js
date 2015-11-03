@@ -1,17 +1,22 @@
-import runSequence from 'run-sequence';
-import obt from 'origami-build-tools';
-import gulp from 'gulp';
 import del from 'del';
+import gulp from 'gulp';
+import igdeploy from 'igdeploy';
+import obt from 'origami-build-tools';
 import path from 'path';
+import runSequence from 'run-sequence';
 
-const $ = require('auto-plug')('gulp');
-let env = 'development';
+
+// Specify a destination directory for deploying this project
+const deployTarget = ''; // e.g. 'features/YOUR-PROJECT-NAME'
 
 const webpackEntry = './client/scripts/main.js';
 const webpackOutput = 'scripts/main.bundle.js';
 const otherScripts = [
   'client/scripts/top.js',
 ];
+
+const $ = require('auto-plug')('gulp');
+let env = 'development';
 
 
 // compresses images (client => dist)
@@ -43,9 +48,10 @@ gulp.task('html', done => {
 
   gulp.src('client/**/*.html')
     .pipe(assets)
-    .pipe($.if('*.js', $.uglify()))
+    .pipe($.if('*.js', $.uglify({output: {inline_script: true}})))
     .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
     .pipe(assets.restore())
+    .pipe($.useref())
     .pipe(gulp.dest('dist'))
     .on('end', () => {
       gulp.src('dist/**/*.html')
@@ -157,4 +163,22 @@ gulp.task('build', done => {
     ['scripts', 'styles', 'copy'],
     ['html', 'images'],
   done);
+});
+
+
+// task to deploy to the interactive server
+gulp.task('deploy', done => {
+  if (!deployTarget) {
+    console.error('Please specify a deployTarget in your gulpfile!');
+    process.exit(1);
+  }
+
+  igdeploy({
+    src: 'dist',
+    destPrefix: '/var/opt/customer/apps/interactive.ftdata.co.uk/var/www/html',
+    dest: deployTarget,
+  }, error => {
+    if (error) return done(error);
+    console.log(`Deployed to http://ig.ft.com/${deployTarget}/`);
+  });
 });

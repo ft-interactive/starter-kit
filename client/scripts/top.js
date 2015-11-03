@@ -3,7 +3,7 @@
 // global addScript function
 function addScript(src, async, defer) {
   if (!async && !defer) {
-    document.write('<script src="' + src + '"><\/script>');
+    document.write('<script src="' + src + '">\x3c/script>');
   }
   else {
     var script = document.createElement('script');

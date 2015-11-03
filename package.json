@@ -18,6 +18,7 @@
     "gulp-uglify": "^1.4.2",
     "gulp-useref": "^2.0.1",
     "gulp-util": "^3.0.7",
+    "igdeploy": "^0.1.0",
     "nodemon": "^1.8.1",
     "origami-build-tools": "^4.2.0",
     "run-sequence": "^1.1.4"
@@ -31,6 +32,7 @@
     "build": "gulp build",
     "postinstall": "bower install",
     "start": "nodemon --watch gulpfile.babel.js --watch .scss-lint.yml --exec 'gulp clean && gulp serve'",
+    "deploy": "gulp deploy",
     "test": "npm run build"
   }
 }
