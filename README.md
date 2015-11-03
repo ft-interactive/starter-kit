@@ -1,9 +1,11 @@
 # Project Starter Kit
-#### For FT Interactive Projects
+
+For FT Interactive Projects.
+
+**[See the dev site for how to use this](http://ft-interactive.github.io/guides/project-starter-kit/)**.
 
 [![Build Status][travis-image]][travis-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
-**[See the dev site for how to use this](http://ft-interactive.github.io/guides/project-starter-kit/)**.
 
 ## What's included
 
