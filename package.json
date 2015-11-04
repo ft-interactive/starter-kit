@@ -20,7 +20,7 @@
     "gulp-util": "^3.0.7",
     "igdeploy": "^0.1.0",
     "nodemon": "^1.8.1",
-    "origami-build-tools": "^4.2.0",
+    "origami-build-tools": "github:financial-times/origami-build-tools#resolve-babel-runtime",
     "run-sequence": "^1.1.4"
   },
   "engines": {
