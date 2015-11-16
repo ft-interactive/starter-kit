@@ -10,14 +10,11 @@ For FT Interactive Projects.
 ## What's included
 
 - `serve` and `build` tasks (similar to [Yeoman](http://yeoman.io/learning/index.html)'s)
-- [WebPack](https://webpack.github.io/)
-- [Bower](http://bower.io/) (configured to use Origami)
-- [origami-build-tools](https://github.com/Financial-Times/origami-build-tools), which provides:
-    - [Webpack](https://webpack.github.io/)
-    - [node-sass](https://github.com/sass/node-sass)
-    - [ESLint](http://eslint.org/)
-    - [SCSS-Lint](https://github.com/causes/scss-lint)
-
+- [Browserify](http://browserify.org/)
+- [node-sass](https://github.com/sass/node-sass)
+- [ESLint](http://eslint.org/)
+- [SCSS-Lint](https://github.com/causes/scss-lint)
+- [Bower](http://bower.io/) (configured to try Origami's registry first)
 
 ## Documentation
 
