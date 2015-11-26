@@ -39,6 +39,8 @@ These Origami components are included as standard:
 
 Other components can be added easily – see [recipes](docs/recipes/README.md).
 
+## Licence
+This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
 
 <!-- badge URLs -->
 [travis-url]: http://travis-ci.org/ft-interactive/project-starter-kit
