@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "ansi-to-html": "^0.3.0",
     "auto-plug": "^1.2.0",
     "babel-core": "^6.1.21",
     "babel-eslint": "^4.1.3",

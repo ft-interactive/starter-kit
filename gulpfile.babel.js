@@ -10,7 +10,10 @@ import source from 'vinyl-source-stream';
 import subdir from 'subdir';
 import vinylBuffer from 'vinyl-buffer';
 import watchify from 'watchify';
+import AnsiToHTML from 'ansi-to-html';
+
 const $ = require('auto-plug')('gulp');
+const ansiToHTML = new AnsiToHTML();
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 8',
@@ -50,7 +53,9 @@ function getBundlers(useWatchify) {
 
       execute: function () {
         var stream = this.b.bundle()
-          .on('error', $.util.log.bind($.util, 'Browserify error'))
+          .on('error', function (error) {
+            handleBuildError.call(this, 'Error building JavaScript', error);
+          })
           .pipe(source(entry.replace(/\.js$/, '.bundle.js')));
 
         // skip sourcemap creation if we're in 'serve' mode
@@ -75,7 +80,7 @@ function getBundlers(useWatchify) {
       bundler.b = watchify(bundler.b);
       bundler.b.on('update', function (files) {
         // re-run the bundler then reload the browser
-        bundler.execute().on('end', browserSync.reload);
+        bundler.execute().on('end', reload);
 
         // also report any linting errors in the changed file(s)
         gulp.src(files.filter(file => subdir(path.resolve('client'), file))) // skip bower/npm modules
@@ -144,7 +149,7 @@ gulp.task('serve', ['styles'], function (done) {
   initialBundles.on('end', function () {
     // use browsersync to serve up the development app
     browserSync({
-      notify: false,
+      // notify: false,
       server: {
         baseDir: ['.tmp', 'client'],
         routes: {
@@ -154,9 +159,9 @@ gulp.task('serve', ['styles'], function (done) {
     });
 
     // refresh browser after other changes
-    gulp.watch(['client/**/*.html'], browserSync.reload);
-    gulp.watch(['client/styles/**/*.{scss,css}'], ['styles', 'scsslint', browserSync.reload]);
-    gulp.watch(['client/images/**/*'], browserSync.reload);
+    gulp.watch(['client/**/*.html'], reload);
+    gulp.watch(['client/styles/**/*.{scss,css}'], ['styles', 'scsslint', reload]);
+    gulp.watch(['client/images/**/*'], reload);
 
     done();
   });
@@ -181,7 +186,11 @@ gulp.task('scripts', function () {
 // builds stylesheets with sass/autoprefixer
 gulp.task('styles', () => gulp.src('client/**/*.scss')
   .pipe($.sourcemaps.init())
-  .pipe($.sass({includePaths: 'bower_components'}).on('error', $.sass.logError))
+  .pipe($.sass({includePaths: 'bower_components'})
+    .on('error', function (error) {
+      handleBuildError.call(this, 'Error building Sass', error);
+    })
+  )
   .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
   .pipe($.sourcemaps.write('./'))
   .pipe(gulp.dest('.tmp'))
@@ -236,3 +245,27 @@ gulp.task('deploy', done => {
     console.log(`Deployed to http://ig.ft.com/${DEPLOY_TARGET}/`);
   });
 });
+
+// helpers
+let preventNextReload; // hack to keep a BS error notification on the screen
+function reload() {
+  if (preventNextReload) {
+    preventNextReload = false;
+    return;
+  }
+
+  browserSync.reload();
+}
+
+function handleBuildError(headline, error) {
+  $.util.log(headline, error && error.stack);
+
+  if (env === 'development') {
+    let report = `<span style="color:red;font-weight:bold;font:bold 20px sans-serif">${headline}</span>`;
+    if (error) report += `<pre style="text-align:left;max-width:800px">${ansiToHTML.toHtml(error.stack)}</pre>`;
+    browserSync.notify(report, 60 * 60 * 1000);
+    preventNextReload = true;
+    this.emit('end');
+  }
+  else this.emit('error', error);
+}
