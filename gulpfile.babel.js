@@ -258,14 +258,18 @@ function reload() {
 }
 
 function handleBuildError(headline, error) {
-  $.util.log(headline, error && error.stack);
-
   if (env === 'development') {
+    // show in the terminal
+    $.util.log(headline, error && error.stack);
+
+    // report it in browser sync
     let report = `<span style="color:red;font-weight:bold;font:bold 20px sans-serif">${headline}</span>`;
     if (error) report += `<pre style="text-align:left;max-width:800px">${ansiToHTML.toHtml(error.stack)}</pre>`;
     browserSync.notify(report, 60 * 60 * 1000);
     preventNextReload = true;
+
+    // allow the sass/js task to end successfully, so the process can continue
     this.emit('end');
   }
-  else this.emit('error', error);
+  else throw error;
 }
