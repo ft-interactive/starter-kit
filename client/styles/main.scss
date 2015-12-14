@@ -1,16 +1,16 @@
-@import 'o-fonts/main';
+@import 'n-normalize/main';
 @import 'o-colors/main';
-@import 'o-footer/main';
 
-@import 'fonts';
-
+$font-sans: MetricWeb, sans-serif;
+$font-serif: Georgia, serif;
+$font-display: FinancierDisplayWeb, Georgia, serif;
 
 body {
   @include oColorsFor(page, background);
 
   margin: 0;
   border: 0;
-  font-family: oFontsGetFontFamilyWithFallbacks(MetricWeb);
+  font-family: $font-sans;
 }
 
 
