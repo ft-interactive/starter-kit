@@ -1,8 +1,8 @@
-# Project Starter Kit
+# Starter Kit
 
 For FT Interactive Projects.
 
-**[See the dev site for how to use this](http://ft-interactive.github.io/guides/project-starter-kit/)**.
+**[See the dev site for how to use this](http://ft-interactive.github.io/guides/starter-kit/)**.
 
 [![Build Status][travis-image]][travis-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
@@ -18,7 +18,7 @@ For FT Interactive Projects.
 
 ## Documentation
 
-- [Guide on the dev site](http://ft-interactive.github.io/guides/project-starter-kit/)
+- [Guide on the dev site](http://ft-interactive.github.io/guides/starter-kit/)
 - [Recipes](docs/recipes/README.md)
 
 
@@ -43,8 +43,8 @@ Other components can be added easily – see [recipes](docs/recipes/README.md).
 This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
 
 <!-- badge URLs -->
-[travis-url]: http://travis-ci.org/ft-interactive/project-starter-kit
-[travis-image]: https://img.shields.io/travis/ft-interactive/project-starter-kit.svg?style=flat-square
+[travis-url]: http://travis-ci.org/ft-interactive/starter-kit
+[travis-image]: https://img.shields.io/travis/ft-interactive/starter-kit.svg?style=flat-square
 
-[devdeps-url]: https://david-dm.org/ft-interactive/project-starter-kit#info=devDependencies
-[devdeps-image]: https://img.shields.io/david/dev/ft-interactive/project-starter-kit.svg?style=flat-square
+[devdeps-url]: https://david-dm.org/ft-interactive/starter-kit#info=devDependencies
+[devdeps-image]: https://img.shields.io/david/dev/ft-interactive/starter-kit.svg?style=flat-square
