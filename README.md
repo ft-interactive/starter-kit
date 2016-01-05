@@ -16,7 +16,7 @@ If you already have [startfrom](https://github.com/callumlocke/startfrom) instal
 
 **Full instructions**
 
-**[Read in-depth instructions on our Developer Guide](https://ft-interactive.github.io/guides/starter-kit/)**.
+[Read in-depth instructions on our Developer Guide](https://ft-interactive.github.io/guides/starter-kit/).
 
 ## What's included
 
