@@ -1,6 +1,6 @@
 # Starter Kit
 
-For FT Interactive Projects.
+> Boilerplate to kick-start a new FT Interactive project
 
 **[See the dev site for how to use this](http://ft-interactive.github.io/guides/starter-kit/)**.
 
