@@ -2,10 +2,21 @@
 
 > Boilerplate to kick-start a new FT Interactive project
 
-**[See the dev site for how to use this](http://ft-interactive.github.io/guides/starter-kit/)**.
-
 [![Build Status][travis-image]][travis-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
+## Usage
+
+**Quick start**
+
+If you already have [startfrom](https://github.com/callumlocke/startfrom) installed...
+
+```shell
+> startfrom ft-interactive/starter-kit
+```
+
+**Full instructions**
+
+**[Read in-depth instructions on our Developer Guide](https://ft-interactive.github.io/guides/starter-kit/)**.
 
 ## What's included
 
