@@ -24,8 +24,9 @@ If you already have [startfrom](https://github.com/callumlocke/startfrom) instal
 - [Browserify](http://browserify.org/)
 - [node-sass](https://github.com/sass/node-sass)
 - [ESLint](http://eslint.org/)
-- [SCSS-Lint](https://github.com/causes/scss-lint)
-- [Bower](http://bower.io/) (configured to try Origami's registry first)
+- ~~[SCSS-Lint](https://github.com/causes/scss-lint)~~
+  - *removed until we can find a non-Ruby version - if you want to lint locally to help clean up your Sass, do `gem install scss-lint` then `scss-lint client/**/*.scss`*
+- [Bower](http://bower.io/) (configured to try Origami's registry before the public one)
 
 ## Documentation
 
