@@ -25,7 +25,7 @@ If you already have [startfrom](https://github.com/callumlocke/startfrom) instal
 - [node-sass](https://github.com/sass/node-sass)
 - [ESLint](http://eslint.org/)
 - ~~[SCSS-Lint](https://github.com/causes/scss-lint)~~
-  - *removed until we can find a non-Ruby version - if you want to lint locally to help clean up your Sass, do `gem install scss-lint` then `scss-lint client/**/*.scss`*
+  - removed until we can find a non-Ruby version - you can still use it manually: `gem install scss-lint` then `scss-lint client/**/*.scss`
 - [Bower](http://bower.io/) (configured to try Origami's registry before the public one)
 
 ## Documentation
