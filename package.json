@@ -25,7 +25,7 @@
     "gulp-smoosher": "0.0.9",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.1",
-    "gulp-useref": "^3.0.4",
+    "gulp-useref": "^2.1.0",
     "gulp-util": "^3.0.7",
     "igdeploy": "^0.1.0",
     "merge-stream": "^1.0.0",
