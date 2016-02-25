@@ -17,11 +17,11 @@ If you already have [startfrom](https://github.com/callumlocke/startfrom) instal
 **Full instructions**
 
 * [In-depth instructions](https://ft-interactive.github.io/guides/starter-kit/) on our Developer Guide
-* The are also [Recipes](docs/recipes/README.md) for how code things
+* The are also [Recipes](docs/recipes/README.md) for how to code things up
 
 ## Tasks
 
-** Development**
+**Development**
 
 Run a dev server, build code and refresh when code changes:
 
@@ -30,7 +30,7 @@ $ npm start
 
 ```
 
-** Publish **
+**Publish**
 
 Build the code ready to be deployed: 
 
