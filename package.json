@@ -13,7 +13,6 @@
     "del": "^2.0.2",
     "eslint": "^1.9.0",
     "eslint-config-xo": "^0.8.0",
-    "fastclick": "^1.0.6",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-eslint": "^1.1.0",

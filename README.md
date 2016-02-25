@@ -16,40 +16,43 @@ If you already have [startfrom](https://github.com/callumlocke/startfrom) instal
 
 **Full instructions**
 
-[Read in-depth instructions on our Developer Guide](https://ft-interactive.github.io/guides/starter-kit/).
+* [In-depth instructions](https://ft-interactive.github.io/guides/starter-kit/) on our Developer Guide
+* The are also [Recipes](docs/recipes/README.md) for how code things
 
-## What's included
+## Tasks
 
-- `serve` and `build` tasks (similar to [Yeoman](http://yeoman.io/learning/index.html)'s)
+** Development**
+
+Run a dev server, build code and refresh when code changes:
+
+```
+$ npm start
+
+```
+
+** Publish **
+
+Build the code ready to be deployed: 
+
+```
+$ npm run build
+
+```
+
+Builds into a `dist` folder.
+
+
+## Includes
+
+- Origami components, some via the [bower registry](http://registry.origami.ft.com/components) others via the [build service](https://build.origami.ft.com/).
 - [Browserify](http://browserify.org/)
 - [node-sass](https://github.com/sass/node-sass)
-- [ESLint](http://eslint.org/)
-- ~~[SCSS-Lint](https://github.com/causes/scss-lint)~~
-  - removed until we can find a non-Ruby version - you can still use it manually: `gem install scss-lint` then `scss-lint client/**/*.scss`
-- [Bower](http://bower.io/) (configured to try Origami's registry before the public one)
-
-## Documentation
-
-- [Guide on the dev site](http://ft-interactive.github.io/guides/starter-kit/)
-- [Recipes](docs/recipes/README.md)
+- Linting: [ESLint](http://eslint.org/) | ~~[SCSS-Lint](https://github.com/causes/scss-lint)~~*
 
 
-## Primary tasks
+* SCSS-lint has been removed until we can find a non-Ruby version.
+You can still use it manually: `gem install scss-lint` then `scss-lint client/**/*.scss`
 
-- `npm start` — runs a development server, opens it in your browser, and incrementally rebuilds and reloads your browser whenever source files change
-
-- `npm run build` — builds a compressed, deployable app in `dist`
-
-
-### Components
-
-These Origami components are included as standard:
-
-- [o-colors](http://registry.origami.ft.com/components/o-colors)
-- [o-hoverable](http://registry.origami.ft.com/components/o-hoverable)
-- [o-fonts](http://registry.origami.ft.com/components/o-fonts)
-
-Other components can be added easily – see [recipes](docs/recipes/README.md).
 
 ## Licence
 This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
