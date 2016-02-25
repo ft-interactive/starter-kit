@@ -8,7 +8,7 @@
 
 **Quick start**
 
-If you already have [startfrom](https://github.com/callumlocke/startfrom) installed...
+If you have [startfrom](https://github.com/callumlocke/startfrom) installed...
 
 ```shell
 > startfrom ft-interactive/starter-kit
@@ -21,6 +21,7 @@ If you already have [startfrom](https://github.com/callumlocke/startfrom) instal
 ## Tasks
 
 **Development**
+
 Run a dev server, build code and refresh when code changes:
 
 ```
@@ -28,6 +29,7 @@ $ npm start
 ```
 
 **Publish**
+
 Build the code ready to be deployed: 
 
 ```
