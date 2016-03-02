@@ -5,7 +5,7 @@
 Add a script tag just before your final script bundle:
 
 ```diff
-+    <script src="http://bertha.ig.ft.com/view/publish/js/SPREADSHEET_KEY/basic?d=spreadsheet"></script>
++    <script src="https://bertha.ig.ft.com/view/publish/js/SPREADSHEET_KEY/basic?d=spreadsheet"></script>
  
      <!-- build:js scripts/main.js -->
      <script src="scripts/main.bundle.js"></script>
