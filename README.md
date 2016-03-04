@@ -54,7 +54,7 @@ You can still use it manually: `gem install scss-lint` then `scss-lint client/**
 This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
 
 <!-- badge URLs -->
-[travis-url]: https://circleci.com/gh/ft-interactive/starter-kit
+[circle-url]: https://circleci.com/gh/ft-interactive/starter-kit
 [circle-image]: https://circleci.com/gh/ft-interactive/starter-kit/tree/master.svg?style=svg
 
 [devdeps-url]: https://david-dm.org/ft-interactive/starter-kit#info=devDependencies
