@@ -55,7 +55,7 @@ This software is published by the Financial Times under the [MIT licence](http:/
 
 <!-- badge URLs -->
 [circle-url]: https://circleci.com/gh/ft-interactive/starter-kit
-[circle-image]: https://circleci.com/gh/ft-interactive/starter-kit/tree/master.svg?style=shield&foo
+[circle-image]: https://circleci.com/gh/ft-interactive/starter-kit/tree/master.svg?style=shield
 
 [devdeps-url]: https://david-dm.org/ft-interactive/starter-kit#info=devDependencies
 [devdeps-image]: https://img.shields.io/david/dev/ft-interactive/starter-kit.svg?style=flat-square
