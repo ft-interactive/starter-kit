@@ -7,4 +7,4 @@ dependencies:
     - bower_components
     - node_modules
   override:
-    - npm install --dev
+    - npm install
