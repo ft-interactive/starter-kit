@@ -36,8 +36,7 @@
     "watchify": "^3.6.1"
   },
   "engines": {
-    "node": ">=4 <5",
-    "npm": ">=3 <4"
+    "node": ">=5"
   },
   "private": true,
   "scripts": {
