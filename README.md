@@ -6,19 +6,13 @@
 
 ## Usage
 
-**Quick start**
+**Download**
 
-If you have [startfrom](https://github.com/callumlocke/startfrom) installed...
+Don't clone this repo. If you have [startfrom](https://github.com/callumlocke/startfrom) installed...
 
 ```shell
 > startfrom ft-interactive/starter-kit
 ```
-
-**Full instructions**
-* [In-depth instructions](https://ft-interactive.github.io/guides/starter-kit/) on our Developer Guide
-* The are also [Recipes](docs/recipes/README.md) for how to code things up
-
-## Tasks
 
 **Development**
 
@@ -37,6 +31,11 @@ $ npm run build
 ```
 
 Builds into a `dist` folder.
+
+**Full instructions**
+
+* [In-depth instructions](https://ft-interactive.github.io/guides/starter-kit/) on our Developer Guide
+* The are also [Recipes](docs/recipes/README.md) for how to code things up
 
 
 ## Includes
