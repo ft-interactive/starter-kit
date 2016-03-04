@@ -1,0 +1,10 @@
+machine:
+  node:
+    version: 5.x
+
+dependencies:
+  cache_directories:
+    - bower_components
+    - node_modules
+  override:
+    - npm install --dev
