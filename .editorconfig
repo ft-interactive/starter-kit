@@ -5,7 +5,23 @@ end_of_line = lf
 insert_final_newline = true
 charset = utf-8
 
-[**{.js,.scss,.html,.mustache,.md}]
+[**.{js,scss,html}]
 indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true
+
+[Makefile]
+insert_final_newline = true
+indent_style = tab
+indent_size = 4
+
+[{package.json,bower.json,npm-shrinkwrap.json,.travis.yml}]
+indent_style = space
+indent_size = 2
+
+[*.{md,markdown}]
+trim_trailing_whitespace = false
+
+[*.yml]
+indent_size = 2
+indent_style = space
