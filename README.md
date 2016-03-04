@@ -2,7 +2,7 @@
 
 > Boilerplate to kick-start a new FT Interactive project
 
-[![Build Status][travis-image]][travis-url] [![Dependency Status][devdeps-image]][devdeps-url]
+[![Build Status][circle-image]][circle-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
 ## Usage
 
@@ -54,8 +54,8 @@ You can still use it manually: `gem install scss-lint` then `scss-lint client/**
 This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
 
 <!-- badge URLs -->
-[travis-url]: http://travis-ci.org/ft-interactive/starter-kit
-[travis-image]: https://img.shields.io/travis/ft-interactive/starter-kit.svg?style=flat-square
+[travis-url]: https://circleci.com/gh/ft-interactive/starter-kit
+[circle-image]: https://circleci.com/gh/ft-interactive/starter-kit/tree/master.svg?style=svg
 
 [devdeps-url]: https://david-dm.org/ft-interactive/starter-kit#info=devDependencies
 [devdeps-image]: https://img.shields.io/david/dev/ft-interactive/starter-kit.svg?style=flat-square
