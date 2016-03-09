@@ -212,6 +212,22 @@ gulp.task('eslint', () => gulp.src('client/scripts/**/*.js')
 //   // .pipe($.if(env === 'production', $.scssLint.failReporter()))
 // );
 
+gulp.task('revision', () => {
+  return gulp.src(['dist/**/*.css', 'dist/**/*.js'])
+    .pipe($.rev())
+    .pipe(gulp.dest('dist'))
+    .pipe($.rev.manifest())
+    .pipe(gulp.dest('dist'))
+});
+
+gulp.task('revreplace', ['revision'], () => {
+  var manifest = gulp.src('./dist/rev-manifest.json');
+
+  return gulp.src('dist/**/*.html')
+    .pipe($.revReplace({manifest: manifest}))
+    .pipe(gulp.dest('dist'));
+});
+
 // sets up watch-and-rebuild for JS and CSS
 gulp.task('watch', done => {
   runSequence('clean', ['scripts', 'styles'], () => {
@@ -229,6 +245,7 @@ gulp.task('build', done => {
     ['clean', /*'scsslint',*/ 'eslint'],
     ['scripts', 'styles', 'copy'],
     ['html', 'images'],
+    ['revreplace'],
   done);
 });
 
