@@ -160,7 +160,7 @@ gulp.task('serve', ['styles'], function (done) {
 
     // refresh browser after other changes
     gulp.watch(['client/**/*.html'], reload);
-    gulp.watch(['client/styles/**/*.{scss,css}'], ['styles', /*'scsslint',*/ reload]);
+    gulp.watch(['client/styles/**/*.{scss,css}'], ['styles', reload]);
     gulp.watch(['client/images/**/*'], reload);
 
     done();
@@ -203,23 +203,16 @@ gulp.task('eslint', () => gulp.src('client/scripts/**/*.js')
   .pipe($.if(env === 'production', $.eslint.failAfterError()))
 );
 
-/**
- * Disabling Sass linting for now, until a non-Ruby way is possible.
- */
-// // lints SCSS files
-// gulp.task('scsslint', () => gulp.src('client/styles/**/*.scss')
-//   .pipe($.scssLint({bundleExec: true}))
-//   // .pipe($.if(env === 'production', $.scssLint.failReporter()))
-// );
-
-gulp.task('revision', () => {
-  return gulp.src(['dist/**/*.css', 'dist/**/*.js'])
+// renames asset files and adds a rev-manifest.json
+gulp.task('revision', () =>
+  gulp.src(['dist/**/*.css', 'dist/**/*.js'])
     .pipe($.rev())
     .pipe(gulp.dest('dist'))
     .pipe($.rev.manifest())
     .pipe(gulp.dest('dist'))
-});
+);
 
+// edits html to reflect changes in rev-manifest.json
 gulp.task('revreplace', ['revision'], () => {
   var manifest = gulp.src('./dist/rev-manifest.json');
 
@@ -231,7 +224,7 @@ gulp.task('revreplace', ['revision'], () => {
 // sets up watch-and-rebuild for JS and CSS
 gulp.task('watch', done => {
   runSequence('clean', ['scripts', 'styles'], () => {
-    gulp.watch('./client/**/*.scss', ['styles'/*, 'scsslint'*/]);
+    gulp.watch('./client/**/*.scss', ['styles']);
     gulp.watch('./client/**/*.{js,hbs}', ['scripts', 'eslint']);
     done();
   });
@@ -242,7 +235,7 @@ gulp.task('build', done => {
   env = 'production';
 
   runSequence(
-    ['clean', /*'scsslint',*/ 'eslint'],
+    ['clean', 'eslint'],
     ['scripts', 'styles', 'copy'],
     ['html', 'images'],
     ['revreplace'],
