@@ -20,7 +20,7 @@ const AUTOPREFIXER_BROWSERS = [
   'ff >= 30',
   'chrome >= 34',
   'iOS >= 7',
-  'Safari >= 7'
+  'Safari >= 7',
 ];
 
 const DEPLOY_TARGET = ''; // e.g. 'features/YOUR-PROJECT-NAME'
@@ -35,25 +35,61 @@ const BROWSERIFY_TRANSFORMS = [
 ];
 
 const OTHER_SCRIPTS = [
-  'scripts/top.js'
+  'scripts/top.js',
 ];
 
 let env = 'development';
 
+
+// helpers
+let preventNextReload; // hack to keep a BS error notification on the screen
+function reload() {
+  if (preventNextReload) {
+    preventNextReload = false;
+    return;
+  }
+
+  browserSync.reload();
+}
+
+function handleBuildError(headline, error) {
+  if (env === 'development') {
+    // show in the terminal
+    $.util.log(headline, error && error.stack);
+
+    // report it in browser sync
+    let report = (
+      `<span style="color:red;font-weight:bold;font:bold 20px sans-serif">${headline}</span>`
+    );
+
+    if (error) {
+      report += (
+        `<pre style="text-align:left;max-width:800px">${ansiToHTML.toHtml(error.stack)}</pre>`
+      );
+    }
+
+    browserSync.notify(report, 60 * 60 * 1000);
+    preventNextReload = true;
+
+    // allow the sass/js task to end successfully, so the process can continue
+    this.emit('end');
+  } else throw error;
+}
+
 // function to get an array of objects that handle browserifying
 function getBundlers(useWatchify) {
   return BROWSERIFY_ENTRIES.map(entry => {
-    var bundler = {
+    const bundler = {
       b: browserify(path.posix.resolve('client', entry), {
         cache: {},
         packageCache: {},
         fullPaths: useWatchify,
-        debug: useWatchify
+        debug: useWatchify,
       }),
 
-      execute: function () {
-        var stream = this.b.bundle()
-          .on('error', function (error) {
+      execute() {
+        let stream = this.b.bundle()
+          .on('error', error => {
             handleBuildError.call(this, 'Error building JavaScript', error);
           })
           .pipe(source(entry.replace(/\.js$/, '.bundle.js')));
@@ -62,28 +98,26 @@ function getBundlers(useWatchify) {
         if (useWatchify) {
           stream = stream
             .pipe(vinylBuffer())
-            .pipe($.sourcemaps.init({loadMaps: true}))
+            .pipe($.sourcemaps.init({ loadMaps: true }))
             .pipe($.sourcemaps.write('./'));
         }
 
         return stream.pipe(gulp.dest('.tmp'));
-      }
+      },
     };
 
     // register all the transforms
-    BROWSERIFY_TRANSFORMS.forEach(function (transform) {
-      bundler.b.transform(transform);
-    });
+    BROWSERIFY_TRANSFORMS.forEach(transform => bundler.b.transform(transform));
 
     // upgrade to watchify if we're in 'serve' mode
     if (useWatchify) {
       bundler.b = watchify(bundler.b);
-      bundler.b.on('update', function (files) {
+      bundler.b.on('update', files => {
         // re-run the bundler then reload the browser
         bundler.execute().on('end', reload);
 
         // also report any linting errors in the changed file(s)
-        gulp.src(files.filter(file => subdir(path.resolve('client'), file))) // skip bower/npm modules
+        gulp.src(files.filter(file => subdir(path.resolve('client'), file)))
           .pipe($.eslint())
           .pipe($.eslint.format());
       });
@@ -107,7 +141,7 @@ gulp.task('copy', () => gulp.src(
   OTHER_SCRIPTS.concat([
     'client/**/*',
     '!client/**/*.{html,scss,js,jpg,png,gif,svg}', // all handled by other tasks
-  ]), {dot: true})
+  ]), { dot: true })
   .pipe(gulp.dest('dist'))
 );
 
@@ -119,8 +153,8 @@ gulp.task('html', done => {
 
   gulp.src('client/**/*.html')
     .pipe(assets)
-    .pipe($.if('*.js', $.uglify({output: {inline_script: true}}))) // eslint-disable-line camelcase
-    .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
+    .pipe($.if('*.js', $.uglify({ output: { inline_script: true } })))
+    .pipe($.if('*.css', $.minifyCss({ compatibility: '*' })))
     .pipe(assets.restore())
     .pipe($.useref())
     .pipe(gulp.dest('dist'))
@@ -134,28 +168,26 @@ gulp.task('html', done => {
 });
 
 // clears out the dist and .tmp folders
-gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
+gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], { dot: true }));
 
 // // runs a development server (serving up .tmp and client)
-gulp.task('serve', ['styles'], function (done) {
-  var bundlers = getBundlers(true);
+gulp.task('serve', ['styles'], done => {
+  const bundlers = getBundlers(true);
 
   // execute all the bundlers once, up front
-  var initialBundles = mergeStream(bundlers.map(function (bundler) {
-    return bundler.execute();
-  }));
+  const initialBundles = mergeStream(bundlers.map(bundler => bundler.execute()));
   initialBundles.resume(); // (otherwise never emits 'end')
 
-  initialBundles.on('end', function () {
+  initialBundles.on('end', () => {
     // use browsersync to serve up the development app
     browserSync({
       // notify: false,
       server: {
         baseDir: ['.tmp', 'client'],
         routes: {
-          '/bower_components': 'bower_components'
-        }
-      }
+          '/bower_components': 'bower_components',
+        },
+      },
     });
 
     // refresh browser after other changes
@@ -177,21 +209,19 @@ gulp.task('serve:dist', ['build'], done => {
 });
 
 // task to do a straightforward browserify bundle (build only)
-gulp.task('scripts', function () {
-  return mergeStream(getBundlers().map(function (bundler) {
-    return bundler.execute();
-  }));
-});
+gulp.task('scripts', () =>
+  mergeStream(getBundlers().map(bundler => bundler.execute()))
+);
 
 // builds stylesheets with sass/autoprefixer
 gulp.task('styles', () => gulp.src('client/**/*.scss')
   .pipe($.sourcemaps.init())
-  .pipe($.sass({includePaths: 'bower_components'})
-    .on('error', function (error) {
+  .pipe($.sass({ includePaths: 'bower_components' })
+    .on('error', error => {
       handleBuildError.call(this, 'Error building Sass', error);
     })
   )
-  .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
+  .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
   .pipe($.sourcemaps.write('./'))
   .pipe(gulp.dest('.tmp'))
 );
@@ -213,13 +243,11 @@ gulp.task('revision', () =>
 );
 
 // edits html to reflect changes in rev-manifest.json
-gulp.task('revreplace', ['revision'], () => {
-  var manifest = gulp.src('./dist/rev-manifest.json');
-
-  return gulp.src('dist/**/*.html')
-    .pipe($.revReplace({manifest: manifest}))
-    .pipe(gulp.dest('dist'));
-});
+gulp.task('revreplace', ['revision'], () =>
+  gulp.src('dist/**/*.html')
+    .pipe($.revReplace({ manifest: gulp.src('./dist/rev-manifest.json') }))
+    .pipe(gulp.dest('dist'))
+);
 
 // sets up watch-and-rebuild for JS and CSS
 gulp.task('watch', done => {
@@ -254,35 +282,7 @@ gulp.task('deploy', done => {
     destPrefix: '/var/opt/customer/apps/interactive.ftdata.co.uk/var/www/html',
     dest: DEPLOY_TARGET,
   }, error => {
-    if (error) return done(error);
-    console.log(`Deployed to http://ig.ft.com/${DEPLOY_TARGET}/`);
+    if (error) done(error);
+    else console.log(`Deployed to http://ig.ft.com/${DEPLOY_TARGET}/`);
   });
 });
-
-// helpers
-let preventNextReload; // hack to keep a BS error notification on the screen
-function reload() {
-  if (preventNextReload) {
-    preventNextReload = false;
-    return;
-  }
-
-  browserSync.reload();
-}
-
-function handleBuildError(headline, error) {
-  if (env === 'development') {
-    // show in the terminal
-    $.util.log(headline, error && error.stack);
-
-    // report it in browser sync
-    let report = `<span style="color:red;font-weight:bold;font:bold 20px sans-serif">${headline}</span>`;
-    if (error) report += `<pre style="text-align:left;max-width:800px">${ansiToHTML.toHtml(error.stack)}</pre>`;
-    browserSync.notify(report, 60 * 60 * 1000);
-    preventNextReload = true;
-
-    // allow the sass/js task to end successfully, so the process can continue
-    this.emit('end');
-  }
-  else throw error;
-}
