@@ -1,3 +1,5 @@
+/* eslint-disable no-console, global-require */
+
 import browserify from 'browserify';
 import browserSync from 'browser-sync';
 import del from 'del';
