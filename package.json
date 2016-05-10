@@ -49,8 +49,5 @@
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp clean && gulp serve'",
     "deploy": "gulp deploy",
     "test": "eslint . && npm run build"
-  },
-  "dependencies": {
-    "gulp-useref": "^2.1.0"
   }
 }
