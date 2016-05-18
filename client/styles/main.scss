@@ -11,6 +11,12 @@ body {
   font-family: $font-sans;
 }
 
+.o-header{
+  &--light {
+    border-bottom: 1px solid #e9decf;
+  }
+}
+
 .article {
   &-head {
     margin-top: 18px;
