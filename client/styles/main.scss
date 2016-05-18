@@ -6,23 +6,48 @@ $font-display: FinancierDisplayWeb, Georgia, serif;
 
 body {
   @include oColorsFor(page, background);
-
   margin: 0;
   border: 0;
   font-family: $font-sans;
 }
 
+.article {
+  &-head {
+    margin-top: 18px;
+    margin-bottom: 18px;
+  }
 
-.site-header {
-  padding: 18px 0 14px;
-  text-align: center;
-  border-bottom: 1px solid #e9decf;
-
-  > a {
-    opacity: 0.75;
-    &:hover { opacity: 1; }
+  &-body {
+    & > :not(.graphic) {
+      max-width: 625px;
+      margin: 1em auto;
+      padding: 0 0.75em;
+    }
   }
 }
-    .masthead {
-      height: 18px;
-    }
+
+.graphic {
+
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+
+  & > img,
+  & > svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  &-b-0 {
+    max-width: 625px;
+  }
+
+  &-b-1 {
+    max-width: 700px;
+  }
+
+}

@@ -25,7 +25,8 @@
     <!-- endbuild -->
     <!-- endsmoosh -->
 
-    <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=n-normalize@^1,o-footer@^4,o-fonts@^2,o-grid@^4">
+    <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=n-normalize@^1,o-fonts@^2">
+    <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-grid@^4,o-typography@^4">
 
     <!-- smoosh -->
     <!-- build:css styles/top.css -->
@@ -40,110 +41,42 @@
     <link href="https://plus.google.com/113457471429583444041/" rel="publisher" />
     <meta property="fb:page_id" content="8860325749" />
 
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-35229645-1', 'auto');
-      ga('require','displayfeatures');
-      ga('send', 'pageview');
-    </script>
+    <include src="includes/analytics-ga.html"></include>
   </head>
   <body>
+
     <!--
       REPLACE THIS COMMENT WITH A TRACKING SNIPPET
       http://ft-interactive.github.io/tracking-snippet-generator/
     -->
 
-    <header class="site-header" role="banner">
-      <a href="http://www.ft.com/">
-        <img class="masthead" src="https://image.webservices.ft.com/v1/images/raw/fticon:brand-ft-masthead?source=ft-interactive">
-      </a>
-    </header>
+    <include src="includes/header.html"></include>
 
     <main role="main">
-      <h1>Content goes here</h1>
+      <article class="article">
+
+        <div class="article-head o-grid-container">
+          <div class="o-grid-row">
+            <header data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
+
+              <!-- REPLACE THIS with your article head html -->
+              <include src="includes/mock-article-head.html"></include>
+
+            </header>
+          </div>
+        </div>
+
+        <div class="article-body o-typography-body-wrapper">
+
+          <!-- REPLACE THIS with your article body html -->
+          <include src="includes/mock-article-content.html"></include>
+
+        </div>
+      </article>
     </main>
 
-    <footer class="footer" role="contentinfo">
-      <div class="o-footer o-footer--theme-light" data-o-component="o-footer">
-        <div class="o-footer__container">
-          <nav class="o-footer__row o-footer__nav">
-            <div class="o-footer__col o-footer__col--full-width">
-              <h3 class="o-footer__title">Sections</h3>
-              <ul class="o-footer__row o-footer__section-list">
-                <li class="o-footer__link o-footer__section-link o-footer__col"><a href="http://www.ft.com">Home</a></li>
-                <li class="o-footer__link o-footer__section-link o-footer__col"><a href="http://www.ft.com/world/uk">UK</a></li>
-                <li class="o-footer__link o-footer__section-link o-footer__col"><a href="http://www.ft.com/world">World</a></li>
-                <li class="o-footer__link o-footer__section-link o-footer__col"><a href="http://www.ft.com/companies">Companies</a></li>
-                <li class="o-footer__link o-footer__section-link o-footer__col"><a href="http://www.ft.com/markets">Markets</a></li>
-                <li class="o-footer__link o-footer__section-link o-footer__col"><a href="http://www.ft.com/global-economy">Global Economy</a></li>
-                <li class="o-footer__link o-footer__section-link o-footer__col"><a href="http://www.ft.com/lex">Lex</a></li>
-                <li class="o-footer__link o-footer__section-link o-footer__col"><a href="http://www.ft.com/comment">Comment</a></li>
-                <li class="o-footer__link o-footer__section-link o-footer__col"><a href="http://www.ft.com/management">Management</a></li>
-                <li class="o-footer__link o-footer__section-link o-footer__col"><a href="http://www.ft.com/personal-finance">Personal Finance</a></li>
-                <li class="o-footer__link o-footer__section-link o-footer__col"><a href="http://www.ft.com/life-arts">Life &amp; Arts</a></li>
-              </ul>
-              <div class="o-footer__divider"></div>
-            </div>
-          </nav>
-          <div class="o-footer__row o-footer__link-lists">
-            <nav class="o-footer__col o-footer__link-list">
-              <h3 class="o-footer__title">Tools</h3>
-              <ul>
-                  <li class="o-footer__link"><a href="http://portfolio.ft.com/">Portfolio</a></li>
-                  <li class="o-footer__link"><a href="http://lexicon.ft.com/">Lexicon</a></li>
-                  <li class="o-footer__link"><a href="http://www.ft.com/topics">Topics</a></li>
-                  <li class="o-footer__link"><a href="http://markets.ft.com/alerts/keyword.asp">Alerts Hub</a></li>
-                  <li class="o-footer__link"><a href="http://nbe.ft.com/nbe/profile.cfm?segid=70121">Daily Briefings</a></li>
-              </ul>
-            </nav>
-            <nav class="o-footer__col o-footer__link-list">
-              <h3 class="o-footer__title">Services</h3>
-              <ul>
-                  <li class="o-footer__link"><a href="http://www.ft.com/corporate">Corporate subscriptions</a></li>
-                  <li class="o-footer__link"><a href="http://www.ft.com/syndication">Syndication</a></li>
-                  <li class="o-footer__link"><a href="https://www.ft-live.com/">Conferences</a></li>
-              </ul>
-            </nav>
-            <nav class="o-footer__col o-footer__link-list">
-              <h3 class="o-footer__title">Support</h3>
-              <ul>
-                  <li class="o-footer__link"><a href="http://www.ft.com/help">Help</a></li>
-                  <li class="o-footer__link"><a href="http://www.ft.com/aboutus">About us</a></li>
-                  <li class="o-footer__link"><a href="http://aboutus.ft.com/careers/">Jobs</a></li>
-                  <li class="o-footer__link"><a href="http://aboutus.ft.com/contact-us">Contact us</a></li>
-              </ul>
-            </nav>
-            <nav class="o-footer__col o-footer__link-list">
-              <h3 class="o-footer__title">Legal &amp; Advertising</h3>
-              <ul>
-                  <li class="o-footer__link"><a href="http://www.ft.com/advertising">Advertise with the FT</a></li>
-                  <li class="o-footer__link"><a href="http://www.ft.com/servicestools/help/terms">Terms &amp; conditions</a></li>
-                  <li class="o-footer__link"><a href="http://www.ft.com/servicestools/help/privacy">Cookie &amp; privacy policy</a></li>
-                  <li class="o-footer__link"><a href="http://www.ft.com/servicestools/help/copyright">Copyright</a></li>
-              </ul>
-            </nav>
-          </div>
-          <div class="o-footer__row o-footer__copyright">
-            <div class="o-footer__col o-footer__col--full-width">
-              <span>&#xA9; THE FINANCIAL TIMES LTD 2016.</span>
-              <span><abbr title="Financial Times">FT</abbr> and &#x2018;Financial Times&#x2019; are trademarks of The Financial Times Ltd.</span>
-            </div>
-          </div>
-        </div>
-        <div class="o-footer__brand">
-          <div class="o-footer__container">
-            <div class="o-footer__row">
-              <div class="o-footer__col o-footer__col--full-width">
-                <div class="o-footer__brand-logo" aria-label="A Nikkei Company"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+
+    <include src="includes/footer.html"></include>
 
     <!-- build:js scripts/main.js -->
     <script src="scripts/main.bundle.js"></script>

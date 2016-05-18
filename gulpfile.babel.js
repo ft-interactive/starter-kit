@@ -147,13 +147,19 @@ gulp.task('copy', () => gulp.src(
   .pipe(gulp.dest('dist'))
 );
 
+gulp.task('build-pages', () => {
+  return gulp.src(['client/**/*.html', '!client/includes/**.html'])
+      .pipe($.htmlTagInclude())
+      .pipe(gulp.dest('.tmp'));
+})
+
 // minifies all HTML, CSS and JS (.tmp & client => dist)
 gulp.task('html', done => {
   const assets = $.useref.assets({
     searchPath: ['.tmp', 'client', '.'],
   });
 
-  gulp.src('client/**/*.html')
+  gulp.src('.tmp/**/*.html')
     .pipe(assets)
     .pipe($.if('*.js', $.uglify({ output: { inline_script: true } })))
     .pipe($.if('*.css', $.minifyCss({ compatibility: '*' })))
@@ -173,7 +179,7 @@ gulp.task('html', done => {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], { dot: true }));
 
 // // runs a development server (serving up .tmp and client)
-gulp.task('serve', ['styles'], done => {
+gulp.task('serve', ['styles', 'build-pages'], done => {
   const bundlers = getBundlers(true);
 
   // execute all the bundlers once, up front
@@ -193,7 +199,7 @@ gulp.task('serve', ['styles'], done => {
     });
 
     // refresh browser after other changes
-    gulp.watch(['client/**/*.html'], reload);
+    gulp.watch(['client/**/*.html'], ['build-pages', reload]);
     gulp.watch(['client/styles/**/*.{scss,css}'], ['styles', reload]);
     gulp.watch(['client/images/**/*'], reload);
 
@@ -253,7 +259,8 @@ gulp.task('revreplace', ['revision'], () =>
 
 // sets up watch-and-rebuild for JS and CSS
 gulp.task('watch', done => {
-  runSequence('clean', ['scripts', 'styles'], () => {
+  runSequence('clean', ['scripts', 'styles', 'build-pages'], () => {
+    gulp.watch('./client/**/*.html', ['build-pages']);
     gulp.watch('./client/**/*.scss', ['styles']);
     gulp.watch('./client/**/*.{js,hbs}', ['scripts', 'eslint']);
     done();
@@ -266,7 +273,7 @@ gulp.task('build', done => {
 
   runSequence(
     ['clean', 'eslint'],
-    ['scripts', 'styles', 'copy'],
+    ['scripts', 'styles', 'copy', 'build-pages'],
     ['html', 'images'],
     ['revreplace'],
   done);
