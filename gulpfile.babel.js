@@ -147,11 +147,10 @@ gulp.task('copy', () => gulp.src(
   .pipe(gulp.dest('dist'))
 );
 
-gulp.task('build-pages', () => {
-  return gulp.src(['client/**/*.html', '!client/includes/**.html'])
-      .pipe($.htmlTagInclude())
-      .pipe(gulp.dest('.tmp'));
-})
+gulp.task('build-pages', () =>
+  gulp.src(['client/**/*.html', '!client/includes/**.html'])
+      .pipe($.htmlTagInclude()).pipe(gulp.dest('.tmp'))
+);
 
 // minifies all HTML, CSS and JS (.tmp & client => dist)
 gulp.task('html', done => {
