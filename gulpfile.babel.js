@@ -189,6 +189,7 @@ gulp.task('serve', ['styles', 'build-pages'], done => {
     // use browsersync to serve up the development app
     browserSync({
       // notify: false,
+      port: process.env.PORT || '3000',
       server: {
         baseDir: ['.tmp', 'client'],
         routes: {
