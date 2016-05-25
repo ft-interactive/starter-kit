@@ -54,8 +54,8 @@
     <!-- endbuild -->
     <!-- endsmoosh -->
 
-    <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=n-normalize@^1,o-fonts@^2">
-    <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-grid@^4,o-typography@^4">
+    <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-fonts@^2.1.2,o-grid@^4.0.10">
+    <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=ig-article@^1.0.0-alpha.3">
 
     <!-- smoosh -->
     <!-- build:css styles/top.css -->
@@ -89,30 +89,43 @@
     <include src="includes/header.html"></include>
 
     <main role="main">
-      <article class="article">
+      <article>
 
-        <div class="article-head o-grid-container">
+        <div class="o-grid-container">
           <div class="o-grid-row">
-            <header data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
-              <!-- TODO: configure sharing in the include file -->
-              <include src="includes/share.html"></include>
+            <div data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
+              <header class="section-head" data-o-griddle="lb">
 
-              <!-- REPLACE THIS with your article head html -->
-              <include src="includes/mock-article-head.html"></include>
+                <!-- TODO: configure sharing in the include file -->
+                <include src="includes/share.html"></include>
 
-            </header>
+                <!-- TODO: REPLACE THIS with your article head html -->
+                <include src="_examples/article-head.html"></include>
+
+              </header>
+            </div>
           </div>
         </div>
 
-        <div class="article-body o-typography-body-wrapper">
+        <div class="section-body body">
 
-          <!-- REPLACE THIS with your article body html -->
-          <include src="includes/mock-article-content.html"></include>
+          <include src="_examples/article-content.html"></include>
 
         </div>
+
       </article>
     </main>
 
+    <script>
+    ;(function(){
+      if (!cutsTheMustard) return;
+
+      addScript('https://origami-build.ft.com/v2/bundles/js?modules=ig-article@^1.0.0-alpha.3', true, false, function(){
+        document.dispatchEvent(new CustomEvent('ig.Loaded'));
+      });
+
+    }());
+    </script>
 
     <include src="includes/footer.html"></include>
 
