@@ -25,7 +25,6 @@
     "gulp-uglify": "^1.5.3",
     "gulp-useref": "^2.1.0",
     "gulp-util": "^3.0.7",
-    "igdeploy": "^0.1.0",
     "merge-stream": "^1.0.0",
     "nodemon": "^1.9.1",
     "run-sequence": "^1.1.5",
@@ -42,7 +41,6 @@
     "build": "gulp build",
     "postinstall": "bower install",
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp clean && gulp serve'",
-    "deploy": "gulp deploy",
     "test": "npm run build"
   }
 }

@@ -4,7 +4,6 @@ import browserify from 'browserify';
 import browserSync from 'browser-sync';
 import del from 'del';
 import gulp from 'gulp';
-import igdeploy from 'igdeploy';
 import mergeStream from 'merge-stream';
 import path from 'path';
 import runSequence from 'run-sequence';
@@ -24,8 +23,6 @@ const AUTOPREFIXER_BROWSERS = [
   'iOS >= 7',
   'Safari >= 7',
 ];
-
-const DEPLOY_TARGET = ''; // e.g. 'features/YOUR-PROJECT-NAME'
 
 const BROWSERIFY_ENTRIES = [
   'scripts/main.js',
@@ -265,21 +262,4 @@ gulp.task('build', done => {
     ['html', 'images'],
     ['revreplace'],
   done);
-});
-
-// task to deploy to the interactive server
-gulp.task('deploy', done => {
-  if (!DEPLOY_TARGET) {
-    console.error('Please specify a DEPLOY_TARGET in your gulpfile!');
-    process.exit(1);
-  }
-
-  igdeploy({
-    src: 'dist',
-    destPrefix: '/var/opt/customer/apps/interactive.ftdata.co.uk/var/www/html',
-    dest: DEPLOY_TARGET,
-  }, error => {
-    if (error) done(error);
-    else console.log(`Deployed to http://ig.ft.com/${DEPLOY_TARGET}/`);
-  });
 });
