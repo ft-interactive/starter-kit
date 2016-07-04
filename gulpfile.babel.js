@@ -117,11 +117,6 @@ function getBundlers(useWatchify) {
       bundler.b.on('update', files => {
         // re-run the bundler then reload the browser
         bundler.execute().on('end', reload);
-
-        // also report any linting errors in the changed file(s)
-        gulp.src(files.filter(file => subdir(path.resolve('client'), file)))
-          .pipe($.eslint())
-          .pipe($.eslint.format());
       });
     }
 
@@ -234,13 +229,6 @@ gulp.task('styles', () => gulp.src('client/**/*.scss')
   .pipe(gulp.dest('.tmp'))
 );
 
-// lints JS files
-gulp.task('eslint', () => gulp.src('client/scripts/**/*.js')
-  .pipe($.eslint())
-  .pipe($.eslint.format())
-  .pipe($.if(env === 'production', $.eslint.failAfterError()))
-);
-
 // renames asset files and adds a rev-manifest.json
 gulp.task('revision', () =>
   gulp.src(['dist/**/*.css', 'dist/**/*.js'])
@@ -262,7 +250,7 @@ gulp.task('watch', done => {
   runSequence('clean', ['scripts', 'styles', 'build-pages'], () => {
     gulp.watch('./client/**/*.html', ['build-pages']);
     gulp.watch('./client/**/*.scss', ['styles']);
-    gulp.watch('./client/**/*.{js,hbs}', ['scripts', 'eslint']);
+    gulp.watch('./client/**/*.{js,hbs}', ['scripts']);
     done();
   });
 });
@@ -272,7 +260,7 @@ gulp.task('build', done => {
   env = 'production';
 
   runSequence(
-    ['clean', 'eslint'],
+    ['clean'],
     ['scripts', 'styles', 'copy', 'build-pages'],
     ['html', 'images'],
     ['revreplace'],

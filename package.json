@@ -3,7 +3,6 @@
     "ansi-to-html": "^0.4.1",
     "auto-plug": "^1.2.0",
     "babel-core": "^6.7.4",
-    "babel-eslint": "^6.0.2",
     "babel-preset-es2015": "^6.6.0",
     "babelify": "^7.2.0",
     "bower": "^1.7.9",
@@ -11,13 +10,8 @@
     "browserify": "^13.0.0",
     "debowerify": "^1.4.1",
     "del": "^2.2.0",
-    "eslint": "^2.7.0",
-    "eslint-config-airbnb": "^6.2.0",
-    "eslint-config-react": "^1.1.1",
-    "eslint-plugin-react": "^4.3.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
-    "gulp-eslint": "^2.0.0",
     "gulp-html-tag-include": "^1.0.1",
     "gulp-if": "^2.0.0",
     "gulp-imagemin": "^2.4.0",
@@ -49,6 +43,6 @@
     "postinstall": "bower install",
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp clean && gulp serve'",
     "deploy": "gulp deploy",
-    "test": "eslint . && npm run build"
+    "test": "npm run build"
   }
 }
