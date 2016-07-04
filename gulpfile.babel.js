@@ -121,20 +121,29 @@ function getBundlers(useWatchify) {
   });
 }
 
-// compresses images (client => dist)
-gulp.task('images', () => gulp.src('client/**/*.{jpg,png,gif,svg}')
-  .pipe($.imagemin({
-    progressive: true,
-    interlaced: true,
-  }))
-  .pipe(gulp.dest('dist'))
-);
+// IMAGE COMPRESSION:
+// OPTIONAL TASK IF YOU HAVE IMAGES IN YOUR PROJECT REPO
+//  1. install gulp-imagemin:
+//       $ npm i -D gulp-imagemin
+//  2. uncomment task below
+//  3. Find other commented out stuff related to imagemin elsewhere in this gulpfile
+//
+// gulp.task('images', () => gulp.src('client/**/*.{jpg,png,gif,svg}')
+//   .pipe($.imagemin({
+//     progressive: true,
+//     interlaced: true,
+//   }))
+//   .pipe(gulp.dest('dist'))
+// );
 
 // copies over miscellaneous files (client => dist)
 gulp.task('copy', () => gulp.src(
   OTHER_SCRIPTS.concat([
     'client/**/*',
-    '!client/**/*.{html,scss,js,jpg,png,gif,svg}', // all handled by other tasks
+
+    // REPLACE: if using imagmin
+    // '!client/**/*.{html,scss,js,jpg,png,gif,svg}',
+
   ]), { dot: true })
   .pipe(gulp.dest('dist'))
 );
@@ -193,7 +202,9 @@ gulp.task('serve', ['styles', 'build-pages'], done => {
     // refresh browser after other changes
     gulp.watch(['client/**/*.html'], ['build-pages', reload]);
     gulp.watch(['client/styles/**/*.{scss,css}'], ['styles', reload]);
-    gulp.watch(['client/images/**/*'], reload);
+
+    // UNCOMMENT IF USING IMAGEMIN
+    // gulp.watch(['client/images/**/*'], reload);
 
     done();
   });
@@ -259,7 +270,7 @@ gulp.task('build', done => {
   runSequence(
     ['clean'],
     ['scripts', 'styles', 'copy', 'build-pages'],
-    ['html', 'images'],
+    ['html' /*, 'images'*/],
     ['revreplace'],
   done);
 });
