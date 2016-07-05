@@ -172,7 +172,6 @@ gulp.task('html', done => {
     .pipe(gulp.dest('dist'))
     .on('end', () => {
       gulp.src('dist/**/*.html')
-        .pipe($.smoosher())
         .pipe($.minifyHtml())
         .pipe(gulp.dest('dist'))
         .on('end', done);
