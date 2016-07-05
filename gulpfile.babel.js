@@ -52,6 +52,7 @@ function reload() {
 
 function handleBuildError(headline, error) {
   if (env === 'development') {
+
     // show in the terminal
     $.util.log(headline, error && error.stack);
 
@@ -87,24 +88,24 @@ function getBundlers(useWatchify) {
 
       execute() {
         let stream = this.b.bundle()
-          .on('error', error => {
+          .on('error', function(error) {
             handleBuildError.call(this, 'Error building JavaScript', error);
           })
-          .pipe(source(entry.replace(/\.js$/, '.bundle.js')));
+          .pipe(source(entry));
 
-        // skip sourcemap creation if we're in 'serve' mode
-        if (useWatchify) {
-          stream = stream
-            .pipe(vinylBuffer())
+        // If you want JS sourcemaps:
+        //    1. npm i -D gulp-sourcemaps
+        //    2. uncomment code below
+        //
+        //// skip sourcemap creation if we're in 'serve' mode
+        // if (useWatchify) {
+        //   stream = stream
+        //    .pipe(vinylBuffer())
+        //    .pipe($.sourcemaps.init({ loadMaps: true }))
+        //    .pipe($.sourcemaps.write('./'));
+        // }
 
-            // If you want JS sourcemaps:
-            //    1. npm i -D gulp-sourcemaps
-            //    2. uncomment code below
-            // .pipe($.sourcemaps.init({ loadMaps: true }))
-            // .pipe($.sourcemaps.write('./'));
-        }
-
-        return stream.pipe(gulp.dest('.tmp'));
+        return stream.pipe(gulp.dest('dist'));
       },
     };
 
@@ -131,7 +132,7 @@ function getBundlers(useWatchify) {
 //  2. uncomment task below
 //  3. Find other commented out stuff related to imagemin elsewhere in this gulpfile
 //
-// gulp.task('images', () => gulp.src('client/**/*.{jpg,png,gif,svg}')
+// gulp.task('images', () => gulp.src('dist/**/*.{jpg,png,gif,svg}')
 //   .pipe($.imagemin({
 //     progressive: true,
 //     interlaced: true,
@@ -139,50 +140,40 @@ function getBundlers(useWatchify) {
 //   .pipe(gulp.dest('dist'))
 // );
 
+const copyGlob = OTHER_SCRIPTS.concat([
+  'client/**/*',
+  '!client/**/*.{html,scss}',
+
+  // REPLACE: if using imagmin
+  // '!client/**/*.{jpg,png,gif,svg}',
+
+]);
+
+
 // copies over miscellaneous files (client => dist)
-gulp.task('copy', () => gulp.src(
-  OTHER_SCRIPTS.concat([
-    'client/**/*',
-    '!client/**/*.{html,scss,js}',
-
-    // REPLACE: if using imagmin
-    // '!client/**/*.{jpg,png,gif,svg}',
-
-  ]), { dot: true })
-  .pipe(gulp.dest('dist'))
+gulp.task('copy', () =>
+  gulp.src(copyGlob, { dot: true })
+    .pipe(gulp.dest('dist'))
 );
 
 gulp.task('build-pages', () =>
   gulp.src(['client/**/*.html', '!client/includes/**.html'])
-      .pipe($.htmlTagInclude()).pipe(gulp.dest('.tmp'))
+    .pipe($.htmlTagInclude())
+    .pipe(gulp.dest('dist'))
 );
 
-// minifies all HTML, CSS and JS (.tmp & client => dist)
-gulp.task('html', done => {
-  const assets = $.useref.assets({
-    searchPath: ['.tmp', 'client', '.'],
-  });
-
-  gulp.src('.tmp/**/*.html')
-    .pipe(assets)
-    .pipe($.if('*.js', $.uglify({ output: { inline_script: true } })))
-    .pipe($.if('*.css', $.minifyCss({ compatibility: '*' })))
-    .pipe(assets.restore())
-    .pipe($.useref())
+// minifies all HTML, CSS and JS (dist & client => dist)
+gulp.task('html', () =>
+  gulp.src('dist/**/*.html')
+    .pipe($.minifyHtml())
     .pipe(gulp.dest('dist'))
-    .on('end', () => {
-      gulp.src('dist/**/*.html')
-        .pipe($.minifyHtml())
-        .pipe(gulp.dest('dist'))
-        .on('end', done);
-    });
-});
+);
 
-// clears out the dist and .tmp folders
-gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], { dot: true }));
+// clears out the dist and dist folders
+gulp.task('clean', del.bind(null, ['dist', 'dist/*', '!dist/.git'], { dot: true }));
 
-// // runs a development server (serving up .tmp and client)
-gulp.task('serve', ['styles', 'build-pages'], done => {
+// // runs a development server (serving up dist and client)
+gulp.task('serve', ['styles', 'build-pages', 'copy'], done => {
   const bundlers = getBundlers(true);
 
   // execute all the bundlers once, up front
@@ -192,22 +183,20 @@ gulp.task('serve', ['styles', 'build-pages'], done => {
   initialBundles.on('end', () => {
     // use browsersync to serve up the development app
     browserSync({
-      notify: false,
+      notify: true,
       open: process.argv.includes('--open'),
       ui: process.argv.includes('--bsui'),
       ghostMode: process.argv.includes('--ghost'),
       port: process.env.PORT || '3000',
       server: {
-        baseDir: ['.tmp', 'client'],
-        routes: {
-          '/bower_components': 'bower_components',
-        },
+        baseDir: 'dist'
       },
     });
 
     // refresh browser after other changes
     gulp.watch(['client/**/*.html'], ['build-pages', reload]);
-    gulp.watch(['client/styles/**/*.{scss,css}'], ['styles', reload]);
+    gulp.watch(['client/styles/**/*.scss'], ['styles', reload]);
+    gulp.watch(copyGlob, ['copy', reload]);
 
     // UNCOMMENT IF USING IMAGEMIN
     // gulp.watch(['client/images/**/*'], reload);
@@ -216,31 +205,23 @@ gulp.task('serve', ['styles', 'build-pages'], done => {
   });
 });
 
-// builds and serves up the 'dist' directory
-gulp.task('serve:dist', ['build'], done => {
-  require('browser-sync').create().init({
-    open: false,
-    notify: false,
-    server: 'dist',
-  }, done);
-});
-
 // task to do a straightforward browserify bundle (build only)
 gulp.task('scripts', () =>
   mergeStream(getBundlers().map(bundler => bundler.execute()))
 );
 
 // builds stylesheets with sass/autoprefixer
-gulp.task('styles', () => gulp.src('client/**/*.scss')
-  .pipe($.sass({
-      includePaths: 'bower_components',
-      outputStyle: env === 'production' ? 'compressed' : 'expanded'
-    }).on('error', error => {
-      handleBuildError.call(this, 'Error building Sass', error);
-    })
-  )
-  .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
-  .pipe(gulp.dest('.tmp'))
+gulp.task('styles', () =>
+  gulp.src('client/**/*.scss')
+    .pipe($.sass({
+        includePaths: 'bower_components',
+        outputStyle: env === 'production' ? 'compressed' : 'expanded'
+      }).on('error', function(error) {
+          handleBuildError.call(this, 'Error building Sass', error);
+      })
+    )
+    .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
+    .pipe(gulp.dest('dist'))
 );
 
 // renames asset files and adds a rev-manifest.json
@@ -259,24 +240,12 @@ gulp.task('revreplace', ['revision'], () =>
     .pipe(gulp.dest('dist'))
 );
 
-// FIXME: this doesn't seem to do anything. Remove?
-// sets up watch-and-rebuild for JS and CSS
-// gulp.task('watch', done => {
-//   runSequence('clean', ['scripts', 'styles', 'build-pages'], () => {
-//     gulp.watch('./client/**/*.html', ['build-pages']);
-//     gulp.watch('./client/**/*.scss', ['styles']);
-//     gulp.watch('./client/**/*.{js,hbs}', ['scripts']);
-//     done();
-//   });
-// });
-
 // makes a production build (client => dist)
 gulp.task('build', done => {
   env = 'production';
-
   runSequence(
     ['clean'],
-    ['scripts', 'styles', 'copy', 'build-pages'],
+    ['scripts', 'styles', 'build-pages', 'copy'],
     ['html' /*, 'images'*/],
     ['revreplace'],
   done);
