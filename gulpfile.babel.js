@@ -233,8 +233,10 @@ gulp.task('scripts', () =>
 
 // builds stylesheets with sass/autoprefixer
 gulp.task('styles', () => gulp.src('client/**/*.scss')
-  .pipe($.sass({ includePaths: 'bower_components' })
-    .on('error', error => {
+  .pipe($.sass({
+      includePaths: 'bower_components',
+      outputStyle: env === 'production' ? 'compressed' : 'expanded'
+    }).on('error', error => {
       handleBuildError.call(this, 'Error building Sass', error);
     })
   )
