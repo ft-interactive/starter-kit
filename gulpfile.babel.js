@@ -7,8 +7,6 @@ import mergeStream from 'merge-stream';
 import path from 'path';
 import runSequence from 'run-sequence';
 import source from 'vinyl-source-stream';
-import subdir from 'subdir';
-import vinylBuffer from 'vinyl-buffer';
 import watchify from 'watchify';
 import AnsiToHTML from 'ansi-to-html';
 
