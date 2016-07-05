@@ -1,5 +1,4 @@
 /* eslint-disable no-console, global-require */
-
 import browserify from 'browserify';
 import browserSync from 'browser-sync';
 import del from 'del';
@@ -190,7 +189,10 @@ gulp.task('serve', ['styles', 'build-pages'], done => {
   initialBundles.on('end', () => {
     // use browsersync to serve up the development app
     browserSync({
-      // notify: false,
+      notify: false,
+      open: process.argv.includes('--open'),
+      ui: process.argv.includes('--bsui'),
+      ghostMode: process.argv.includes('--ghost'),
       port: process.env.PORT || '3000',
       server: {
         baseDir: ['.tmp', 'client'],
