@@ -253,15 +253,16 @@ gulp.task('revreplace', ['revision'], () =>
     .pipe(gulp.dest('dist'))
 );
 
+// FIXME: this doesn't seem to do anything. Remove?
 // sets up watch-and-rebuild for JS and CSS
-gulp.task('watch', done => {
-  runSequence('clean', ['scripts', 'styles', 'build-pages'], () => {
-    gulp.watch('./client/**/*.html', ['build-pages']);
-    gulp.watch('./client/**/*.scss', ['styles']);
-    gulp.watch('./client/**/*.{js,hbs}', ['scripts']);
-    done();
-  });
-});
+// gulp.task('watch', done => {
+//   runSequence('clean', ['scripts', 'styles', 'build-pages'], () => {
+//     gulp.watch('./client/**/*.html', ['build-pages']);
+//     gulp.watch('./client/**/*.scss', ['styles']);
+//     gulp.watch('./client/**/*.{js,hbs}', ['scripts']);
+//     done();
+//   });
+// });
 
 // makes a production build (client => dist)
 gulp.task('build', done => {
