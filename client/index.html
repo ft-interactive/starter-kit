@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en-GB" class="core">
   <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,7 +41,7 @@
 
 
     <!--
-    TODO optional author info
+      TODO: optional author info
     <meta name="twitter:creator" content="@individual_account">
     <meta property="article:author" content="">
     -->
@@ -63,53 +62,58 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 
-    <link href="https://plus.google.com/113457471429583444041/" rel="publisher" />
-    <meta property="fb:page_id" content="8860325749" />
-    <link rel="shortcut icon" href="https://ig.ft.com/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="https://ig.ft.com/apple-touch-icon.png">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="robots" content="index,follow">
-    <meta name="copyright" content="Financial Times">
-    <meta name="theme-color" content="#fff1e0" />
 
+    <include src="includes/misc-metadata.html"></include>
     <include src="includes/analytics-ga.html"></include>
-
   </head>
   <body>
 
+
     <!--
-      REPLACE THIS COMMENT WITH A TRACKING SNIPPET
+      TODO: REPLACE THIS COMMENT WITH A TRACKING SNIPPET
       http://ft-interactive.github.io/tracking-snippet-generator/
     -->
 
-    <include src="includes/header.html"></include>
 
+    <include src="includes/header.html"></include>
     <main role="main">
       <article class="article">
-
         <div class="article-head o-grid-container">
           <div class="o-grid-row">
             <header data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
-              <!-- TODO: configure sharing in the include file -->
+
+
+
+              <!-- TODO:
+                    configure sharing options in the include file
+              -->
               <include src="includes/share.html"></include>
 
-              <!-- REPLACE THIS with your article head html -->
+
+
+              <!-- TODO:
+                      replace with your article head html
+              -->
               <include src="includes/mock-article-head.html"></include>
+
 
             </header>
           </div>
         </div>
-
         <div class="article-body o-typography-body-wrapper">
 
-          <!-- REPLACE THIS with your article body html -->
+
+
+          <!-- TODO:
+                replace with your article body html
+          -->
           <include src="includes/mock-article-content.html"></include>
+
+
 
         </div>
       </article>
     </main>
-
-
     <include src="includes/footer.html"></include>
 
     <!-- build:js scripts/main.js -->
