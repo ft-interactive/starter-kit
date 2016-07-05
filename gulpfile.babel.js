@@ -163,6 +163,7 @@ gulp.task('build-pages', () =>
 // minifies all HTML, CSS and JS (dist & client => dist)
 gulp.task('html', () =>
   gulp.src('dist/**/*.html')
+    .pipe($.inlineSource())
     .pipe($.minifyHtml())
     .pipe(gulp.dest('dist'))
 );
@@ -171,7 +172,7 @@ gulp.task('html', () =>
 gulp.task('clean', del.bind(null, ['dist', 'dist/*', '!dist/.git'], { dot: true }));
 
 // // runs a development server (serving up dist and client)
-gulp.task('serve', ['styles', 'build-pages', 'copy'], done => {
+gulp.task('watch', ['styles', 'build-pages', 'copy'], done => {
   const bundlers = getBundlers(true);
 
   // execute all the bundlers once, up front

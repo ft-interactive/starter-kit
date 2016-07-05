@@ -14,6 +14,7 @@
     "gulp-autoprefixer": "^3.1.0",
     "gulp-html-tag-include": "^1.0.1",
     "gulp-if": "^2.0.1",
+    "gulp-inline-source": "^2.1.0",
     "gulp-minify-html": "^1.0.6",
     "gulp-rev": "^7.1.0",
     "gulp-rev-replace": "^0.4.3",
@@ -32,7 +33,7 @@
   "scripts": {
     "build": "gulp build",
     "postinstall": "bower install",
-    "start": "nodemon --watch gulpfile.babel.js --exec 'gulp clean && gulp serve'",
+    "start": "nodemon --watch gulpfile.babel.js --exec 'gulp clean && gulp watch'",
     "test": "npm run build"
   }
 }

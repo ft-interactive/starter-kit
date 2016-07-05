@@ -1,13 +1,11 @@
 /* eslint-disable */
 
-// global addScript function
-function addScript(src, async, defer, cb) {
-  if ((!async && !defer) || (typeof async === 'function' && !defer)) {
-    document.write('<script src="' + src + '">\x3c/script>');
-    if (typeof cb === 'function') {
-      cb();
-    }
-  } else {
+// product-specific cuts-the-mustard test (customise for your needs)
+window.cutsTheMustard = (typeof Function.prototype.bind !== 'undefined');
+
+;(function(){
+
+function add_script(src, async, defer, cb) {
     var script = document.createElement('script');
     script.src = src;
     script.async = !!async;
@@ -30,26 +28,68 @@ function addScript(src, async, defer, cb) {
     }
     oldScript.parentNode.appendChild(script);
     return script;
+}
+
+function exec(script) {
+  if (!window.cutsTheMustard) return;
+  var s = typeof script;
+  if (s === 'string') {
+    add_script.apply(window, arguments);
+  } else if (s === 'function') {
+    script();
+  } else if (script) {
+    try{
+      var args = Array.prototype.slice.call(arguments, 1);
+      for (var i = 0; i < script.length; i++) {
+        exec.apply(window, [script[i]].concat(args));
+      }
+    } catch(e){}
   }
 }
 
-// product-specific cuts-the-mustard test (customise for your needs)
-var cutsTheMustard = (
-  'querySelector' in document &&
-  'localStorage' in window &&
-  'addEventListener' in window
-);
+var queued_scripts = [];
 
-// set the root element to .core or .enhanced as appropriate
-if (cutsTheMustard) {
-  document.documentElement.className = (
-    document.documentElement.className.replace(/\bcore\b/g, 'enhanced')
-  );
+function queue(src, cb, low_priority) {
+  var args = [src, true, !!low_priority, cb];
+
+  if (!queued_scripts) {
+    exec.apply(window, args);
+    return;
+  }
+
+  queued_scripts.push(args);
 }
 
-// add a polyfill.io script.
-// see polyfill.io for how to add non-default polyfills to this.
-// Note: you may also want to add this conditionally - a basic one for non-CTM
-// browsers (just to get basics like the HTML5 Shiv), and a special one (with
-// things like Promise) for CTM browsers.
-addScript('https://cdn.polyfill.io/v2/polyfill.min.js');
+function clear_queue() {
+  var arr = queued_scripts.slice(0);
+  queued_scripts = null;
+  for (var i = 0; i < arr.length; i++) {
+    exec.apply(window, arr[i]);
+  }
+}
+
+window.queue = queue;
+window.clear_queue = clear_queue;
+window.exec = exec;
+
+exec(function(){
+  document.documentElement.className = document.documentElement.className.replace(/\bcore\b/g, 'enhanced');
+});
+
+// Load the polyfill service with custom features. Exclude big unneeded polyfills.
+// and use ?callback= to clear the queue of scripts to load
+var polyfill_features = [
+  'default',
+  'requestAnimationFrame',
+  'Promise',
+  'matchMedia',
+  'HTMLPictureElement'
+];
+
+var polfill_url = 'https://cdn.polyfill.io/v2/polyfill.min.js?callback=clear_queue&features='
+                    + polyfill_features.join(',')
+                    + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set';
+
+exec(polfill_url, true, true)
+
+}());
