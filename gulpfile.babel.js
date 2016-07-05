@@ -140,9 +140,10 @@ function getBundlers(useWatchify) {
 gulp.task('copy', () => gulp.src(
   OTHER_SCRIPTS.concat([
     'client/**/*',
+    '!client/**/*.{html,scss,js}',
 
     // REPLACE: if using imagmin
-    // '!client/**/*.{html,scss,js,jpg,png,gif,svg}',
+    // '!client/**/*.{jpg,png,gif,svg}',
 
   ]), { dot: true })
   .pipe(gulp.dest('dist'))
