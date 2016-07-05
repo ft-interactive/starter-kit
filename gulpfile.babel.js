@@ -96,8 +96,12 @@ function getBundlers(useWatchify) {
         if (useWatchify) {
           stream = stream
             .pipe(vinylBuffer())
-            .pipe($.sourcemaps.init({ loadMaps: true }))
-            .pipe($.sourcemaps.write('./'));
+
+            // If you want JS sourcemaps:
+            //    1. npm i -D gulp-sourcemaps
+            //    2. uncomment code below
+            // .pipe($.sourcemaps.init({ loadMaps: true }))
+            // .pipe($.sourcemaps.write('./'));
         }
 
         return stream.pipe(gulp.dest('.tmp'));
@@ -229,14 +233,12 @@ gulp.task('scripts', () =>
 
 // builds stylesheets with sass/autoprefixer
 gulp.task('styles', () => gulp.src('client/**/*.scss')
-  .pipe($.sourcemaps.init())
   .pipe($.sass({ includePaths: 'bower_components' })
     .on('error', error => {
       handleBuildError.call(this, 'Error building Sass', error);
     })
   )
   .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
-  .pipe($.sourcemaps.write('./'))
   .pipe(gulp.dest('.tmp'))
 );
 
