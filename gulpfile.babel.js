@@ -1,10 +1,8 @@
 /* eslint-disable no-console, global-require */
-
 import browserify from 'browserify';
 import browserSync from 'browser-sync';
 import del from 'del';
 import gulp from 'gulp';
-import igdeploy from 'igdeploy';
 import mergeStream from 'merge-stream';
 import path from 'path';
 import runSequence from 'run-sequence';
@@ -24,8 +22,6 @@ const AUTOPREFIXER_BROWSERS = [
   'iOS >= 7',
   'Safari >= 7',
 ];
-
-const DEPLOY_TARGET = ''; // e.g. 'features/YOUR-PROJECT-NAME'
 
 const BROWSERIFY_ENTRIES = [
   'scripts/main.js',
@@ -100,8 +96,12 @@ function getBundlers(useWatchify) {
         if (useWatchify) {
           stream = stream
             .pipe(vinylBuffer())
-            .pipe($.sourcemaps.init({ loadMaps: true }))
-            .pipe($.sourcemaps.write('./'));
+
+            // If you want JS sourcemaps:
+            //    1. npm i -D gulp-sourcemaps
+            //    2. uncomment code below
+            // .pipe($.sourcemaps.init({ loadMaps: true }))
+            // .pipe($.sourcemaps.write('./'));
         }
 
         return stream.pipe(gulp.dest('.tmp'));
@@ -117,11 +117,6 @@ function getBundlers(useWatchify) {
       bundler.b.on('update', files => {
         // re-run the bundler then reload the browser
         bundler.execute().on('end', reload);
-
-        // also report any linting errors in the changed file(s)
-        gulp.src(files.filter(file => subdir(path.resolve('client'), file)))
-          .pipe($.eslint())
-          .pipe($.eslint.format());
       });
     }
 
@@ -129,20 +124,30 @@ function getBundlers(useWatchify) {
   });
 }
 
-// compresses images (client => dist)
-gulp.task('images', () => gulp.src('client/**/*.{jpg,png,gif,svg}')
-  .pipe($.imagemin({
-    progressive: true,
-    interlaced: true,
-  }))
-  .pipe(gulp.dest('dist'))
-);
+// IMAGE COMPRESSION:
+// OPTIONAL TASK IF YOU HAVE IMAGES IN YOUR PROJECT REPO
+//  1. install gulp-imagemin:
+//       $ npm i -D gulp-imagemin
+//  2. uncomment task below
+//  3. Find other commented out stuff related to imagemin elsewhere in this gulpfile
+//
+// gulp.task('images', () => gulp.src('client/**/*.{jpg,png,gif,svg}')
+//   .pipe($.imagemin({
+//     progressive: true,
+//     interlaced: true,
+//   }))
+//   .pipe(gulp.dest('dist'))
+// );
 
 // copies over miscellaneous files (client => dist)
 gulp.task('copy', () => gulp.src(
   OTHER_SCRIPTS.concat([
     'client/**/*',
-    '!client/**/*.{html,scss,js,jpg,png,gif,svg}', // all handled by other tasks
+    '!client/**/*.{html,scss,js}',
+
+    // REPLACE: if using imagmin
+    // '!client/**/*.{jpg,png,gif,svg}',
+
   ]), { dot: true })
   .pipe(gulp.dest('dist'))
 );
@@ -167,7 +172,6 @@ gulp.task('html', done => {
     .pipe(gulp.dest('dist'))
     .on('end', () => {
       gulp.src('dist/**/*.html')
-        .pipe($.smoosher())
         .pipe($.minifyHtml())
         .pipe(gulp.dest('dist'))
         .on('end', done);
@@ -188,7 +192,10 @@ gulp.task('serve', ['styles', 'build-pages'], done => {
   initialBundles.on('end', () => {
     // use browsersync to serve up the development app
     browserSync({
-      // notify: false,
+      notify: false,
+      open: process.argv.includes('--open'),
+      ui: process.argv.includes('--bsui'),
+      ghostMode: process.argv.includes('--ghost'),
       port: process.env.PORT || '3000',
       server: {
         baseDir: ['.tmp', 'client'],
@@ -201,7 +208,9 @@ gulp.task('serve', ['styles', 'build-pages'], done => {
     // refresh browser after other changes
     gulp.watch(['client/**/*.html'], ['build-pages', reload]);
     gulp.watch(['client/styles/**/*.{scss,css}'], ['styles', reload]);
-    gulp.watch(['client/images/**/*'], reload);
+
+    // UNCOMMENT IF USING IMAGEMIN
+    // gulp.watch(['client/images/**/*'], reload);
 
     done();
   });
@@ -223,22 +232,15 @@ gulp.task('scripts', () =>
 
 // builds stylesheets with sass/autoprefixer
 gulp.task('styles', () => gulp.src('client/**/*.scss')
-  .pipe($.sourcemaps.init())
-  .pipe($.sass({ includePaths: 'bower_components' })
-    .on('error', error => {
+  .pipe($.sass({
+      includePaths: 'bower_components',
+      outputStyle: env === 'production' ? 'compressed' : 'expanded'
+    }).on('error', error => {
       handleBuildError.call(this, 'Error building Sass', error);
     })
   )
   .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
-  .pipe($.sourcemaps.write('./'))
   .pipe(gulp.dest('.tmp'))
-);
-
-// lints JS files
-gulp.task('eslint', () => gulp.src('client/scripts/**/*.js')
-  .pipe($.eslint())
-  .pipe($.eslint.format())
-  .pipe($.if(env === 'production', $.eslint.failAfterError()))
 );
 
 // renames asset files and adds a rev-manifest.json
@@ -257,41 +259,25 @@ gulp.task('revreplace', ['revision'], () =>
     .pipe(gulp.dest('dist'))
 );
 
+// FIXME: this doesn't seem to do anything. Remove?
 // sets up watch-and-rebuild for JS and CSS
-gulp.task('watch', done => {
-  runSequence('clean', ['scripts', 'styles', 'build-pages'], () => {
-    gulp.watch('./client/**/*.html', ['build-pages']);
-    gulp.watch('./client/**/*.scss', ['styles']);
-    gulp.watch('./client/**/*.{js,hbs}', ['scripts', 'eslint']);
-    done();
-  });
-});
+// gulp.task('watch', done => {
+//   runSequence('clean', ['scripts', 'styles', 'build-pages'], () => {
+//     gulp.watch('./client/**/*.html', ['build-pages']);
+//     gulp.watch('./client/**/*.scss', ['styles']);
+//     gulp.watch('./client/**/*.{js,hbs}', ['scripts']);
+//     done();
+//   });
+// });
 
 // makes a production build (client => dist)
 gulp.task('build', done => {
   env = 'production';
 
   runSequence(
-    ['clean', 'eslint'],
+    ['clean'],
     ['scripts', 'styles', 'copy', 'build-pages'],
-    ['html', 'images'],
+    ['html' /*, 'images'*/],
     ['revreplace'],
   done);
-});
-
-// task to deploy to the interactive server
-gulp.task('deploy', done => {
-  if (!DEPLOY_TARGET) {
-    console.error('Please specify a DEPLOY_TARGET in your gulpfile!');
-    process.exit(1);
-  }
-
-  igdeploy({
-    src: 'dist',
-    destPrefix: '/var/opt/customer/apps/interactive.ftdata.co.uk/var/www/html',
-    dest: DEPLOY_TARGET,
-  }, error => {
-    if (error) done(error);
-    else console.log(`Deployed to http://ig.ft.com/${DEPLOY_TARGET}/`);
-  });
 });

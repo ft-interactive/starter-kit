@@ -1,12 +1,12 @@
 # Starter Kit
 
-> Boilerplate to kick-start a new FT Interactive project
+> Boilerplate to kick-start a new project
 
 [![Build Status][circle-image]][circle-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
 ## Usage
 
-**Download**
+**1. Download**
 
 Don't clone this repo. If you have [startfrom](https://github.com/callumlocke/startfrom) installed...
 
@@ -14,41 +14,36 @@ Don't clone this repo. If you have [startfrom](https://github.com/callumlocke/st
 > startfrom ft-interactive/starter-kit
 ```
 
-**Development**
-
-Run a dev server, build code and refresh when code changes:
+**2. Development**
 
 ```
 $ npm start
 ```
 
-**Publish**
+A dev server that watches for changes.
 
-Build the code ready to be deployed: 
+
+**3. Publish**
 
 ```
 $ npm run build
 ```
 
-Builds into a `dist` folder.
+Builds the code into a `dist` folder ready to be deployed.
 
 **Full instructions**
 
 * [In-depth instructions](https://ft-interactive.github.io/guides/starter-kit/) on our Developer Guide
-* The are also [Recipes](docs/recipes/README.md) for how to code things up
 
 
 ## Includes
 
-- Origami components, some via the [bower registry](http://registry.origami.ft.com/components) others via the [build service](https://build.origami.ft.com/).
+- [Babel](https://babeljs.io/docs/learn-es2015/)
+- [Sass](https://github.com/sass/node-sass)
+- [Browsersync](https://www.browsersync.io/docs)
+- [Origami modules](http://registry.origami.ft.com/components)  
+  –– using [build service](https://build.origami.ft.com/) _and_ [bower components](http://origami.ft.com/docs/developer-guide/modules/choosing-your-build-method/)
 - [Browserify](http://browserify.org/)
-- [node-sass](https://github.com/sass/node-sass)
-- Linting: [ESLint](http://eslint.org/) | ~~[SCSS-Lint](https://github.com/causes/scss-lint)~~*
-
-
-* SCSS-lint has been removed until we can find a non-Ruby version.
-You can still use it manually: `gem install scss-lint` then `scss-lint client/**/*.scss`
-
 
 ## Licence
 This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
