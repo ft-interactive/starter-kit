@@ -5,9 +5,8 @@
 
 [![Build Status][circle-image]][circle-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
-## Usage
+## Download
 
-**1. Download**
 
 Paste this snippet into your terminal and follow the instructions:
 
@@ -17,7 +16,9 @@ read -p "Local directory for the project (use lowercase with dashes) : " dir; gi
 
 Note: this will attempt create a Github repo so you need an [access token](https://github.com/settings/tokens) if you want this bit of the script to work.
 
-**2. Development**
+## Tasks
+
+**Development**
 
 ```
 $ npm start
@@ -26,18 +27,13 @@ $ npm start
 A dev server that watches for changes.
 
 
-**3. Publish**
+**Publish**
 
 ```
 $ npm run build
 ```
 
 Builds the code into a `dist` folder ready to be deployed.
-
-**Full instructions**
-
-* [In-depth instructions](https://ft-interactive.github.io/guides/starter-kit/) on our Developer Guide
-
 
 ## Includes
 
