@@ -2,16 +2,20 @@
 
 > Boilerplate to kick-start a new project
 
+
 [![Build Status][circle-image]][circle-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
 ## Usage
 
 **1. Download**
 
-Don't clone this repo. If you have [startfrom](https://github.com/callumlocke/startfrom) installed...
+Paste this snippet into your terminal and follow the instructions:
 
 ```shell
-> startfrom ft-interactive/starter-kit
+read -p "Folder name (use lowercase with dashes) : " dir; git clone -b master --single-branch ssh://git@github.com/ft-interactive/starter-kit.git $dir \
+&& cd $dir \
+&& ./configure \
+&& npm start -- --open
 ```
 
 **2. Development**

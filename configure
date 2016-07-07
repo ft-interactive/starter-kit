@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+echo ""
+echo "STARTER KIT"
+echo "==========="
+echo ""
+echo "Configuratoring code for your new project..."
+echo ""
+
+dir=$(echo ${PWD##*/} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
+
+if [ $dir == "sk" ]
+then
+  echo "DANGER: the directory name is \"$dir\""
+  read -e -n 1 -p "Are you sure you want to continue? [y/N] : " -r
+  if [[ ! $REPLY =~ ^[Yy]$ ]]
+  then
+    echo "Exiting"
+    exit;
+  fi
+fi
+
+read -p "Repo name (press enter to use default \"$dir\") : " name
+read -p "Description of the project to display on Github : " description
+
+repo=$(echo ${name:-$dir} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
+
+defaulturl="https://ig.ft.com/sites/${repo}"
+
+read -p "Live URL (press enter for default \"${defaulturl}\") : " url
+read -p "If you have a Link File UUID enter if here: " uuid
+url=${url:-$defaulturl}
+
+if [[ ! $url =~ ^https?\:\/\/ ]]
+then
+  url="https://ig.ft.com/sites/${url}"
+fi
+echo "Setting URL to $url"
+
+template_str=$(cat readme.md.template)
+
+if [ -n "$uuid" ]
+then
+  echo "Adding $uuid to ./uuid file"
+  echo $uuid > uuid
+fi
+
+echo "Trash git history for starter-kit"
+rm -rf .git
+echo "Delete $(rm -rfv configure readme.md.template)"
+
+echo "Directory: $dir"
+echo "Repo name: $repo"
+eval "echo \"${template_str}\"" > README.md
+
+git init
+git add .
+git commit -m 'Initial commit: uses starter kit'
+
+echo "Installing dependencies..."
+
+npm i
+
+echo "Creating repo on Github"
+
+curl -v -u : -n https://api.github.com/orgs/ft-interactive/repos \
+-d "{\"name\": \"${repo}\", \"homepage\":\"${url}\",\"description\": \"${description}\", \"private\":true, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}"
+
+git remote add origin ssh://git@github.com/ft-interactive/$repo.git
+
+echo "Push to Github"
+git push origin master
+
+echo "Done!"
+echo ""
