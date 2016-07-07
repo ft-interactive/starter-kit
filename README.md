@@ -12,11 +12,10 @@
 Paste this snippet into your terminal and follow the instructions:
 
 ```shell
-read -p "Folder name (use lowercase with dashes) : " dir; git clone -b master --single-branch ssh://git@github.com/ft-interactive/starter-kit.git $dir \
-&& cd $dir \
-&& ./configure \
-&& npm start -- --open
+read -p "Local directory for the project (use lowercase with dashes) : " dir; git clone -b master --single-branch ssh://git@github.com/ft-interactive/starter-kit.git $dir && cd $dir && ./configure && npm start -- --open
 ```
+
+Note: this will attempt create a Github repo so you need an [access token](https://github.com/settings/tokens) if you want this bit of the script to work.
 
 **2. Development**
 

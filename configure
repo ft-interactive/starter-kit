@@ -20,7 +20,7 @@ then
   fi
 fi
 
-read -p "Repo name (press enter to use default \"$dir\") : " name
+read -p "New github repo name (press enter to use default \"$dir\") : " name
 read -p "Description of the project to display on Github : " description
 
 repo=$(echo ${name:-$dir} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
@@ -28,7 +28,7 @@ repo=$(echo ${name:-$dir} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z
 defaulturl="https://ig.ft.com/sites/${repo}"
 
 read -p "Live URL (press enter for default \"${defaulturl}\") : " url
-read -p "If you have a Link File UUID enter if here: " uuid
+read -p "If you have a Link File UUID paste if here: " uuid
 url=${url:-$defaulturl}
 
 if [[ ! $url =~ ^https?\:\/\/ ]]
