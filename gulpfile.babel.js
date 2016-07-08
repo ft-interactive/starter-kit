@@ -13,6 +13,8 @@ import subdir from 'subdir';
 import vinylBuffer from 'vinyl-buffer';
 import watchify from 'watchify';
 import AnsiToHTML from 'ansi-to-html';
+import nightwatch from 'nightwatch';
+import selenium from 'selenium-standalone';
 
 const $ = require('auto-plug')('gulp');
 const ansiToHTML = new AnsiToHTML();
@@ -209,7 +211,7 @@ gulp.task('serve', ['styles', 'build-pages'], done => {
 
 // builds and serves up the 'dist' directory
 gulp.task('serve:dist', ['build'], done => {
-  require('browser-sync').create().init({
+  browserSync.create().init({
     open: false,
     notify: false,
     server: 'dist',
@@ -236,6 +238,13 @@ gulp.task('styles', () => gulp.src('client/**/*.scss')
 
 // lints JS files
 gulp.task('eslint', () => gulp.src('client/scripts/**/*.js')
+  .pipe($.eslint())
+  .pipe($.eslint.format())
+  .pipe($.if(env === 'production', $.eslint.failAfterError()))
+);
+
+// lints JS files
+gulp.task('eslint:tests', () => gulp.src('test/**/*.js')
   .pipe($.eslint())
   .pipe($.eslint.format())
   .pipe($.if(env === 'production', $.eslint.failAfterError()))
@@ -293,5 +302,27 @@ gulp.task('deploy', done => {
   }, error => {
     if (error) done(error);
     else console.log(`Deployed to http://ig.ft.com/${DEPLOY_TARGET}/`);
+  });
+});
+
+gulp.task('test:install-selenium', done => {
+  selenium.install({}, done);
+});
+
+gulp.task('test:preflight', ['serve:dist', 'test:install-selenium'], () => {
+  if (process.env.CIRCLE_PROJECT_REPONAME === 'starter-kit') {
+    console.info('Project is base starter-kit; bypassing preflight checks...');
+    return process.exit();
+  }
+
+  return nightwatch.runner({ // eslint-disable-line consistent-return
+    config: 'nightwatch.json',
+    group: 'preflight',
+  }, passed => {
+    if (passed) {
+      process.exit();
+    } else {
+      process.exit(1);
+    }
   });
 });
