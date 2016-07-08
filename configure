@@ -59,11 +59,11 @@ git commit -m 'Initial commit: uses starter kit'
 
 echo "Installing dependencies..."
 
-npm i
+npm i --link
 
 echo "Creating repo on Github"
 
-curl -v -u : -n https://api.github.com/orgs/ft-interactive/repos \
+curl -v -n https://api.github.com/orgs/ft-interactive/repos \
 -d "{\"name\": \"${repo}\", \"homepage\":\"${url}\",\"description\": \"${description}\", \"private\":true, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}"
 
 git remote add origin ssh://git@github.com/ft-interactive/$repo.git
@@ -71,5 +71,6 @@ git remote add origin ssh://git@github.com/ft-interactive/$repo.git
 echo "Push to Github"
 git push origin master
 
-echo "Done!"
+echo ""
+echo "DONE !!"
 echo ""
