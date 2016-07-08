@@ -5,7 +5,7 @@
 
 [![Build Status][circle-image]][circle-url] [![Dependency Status][devdeps-image]][devdeps-url]
 
-## Download
+### Download
 
 
 Paste this snippet into your terminal and follow the instructions:
@@ -18,7 +18,7 @@ Local directory for the project (use lowercase with dashes) : " dir; git clone -
 
 Note: this will attempt create a Github repo so you need an [access token](https://github.com/settings/tokens) if you want this bit of the script to work.
 
-## Includes
+### Included
 
 - [Babel](https://babeljs.io/docs/learn-es2015/)
 - [Sass](https://github.com/sass/node-sass)
@@ -27,7 +27,7 @@ Note: this will attempt create a Github repo so you need an [access token](https
   –– using [build service](https://build.origami.ft.com/) _and_ [bower components](http://origami.ft.com/docs/developer-guide/modules/choosing-your-build-method/)
 - [Browserify](http://browserify.org/)
 
-## Licence
+### Licence
 This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
 
 <!-- badge URLs -->

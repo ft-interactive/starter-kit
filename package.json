@@ -31,7 +31,7 @@
   },
   "private": true,
   "scripts": {
-    "build": "gulp build",
+    "build": "gulp",
     "postinstall": "bower install",
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp clean && gulp watch'",
     "test": "npm run build"
