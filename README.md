@@ -18,25 +18,6 @@ Local directory for the project (use lowercase with dashes) : " dir; git clone -
 
 Note: this will attempt create a Github repo so you need an [access token](https://github.com/settings/tokens) if you want this bit of the script to work.
 
-## Tasks
-
-**Development**
-
-```
-$ npm start
-```
-
-A dev server that watches for changes.
-
-
-**Publish**
-
-```
-$ npm run build
-```
-
-Builds the code into a `dist` folder ready to be deployed.
-
 ## Includes
 
 - [Babel](https://babeljs.io/docs/learn-es2015/)
