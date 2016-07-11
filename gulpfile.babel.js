@@ -266,3 +266,33 @@ gulp.task('revreplace', ['revision'], () =>
 //   }))
 //   .pipe(gulp.dest('dist'))
 // );
+
+gulp.task('test:install-selenium', done => {
+  const selenium = require('selenium-standalone');
+  selenium.install({}, done);
+});
+
+gulp.task('test:preflight', ['watch', 'test:install-selenium'], () => {
+  const nightwatch = require('nightwatch');
+
+  if (process.env.CIRCLE_PROJECT_REPONAME === 'starter-kit') {
+    console.info('Project is base starter-kit; bypassing preflight checks...');
+    return process.exit();
+  }
+
+  if (process.env.CIRCLE_BUILD_NUM === 1) {
+    console.info('Initial build; bypassing preflight checks...');
+    return process.exit();
+  }
+
+  return nightwatch.runner({ // eslint-disable-line consistent-return
+    config: 'nightwatch.json',
+    group: 'preflight',
+  }, passed => {
+    if (passed) {
+      process.exit();
+    } else {
+      process.exit(1);
+    }
+  });
+});
