@@ -23,6 +23,10 @@ Build/compile, start a dev server and watches for changes.
 5. CI will build, test and deploy a build to Production.
 
 
+## Uses Starter Kit
+
+This project was scaffolded with [Stater Kit @$repo](https://github.com/ft-interactive/starter-kit/tree/$repo).
+
 ## Licence
 This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
 
