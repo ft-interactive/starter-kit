@@ -56,7 +56,7 @@ eval "echo \"${template_str}\"" > README.md
 
 git init
 git add .
-git commit -m 'Initial commit: uses starter kit (commit $rev)'
+git commit -m "Initial commit: uses starter kit (commit $rev)"
 
 echo "Installing dependencies..."
 
