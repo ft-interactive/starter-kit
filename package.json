@@ -21,8 +21,11 @@
     "gulp-sass": "^2.3.2",
     "gulp-util": "^3.0.7",
     "merge-stream": "^1.0.0",
+    "nightwatch": "^0.9.5",
     "nodemon": "^1.9.2",
+    "phantomjs-prebuilt": "^2.1.7",
     "run-sequence": "^1.2.2",
+    "selenium-standalone": "^5.5.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
   },
@@ -34,6 +37,7 @@
     "build": "gulp",
     "postinstall": "bower install",
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp clean && gulp watch'",
-    "test": "npm run build"
+    "test": "npm run build",
+    "preflight": "gulp test:preflight"
   }
 }

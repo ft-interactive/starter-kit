@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 5.0
+    version: 6.0
 
 dependencies:
   cache_directories:
@@ -8,3 +8,7 @@ dependencies:
     - node_modules
   override:
     - npm install
+
+test:
+  pre:
+    - npm run preflight

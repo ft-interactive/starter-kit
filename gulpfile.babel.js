@@ -9,6 +9,8 @@ import runSequence from 'run-sequence';
 import source from 'vinyl-source-stream';
 import watchify from 'watchify';
 import AnsiToHTML from 'ansi-to-html';
+import nightwatch from 'nightwatch';
+import selenium from 'selenium-standalone';
 
 const $ = require('auto-plug')('gulp');
 const ansiToHTML = new AnsiToHTML();
@@ -247,3 +249,26 @@ function handleBuildError(headline, error) {
     this.emit('end');
   } else throw error;
 }
+
+
+gulp.task('test:install-selenium', done => {
+  selenium.install({}, done);
+});
+
+gulp.task('test:preflight', ['watch', 'test:install-selenium'], () => {
+  if (process.env.CIRCLE_PROJECT_REPONAME === 'starter-kit') {
+    console.info('Project is base starter-kit; bypassing preflight checks...');
+    return process.exit();
+  }
+
+  return nightwatch.runner({ // eslint-disable-line consistent-return
+    config: 'nightwatch.json',
+    group: 'preflight',
+  }, passed => {
+    if (passed) {
+      process.exit();
+    } else {
+      process.exit(1);
+    }
+  });
+});
