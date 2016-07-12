@@ -9,6 +9,8 @@ import runSequence from 'run-sequence';
 import source from 'vinyl-source-stream';
 import watchify from 'watchify';
 import AnsiToHTML from 'ansi-to-html';
+import nunjucks from 'nunjucks';
+import article from './config/article';
 
 const $ = require('auto-plug')('gulp');
 const ansiToHTML = new AnsiToHTML();
@@ -78,7 +80,7 @@ gulp.task('watch', ['styles', 'build-pages', 'copy'], done => {
     });
 
     // refresh browser after other changes
-    gulp.watch(['client/**/*.html'], ['build-pages', reload]);
+    gulp.watch(['client/**/*.html', 'views/**/*.{js,html}', 'config/*.{js,json}'], ['build-pages', reload]);
     gulp.watch(['client/styles/**/*.scss'], ['styles', reload]);
     gulp.watch(copyGlob, ['copy', reload]);
 
@@ -95,11 +97,29 @@ gulp.task('copy', () =>
     .pipe(gulp.dest('dist'))
 );
 
-gulp.task('build-pages', () =>
-  gulp.src(['client/**/*.html', '!client/includes/**.html'])
-    .pipe($.htmlTagInclude())
-    .pipe(gulp.dest('dist'))
-);
+gulp.task('build-pages', () => {
+  delete require.cache[require.resolve('./config/flags')];
+  delete require.cache[require.resolve('./config/article')];
+  delete require.cache[require.resolve('./views/filters/index')];
+
+  const nunjucks_env = new nunjucks.Environment(
+    new nunjucks.FileSystemLoader(['client', 'views'])
+  );
+  nunjucks_env.filters = Object.assign(nunjucks_env.filters, require('./views/filters'));
+  return gulp.src('client/index.html')
+		.pipe($.data(() => {
+      const d = {
+        ...require('./config/article').default,
+        flags: require('./config/flags').default
+      }
+
+      console.dir(d)
+
+      return d;
+    }))
+		.pipe($.nunjucks.compile(null, {env: nunjucks_env}))
+		.pipe(gulp.dest('dist'))
+});
 
 // minifies all HTML, CSS and JS (dist & client => dist)
 gulp.task('html', () =>

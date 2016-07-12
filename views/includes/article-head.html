@@ -1,0 +1,16 @@
+<div>
+  <a href="{{ topicUrl }}" class="o-typography-link-topic o-typography-link-topic--medium">{{ topic }}</a>
+</div>
+
+<h1 class="o-typography-heading1">{{ headline }}</h1>
+
+<p class="o-typography-lead">{{ summary }}</p>
+
+<p>
+  {% if publishedDate %}
+  <time class="article__timestamp o-date o-typography-timestamp" data-o-component="o-date" datetime="{{ publishedDate.toISOString() }}" data-o-date-js>
+    {{ publishedDate | ftdate }}
+  </time>
+  {% endif %}
+  <span class="article__byline">by <a href="#" class="o-typography-link-topic o-typography-link-topic--small">Author one</a> and <a href="#" class="o-typography-link-topic o-typography-link-topic--small">Author two</a></span>
+</p>

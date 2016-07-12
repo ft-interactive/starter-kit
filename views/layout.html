@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en-GB" class="core" data-content-id="{{ id }}">
+  <head>
+    {% include "includes/html-head.html" %}
+  </head>
+  <body>
+
+
+    <!--
+      TODO: REPLACE THIS COMMENT WITH A TRACKING SNIPPET
+      http://ft-interactive.github.io/tracking-snippet-generator/
+    -->
+
+    {% include "includes/header.html" %}
+    <main role="main">
+      <article class="article">
+        <div class="article-head o-grid-container">
+          <div class="o-grid-row">
+            <header data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
+
+              {% block article_head %}
+              {% include "includes/share.html" %}
+              {% include "includes/article-head.html" %}
+              {% endblock %}
+
+            </header>
+          </div>
+        </div>
+        <div class="article-body o-typography-body-wrapper">
+
+        {% block article_body %}{% endblock %}
+
+        </div>
+      </article>
+    </main>
+    {% include "includes/footer.html" %}
+
+    <script async>
+    queue([
+      'scripts/main.js'
+    ]);
+    </script>
+
+  </body>
+</html>
