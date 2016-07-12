@@ -11,11 +11,35 @@ body {
   padding:0;
 }
 
-main{
+main {
   display:block
 }
 
 .core .o--if-js,
-.enhanced .o--if-no-js {
+.enhanced .o--if-no-js,
+.is-next .hide-next,
+.is-falcon .hide-falcon,
+.is-loggedin .hide-loggedin,
+.is-anonymous .hide-anonymous {
   display: none !important;
+}
+
+.show-loggedin,
+.show-anonymous,
+.show-next,
+.show-falcon,
+.hide-falcon,
+.hide-next,
+.hide-loggedin,
+.hide-anonymous {
+  display: none;
+}
+
+.is-loggedin .show-loggedin,
+.is-anonymous .show-anonymous,
+.is-next .show-next,
+.is-falcon .show-falcon,
+.is-falcon .hide-next,
+.is-next .hide-falcon {
+  display: inherit;
 }

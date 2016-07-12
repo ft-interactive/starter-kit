@@ -66,6 +66,7 @@ function clear_queue() {
   for (var i = 0; i < arr.length; i++) {
     exec.apply(window, arr[i]);
   }
+  document.documentElement.className = document.documentElement.className + ' js-success';
 }
 
 window.queue = queue;
@@ -73,8 +74,16 @@ window.clear_queue = clear_queue;
 window.exec = exec;
 
 exec(function(){
-  document.documentElement.className = document.documentElement.className.replace(/\bcore\b/g, 'enhanced');
+  window.isNext = document.cookie.indexOf('FT_SITE=NEXT') !== -1;
+  window.isLoggedIn = document.cookie.indexOf('FTSession=') !== -1;
+  document.documentElement.className = document.documentElement.className.replace(/\bcore\b/g, [
+    'enhanced',
+    (window.isNext ? 'is-next' : 'is-falcon'),
+    (window.isLoggedIn ? 'is-loggedin' : 'is-anonymous')
+  ].join(' '));
 });
+
+
 
 // Load the polyfill service with custom features. Exclude big unneeded polyfills.
 // and use ?callback= to clear the queue of scripts to load
@@ -83,7 +92,8 @@ var polyfill_features = [
   'requestAnimationFrame',
   'Promise',
   'matchMedia',
-  'HTMLPictureElement'
+  'HTMLPictureElement',
+  'fetch|always|gated'
 ];
 
 var polfill_url = 'https://cdn.polyfill.io/v2/polyfill.min.js?callback=clear_queue&features='
