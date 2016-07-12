@@ -11,8 +11,9 @@ export default {
   // canonical URL of the published page
   url: '$url',
 
-  // Use UTC timezone
-  publishedDate: new Date('2016-05-17T17:11:22Z'),
+  // To set an exact publish date do this: 
+  //       new Date('2016-05-17T17:11:22Z')
+  publishedDate: new Date(),
 
   headline: 'Politics and the English Language',
 
