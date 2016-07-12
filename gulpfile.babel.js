@@ -80,7 +80,7 @@ gulp.task('watch', ['styles', 'build-pages', 'copy'], done => {
     });
 
     // refresh browser after other changes
-    gulp.watch(['client/**/*.html', 'views/**/*.{js,html}', 'config/*.{js,json}'], ['build-pages', reload]);
+    gulp.watch(['client/**/*.{html,md}', 'views/**/*.{js,html}', 'config/*.{js,json}'], ['build-pages', reload]);
     gulp.watch(['client/styles/**/*.scss'], ['styles', reload]);
     gulp.watch(copyGlob, ['copy', reload]);
 

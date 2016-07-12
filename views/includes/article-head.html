@@ -2,9 +2,9 @@
   <a href="{{ topicUrl }}" class="o-typography-link-topic o-typography-link-topic--medium">{{ topic }}</a>
 </div>
 
-<h1 class="o-typography-heading1">{{ headline }}</h1>
+<h1 class="o-typography-heading1">{{ headline | md(true) }}</h1>
 
-<p class="o-typography-lead">{{ summary }}</p>
+<p class="o-typography-lead">{{ summary | md(true) }}</p>
 
 <p>
   {% if publishedDate %}
