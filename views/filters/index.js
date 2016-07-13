@@ -1,4 +1,5 @@
 import markdownIt from 'markdown-it';
+import removeMarkdown from 'remove-markdown';
 
 const days  = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
@@ -19,4 +20,8 @@ const markdown = markdownIt({
 
 export function md(str, inline) {
   return this.env.filters.safe(inline ? markdown.renderInline(str) : markdown.render(str));
+}
+
+export function plain(str, stripListLeaders=true) {
+  return removeMarkdown(str, {stripListLeaders: stripListLeaders, gfm: true});
 }
