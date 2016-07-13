@@ -65,7 +65,7 @@ npm i --link --no-optional
 echo "Creating repo on Github"
 
 curl -v -n https://api.github.com/orgs/ft-interactive/repos \
--d "{\"name\": \"${repo}\", \"homepage\":\"${url}\",\"description\": \"${description}\", \"private\":true, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}"
+-d "{\"name\": \"${repo}\", \"homepage\":\"${url}\",\"description\": \"${description}\", \"private\":true, \"team_id\":260487, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}"
 
 git remote add origin ssh://git@github.com/ft-interactive/$repo.git
 
