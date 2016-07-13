@@ -1,5 +1,6 @@
+{% set test_comments_uuid = "3a499586-b2e0-11e4-a058-00144feab7de" if not flags.prod and flags.comments else "" %}
 <!doctype html>
-<html lang="en-GB" class="core" data-content-id="{{ id }}">
+<html lang="en-GB" class="core" data-content-id="{{ id if id else test_comments_uuid }}">
   <head>
     {% include "includes/html-head.html" %}
   </head>
@@ -44,6 +45,11 @@
         </div>
       </article>
     </main>
+
+    {% if flags.comments %}
+      {% include "includes/comments.html" %}
+    {% endif %}
+
     {% if flags.footer %}
       {% include "includes/footer.html" %}
     {% endif %}
