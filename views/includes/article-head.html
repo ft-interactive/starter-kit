@@ -4,7 +4,12 @@
 
 <h1 class="o-typography-heading1" itemprop="headline">{{ headline | md(true) }}</h1>
 
-<p class="o-typography-lead">{{ summary | md(true) }}</p>
+<p class="o-typography-lead">
+  {{ summary | md(true) }}
+  {% if relatedArticle %}
+  <a href="{{ relatedArticle.url }}" class="o-typography-link">{{ relatedArticle.text }}</a>
+  {% endif %}
+</p>
 
 <p>
   {% if publishedDate %}

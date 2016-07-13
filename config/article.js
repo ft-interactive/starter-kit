@@ -21,6 +21,10 @@ export default {
 
   topic: 'Starter Kit',
   topicUrl: '/foo',
+  relatedArticle: {
+    text: 'Related article »',
+    url: 'https://en.wikipedia.org/wiki/Politics_and_the_English_Language'
+  },
 
   /*
   TODO: Select Twitter card type -
