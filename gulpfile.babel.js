@@ -10,7 +10,6 @@ import source from 'vinyl-source-stream';
 import watchify from 'watchify';
 import AnsiToHTML from 'ansi-to-html';
 import nunjucks from 'nunjucks';
-import article from './config/article';
 
 const $ = require('auto-plug')('gulp');
 const ansiToHTML = new AnsiToHTML();
@@ -36,7 +35,7 @@ const OTHER_SCRIPTS = [
   'scripts/top.js',
 ];
 
-let env = 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 const copyGlob = OTHER_SCRIPTS.concat([
   'client/**/*',
@@ -49,7 +48,7 @@ const copyGlob = OTHER_SCRIPTS.concat([
 
 // makes a production build (client => dist)
 gulp.task('default', done => {
-  env = 'production';
+  process.env.NODE_ENV = 'production';
   runSequence(
     ['clean'],
     ['scripts', 'styles', 'build-pages', 'copy'],
@@ -113,8 +112,6 @@ gulp.task('build-pages', () => {
         flags: require('./config/flags').default
       }
 
-      console.dir(d)
-
       return d;
     }))
 		.pipe($.nunjucks.compile(null, {env: nunjucks_env}))
@@ -142,7 +139,7 @@ gulp.task('styles', () =>
   gulp.src('client/**/*.scss')
     .pipe($.sass({
         includePaths: 'bower_components',
-        outputStyle: env === 'production' ? 'compressed' : 'expanded'
+        outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded'
       }).on('error', function(error) {
           handleBuildError.call(this, 'Error building Sass', error);
       })
@@ -244,7 +241,7 @@ function reload() {
 }
 
 function handleBuildError(headline, error) {
-  if (env === 'development') {
+  if (process.env.NODE_ENV === 'development') {
 
     // show in the terminal
     $.util.log(headline, error && error.stack);
