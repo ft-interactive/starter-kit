@@ -60,7 +60,7 @@ git commit -m "Initial commit: uses starter kit (commit $rev)"
 
 echo "Installing dependencies..."
 
-npm i --link
+npm i --link --no-optional
 
 echo "Creating repo on Github"
 
