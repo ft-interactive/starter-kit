@@ -7,13 +7,15 @@
 <link rel="preconnect" href="https://build.origami.ft.com" crossorigin>
 <link rel="preconnect" href="https://cdn.polyfill.io">
 
-<!-- Critical JS and CSS -->
 <script inline src="scripts/top.js"></script>
 <link inline rel="stylesheet" href="styles/top.css">
 
 <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=n-normalize@^1,o-fonts@^2">
 <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-grid@^4,o-typography@^4.2">
 <link rel="stylesheet" href="styles/main.css">
+{% if stylesheets %}{% for stylesheet in stylesheets %}
+<link rel="stylesheet" href="{{ stylesheet }}">
+{% endfor %}{% endif %}
 
 <!-- misc metadata -->
 <link href="https://plus.google.com/113457471429583444041/" rel="publisher" />
