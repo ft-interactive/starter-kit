@@ -8,3 +8,8 @@ dependencies:
     - node_modules
   override:
     - npm install
+
+notify:
+  webhooks:
+    # Notifies GHPM of build
+    - url: https://ft-ig-github-project-manager.herokuapp.com/build
