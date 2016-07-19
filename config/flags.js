@@ -1,6 +1,6 @@
 const prod = process.env.NODE_ENV === 'production';
 
-export default {
+export default _ => ({
   prod: prod,
   errorReporting: prod,
   googleAnalytics: prod,
@@ -13,11 +13,11 @@ export default {
     localhost, you need an ft.com hostname
     Add the follow entry to the end of the hosts file
 
-    127.0.0.1 local.dev.ft.com
+    127.0.0.1 ig-local.ft.com
   */
   comments: true,
 
   header: true,
   footer: true,
 
-}
+})

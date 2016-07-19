@@ -1,7 +1,6 @@
 /* eslint-disable no-console, global-require */
 import browserify from 'browserify';
 import browserSync from 'browser-sync';
-import del from 'del';
 import gulp from 'gulp';
 import mergeStream from 'merge-stream';
 import path from 'path';
@@ -9,9 +8,18 @@ import runSequence from 'run-sequence';
 import source from 'vinyl-source-stream';
 import watchify from 'watchify';
 import AnsiToHTML from 'ansi-to-html';
+
+import gulpnunjucks from 'gulp-nunjucks';
+import inlineSource from 'gulp-inline-source';
+import minifyHtml from 'gulp-minify-html';
+import rev from 'gulp-rev';
+import revReplace from 'gulp-rev-replace';
+import gulpdata from 'gulp-data';
+import sass from 'gulp-sass';
+import util from 'gulp-util';
+import autoprefixer from 'gulp-autoprefixer';
 import nunjucks from 'nunjucks';
 
-const $ = require('auto-plug')('gulp');
 const ansiToHTML = new AnsiToHTML();
 
 const AUTOPREFIXER_BROWSERS = [
@@ -50,7 +58,6 @@ const copyGlob = OTHER_SCRIPTS.concat([
 gulp.task('default', done => {
   process.env.NODE_ENV = 'production';
   runSequence(
-    ['clean'],
     ['scripts', 'styles', 'build-pages', 'copy'],
     ['html' /*, 'images'*/],
     ['revreplace'],
@@ -104,30 +111,25 @@ gulp.task('build-pages', () => {
   const nunjucks_env = new nunjucks.Environment(
     new nunjucks.FileSystemLoader(['client', 'views'])
   );
-  nunjucks_env.filters = Object.assign(nunjucks_env.filters, require('./views/filters'));
-  return gulp.src('client/index.html')
-		.pipe($.data(() => {
-      const d = {
-        ...require('./config/article').default,
-        flags: require('./config/flags').default
-      }
 
-      return d;
-    }))
-		.pipe($.nunjucks.compile(null, {env: nunjucks_env}))
+  nunjucks_env.filters = Object.assign(nunjucks_env.filters, require('./views/filters'));
+
+  return gulp.src('client/**/*.html')
+		.pipe(gulpdata(() => ({
+      ...require('./config/article').default(),
+      flags: require('./config/flags').default()
+    })))
+		.pipe(gulpnunjucks.compile(null, {env: nunjucks_env}))
 		.pipe(gulp.dest('dist'))
 });
 
 // minifies all HTML, CSS and JS (dist & client => dist)
 gulp.task('html', () =>
   gulp.src('dist/**/*.html')
-    .pipe($.inlineSource())
-    .pipe($.minifyHtml())
+    .pipe(inlineSource())
+    .pipe(minifyHtml())
     .pipe(gulp.dest('dist'))
 );
-
-// clears out the dist and dist folders
-gulp.task('clean', del.bind(null, ['dist', 'dist/*', '!dist/.git'], { dot: true }));
 
 // task to do a straightforward browserify bundle (build only)
 gulp.task('scripts', () =>
@@ -137,30 +139,30 @@ gulp.task('scripts', () =>
 // builds stylesheets with sass/autoprefixer
 gulp.task('styles', () =>
   gulp.src('client/**/*.scss')
-    .pipe($.sass({
+    .pipe(sass({
         includePaths: 'bower_components',
         outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded'
       }).on('error', function(error) {
           handleBuildError.call(this, 'Error building Sass', error);
       })
     )
-    .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
+    .pipe(autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
     .pipe(gulp.dest('dist'))
 );
 
 // renames asset files and adds a rev-manifest.json
 gulp.task('revision', () =>
   gulp.src(['dist/**/*.css', 'dist/**/*.js'])
-    .pipe($.rev())
+    .pipe(rev())
     .pipe(gulp.dest('dist'))
-    .pipe($.rev.manifest())
+    .pipe(rev.manifest())
     .pipe(gulp.dest('dist'))
 );
 
 // edits html to reflect changes in rev-manifest.json
 gulp.task('revreplace', ['revision'], () =>
   gulp.src('dist/**/*.html')
-    .pipe($.revReplace({ manifest: gulp.src('./dist/rev-manifest.json') }))
+    .pipe(revReplace({ manifest: gulp.src('./dist/rev-manifest.json') }))
     .pipe(gulp.dest('dist'))
 );
 
@@ -172,7 +174,7 @@ gulp.task('revreplace', ['revision'], () =>
 //  3. Find other commented out stuff related to imagemin elsewhere in this gulpfile
 //
 // gulp.task('images', () => gulp.src('dist/**/*.{jpg,png,gif,svg}')
-//   .pipe($.imagemin({
+//   .pipe(gulpimagemin({
 //     progressive: true,
 //     interlaced: true,
 //   }))
@@ -205,8 +207,8 @@ function getBundlers(useWatchify) {
         // if (useWatchify) {
         //   stream = stream
         //    .pipe(vinylBuffer())
-        //    .pipe($.sourcemaps.init({ loadMaps: true }))
-        //    .pipe($.sourcemaps.write('./'));
+        //    .pipe(gulpsourcemaps.init({ loadMaps: true }))
+        //    .pipe(gulpsourcemaps.write('./'));
         // }
 
         return stream.pipe(gulp.dest('dist'));
@@ -244,7 +246,7 @@ function handleBuildError(headline, error) {
   if (process.env.NODE_ENV === 'development') {
 
     // show in the terminal
-    $.util.log(headline, error && error.stack);
+    util.log(headline, error && error.stack);
 
     // report it in browser sync
     let report = (

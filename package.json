@@ -1,7 +1,6 @@
 {
   "devDependencies": {
     "ansi-to-html": "^0.4.1",
-    "auto-plug": "^1.2.0",
     "babel-core": "^6.10.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-2": "^6.5.0",
@@ -10,7 +9,6 @@
     "browser-sync": "^2.11.2",
     "browserify": "^13.0.0",
     "debowerify": "^1.4.1",
-    "del": "^2.2.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-data": "^1.2.1",
@@ -36,9 +34,17 @@
   },
   "private": true,
   "scripts": {
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
     "build": "gulp",
     "postinstall": "bower install",
-    "start": "nodemon --watch gulpfile.babel.js --exec 'gulp clean && gulp watch'",
+    "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'",
+    "prestart": "npm run clean",
+    "poststart": "echo foobarafter",
     "test": "npm run build"
-  }
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "bower_components"
+  ]
 }

@@ -1,4 +1,5 @@
-export default {
+export default _ => ({
+
   // link file UUID
   id: '$uuid',
 
@@ -9,6 +10,7 @@ export default {
   description: '',
 
   // canonical URL of the published page
+  // "$url" get filled in by the ./configure script
   url: '$url',
 
   // To set an exact publish date do this:
@@ -50,4 +52,16 @@ export default {
   // tweetText:  '',
   // socialHeadline: '',
   // socialSummary:  '',
-}
+
+  onwardjourney: {
+
+    // "list" (methode list) or "topic"
+    type: '',
+
+    // topic or list id
+    id: '',
+
+    // a heading is provided automatically if not set (peferred)
+    heading: ''
+  },
+})
