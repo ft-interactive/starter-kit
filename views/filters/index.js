@@ -19,7 +19,7 @@ const markdown = markdownIt({
 });
 
 export function md(str, inline) {
-  return this.env.filters.safe(inline ? markdown.renderInline(str) : markdown.render(str));
+  return !str ? '' : this.env.filters.safe(inline ? markdown.renderInline(str) : markdown.render(str));
 }
 
 export function plain(str, stripListLeaders=true) {
