@@ -8,7 +8,7 @@ import runSequence from 'run-sequence';
 import source from 'vinyl-source-stream';
 import watchify from 'watchify';
 import AnsiToHTML from 'ansi-to-html';
-
+import nunjucks from 'nunjucks';
 import gulpnunjucks from 'gulp-nunjucks';
 import inlineSource from 'gulp-inline-source';
 import minifyHtml from 'gulp-minify-html';
@@ -18,7 +18,6 @@ import gulpdata from 'gulp-data';
 import sass from 'gulp-sass';
 import util from 'gulp-util';
 import autoprefixer from 'gulp-autoprefixer';
-import nunjucks from 'nunjucks';
 
 const ansiToHTML = new AnsiToHTML();
 
