@@ -11,7 +11,7 @@
 Paste this snippet into your terminal and follow the instructions:
 
 ```shell
-bash <(curl -s https://ig.ft.com/starter-kit/install)
+eval "$(curl -s https://ig.ft.com/starter-kit/install)"
 ```
 
 Note: this will attempt create a Github repo so you need an [access token](https://github.com/settings/tokens) if you want this bit of the script to work.
