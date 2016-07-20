@@ -8,7 +8,6 @@ import runSequence from 'run-sequence';
 import source from 'vinyl-source-stream';
 import watchify from 'watchify';
 import AnsiToHTML from 'ansi-to-html';
-import nunjucks from 'nunjucks';
 import gulpnunjucks from 'gulp-nunjucks';
 import inlineSource from 'gulp-inline-source';
 import minifyHtml from 'gulp-minify-html';
@@ -103,22 +102,14 @@ gulp.task('copy', () =>
 );
 
 gulp.task('build-pages', () => {
+  delete require.cache[require.resolve('./views')];
   delete require.cache[require.resolve('./config/flags')];
   delete require.cache[require.resolve('./config/article')];
-  delete require.cache[require.resolve('./views/filters/index')];
-
-  const nunjucks_env = new nunjucks.Environment(
-    new nunjucks.FileSystemLoader(['client', 'views'])
-  );
-
-  nunjucks_env.filters = Object.assign(nunjucks_env.filters, require('./views/filters'));
+  delete require.cache[require.resolve('./config/index')];
 
   return gulp.src('client/**/*.html')
-		.pipe(gulpdata(() => ({
-      ...require('./config/article').default(),
-      flags: require('./config/flags').default()
-    })))
-		.pipe(gulpnunjucks.compile(null, {env: nunjucks_env}))
+		.pipe(gulpdata(() => require('./config').default()))
+		.pipe(gulpnunjucks.compile(null, {env: require('./views').default()}))
 		.pipe(gulp.dest('dist'))
 });
 
