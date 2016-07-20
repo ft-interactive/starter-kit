@@ -1,8 +1,10 @@
 {
   "devDependencies": {
     "ansi-to-html": "^0.4.1",
+    "axios": "^0.13.1",
     "babel-core": "^6.10.4",
     "babel-preset-es2015": "^6.9.0",
+    "babel-preset-es2015-node6": "^0.2.0",
     "babel-preset-stage-2": "^6.5.0",
     "babelify": "^7.2.0",
     "bower": "^1.7.9",
@@ -48,6 +50,9 @@
     "bower_components"
   ],
   "babel": {
-    "presets": ["es2015", "stage-2"]
+    "presets": [
+      "es2015-node6",
+      "stage-2"
+    ]
   }
 }

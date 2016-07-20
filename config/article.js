@@ -3,12 +3,6 @@ export default _ => ({
   // link file UUID
   id: '$uuid',
 
-  // Appears in the HTML <title>
-  title: '',
-
-  // meta data
-  description: '',
-
   // canonical URL of the published page
   // "$url" get filled in by the ./configure script
   url: '$url',
@@ -37,6 +31,12 @@ export default _ => ({
     {name: 'Author One', url: '/foo/bar'},
     {name: 'Author Two'},
   ],
+
+  // Appears in the HTML <title>
+  title: '',
+
+  // meta data
+  description: '',
 
   /*
   TODO: Select Twitter card type -

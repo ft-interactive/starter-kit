@@ -1,4 +1,5 @@
 /* eslint-disable no-console, global-require */
+
 import browserify from 'browserify';
 import browserSync from 'browser-sync';
 import gulp from 'gulp';
@@ -108,8 +109,10 @@ gulp.task('build-pages', () => {
   delete require.cache[require.resolve('./config/index')];
 
   return gulp.src('client/**/*.html')
-		.pipe(gulpdata(() => require('./config').default()))
-		.pipe(gulpnunjucks.compile(null, {env: require('./views').default()}))
+		.pipe(gulpdata(async (d) => {
+      return await require('./config').default(d)
+    }))
+		.pipe(gulpnunjucks.compile(null, {env: require('./views').configure()}))
 		.pipe(gulp.dest('dist'))
 });
 
