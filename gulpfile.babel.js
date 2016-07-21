@@ -11,7 +11,7 @@ import watchify from 'watchify';
 import AnsiToHTML from 'ansi-to-html';
 import gulpnunjucks from 'gulp-nunjucks';
 import inlineSource from 'gulp-inline-source';
-import minifyHtml from 'gulp-minify-html';
+import htmlmin from 'gulp-htmlmin';
 import rev from 'gulp-rev';
 import revReplace from 'gulp-rev-replace';
 import gulpdata from 'gulp-data';
@@ -30,7 +30,7 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 const BROWSERIFY_ENTRIES = [
-  'scripts/main.js',
+  'scripts/main.js'
 ];
 
 const BROWSERIFY_TRANSFORMS = [
@@ -39,7 +39,7 @@ const BROWSERIFY_TRANSFORMS = [
 ];
 
 const OTHER_SCRIPTS = [
-  'scripts/top.js',
+  'scripts/top.js'
 ];
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -120,7 +120,11 @@ gulp.task('build-pages', () => {
 gulp.task('html', () =>
   gulp.src('dist/**/*.html')
     .pipe(inlineSource())
-    .pipe(minifyHtml())
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      processConditionalComments: true,
+      minifyJS: true
+    }))
     .pipe(gulp.dest('dist'))
 );
 
