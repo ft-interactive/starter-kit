@@ -53,6 +53,7 @@ echo "Delete $(rm -rfv configure readme.md.template)"
 echo "Directory: $dir"
 echo "Repo name: $repo"
 eval "echo \"${template_str}\"" > README.md
+eval "echo \"$(cat config/article.js)\"" > config/article.js
 
 git init
 git add .

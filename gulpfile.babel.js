@@ -1,7 +1,7 @@
 /* eslint-disable no-console, global-require */
+
 import browserify from 'browserify';
 import browserSync from 'browser-sync';
-import del from 'del';
 import gulp from 'gulp';
 import mergeStream from 'merge-stream';
 import path from 'path';
@@ -9,8 +9,16 @@ import runSequence from 'run-sequence';
 import source from 'vinyl-source-stream';
 import watchify from 'watchify';
 import AnsiToHTML from 'ansi-to-html';
+import gulpnunjucks from 'gulp-nunjucks';
+import inlineSource from 'gulp-inline-source';
+import htmlmin from 'gulp-htmlmin';
+import rev from 'gulp-rev';
+import revReplace from 'gulp-rev-replace';
+import gulpdata from 'gulp-data';
+import sass from 'gulp-sass';
+import util from 'gulp-util';
+import autoprefixer from 'gulp-autoprefixer';
 
-const $ = require('auto-plug')('gulp');
 const ansiToHTML = new AnsiToHTML();
 
 const AUTOPREFIXER_BROWSERS = [
@@ -22,7 +30,7 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 const BROWSERIFY_ENTRIES = [
-  'scripts/main.js',
+  'scripts/main.js'
 ];
 
 const BROWSERIFY_TRANSFORMS = [
@@ -31,10 +39,10 @@ const BROWSERIFY_TRANSFORMS = [
 ];
 
 const OTHER_SCRIPTS = [
-  'scripts/top.js',
+  'scripts/top.js'
 ];
 
-let env = 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 const copyGlob = OTHER_SCRIPTS.concat([
   'client/**/*',
@@ -47,9 +55,8 @@ const copyGlob = OTHER_SCRIPTS.concat([
 
 // makes a production build (client => dist)
 gulp.task('default', done => {
-  env = 'production';
+  process.env.NODE_ENV = 'production';
   runSequence(
-    ['clean'],
     ['scripts', 'styles', 'build-pages', 'copy'],
     ['html' /*, 'images'*/],
     ['revreplace'],
@@ -78,7 +85,7 @@ gulp.task('watch', ['styles', 'build-pages', 'copy'], done => {
     });
 
     // refresh browser after other changes
-    gulp.watch(['client/**/*.html'], ['build-pages', reload]);
+    gulp.watch(['client/**/*.{html,md}', 'views/**/*.{js,html}', 'config/*.{js,json}'], ['build-pages', reload]);
     gulp.watch(['client/styles/**/*.scss'], ['styles', reload]);
     gulp.watch(copyGlob, ['copy', reload]);
 
@@ -95,22 +102,31 @@ gulp.task('copy', () =>
     .pipe(gulp.dest('dist'))
 );
 
-gulp.task('build-pages', () =>
-  gulp.src(['client/**/*.html', '!client/includes/**.html'])
-    .pipe($.htmlTagInclude())
-    .pipe(gulp.dest('dist'))
-);
+gulp.task('build-pages', () => {
+  delete require.cache[require.resolve('./views')];
+  delete require.cache[require.resolve('./config/flags')];
+  delete require.cache[require.resolve('./config/article')];
+  delete require.cache[require.resolve('./config/index')];
+
+  return gulp.src('client/**/*.html')
+		.pipe(gulpdata(async (d) => {
+      return await require('./config').default(d)
+    }))
+		.pipe(gulpnunjucks.compile(null, {env: require('./views').configure()}))
+		.pipe(gulp.dest('dist'))
+});
 
 // minifies all HTML, CSS and JS (dist & client => dist)
 gulp.task('html', () =>
   gulp.src('dist/**/*.html')
-    .pipe($.inlineSource())
-    .pipe($.minifyHtml())
+    .pipe(inlineSource())
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      processConditionalComments: true,
+      minifyJS: true
+    }))
     .pipe(gulp.dest('dist'))
 );
-
-// clears out the dist and dist folders
-gulp.task('clean', del.bind(null, ['dist', 'dist/*', '!dist/.git'], { dot: true }));
 
 // task to do a straightforward browserify bundle (build only)
 gulp.task('scripts', () =>
@@ -120,30 +136,30 @@ gulp.task('scripts', () =>
 // builds stylesheets with sass/autoprefixer
 gulp.task('styles', () =>
   gulp.src('client/**/*.scss')
-    .pipe($.sass({
+    .pipe(sass({
         includePaths: 'bower_components',
-        outputStyle: env === 'production' ? 'compressed' : 'expanded'
+        outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded'
       }).on('error', function(error) {
           handleBuildError.call(this, 'Error building Sass', error);
       })
     )
-    .pipe($.autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
+    .pipe(autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
     .pipe(gulp.dest('dist'))
 );
 
 // renames asset files and adds a rev-manifest.json
 gulp.task('revision', () =>
   gulp.src(['dist/**/*.css', 'dist/**/*.js'])
-    .pipe($.rev())
+    .pipe(rev())
     .pipe(gulp.dest('dist'))
-    .pipe($.rev.manifest())
+    .pipe(rev.manifest())
     .pipe(gulp.dest('dist'))
 );
 
 // edits html to reflect changes in rev-manifest.json
 gulp.task('revreplace', ['revision'], () =>
   gulp.src('dist/**/*.html')
-    .pipe($.revReplace({ manifest: gulp.src('./dist/rev-manifest.json') }))
+    .pipe(revReplace({ manifest: gulp.src('./dist/rev-manifest.json') }))
     .pipe(gulp.dest('dist'))
 );
 
@@ -155,7 +171,7 @@ gulp.task('revreplace', ['revision'], () =>
 //  3. Find other commented out stuff related to imagemin elsewhere in this gulpfile
 //
 // gulp.task('images', () => gulp.src('dist/**/*.{jpg,png,gif,svg}')
-//   .pipe($.imagemin({
+//   .pipe(gulpimagemin({
 //     progressive: true,
 //     interlaced: true,
 //   }))
@@ -188,8 +204,8 @@ function getBundlers(useWatchify) {
         // if (useWatchify) {
         //   stream = stream
         //    .pipe(vinylBuffer())
-        //    .pipe($.sourcemaps.init({ loadMaps: true }))
-        //    .pipe($.sourcemaps.write('./'));
+        //    .pipe(gulpsourcemaps.init({ loadMaps: true }))
+        //    .pipe(gulpsourcemaps.write('./'));
         // }
 
         return stream.pipe(gulp.dest('dist'));
@@ -224,10 +240,10 @@ function reload() {
 }
 
 function handleBuildError(headline, error) {
-  if (env === 'development') {
+  if (process.env.NODE_ENV === 'development') {
 
     // show in the terminal
-    $.util.log(headline, error && error.stack);
+    util.log(headline, error && error.stack);
 
     // report it in browser sync
     let report = (

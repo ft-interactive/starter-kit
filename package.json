@@ -1,27 +1,34 @@
 {
   "devDependencies": {
     "ansi-to-html": "^0.4.1",
-    "auto-plug": "^1.2.0",
+    "axios": "^0.13.1",
     "babel-core": "^6.10.4",
     "babel-preset-es2015": "^6.9.0",
+    "babel-preset-es2015-node6": "^0.2.0",
+    "babel-preset-stage-2": "^6.5.0",
     "babelify": "^7.2.0",
     "bower": "^1.7.9",
     "browser-sync": "^2.11.2",
     "browserify": "^13.0.0",
     "debowerify": "^1.4.1",
-    "del": "^2.2.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
-    "gulp-html-tag-include": "^1.0.1",
+    "gulp-data": "^1.2.1",
+    "gulp-htmlmin": "^2.0.0",
     "gulp-if": "^2.0.1",
     "gulp-inline-source": "^2.1.0",
     "gulp-minify-html": "^1.0.6",
+    "gulp-nunjucks": "^2.2.0",
     "gulp-rev": "^7.1.0",
     "gulp-rev-replace": "^0.4.3",
     "gulp-sass": "^2.3.2",
     "gulp-util": "^3.0.7",
+    "markdown-it": "^7.0.0",
     "merge-stream": "^1.0.0",
     "nodemon": "^1.9.2",
+    "nunjucks": "^2.4.2",
+    "nunjucks-markdown": "^2.0.0",
+    "remove-markdown": "^0.1.0",
     "run-sequence": "^1.2.2",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
@@ -31,9 +38,22 @@
   },
   "private": true,
   "scripts": {
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
     "build": "gulp",
     "postinstall": "bower install",
-    "start": "nodemon --watch gulpfile.babel.js --exec 'gulp clean && gulp watch'",
+    "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'",
+    "prestart": "npm run clean",
     "test": "npm run build"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "bower_components"
+  ],
+  "babel": {
+    "presets": [
+      "es2015-node6",
+      "stage-2"
+    ]
   }
 }

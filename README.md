@@ -20,6 +20,7 @@ Note: this will attempt create a Github repo so you need an [access token](https
 
 - [Babel](https://babeljs.io/docs/learn-es2015/)
 - [Sass](https://github.com/sass/node-sass)
+- [Nunjucks templates](https://mozilla.github.io/nunjucks/templating.html)
 - [Browsersync](https://www.browsersync.io/docs)
 - [Origami modules](http://registry.origami.ft.com/components)  
   –– using [build service](https://build.origami.ft.com/) _and_ [bower components](http://origami.ft.com/docs/developer-guide/modules/choosing-your-build-method/)

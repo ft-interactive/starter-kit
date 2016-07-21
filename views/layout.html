@@ -1,0 +1,65 @@
+{% set test_comments_uuid = "3a499586-b2e0-11e4-a058-00144feab7de" if not flags.prod and flags.comments else "" %}
+<!doctype html>
+<html lang="en-GB" class="core" data-content-id="{{ id if id else test_comments_uuid }}">
+  <head>
+    {% include "includes/html-head.html" %}
+  </head>
+  <body>
+
+    {% if flags.analytics %}
+      {% include "includes/analytics.html" %}
+    {% endif %}
+
+    {% if flags.header %}
+      {% include "includes/header.html" %}
+    {% endif %}
+
+    <main role="main">
+      <article class="article" itemscope itemtype="http://schema.org/Article">
+        <div class="article-head o-grid-container">
+          <div class="o-grid-row">
+            <header data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
+
+              {% block article_head %}
+
+              {% if flags.shareButtons %}
+                {% include "includes/share.html" %}
+              {% endif %}
+
+              {% include "includes/article-head.html" %}
+              {% endblock %}
+
+            </header>
+          </div>
+        </div>
+        <div class="article-body o-typography-body-wrapper" itemprop="articleBody">
+
+          {% block article_body %}{% endblock %}
+
+          <footer class="o-typography-footer">
+            <small><a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright">Copyright</a>
+  					The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web.</small>
+          </footer>
+        </div>
+      </article>
+    </main>
+
+    {% if flags.comments %}
+      {% include "includes/comments.html" %}
+    {% endif %}
+
+    {% if flags.footer %}
+      {% include "includes/footer.html" %}
+    {% endif %}
+
+    <script async>
+    queue([
+      'scripts/main.js'
+      {% if scripts %}{% for script in scripts %}
+      ,'{{ script }}'
+      {% endfor %}{% endif %}
+    ]);
+    </script>
+
+  </body>
+</html>

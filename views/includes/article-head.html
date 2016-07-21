@@ -1,0 +1,34 @@
+<div>
+  <a href="{{ topic.url }}" class="o-typography-link-topic o-typography-link-topic--medium">{{ topic.name }}</a>
+</div>
+
+<h1 class="o-typography-heading1" itemprop="headline">{{ headline | md(true) }}</h1>
+
+<p class="o-typography-lead">
+  {{ summary | md(true) }}
+  {% if relatedArticle %}
+  <a href="{{ relatedArticle.url }}" class="o-typography-link">{{ relatedArticle.text }}</a>
+  {% endif %}
+</p>
+
+<p>
+  {%- if publishedDate -%}
+  <time class="article__timestamp o-date o-typography-timestamp" data-o-component="o-date" datetime="{{ publishedDate.toISOString() }}" data-o-date-js>{{ publishedDate | ftdate }}</time>
+  {%- endif -%}
+  {%- if byline -%}
+  &#32;<span class="article__byline">by&nbsp;
+  {%- if byline.push -%}
+    {%- for author in byline -%}
+      {{ " and " if not loop.first and loop.last else (", " if not loop.first else "") }}
+      {%- if author.url -%}
+        <a href="{{ author.url }}" class="o-typography-link-topic o-typography-link-topic--small">{{ author.name }}</a>
+      {%- else -%}
+        {{ author.name }}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- else -%}
+    {{ byline | md(true) }}
+  {%- endif -%}
+  </span>
+  {%- endif -%}
+</p>
