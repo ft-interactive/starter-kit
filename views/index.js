@@ -11,7 +11,7 @@ export function configure() {
   );
 
   Object.assign(env.filters, require('./filters'));
-  markdown_tag.register(env, env.filters.md.bind({env: env}));
+  markdown_tag.register(env, env.filters.md);
 
   return env;
 }

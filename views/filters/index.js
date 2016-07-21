@@ -1,5 +1,6 @@
 import markdownIt from 'markdown-it';
 import removeMarkdown from 'remove-markdown';
+import nunjucks from 'nunjucks';
 
 const days  = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
@@ -19,7 +20,7 @@ const markdown = markdownIt({
 });
 
 export function md(str, inline) {
-  return !str ? '' : this.env.filters.safe(inline ? markdown.renderInline(str) : markdown.render(str));
+  return !str ? '' : new nunjucks.runtime.SafeString(inline ? markdown.renderInline(str) : markdown.render(str));
 }
 
 export function plain(str, stripListLeaders=true) {
