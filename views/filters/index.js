@@ -26,3 +26,11 @@ export function md(str, inline) {
 export function plain(str, stripListLeaders=true) {
   return removeMarkdown(str, {stripListLeaders: stripListLeaders, gfm: true});
 }
+
+export function encodedJSON (options) {
+  try {
+    return encodeURIComponent(JSON.stringify(JSON.parse((options.fn(this) || '')), null, ''));
+  } catch (e) {
+    return '';
+  }
+};
