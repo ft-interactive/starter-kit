@@ -64,14 +64,22 @@ npm i --link --no-optional
 
 echo "Creating repo on Github"
 
-curl -v -n https://api.github.com/orgs/ft-interactive/repos \
--d "{\"name\": \"${repo}\", \"homepage\":\"${url}\",\"description\": \"${description}\", \"private\":true, \"team_id\":260487, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}"
-
+RESP=$(curl -n -v https://api.github.com/orgs/ft-interactive/repos \
+-d "{\"name\": \"${repo}\", \"homepage\":\"${url}\",\"description\": \"${description}\", \"private\":true, \"team_id\":260487, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}"  | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin').toString()).message")
+echo $RESP
 git remote add origin ssh://git@github.com/ft-interactive/$repo.git
 
-echo "Push to Github"
-git push origin master
+if [[ $RESP =~ "upgrade your plan" ]];
+then
+  echo ""
+  echo "No more private repos 😭 -- please manually create repo and then run:"
+  echo ""
+  echo "    git push origin master"
+else
+  echo "Push to Github"
+  git push origin master -u
 
-echo ""
-echo "DONE !!"
-echo ""
+  echo ""
+  echo "DONE !!"
+  echo ""
+fi
