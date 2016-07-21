@@ -64,4 +64,9 @@ export default _ => ({
     // a heading is provided automatically if not set (peferred)
     heading: ''
   },
+
+  tracking: {
+    //
+    // micrositeName: ''
+  }
 })

@@ -27,10 +27,19 @@ export function plain(str, stripListLeaders=true) {
   return removeMarkdown(str, {stripListLeaders: stripListLeaders, gfm: true});
 }
 
-export function encodedJSON (options) {
+export function encodedJSON(str) {
   try {
-    return encodeURIComponent(JSON.stringify(JSON.parse((options.fn(this) || '')), null, ''));
+    return encodeURIComponent(JSON.stringify(JSON.parse(str || ''), null, ''));
   } catch (e) {
     return '';
   }
-};
+}
+
+export function spoorTrackingPixel(str) {
+  const json = encodedJSON(str.trim());
+  const img = `<img src="https://spoor-api.ft.com/px.gif?data=${json}" height="1" width="1" />`;
+  return new nunjucks.runtime.SafeString(`<!--[if lt IE 9]>
+    ${img}
+    <![endif]-->
+    <noscript data-o-component="o-tracking">${img}</noscript>`);
+}

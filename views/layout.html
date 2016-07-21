@@ -6,11 +6,9 @@
   </head>
   <body>
 
-
-    <!--
-      TODO: REPLACE THIS COMMENT WITH A TRACKING SNIPPET
-      http://ft-interactive.github.io/tracking-snippet-generator/
-    -->
+    {% if flags.analytics %}
+      {% include "includes/analytics.html" %}
+    {% endif %}
 
     {% if flags.header %}
       {% include "includes/header.html" %}
