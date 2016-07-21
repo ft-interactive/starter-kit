@@ -66,7 +66,25 @@ export default _ => ({
   },
 
   tracking: {
-    //
-    // micrositeName: ''
+
+    /*
+
+    Microsite Name
+
+    e.g. guffipedia, business-books, baseline.
+    Used to query groups of pages, not intended for use with
+    one off interactive pages. If you're building a microsite
+    consider more custom tracking to allow better analysis.
+    Also used for pages that do not have a UUID for whatever reason
+    */
+    // micrositeName: '',
+
+    /*
+    Product name
+
+    This will usually default to "IG"
+    however another value may be needed
+    */
+    // product: '',
   }
 })
