@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "o-colors": "^3.3.1",
-    "o-grid": "^4.0.6"
+    "o-grid": "^4.0.6",
+    "ig-article": "^1.1.0-alpha.3"
   }
 }
