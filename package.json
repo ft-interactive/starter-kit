@@ -1,4 +1,14 @@
 {
+  "babel": {
+    "presets": [
+      "es2015-node6",
+      "stage-2"
+    ]
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "bower_components"
+  ],
   "devDependencies": {
     "ansi-to-html": "^0.4.1",
     "axios": "^0.13.1",
@@ -36,27 +46,6 @@
   "engines": {
     "node": ">=6"
   },
-  "private": true,
-  "scripts": {
-    "clean": "rm -rf dist",
-    "prebuild": "npm run clean",
-    "build": "gulp",
-    "postinstall": "bower install",
-    "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'",
-    "prestart": "npm run clean",
-    "test": "npm run build",
-    "lint": "eslint ."
-  },
-  "cacheDirectories": [
-    "node_modules",
-    "bower_components"
-  ],
-  "babel": {
-    "presets": [
-      "es2015-node6",
-      "stage-2"
-    ]
-  },
   "optionalDependencies": {
     "babel-eslint": "^6.1.2",
     "eslint": "^3.1.1",
@@ -65,5 +54,16 @@
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^5.2.2"
+  },
+  "private": true,
+  "scripts": {
+    "build": "gulp",
+    "clean": "rm -rf dist",
+    "lint": "eslint .",
+    "postinstall": "bower install",
+    "prebuild": "npm run clean",
+    "prestart": "npm run clean",
+    "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'",
+    "test": "npm run build"
   }
 }
