@@ -1,4 +1,14 @@
 {
+  "babel": {
+    "presets": [
+      "es2015-node6",
+      "stage-2"
+    ]
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "bower_components"
+  ],
   "devDependencies": {
     "ansi-to-html": "^0.4.1",
     "axios": "^0.13.1",
@@ -36,24 +46,24 @@
   "engines": {
     "node": ">=6"
   },
+  "optionalDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.1.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-import": "^1.12.0",
+    "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-react": "^5.2.2"
+  },
   "private": true,
   "scripts": {
-    "clean": "rm -rf dist",
-    "prebuild": "npm run clean",
     "build": "gulp",
+    "clean": "rm -rf dist",
+    "lint": "eslint .",
     "postinstall": "bower install",
-    "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'",
+    "prebuild": "npm run clean",
     "prestart": "npm run clean",
+    "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'",
     "test": "npm run build"
-  },
-  "cacheDirectories": [
-    "node_modules",
-    "bower_components"
-  ],
-  "babel": {
-    "presets": [
-      "es2015-node6",
-      "stage-2"
-    ]
   }
 }

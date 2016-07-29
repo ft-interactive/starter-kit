@@ -1,4 +1,4 @@
-export default _ => ({
+export default _ => ({ // eslint-disable-line
 
   // link file UUID
   id: '$uuid',
@@ -13,23 +13,24 @@ export default _ => ({
 
   headline: 'Politics and the English Language',
 
-  summary: 'Political language is designed to make lies sound truthful and murder respectable, and to give an appearance of solidity to pure wind',
+  summary: 'Political language is designed to make lies sound truthful' +
+           'and murder respectable, and to give an appearance of solidity to pure wind',
 
   topic: {
     name: 'Starter Kit',
-    url: '/foo'
+    url: '/foo',
   },
 
   relatedArticle: {
     text: 'Related article »',
-    url: 'https://en.wikipedia.org/wiki/Politics_and_the_English_Language'
+    url: 'https://en.wikipedia.org/wiki/Politics_and_the_English_Language',
   },
 
   // Byline can by a plain string, markdown, or array of authors
   // if array of authors, url is optional
   byline: [
-    {name: 'Author One', url: '/foo/bar'},
-    {name: 'Author Two'},
+    { name: 'Author One', url: '/foo/bar' },
+    { name: 'Author Two' },
   ],
 
   // Appears in the HTML <title>
@@ -62,7 +63,7 @@ export default _ => ({
     id: '',
 
     // a heading is provided automatically if not set (peferred)
-    heading: ''
+    heading: '',
   },
 
   tracking: {
@@ -86,5 +87,5 @@ export default _ => ({
     however another value may be needed
     */
     // product: '',
-  }
-})
+  },
+});

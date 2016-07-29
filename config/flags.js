@@ -1,7 +1,7 @@
 const prod = process.env.NODE_ENV === 'production';
 
-export default _ => ({
-  prod: prod,
+export default _ => ({ // eslint-disable-line
+  prod,
   errorReporting: prod,
   analytics: prod,
   googleAnalytics: prod,
@@ -30,4 +30,4 @@ export default _ => ({
 
   */
   comments: true,
-})
+});

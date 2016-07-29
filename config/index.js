@@ -2,12 +2,10 @@ import article from './article';
 import flags from './flags';
 
 export default async function() {
-
   const d = await article();
   const f = await flags();
 
   /*
-
   An experimental demo that gets content from the API
   and overwrites some model values. This requires the Link File
   to have been published. Also next-es-interface.ft.com probably
@@ -31,6 +29,6 @@ export default async function() {
 
   return {
     ...d,
-    flags: f
-  }
+    flags: f,
+  };
 }
