@@ -3,7 +3,8 @@
 > Boilerplate to kick-start a new project
 
 
-[![Build Status][circle-image]][circle-url] [![Dependency Status][devdeps-image]][devdeps-url]
+[![Build Status][circle-image]][circle-url] [![Dependency Status][devdeps-image]][devdeps-url] [![Dependency Status][dependencyci-image]][dependencyci-url]
+
 
 ### Download
 
@@ -35,3 +36,6 @@ This software is published by the Financial Times under the [MIT licence](http:/
 
 [devdeps-url]: https://david-dm.org/ft-interactive/starter-kit#info=devDependencies
 [devdeps-image]: https://img.shields.io/david/dev/ft-interactive/starter-kit.svg?style=flat-square
+
+[dependencyci-url]: https://dependencyci.com/github/ft-interactive/starter-kit
+[dependencyci-image]: https://dependencyci.com/github/ft-interactive/starter-kit/badge
