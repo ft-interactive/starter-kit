@@ -10,6 +10,7 @@ import ora from 'ora';
 import parseGitHubURL from 'parse-github-url';
 import path from 'path';
 import s3 from 's3';
+import fs from 'fs';
 import { cyan, green, red, yellow } from 'chalk';
 
 process.on('unhandledRejection', error => {
@@ -27,8 +28,14 @@ process.on('unhandledRejection', error => {
   const oneYear = 31556926;
   const oneMinute = 60;
 
-  // fn to determine if a filename is revved, i.e. if it matches `**/*.rev-*.*`
-  const isRevved = name => /.+\.rev-.+/.test(path.basename(name));
+  // fn to determine if a file is revved
+  const isRevved = (() => {
+    const revvedFileNames = Object.values(JSON.parse(
+      fs.readFileSync(path.join(localDir, 'rev-manifest.json'), 'utf8'))
+    );
+
+    return name => revvedFileNames.indexOf(name) > -1;
+  })();
 
   // increase socket pool size to improve bandwidth usage
   http.globalAgent.maxSockets = 20;
