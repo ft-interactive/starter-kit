@@ -34,7 +34,7 @@ process.on('unhandledRejection', error => {
       fs.readFileSync(path.join(localDir, 'rev-manifest.json'), 'utf8'))
     );
 
-    return name => revvedFileNames.indexOf(name) > -1;
+    return name => revvedFileNames.indexOf(path.relative(localDir, name)) > -1;
   })();
 
   // increase socket pool size to improve bandwidth usage
