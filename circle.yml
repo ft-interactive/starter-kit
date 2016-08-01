@@ -1,6 +1,7 @@
 machine:
+  timezone: Europe/London
   node:
-    version: 6.3.0
+    version: 6.3.1
 
 dependencies:
   cache_directories:
@@ -8,3 +9,9 @@ dependencies:
     - node_modules
   override:
     - npm install
+
+deployment:
+  s3: # this is just a custom name, could be anything
+    branch: /.*/
+    commands:
+      - npm run deploy:confirm
