@@ -21,9 +21,9 @@ const config = {
   plugins: ['babel'],
   rules: Object.keys(rules).reduce((last, curr) => {
     let rule = rules[curr];
-    if (Array.isArray(rule) && rule[0] === 2) {
+    if (Array.isArray(rule) && (rule[0] === 2 || rule[0] === 'error')) {
       rule[0] = 1;
-    } else if (Number.isInteger(rule) && rule === 2) {
+    } else if (rule === 2 || rule === 'error') {
       rule = 1;
     }
 
