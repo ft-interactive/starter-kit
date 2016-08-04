@@ -1,23 +1,23 @@
 /* eslint-disable no-console, global-require */
 
-import browserify from 'browserify';
-import browserSync from 'browser-sync';
-import gulp from 'gulp';
-import mergeStream from 'merge-stream';
-import path from 'path';
-import runSequence from 'run-sequence';
-import source from 'vinyl-source-stream';
-import watchify from 'watchify';
-import AnsiToHTML from 'ansi-to-html';
-import gulpnunjucks from 'gulp-nunjucks';
-import inlineSource from 'gulp-inline-source';
-import htmlmin from 'gulp-htmlmin';
-import rev from 'gulp-rev';
-import revReplace from 'gulp-rev-replace';
-import gulpdata from 'gulp-data';
-import sass from 'gulp-sass';
-import util from 'gulp-util';
-import autoprefixer from 'gulp-autoprefixer';
+const browserify = require('browserify');
+const browserSync = require('browser-sync');
+const gulp = require('gulp');
+const mergeStream = require('merge-stream');
+const path = require('path');
+const runSequence = require('run-sequence');
+const source = require('vinyl-source-stream');
+const watchify = require('watchify');
+const AnsiToHTML = require('ansi-to-html');
+const gulpnunjucks = require('gulp-nunjucks');
+const inlineSource = require('gulp-inline-source');
+const htmlmin = require('gulp-htmlmin');
+const rev = require('gulp-rev');
+const revReplace = require('gulp-rev-replace');
+const gulpdata = require('gulp-data');
+const sass = require('gulp-sass');
+const util = require('gulp-util');
+const autoprefixer = require('gulp-autoprefixer');
 
 const ansiToHTML = new AnsiToHTML();
 
@@ -201,7 +201,7 @@ gulp.task('build-pages', () => {
   delete require.cache[require.resolve('./config/index')];
 
   return gulp.src('client/**/*.html')
-    .pipe(gulpdata(async(d) => await require('./config').default(d)))
+    .pipe(gulpdata(d => require('./config').default(d))) // This might be broken now.
     .pipe(gulpnunjucks.compile(null, { env: require('./views').configure() }))
     .pipe(gulp.dest('dist'));
 });

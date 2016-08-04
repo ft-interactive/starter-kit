@@ -1,18 +1,18 @@
-import nunjucks from 'nunjucks';
-import markdownTag from 'nunjucks-markdown';
-// import markdownIt from 'markdown-it';
+/**
+ * Starter Kit Nunjucks config
+ *
+ * This pulls in templates and filters from ft-interactive/g-ui and
+ * then adds any extra ones added to views/ and views/filters, respectively.
+ */
 
-// Disabling because I don't know where this is used. Æ
-// eslint-disable-next-line import/prefer-default-export
+import { templates } from 'g-ui/lib';
+
 export function configure() {
   delete require.cache[require.resolve('./filters/index')];
 
-  const env = new nunjucks.Environment(
-    new nunjucks.FileSystemLoader(['client', 'views'])
-  );
+  const env = templates.configure(['client', 'views']);
 
   Object.assign(env.filters, require('./filters'));
-  markdownTag.register(env, env.filters.md);
 
   return env;
 }
