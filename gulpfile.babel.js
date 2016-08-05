@@ -188,6 +188,31 @@ gulp.task('watch', ['styles', 'build-pages', 'copy'], done => {
   });
 });
 
+// Same as the above, but doesn't run BrowserSync. Used in `npm run server`
+gulp.task('watch-server', ['styles', 'build-pages', 'copy'], done => {
+  const bundlers = getBundlers(true);
+
+  // execute all the bundlers once, up front
+  const initialBundles = mergeStream(bundlers.map(bundler => bundler.execute()));
+  initialBundles.resume(); // (otherwise never emits 'end')
+
+  initialBundles.on('end', () => {
+    // refresh browser after other changes
+    gulp.watch([
+      'client/**/*.{html,md}',
+      'views/**/*.{js,html}',
+      'config/*.{js,json}'], ['build-pages']);
+    gulp.watch(['client/styles/**/*.scss'], ['styles']);
+    gulp.watch(copyGlob, ['copy']);
+
+    // UNCOMMENT IF USING IMAGEMIN
+    // gulp.watch(['client/images/**/*']);
+
+    done();
+  });
+});
+
+
 // copies over miscellaneous files (client => dist)
 gulp.task('copy', () =>
   gulp.src(copyGlob, { dot: true })

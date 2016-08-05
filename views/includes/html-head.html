@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://cdn.polyfill.io">
 
 {# Critical JS and CSS #}
-<script inline src="scripts/top.js"></script>
+<script inline src="{{ 'scripts/top.js' | rev }}"></script>
 <!--[if lt IE 9]><script>/**
 * @preserve HTML5 Shiv 3.7.2 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
 */
@@ -19,7 +19,7 @@
 
 <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=n-normalize@^1,o-fonts@^2">
 <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-grid@^4,o-typography@^4.2">
-<link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="{{ 'styles/main.css' | rev }}">
 {% if stylesheets %}{% for stylesheet in stylesheets %}
 <link rel="stylesheet" href="{{ stylesheet }}">
 {% endfor %}{% endif %}
