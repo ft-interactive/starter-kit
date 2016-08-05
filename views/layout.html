@@ -54,7 +54,7 @@
 
     <script async>
     queue([
-      'scripts/main.js'
+      '{{'scripts/main.js' | rev }}'
       {% if scripts %}{% for script in scripts %}
       ,'{{ script }}'
       {% endfor %}{% endif %}

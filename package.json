@@ -20,7 +20,7 @@
     "bower": "^1.7.9",
     "browser-sync": "^2.11.2",
     "browserify": "^13.0.0",
-    "debowerify": "^1.4.1",
+    "debowerify": "github:eugeneware/debowerify#pull/85/head",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-data": "^1.2.1",
@@ -33,6 +33,7 @@
     "gulp-rev-replace": "^0.4.3",
     "gulp-sass": "^2.3.2",
     "gulp-util": "^3.0.7",
+    "htmlmin": "0.0.6",
     "markdown-it": "^7.0.0",
     "merge-stream": "^1.0.0",
     "nodemon": "^1.9.2",
@@ -77,5 +78,15 @@
     "babel-node": "babel-node --presets=es2015-node6,stage-2",
     "server": "nodemon --watch server --exec npm run babel-node -- server/index.js",
     "transpile-server": "babel --presets=es2015-node6,stage-2 --minified --out-dir dist server/index.js"
+  },
+  "dependencies": {
+    "es6-promisify": "^4.1.0",
+    "glob": "^7.0.5",
+    "koa-manifest-rev": "^0.1.0",
+    "koa-mount": "^2.0.0",
+    "koa-router": "^7.0.1",
+    "koa-static": "^3.0.0",
+    "rev-file": "^2.0.0",
+    "sander": "^0.5.1"
   }
 }
