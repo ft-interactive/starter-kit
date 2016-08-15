@@ -18,6 +18,7 @@ import gulpdata from 'gulp-data';
 import sass from 'gulp-sass';
 import util from 'gulp-util';
 import autoprefixer from 'gulp-autoprefixer';
+import plumber from 'gulp-plumber';
 
 const ansiToHTML = new AnsiToHTML();
 
@@ -201,6 +202,7 @@ gulp.task('build-pages', () => {
   delete require.cache[require.resolve('./config/index')];
 
   return gulp.src('client/**/*.html')
+    .pipe(plumber())
     .pipe(gulpdata(async(d) => await require('./config').default(d)))
     .pipe(gulpnunjucks.compile(null, { env: require('./views').configure() }))
     .pipe(gulp.dest('dist'));
@@ -226,6 +228,7 @@ gulp.task('scripts', () =>
 // builds stylesheets with sass/autoprefixer
 gulp.task('styles', () =>
   gulp.src('client/**/*.scss')
+    .pipe(plumber())
     .pipe(sass({
       includePaths: 'bower_components',
       outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded',
