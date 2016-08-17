@@ -30,7 +30,7 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 const BROWSERIFY_ENTRIES = [
-  'scripts/main.js'
+  'scripts/main.js',
 ];
 
 const BROWSERIFY_TRANSFORMS = [
@@ -39,7 +39,7 @@ const BROWSERIFY_TRANSFORMS = [
 ];
 
 const OTHER_SCRIPTS = [
-  'scripts/top.js'
+  'scripts/top.js',
 ];
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -53,12 +53,101 @@ const copyGlob = OTHER_SCRIPTS.concat([
 
 ]);
 
+// helpers
+let preventNextReload; // hack to keep a BS error notification on the screen
+function reload() {
+  if (preventNextReload) {
+    preventNextReload = false;
+    return;
+  }
+
+  browserSync.reload();
+}
+
+function handleBuildError(headline, error) {
+  if (process.env.NODE_ENV === 'development') {
+    // show in the terminal
+    util.log(headline, error && error.stack);
+
+    // report it in browser sync
+    let report = (
+      `<span style="color:red;font-weight:bold;font:bold 20px sans-serif">${headline}</span>`
+    );
+
+    if (error) {
+      report += (
+        `<pre style="text-align:left;max-width:800px">${ansiToHTML.toHtml(error.stack)}</pre>`
+      );
+    }
+
+    browserSync.notify(report, 60 * 60 * 1000);
+    preventNextReload = true;
+
+    // allow the sass/js task to end successfully, so the process can continue
+    this.emit('end');
+  } else throw error;
+}
+
+// function to get an array of objects that handle browserifying
+function getBundlers(useWatchify) {
+  return BROWSERIFY_ENTRIES.map(entry => {
+    const bundler = {
+      b: browserify(path.posix.resolve('client', entry), {
+        cache: {},
+        packageCache: {},
+        fullPaths: useWatchify,
+        debug: useWatchify,
+      }),
+
+      execute() {
+        const stream = this.b.bundle()
+          .on('error', function browserifyError(error) {
+            handleBuildError.call(this, 'Error building JavaScript', error);
+          })
+          .pipe(source(entry));
+
+        // If you want JS sourcemaps:
+        //    1. npm i -D gulp-sourcemaps
+        //    2. uncomment code below
+        //
+        // skip sourcemap creation if we're in 'serve' mode
+        // if (useWatchify) {
+        //   stream = stream
+        //    .pipe(vinylBuffer())
+        //    .pipe(gulpsourcemaps.init({ loadMaps: true }))
+        //    .pipe(gulpsourcemaps.write('./'));
+        // }
+
+        return stream.pipe(gulp.dest('dist'));
+      },
+    };
+
+    // register all the transforms
+    BROWSERIFY_TRANSFORMS.forEach(transform => bundler.b.transform(transform));
+
+    // upgrade to watchify if we're in 'serve' mode
+    if (useWatchify) {
+      bundler.b = watchify(bundler.b);
+      bundler.b.on('update', () => {
+        // re-run the bundler then reload the browser
+        bundler.execute().on('end', reload);
+      });
+    }
+
+    return bundler;
+  });
+}
+
+/**
+ * The Tasks
+ */
+
 // makes a production build (client => dist)
 gulp.task('default', done => {
   process.env.NODE_ENV = 'production';
   runSequence(
     ['scripts', 'styles', 'build-pages', 'copy'],
-    ['html' /*, 'images'*/],
+    ['html'/* 'images' */],
     ['revreplace'],
   done);
 });
@@ -80,12 +169,15 @@ gulp.task('watch', ['styles', 'build-pages', 'copy'], done => {
       ghostMode: process.argv.includes('--ghost'),
       port: process.env.PORT || '3000',
       server: {
-        baseDir: 'dist'
+        baseDir: 'dist',
       },
     });
 
     // refresh browser after other changes
-    gulp.watch(['client/**/*.{html,md}', 'views/**/*.{js,html}', 'config/*.{js,json}'], ['build-pages', reload]);
+    gulp.watch([
+      'client/**/*.{html,md}',
+      'views/**/*.{js,html}',
+      'config/*.{js,json}'], ['build-pages', reload]);
     gulp.watch(['client/styles/**/*.scss'], ['styles', reload]);
     gulp.watch(copyGlob, ['copy', reload]);
 
@@ -109,11 +201,9 @@ gulp.task('build-pages', () => {
   delete require.cache[require.resolve('./config/index')];
 
   return gulp.src('client/**/*.html')
-		.pipe(gulpdata(async (d) => {
-      return await require('./config').default(d)
-    }))
-		.pipe(gulpnunjucks.compile(null, {env: require('./views').configure()}))
-		.pipe(gulp.dest('dist'))
+    .pipe(gulpdata(async(d) => await require('./config').default(d)))
+    .pipe(gulpnunjucks.compile(null, { env: require('./views').configure() }))
+    .pipe(gulp.dest('dist'));
 });
 
 // minifies all HTML, CSS and JS (dist & client => dist)
@@ -123,7 +213,7 @@ gulp.task('html', () =>
     .pipe(htmlmin({
       collapseWhitespace: true,
       processConditionalComments: true,
-      minifyJS: true
+      minifyJS: true,
     }))
     .pipe(gulp.dest('dist'))
 );
@@ -137,12 +227,11 @@ gulp.task('scripts', () =>
 gulp.task('styles', () =>
   gulp.src('client/**/*.scss')
     .pipe(sass({
-        includePaths: 'bower_components',
-        outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded'
-      }).on('error', function(error) {
-          handleBuildError.call(this, 'Error building Sass', error);
-      })
-    )
+      includePaths: 'bower_components',
+      outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded',
+    }).on('error', function sassError(error) {
+      handleBuildError.call(this, 'Error building Sass', error);
+    }))
     .pipe(autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
     .pipe(gulp.dest('dist'))
 );
@@ -178,88 +267,32 @@ gulp.task('revreplace', ['revision'], () =>
 //   .pipe(gulp.dest('dist'))
 // );
 
-// function to get an array of objects that handle browserifying
-function getBundlers(useWatchify) {
-  return BROWSERIFY_ENTRIES.map(entry => {
-    const bundler = {
-      b: browserify(path.posix.resolve('client', entry), {
-        cache: {},
-        packageCache: {},
-        fullPaths: useWatchify,
-        debug: useWatchify,
-      }),
+gulp.task('test:install-selenium', done => {
+  const selenium = require('selenium-standalone');
+  selenium.install({}, done);
+});
 
-      execute() {
-        let stream = this.b.bundle()
-          .on('error', function(error) {
-            handleBuildError.call(this, 'Error building JavaScript', error);
-          })
-          .pipe(source(entry));
+gulp.task('test:preflight', ['watch', 'test:install-selenium'], () => {
+  const nightwatch = require('nightwatch');
 
-        // If you want JS sourcemaps:
-        //    1. npm i -D gulp-sourcemaps
-        //    2. uncomment code below
-        //
-        //// skip sourcemap creation if we're in 'serve' mode
-        // if (useWatchify) {
-        //   stream = stream
-        //    .pipe(vinylBuffer())
-        //    .pipe(gulpsourcemaps.init({ loadMaps: true }))
-        //    .pipe(gulpsourcemaps.write('./'));
-        // }
-
-        return stream.pipe(gulp.dest('dist'));
-      },
-    };
-
-    // register all the transforms
-    BROWSERIFY_TRANSFORMS.forEach(transform => bundler.b.transform(transform));
-
-    // upgrade to watchify if we're in 'serve' mode
-    if (useWatchify) {
-      bundler.b = watchify(bundler.b);
-      bundler.b.on('update', files => {
-        // re-run the bundler then reload the browser
-        bundler.execute().on('end', reload);
-      });
-    }
-
-    return bundler;
-  });
-}
-
-// helpers
-let preventNextReload; // hack to keep a BS error notification on the screen
-function reload() {
-  if (preventNextReload) {
-    preventNextReload = false;
-    return;
+  if (process.env.CIRCLE_PROJECT_REPONAME === 'starter-kit') {
+    console.info('Project is base starter-kit; bypassing preflight checks...');
+    return process.exit();
   }
 
-  browserSync.reload();
-}
+  if (process.env.CIRCLE_BUILD_NUM === 1) {
+    console.info('Initial build; bypassing preflight checks...');
+    return process.exit();
+  }
 
-function handleBuildError(headline, error) {
-  if (process.env.NODE_ENV === 'development') {
-
-    // show in the terminal
-    util.log(headline, error && error.stack);
-
-    // report it in browser sync
-    let report = (
-      `<span style="color:red;font-weight:bold;font:bold 20px sans-serif">${headline}</span>`
-    );
-
-    if (error) {
-      report += (
-        `<pre style="text-align:left;max-width:800px">${ansiToHTML.toHtml(error.stack)}</pre>`
-      );
+  return nightwatch.runner({ // eslint-disable-line consistent-return
+    config: 'nightwatch.json',
+    group: 'preflight',
+  }, passed => {
+    if (passed) {
+      process.exit();
+    } else {
+      process.exit(1);
     }
-
-    browserSync.notify(report, 60 * 60 * 1000);
-    preventNextReload = true;
-
-    // allow the sass/js task to end successfully, so the process can continue
-    this.emit('end');
-  } else throw error;
-}
+  });
+});

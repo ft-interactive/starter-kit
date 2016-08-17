@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 exec('https://origami-build.ft.com/v2/bundles/js?modules=o-tracking', true, true, function () {
   var oTracking = Origami['o-tracking'];
   var page_data = {

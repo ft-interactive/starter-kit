@@ -1,6 +1,8 @@
 import nunjucks from 'nunjucks';
 import markdownTag from 'nunjucks-markdown';
 
+// Disabling because I don't know where this is used. Æ
+// eslint-disable-next-line import/prefer-default-export
 export function configure() {
   delete require.cache[require.resolve('./filters/index')];
 
