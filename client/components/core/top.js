@@ -79,15 +79,15 @@ function empty_queue(q) {
 function clear_queue() {
   empty_queue(queued_scripts);
   queued_scripts = null;
-  let callback = low_priority_queue.length
+  var callback = low_priority_queue.length
                         ? low_priority_queue[low_priority_queue.length - 1][3]
                         : null;
 
-  const done = function () {
+  var done = function () {
     document.documentElement.className = document.documentElement.className + ' js-success';
   }
 
-  const onLoaded = typeof callback !== 'function' ? done : function() {
+  var onLoaded = typeof callback !== 'function' ? done : function() {
     callback();
     done();
   }
