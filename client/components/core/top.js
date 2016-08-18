@@ -79,9 +79,27 @@ function empty_queue(q) {
 function clear_queue() {
   empty_queue(queued_scripts);
   queued_scripts = null;
+  let callback = low_priority_queue.length
+                        ? low_priority_queue[low_priority_queue.length - 1][3]
+                        : null;
+
+  const done = function () {
+    document.documentElement.className = document.documentElement.className + ' js-success';
+  }
+
+  const onLoaded = typeof callback !== 'function' ? done : function() {
+    callback();
+    done();
+  }
+
+  if (low_priority_queue.length) {
+    low_priority_queue[low_priority_queue.length - 1][3] = onLoaded;
+  } else {
+    setTimeout(function(){onLoaded()},1);
+  }
+
   empty_queue(low_priority_queue);
   low_priority_queue = null;
-  document.documentElement.className = document.documentElement.className + ' js-success';
 }
 
 window.queue = queue;
