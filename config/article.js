@@ -13,6 +13,7 @@ export default _ => ({ // eslint-disable-line
 
   headline: 'Politics and the English Language',
 
+  // summary === standfirst (Summary is what the content API calls it)
   summary: 'Political language is designed to make lies sound truthful' +
            'and murder respectable, and to give an appearance of solidity to pure wind',
 

@@ -31,7 +31,7 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 const BROWSERIFY_ENTRIES = [
-  'scripts/main.js',
+  'index.js',
 ];
 
 const BROWSERIFY_TRANSFORMS = [
@@ -40,7 +40,7 @@ const BROWSERIFY_TRANSFORMS = [
 ];
 
 const OTHER_SCRIPTS = [
-  'scripts/top.js',
+  'components/core/top.js',
 ];
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -179,7 +179,7 @@ gulp.task('watch', ['styles', 'build-pages', 'copy'], done => {
       'client/**/*.{html,md}',
       'views/**/*.{js,html}',
       'config/*.{js,json}'], ['build-pages', reload]);
-    gulp.watch(['client/styles/**/*.scss'], ['styles', reload]);
+    gulp.watch(['client/**/*.scss'], ['styles', reload]);
     gulp.watch(copyGlob, ['copy', reload]);
 
     // UNCOMMENT IF USING IMAGEMIN
