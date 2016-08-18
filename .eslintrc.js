@@ -20,8 +20,15 @@ const config = {
   parser: 'babel-eslint',
   plugins: ['babel'],
   rules: Object.keys(rules).reduce((last, curr) => {
+console.log(curr);
+// 'jsx-sort-props'
+
     let rule = rules[curr];
-    if (Array.isArray(rule) && (rule[0] === 2 || rule[0] === 'error')) {
+    if (/^jsx/.test(curr)) {
+      console.log('========================================');
+      console.log(curr);
+      rule = 2;
+    } else if (Array.isArray(rule) && (rule[0] === 2 || rule[0] === 'error')) {
       rule[0] = 1;
     } else if (rule === 2 || rule === 'error') {
       rule = 1;
