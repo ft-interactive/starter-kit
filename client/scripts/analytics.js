@@ -1,7 +1,7 @@
 /* eslint-disable */
 
-exec('https://origami-build.ft.com/v2/bundles/js?modules=o-tracking', true, true, function () {
-  var oTracking = Origami['o-tracking'];
+queue('https://origami-build.ft.com/v2/bundles/js?modules=o-tracking&export=oTracking', function () {
+  var oTracking = window.oTracking['o-tracking'];
   var page_data = {
     content: { asset_type: 'interactive' }
   };
@@ -33,4 +33,4 @@ exec('https://origami-build.ft.com/v2/bundles/js?modules=o-tracking', true, true
   oTracking.link.init();
   // Register page view
   oTracking.page(page_data);
-});
+}, true);

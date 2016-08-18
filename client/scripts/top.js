@@ -34,9 +34,13 @@ function exec(script) {
   if (!window.cutsTheMustard) return;
   var s = typeof script;
   if (s === 'string') {
-    add_script.apply(window, arguments);
+    try {
+      add_script.apply(window, arguments);
+    } catch(e) {}
   } else if (s === 'function') {
-    script();
+    try {
+      script();
+    } catch(e) {}
   } else if (script) {
     try{
       var args = Array.prototype.slice.call(arguments, 1);
@@ -48,6 +52,7 @@ function exec(script) {
 }
 
 var queued_scripts = [];
+var low_priority_queue = [];
 
 function queue(src, cb, low_priority) {
   var args = [src, true, !!low_priority, cb];
@@ -57,15 +62,25 @@ function queue(src, cb, low_priority) {
     return;
   }
 
-  queued_scripts.push(args);
+  if (low_priority) {
+    low_priority_queue.push(args);
+  } else {
+    queued_scripts.push(args);
+  }
 }
 
-function clear_queue() {
-  var arr = queued_scripts.slice(0);
-  queued_scripts = null;
+function empty_queue(q) {
+  var arr = q.slice(0);
   for (var i = 0; i < arr.length; i++) {
     exec.apply(window, arr[i]);
   }
+}
+
+function clear_queue() {
+  empty_queue(queued_scripts);
+  queued_scripts = null;
+  empty_queue(low_priority_queue);
+  low_priority_queue = null;
   document.documentElement.className = document.documentElement.className + ' js-success';
 }
 
@@ -82,8 +97,6 @@ exec(function(){
     (window.isLoggedIn ? 'is-loggedin' : 'is-anonymous')
   ].join(' '));
 });
-
-
 
 // Load the polyfill service with custom features. Exclude big unneeded polyfills.
 // and use ?callback= to clear the queue of scripts to load
