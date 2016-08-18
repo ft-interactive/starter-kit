@@ -26,6 +26,14 @@ export default _ => ({ // eslint-disable-line
     url: 'https://en.wikipedia.org/wiki/Politics_and_the_English_Language',
   },
 
+  mainImage: {
+    title: '',
+    description: '',
+    url: '',
+    width: 2048, // ensure correct width
+    height: 1152, // ensure correct height
+  },
+
   // Byline can by a plain string, markdown, or array of authors
   // if array of authors, url is optional
   byline: [
@@ -48,11 +56,24 @@ export default _ => ({ // eslint-disable-line
   */
   twitterCard: 'summary',
 
-  // optional social meta data
-  // twitterCreator: '@individual's_account',
-  // tweetText:  '',
+  /*
+  TODO: Do you want to tweak any of the
+        optional social meta data?
+  */
+  // General social
+  // socialImage: '',
   // socialHeadline: '',
   // socialSummary:  '',
+
+  // TWITTER
+  // twitterImage: '',
+  // twitterCreator: '@individual's_account',
+  // tweetText:  '',
+  // twitterHeadline:  '',
+
+  // FACEBOOK
+  // facebookImage: '',
+  // facebookHeadline: '',
 
   onwardjourney: {
 
