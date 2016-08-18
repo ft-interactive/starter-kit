@@ -73,8 +73,8 @@
   "scripts": {
     "build": "gulp",
     "clean": "rm -rf dist",
-    "deploy": "env $([[ -f .env ]] && cat .env) babel-node ./task/deploy.js",
-    "deploy:confirm": "env $([[ -f .env ]] && cat .env) babel-node ./task/deploy.js --confirm",
+    "deploy": "env $([[ -f .env ]] && cat .env) babel-node ./tasks/deploy.js",
+    "deploy:confirm": "env $([[ -f .env ]] && cat .env) babel-node ./tasks/deploy.js --confirm",
     "lint": "eslint .",
     "postinstall": "bower install",
     "prebuild": "npm run clean",
