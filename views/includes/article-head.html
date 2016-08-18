@@ -13,7 +13,11 @@
 
 <p>
   {%- if publishedDate -%}
-  <time class="article__timestamp o-date o-typography-timestamp" data-o-component="o-date" datetime="{{ publishedDate.toISOString() }}" data-o-date-js>{{ publishedDate | ftdate }}</time>
+  <time class="article__timestamp o-date o-typography-timestamp"
+          data-o-component="o-date" datetime="{{ lastUpdated | isotime }}"
+          itemprop="datePublished" content="{{ lastUpdated | isotime }}"
+          data-o-date-js>{{ publishedDate | ftdate }}</time>
+  <meta itemprop="dateModified" content="{{ lastUpdated | isotime }}">
   {%- endif -%}
   {%- if byline -%}
   &#32;<span class="article__byline">by&nbsp;
@@ -21,7 +25,7 @@
     {%- for author in byline -%}
       {{ " and " if not loop.first and loop.last else (", " if not loop.first else "") }}
       {%- if author.url -%}
-        <a href="{{ author.url }}" class="o-typography-link-topic o-typography-link-topic--small">{{ author.name }}</a>
+        <a href="{{ author.url }}" class="o-typography-link-topic o-typography-link-topic--small" itemprop="author">{{ author.name }}</a>
       {%- else -%}
         {{ author.name }}
       {%- endif -%}

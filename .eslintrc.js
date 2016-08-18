@@ -21,9 +21,9 @@ const config = {
   plugins: ['babel'],
   rules: Object.keys(rules).reduce((last, curr) => {
     let rule = rules[curr];
-    if (Array.isArray(rule) && rule[0] === 2) {
+    if (Array.isArray(rule) && (rule[0] === 2 || rule[0] === 'error')) {
       rule[0] = 1;
-    } else if (Number.isInteger(rule) && rule === 2) {
+    } else if (rule === 2 || rule === 'error') {
       rule = 1;
     }
 
@@ -40,8 +40,8 @@ const overrides = {
   'no-console': 0,
   'generator-star-spacing': 0,
   'babel/generator-star-spacing': [2, { before: false, after: true }],
-  'global-require': 1
-
+  'global-require': 1,
+  'import/no-extraneous-dependencies': 2
 };
 
 Object.assign(config.rules, overrides);

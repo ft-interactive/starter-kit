@@ -1,8 +1,12 @@
 {% set test_comments_uuid = "3a499586-b2e0-11e4-a058-00144feab7de" if not flags.prod and flags.comments else "" %}
 <!doctype html>
-<html lang="en-GB" class="core" data-content-id="{{ id if id else test_comments_uuid }}">
+<html lang="en-GB" class="core"
+    data-buildtime="{{ now() | isotime }}"
+    data-content-id="{{ id if id else test_comments_uuid }}">
   <head>
+    {% block prependhead %}{% endblock -%}
     {% include "includes/html-head.html" %}
+    {% block appendhead %}{% endblock -%}
   </head>
   <body>
 
@@ -36,13 +40,17 @@
 
           {% block article_body %}{% endblock %}
 
-          <footer class="o-typography-footer">
+          <footer class="o-typography-footer" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
             <small><a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright">Copyright</a>
-  					The Financial Times Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web.</small>
+  					<span itemprop="name">The Financial Times</span> Limited 2016. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web.</small>
           </footer>
         </div>
       </article>
     </main>
+
+    {% if flags.onwardjourney %}
+      {% include "includes/onwardjourney.html" %}
+    {% endif %}
 
     {% if flags.comments %}
       {% include "includes/comments.html" %}

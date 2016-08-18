@@ -10,6 +10,10 @@ dependencies:
   override:
     - npm install
 
+test:
+  pre:
+    - npm run preflight
+
 deployment:
   s3: # this is just a custom name, could be anything
     branch: /.*/

@@ -18,6 +18,7 @@ import gulpdata from 'gulp-data';
 import sass from 'gulp-sass';
 import util from 'gulp-util';
 import autoprefixer from 'gulp-autoprefixer';
+import plumber from 'gulp-plumber';
 
 const ansiToHTML = new AnsiToHTML();
 
@@ -201,6 +202,7 @@ gulp.task('build-pages', () => {
   delete require.cache[require.resolve('./config/index')];
 
   return gulp.src('client/**/*.html')
+    .pipe(plumber())
     .pipe(gulpdata(async(d) => await require('./config').default(d)))
     .pipe(gulpnunjucks.compile(null, { env: require('./views').configure() }))
     .pipe(gulp.dest('dist'));
@@ -226,6 +228,7 @@ gulp.task('scripts', () =>
 // builds stylesheets with sass/autoprefixer
 gulp.task('styles', () =>
   gulp.src('client/**/*.scss')
+    .pipe(plumber())
     .pipe(sass({
       includePaths: 'bower_components',
       outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded',
@@ -266,3 +269,33 @@ gulp.task('revreplace', ['revision'], () =>
 //   }))
 //   .pipe(gulp.dest('dist'))
 // );
+
+gulp.task('test:install-selenium', done => {
+  const selenium = require('selenium-standalone');
+  selenium.install({}, done);
+});
+
+gulp.task('test:preflight', ['watch', 'test:install-selenium'], () => {
+  const nightwatch = require('nightwatch');
+
+  if (process.env.CIRCLE_PROJECT_REPONAME === 'starter-kit') {
+    console.info('Project is base starter-kit; bypassing preflight checks...');
+    return process.exit();
+  }
+
+  if (process.env.CIRCLE_BUILD_NUM === 1) {
+    console.info('Initial build; bypassing preflight checks...');
+    return process.exit();
+  }
+
+  return nightwatch.runner({ // eslint-disable-line consistent-return
+    config: 'nightwatch.json',
+    group: 'preflight',
+  }, passed => {
+    if (passed) {
+      process.exit();
+    } else {
+      process.exit(1);
+    }
+  });
+});
