@@ -1,5 +1,3 @@
-@import 'o-colors/main';
-
 $font-sans: MetricWeb, sans-serif;
 $font-serif: Georgia, serif;
 $font-display: FinancierDisplayWeb, Georgia, serif;
@@ -100,3 +98,6 @@ $share-button-size: 38px;
   }
 
 }
+
+.enhanced .o-date {opacity: 0;}
+.enhanced.js-success .o-date {opacity: 1;}
