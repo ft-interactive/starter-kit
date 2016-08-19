@@ -82,6 +82,6 @@
     "preflight": "gulp test:preflight",
     "prestart": "npm run clean",
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'",
-    "test": "npm run build"
+    "test": "npm run lint && npm run build"
   }
 }
