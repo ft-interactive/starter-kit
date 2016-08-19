@@ -7,10 +7,13 @@
   import {select} from 'd3-selection';
   import myComponent from './components/my-component';
 
-  ... you code here
+  Split logical parts of you project into components e.g.
+
+  /client
+    - /components
+        - /component-name
+            - styles.scss
+            - index.js
+            - template.html
 
 */
-
-// Need at the moment to to wire up
-// some standard page components
-document.dispatchEvent(new CustomEvent('ig.Loaded'));
