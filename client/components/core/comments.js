@@ -2,7 +2,7 @@
 
 function load_comments_lib() {
   document.removeEventListener('ig.Loaded', load_comments_lib);
-  exec('https://origami-build.ft.com/v2/bundles/js?modules=o-comments@^3.1.0', true, true, show_comments);
+  exec('https://origami-build.ft.com/v2/bundles/js?export=oComments&modules=o-comments@^3.1.0', true, true, show_comments);
 }
 
 function show_comments() {
