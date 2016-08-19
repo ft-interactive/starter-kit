@@ -9,12 +9,6 @@ body {
   font-family: $font-sans;
 }
 
-.o-header{
-  &--light {
-    border-bottom: 1px solid #e9decf;
-  }
-}
-
 $share-button-size: 38px;
 .o-share--muted {
   .o-share__action {
