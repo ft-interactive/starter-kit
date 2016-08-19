@@ -1,7 +1,7 @@
 export default _ => ({ // eslint-disable-line
 
   // link file UUID
-  id: '$uuid',
+  id: null,
 
   // canonical URL of the published page
   // "$url" get filled in by the ./configure script
