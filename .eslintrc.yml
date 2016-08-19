@@ -1,0 +1,5 @@
+# This config is for a large set of stylistic rules useful for lint highlighting.
+# This ruleset is not used in CI as it would be too strict.
+
+extends: airbnb
+root: true

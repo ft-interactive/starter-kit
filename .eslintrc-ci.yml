@@ -1,0 +1,5 @@
+# This config is for a small set of important rules.
+# Breaking these rules will  fail the build.
+
+extends: ft-graphics
+root: true
