@@ -20,8 +20,8 @@
     "bower": "^1.7.9",
     "browser-sync": "^2.14.0",
     "browserify": "^13.1.0",
-    "debowerify": "^1.5.0",
     "d3-time-format": "^2.0.2",
+    "debowerify": "^1.5.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-data": "^1.2.1",
@@ -61,13 +61,13 @@
     "figures": "^1.7.0",
     "input": "^1.0.1",
     "minimist": "^1.2.0",
+    "nightwatch": "^0.9.7",
     "nodegit": "^0.14.1",
     "ora": "^0.3.0",
     "parse-github-url": "^0.3.1",
-    "s3": "^4.4.0",
     "phantomjs-prebuilt": "^2.1.12",
-    "selenium-standalone": "^5.5.0",
-    "nightwatch": "^0.9.7"
+    "s3": "^4.4.0",
+    "selenium-standalone": "^5.5.0"
   },
   "private": true,
   "scripts": {
@@ -78,9 +78,9 @@
     "lint": "eslint .",
     "postinstall": "bower install",
     "prebuild": "npm run clean",
+    "preflight": "gulp test:preflight",
     "prestart": "npm run clean",
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'",
-    "test": "npm run build",
-    "preflight": "gulp test:preflight"
+    "test": "npm run build"
   }
 }
