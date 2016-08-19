@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-queue('https://origami-build.ft.com/v2/bundles/js?modules=o-tracking&export=oTracking', function () {
+queue('https://origami-build.ft.com/v2/bundles/js?modules=o-tracking&export=oTracking&autoinit=0', function () {
   var oTracking = window.oTracking['o-tracking'];
   var page_data = {
     content: { asset_type: 'interactive' }
