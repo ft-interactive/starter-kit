@@ -10,13 +10,13 @@
   <a href="{{ relatedArticle.url }}" class="o-typography-link">{{ relatedArticle.text }}</a>
   {% endif %}
 </p>
-<meta itemprop="dateModified" content="{{ lastUpdated | isotime }}">
+<meta itemprop="dateModified" content="{{ publishedDate | isotime }}">
 
 <p>
   {%- if publishedDate -%}
   <time class="article__timestamp o-date o-typography-timestamp"
-          data-o-component="o-date" datetime="{{ lastUpdated | isotime }}"
-          itemprop="datePublished" content="{{ lastUpdated | isotime }}"
+          data-o-component="o-date" datetime="{{ publishedDate | isotime }}"
+          itemprop="datePublished" content="{{ publishedDate | isotime }}"
           data-o-date-js>{{ publishedDate | ftdate }}</time>
   {%- endif -%}
   {%- if byline -%}
