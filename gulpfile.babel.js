@@ -19,6 +19,9 @@ import sass from 'gulp-sass';
 import util from 'gulp-util';
 import autoprefixer from 'gulp-autoprefixer';
 import plumber from 'gulp-plumber';
+import serveStatic from 'serve-static';
+import http from 'http';
+import finalhandler from 'finalhandler';
 
 const ansiToHTML = new AnsiToHTML();
 
@@ -269,13 +272,19 @@ gulp.task('revreplace', ['revision'], () =>
 //   }))
 //   .pipe(gulp.dest('dist'))
 // );
+function distServer() {
+  const serve = serveStatic('dist', {'index': ['index.html']})
+  return http.createServer(function onRequest (req, res) {
+    serve(req, res, finalhandler(req, res))
+  });
+}
 
 gulp.task('test:install-selenium', done => {
   const selenium = require('selenium-standalone');
   selenium.install({}, done);
 });
 
-gulp.task('test:preflight', ['watch', 'test:install-selenium'], () => {
+gulp.task('test:preflight', ['test:install-selenium'], () => {
   const nightwatch = require('nightwatch');
 
   if (process.env.CIRCLE_PROJECT_REPONAME === 'starter-kit') {
@@ -287,6 +296,8 @@ gulp.task('test:preflight', ['watch', 'test:install-selenium'], () => {
     console.info('Initial build; bypassing preflight checks...');
     return process.exit();
   }
+
+  distServer().listen(process.env.PORT || '3000');
 
   return nightwatch.runner({ // eslint-disable-line consistent-return
     config: 'nightwatch.json',

@@ -11,8 +11,10 @@ dependencies:
     - npm install
 
 test:
-  pre:
+  post:
     - npm run preflight
+    - mv -fv dist/* $CIRCLE_ARTIFACTS
+
 
 deployment:
   s3: # this is just a custom name, could be anything
