@@ -11,7 +11,7 @@ dependencies:
     - npm install
 
 test:
-  pre:
+  post:
     - npm run preflight
 
 deployment:
@@ -19,3 +19,7 @@ deployment:
     branch: /.*/
     commands:
       - npm run deploy:confirm
+
+general:
+  artifacts:
+    - dist
