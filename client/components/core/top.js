@@ -1,58 +1,91 @@
-/* eslint-disable */
+/* eslint-disable
+      camelcase,
+      no-param-reassign,
+      func-names,
+      prefer-rest-params,
+      no-console,
+      operator-assignment,
+      prefer-template,
+      prefer-arrow-callback,
+      prefer-rest-params,
+      no-var
+*/
+
+// Load the polyfill service with custom features. Exclude big unneeded polyfills.
+// and use ?callback= to clear the queue of scripts to load
+var polyfill_features = [
+  'default',
+  'requestAnimationFrame',
+  'Promise',
+  'matchMedia',
+  'HTMLPictureElement',
+  'fetch|always|gated',
+];
+
+var polfill_url = 'https://cdn.polyfill.io/v2/polyfill.min.js?callback=clear_queue&features='
+  + polyfill_features.join(',')
+  + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set';
+
+var queued_scripts = [];
+var low_priority_queue = [];
 
 // product-specific cuts-the-mustard test (customise for your needs)
 window.cutsTheMustard = (typeof Function.prototype.bind !== 'undefined');
 
-;(function(){
-
 function add_script(src, async, defer, cb) {
-    var script = document.createElement('script');
-    script.src = src;
-    script.async = !!async;
-    if (defer) script.defer = !!defer;
-    var oldScript = document.getElementsByTagName('script')[0];
-    if (!cb && typeof defer === 'function') {
-      cb = defer;
-    }
+  var script = document.createElement('script');
+  var oldScript = document.getElementsByTagName('script')[0];
 
-    if (typeof cb === 'function') {
-      if (script.hasOwnProperty('onreadystatechange')) {
-        script.onreadystatechange = function() {
-          if (script.readyState === 'loaded') {
-            cb();
-          }
-        };
-      } else {
-        script.onload = cb;
-      }
+  script.src = src;
+  script.async = !!async;
+  if (defer) script.defer = !!defer;
+  if (!cb && typeof defer === 'function') {
+    cb = defer;
+  }
+
+  if (typeof cb === 'function') {
+    if ({}.hasOwnProperty.call(script, 'onreadystatechange')) {
+      script.onreadystatechange = function () {
+        if (script.readyState === 'loaded') {
+          cb();
+        }
+      };
+    } else {
+      script.onload = cb;
     }
-    oldScript.parentNode.appendChild(script);
-    return script;
+  }
+  oldScript.parentNode.appendChild(script);
+  return script;
 }
 
 function exec(script) {
-  if (!window.cutsTheMustard) return;
   var s = typeof script;
+  var args = Array.prototype.slice.call(arguments, 1);
+  var i;
+
+  if (!window.cutsTheMustard) return;
   if (s === 'string') {
     try {
       add_script.apply(window, arguments);
-    } catch(e) {}
+    } catch (e) {
+      console.error(e);
+    }
   } else if (s === 'function') {
     try {
       script();
-    } catch(e) {}
+    } catch (e) {
+      console.error(e);
+    }
   } else if (script) {
-    try{
-      var args = Array.prototype.slice.call(arguments, 1);
-      for (var i = 0; i < script.length; i++) {
+    try {
+      for (i = 0; i < script.length; i++) {
         exec.apply(window, [script[i]].concat(args));
       }
-    } catch(e){}
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
-
-var queued_scripts = [];
-var low_priority_queue = [];
 
 function queue(src, cb, low_priority) {
   var args = [src, true, !!low_priority, cb];
@@ -71,31 +104,34 @@ function queue(src, cb, low_priority) {
 
 function empty_queue(q) {
   var arr = q.slice(0);
-  for (var i = 0; i < arr.length; i++) {
+  var i;
+
+  for (i = 0; i < arr.length; i++) {
     exec.apply(window, arr[i]);
   }
 }
 
 function clear_queue() {
-  empty_queue(queued_scripts);
-  queued_scripts = null;
   var callback = low_priority_queue.length
-                        ? low_priority_queue[low_priority_queue.length - 1][3]
-                        : null;
+    ? low_priority_queue[low_priority_queue.length - 1][3]
+    : null;
 
   var done = function () {
     document.documentElement.className = document.documentElement.className + ' js-success';
-  }
+  };
 
-  var onLoaded = typeof callback !== 'function' ? done : function() {
+  var onLoaded = typeof callback !== 'function' ? done : function () {
     callback();
     done();
-  }
+  };
+
+  empty_queue(queued_scripts);
+  queued_scripts = null;
 
   if (low_priority_queue.length) {
     low_priority_queue[low_priority_queue.length - 1][3] = onLoaded;
   } else {
-    setTimeout(function(){onLoaded()},1);
+    setTimeout(function () { onLoaded(); }, 1);
   }
 
   empty_queue(low_priority_queue);
@@ -106,31 +142,14 @@ window.queue = queue;
 window.clear_queue = clear_queue;
 window.exec = exec;
 
-exec(function(){
+exec(function () {
   window.isNext = document.cookie.indexOf('FT_SITE=NEXT') !== -1;
   window.isLoggedIn = document.cookie.indexOf('FTSession=') !== -1;
   document.documentElement.className = document.documentElement.className.replace(/\bcore\b/g, [
     'enhanced',
     (window.isNext ? 'is-next' : 'is-falcon'),
-    (window.isLoggedIn ? 'is-loggedin' : 'is-anonymous')
+    (window.isLoggedIn ? 'is-loggedin' : 'is-anonymous'),
   ].join(' '));
 });
 
-// Load the polyfill service with custom features. Exclude big unneeded polyfills.
-// and use ?callback= to clear the queue of scripts to load
-var polyfill_features = [
-  'default',
-  'requestAnimationFrame',
-  'Promise',
-  'matchMedia',
-  'HTMLPictureElement',
-  'fetch|always|gated'
-];
-
-var polfill_url = 'https://cdn.polyfill.io/v2/polyfill.min.js?callback=clear_queue&features='
-                    + polyfill_features.join(',')
-                    + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set';
-
-exec(polfill_url, true, true)
-
-}());
+exec(polfill_url, true, true);
