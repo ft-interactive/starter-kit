@@ -36,18 +36,24 @@ function exec(script) {
   if (s === 'string') {
     try {
       add_script.apply(window, arguments);
-    } catch(e) {}
+    } catch(e) {
+      console.error(e);
+    }
   } else if (s === 'function') {
     try {
       script();
-    } catch(e) {}
+    } catch(e) {
+      console.error(e);
+    }
   } else if (script) {
-    try{
+    try {
       var args = Array.prototype.slice.call(arguments, 1);
       for (var i = 0; i < script.length; i++) {
         exec.apply(window, [script[i]].concat(args));
       }
-    } catch(e){}
+    } catch(e){
+      console.error(e);
+    }
   }
 }
 
