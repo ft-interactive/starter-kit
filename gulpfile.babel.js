@@ -127,7 +127,13 @@ function getBundlers(useWatchify) {
     };
 
     // register all the transforms
-    BROWSERIFY_TRANSFORMS.forEach(transform => bundler.b.transform(transform));
+    BROWSERIFY_TRANSFORMS.forEach(transform => {
+      const opts = transform === 'babelify'
+        ? { plugins: ['transform-runtime'] } 
+        : {};
+
+      return bundler.b.transform(transform, opts);
+    });
 
     // upgrade to watchify if we're in 'serve' mode
     if (useWatchify) {
