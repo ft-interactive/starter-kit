@@ -141,6 +141,6 @@ var polfill_url = 'https://cdn.polyfill.io/v2/polyfill.min.js?callback=clear_que
                     + polyfill_features.join(',')
                     + '&excludes=Symbol,Symbol.iterator,Symbol.species';
 
-exec(polfill_url, true, true)
+exec(polfill_url, true, false)
 
 }());
