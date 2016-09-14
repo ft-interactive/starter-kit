@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-grid@^4.2.1,o-typography@^4.3.1,o-card@^2.1.8">
 <link rel="stylesheet" href="styles.css">
 {%- if stylesheets %}{% for stylesheet in stylesheets %}
-<link rel="stylesheet" href="{{ stylesheet }}">
+<link rel="stylesheet" href="{{ stylesheet | safe }}">
 {% endfor %}{% endif -%}
 
 <link href="https://plus.google.com/113457471429583444041/" rel="publisher" />
@@ -87,6 +87,8 @@
 {% endif -%}
 
 {%- if flags.analytics %}
+  <link rel="preconnect" href="https://spoor-api.ft.com">
+  <meta property="ft.track:is_live" content="true"/>
   {% if tracking.product %}
   <meta property="ft.track:product" content="{{ tracking.product }}"/>
   {% endif %}

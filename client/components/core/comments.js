@@ -3,7 +3,10 @@
 function show_comments() {
   var comments = document.getElementById('comments');
   var id = document.documentElement.getAttribute('data-content-id');
-  if (!comments || !id || !oComments) return;
+  if (!comments || !id) return;
+  if (!window.oComments) {
+    throw new Error('Could not load oComments');
+  }
   new oComments['o-comments'](comments, {
     title: document.title,
     url: document.location.href,
