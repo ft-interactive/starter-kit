@@ -101,42 +101,61 @@ module.exports = {
   },
 
   'If optional author info is present, check it is defined': client => {
-    client.element('css selector', 'meta[name="twitter:creator"]', result => {
-      if (result.value && result.value.ELEMENT) {
-        client.expect.element('meta[name="twitter:creator"]')
-          .to.have.attribute('content').not.equal('@individual_account');
-        client.expect.element('meta[name="twitter:creator"]')
-          .to.have.attribute('content').not.equal('');
+    client.perform(done => {
+      client.element('css selector', 'meta[name="twitter:creator"]', result => {
+        if (result.value && result.value.ELEMENT) {
+          client.expect.element('meta[name="twitter:creator"]')
+            .to.have.attribute('content').not.equal('@individual_account');
+          client.expect.element('meta[name="twitter:creator"]')
+            .to.have.attribute('content').not.equal('');
 
-        client.expect.element('meta[property="article:author"]')
-          .to.have.attribute('content').not.equal('');
-      }
+          client.expect.element('meta[property="article:author"]')
+            .to.have.attribute('content').not.equal('');
+        }
+        done();
+      });
     });
   },
 
   'If optional ft.track:product tag is present, check it is defined': client => {
-    client.element('css selector', 'meta[property="ft.track:product"]', result => {
-      if (result.value && result.value.ELEMENT) {
-        client.expect.element('meta[property="ft.track:product"]')
-          .to.have.attribute('content').not.equal('');
-      }
+    client.perform(done => {
+      client.element('css selector', 'meta[property="ft.track:product"]', result => {
+        if (result.value && result.value.ELEMENT) {
+          client.expect.element('meta[property="ft.track:product"]')
+            .to.have.attribute('content').not.equal('');
+        }
+        done();
+      });
     });
   },
 
   'If optional ft.track:microsite_name tag is present, check it is defined': client => {
-    client.element('css selector', 'meta[property="ft.track:microsite_name"]', result => {
-      if (result.value && result.value.ELEMENT) {
-        client.expect.element('meta[property="ft.track:microsite_name"]')
-          .to.have.attribute('content').not.equal('');
-      }
+    client.perform(done => {
+      client.element('css selector', 'meta[property="ft.track:microsite_name"]', result => {
+        if (result.value && result.value.ELEMENT) {
+          client.expect.element('meta[property="ft.track:microsite_name"]')
+            .to.have.attribute('content').not.equal('');
+        }
+        done();
+      });
     });
   },
 
-  'Tracking code should be present': client => {
-    client.expect
-      .element('img[src*="https://spoor-api.ft.com/px.gif"]')
-      .to.be.present.before(1000);
-  },
+  // 2016-09-14 -- Disabling because of no way of reliably checking on front-end. —Æ
+  // 'Tracking code should be present': client => {
+  //   client.execute(
+  //     /* eslint-disable */
+  //     function getResources() { // execute application specific code
+  //       return window.performance.getEntries();
+  //     },
+  //     /* eslint-enable */
+  //     [], // arguments array to be passed
+  //     result => {
+  //       const spoor = result.value.filter(item => item.name.match('spoor'));
+  //       client.assert.ok(spoor.length, 'Spoor tracking image present');
+  //     }
+  //   );
+  // },
 
   'Sharing should be present': client => {
     client.expect.element('.o-share').to.be.present;
@@ -179,31 +198,41 @@ module.exports = {
   },
 
   'If optional related article tag is present, check it is defined': client => {
-    client.element('css selector', '.o-typography-lead > .o-typography-link', result => {
-      if (result.value && result.value.ELEMENT) {
-        client.expect.element('.o-typography-lead > .o-typography-link')
-          .to.have.attribute('href').not.equal('');
-        client.expect.element('.o-typography-lead > .o-typography-link')
-          .text.to.not.equal('');
-      }
+    client.perform(done => {
+      client.element('css selector', '.o-typography-lead > .o-typography-link', result => {
+        if (result.value && result.value.ELEMENT) {
+          client.expect.element('.o-typography-lead > .o-typography-link')
+            .to.have.attribute('href').not.equal('');
+          client.expect.element('.o-typography-lead > .o-typography-link')
+            .text.to.not.equal('');
+        }
+
+        done();
+      });
     });
   },
 
   'If optional timestamp tag is present, check it is defined': client => {
-    client.element('css selector', '.article__timestamp', result => {
-      if (result.value && result.value.ELEMENT) {
-        client.expect.element('.article__timestamp')
-          .text.to.not.equal('');
-      }
+    client.perform(done => {
+      client.element('css selector', '.article__timestamp', result => {
+        if (result.value && result.value.ELEMENT) {
+          client.expect.element('.article__timestamp')
+            .text.to.not.equal('');
+        }
+        done();
+      });
     });
   },
 
   'If optional byline tag is present, check it is populated': client => {
-    client.element('css selector', '.article__byline', result => {
-      if (result.value && result.value.ELEMENT) {
-        client.expect.element('.article__byline')
-          .text.to.not.equal('&#32;by&nbsp;');
-      }
+    client.perform(done => {
+      client.element('css selector', '.article__byline', result => {
+        if (result.value && result.value.ELEMENT) {
+          client.expect.element('.article__byline')
+            .text.to.not.equal('&#32;by&nbsp;');
+        }
+        done();
+      });
     });
   },
 
