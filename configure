@@ -9,7 +9,7 @@ echo ""
 
 dir=$(echo ${PWD##*/} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 
-if [ $dir == "sk" ]
+if [ $dir == "starter-kit" ]
 then
   echo "DANGER: the directory name is \"$dir\""
   read -e -n 1 -p "Are you sure you want to continue? [y/N] : " -r
@@ -20,8 +20,8 @@ then
   fi
 fi
 
-read -p "New github repo name (press enter to use default \"$dir\") : " name
-read -p "Description of the project to display on Github : " description
+read -p "New Github repo name (press enter to use default \"$dir\") : " name
+read -p "Description of the project displayed on Github : " description
 
 repo=$(echo ${name:-$dir} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 rev=$(git rev-parse --short HEAD)
