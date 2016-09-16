@@ -1,10 +1,11 @@
 import article from './article';
-import flags from './flags';
+import getFlags from './flags';
+import getOnwardJourney from './onward-journey';
 
 export default async function() {
   const d = await article();
-  const f = await flags();
-
+  const flags = await getFlags();
+  const onwardJourney = await getOnwardJourney();
   /*
   An experimental demo that gets content from the API
   and overwrites some model values. This requires the Link File
@@ -29,6 +30,7 @@ export default async function() {
 
   return {
     ...d,
-    flags: f,
+    flags,
+    onwardJourney,
   };
 }

@@ -1,6 +1,6 @@
 const prod = process.env.NODE_ENV === 'production';
 
-export default _ => ({ // eslint-disable-line
+export default () => ({ // eslint-disable-line
   prod,
   errorReporting: prod,
   analytics: prod,

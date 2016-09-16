@@ -1,7 +1,8 @@
-<aside>
-  <section data-g-component="onward-journey" data-list="list/graphics" data-rows="1"></section>
-  <section data-g-component="onward-journey" data-list="list/highlights" data-rows="1"></section>
-</aside>
+{% for section in onwardJourney.relatedContent %}
+{% if loop.first %}<aside class="onward-journey__block">{% endif %}
+  <section class="onward-journey__section" data-g-component="onward-journey" data-list="{{ section.list | safe }}" data-rows="{{ section.rows | default('1', true) }}"></section>
+{% if loop.last %}</aside>{% endif %}
+{% endfor %}
 <style>
 .o-card {
 background-color: #fff1e0;
