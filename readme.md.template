@@ -25,7 +25,7 @@ Build/compile, start a dev server and watches for changes.
 
 ## Uses Starter Kit
 
-This project was scaffolded with [Stater Kit @$rev](https://github.com/ft-interactive/starter-kit/tree/$rev).
+This project was scaffolded with [Starter Kit @$rev](https://github.com/ft-interactive/starter-kit/tree/$rev).
 
 ## Licence
 This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
