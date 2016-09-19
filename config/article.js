@@ -1,4 +1,4 @@
-export default _ => ({ // eslint-disable-line
+export default () => ({ // eslint-disable-line
 
   // link file UUID
   id: '$uuid',
@@ -75,18 +75,6 @@ export default _ => ({ // eslint-disable-line
   // FACEBOOK
   // facebookImage: '',
   // facebookHeadline: '',
-
-  onwardjourney: {
-
-    // "list" (methode list) or "topic"
-    type: '',
-
-    // topic or list id
-    id: '',
-
-    // a heading is provided automatically if not set (peferred)
-    heading: '',
-  },
 
   tracking: {
 

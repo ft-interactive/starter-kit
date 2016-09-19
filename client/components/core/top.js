@@ -5,10 +5,15 @@ window.cutsTheMustard = (typeof Function.prototype.bind !== 'undefined');
 
 ;(function(){
 
-function add_script(src, async, defer, cb) {
+function add_script(src, async, defer, cb, attributes) {
   var script = document.createElement('script');
   script.src = src;
   script.async = !!async;
+  if (attributes) {
+    for (var key in attributes) {
+      script.setAttribute(key, attributes[key]);
+    }
+  }
   if (defer) script.defer = !!defer;
   var head = document.head || document.getElementsByTagName('head')[0];
   if (!cb && typeof defer === 'function') {
@@ -65,8 +70,8 @@ function exec(script) {
 var queued_scripts = [];
 var low_priority_queue = [];
 
-function queue(src, cb, low_priority) {
-  var args = [src, true, !!low_priority, cb];
+function queue(src, cb, low_priority, attributes) {
+  var args = [src, true, !!low_priority, cb, attributes];
 
   if (!queued_scripts) {
     exec.apply(window, args);
@@ -141,6 +146,6 @@ var polfill_url = 'https://cdn.polyfill.io/v2/polyfill.min.js?callback=clear_que
                     + polyfill_features.join(',')
                     + '&excludes=Symbol,Symbol.iterator,Symbol.species';
 
-exec(polfill_url, true, false)
+exec(polfill_url, true, false, null, {crossorigin: 'anonymous'})
 
 }());

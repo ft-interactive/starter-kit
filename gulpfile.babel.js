@@ -19,9 +19,7 @@ import sass from 'gulp-sass';
 import util from 'gulp-util';
 import autoprefixer from 'gulp-autoprefixer';
 import plumber from 'gulp-plumber';
-import serveStatic from 'serve-static';
 import http from 'http';
-import finalhandler from 'finalhandler';
 
 const ansiToHTML = new AnsiToHTML();
 
@@ -273,6 +271,8 @@ gulp.task('revreplace', ['revision'], () =>
 //   .pipe(gulp.dest('dist'))
 // );
 function distServer() {
+  const serveStatic = require('serve-static');
+  const finalhandler = require('finalhandler');
   const serve = serveStatic('dist', {'index': ['index.html']})
   return http.createServer(function onRequest (req, res) {
     serve(req, res, finalhandler(req, res))
