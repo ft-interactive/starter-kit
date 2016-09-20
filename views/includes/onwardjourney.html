@@ -141,7 +141,7 @@ if (!tag.classList.contains('is-rendered')) {
 var list = tag.getAttribute('data-list');
 var layout = tag.getAttribute('data-layout') || '';
 var limit = parseInt(tag.getAttribute('data-rows') || '1') * 4;
-var urlBase = 'https://ft-ig-onwardjourney-pr-15.herokuapp.com/v1/';
+var urlBase = 'https://ft-ig-onwardjourney.herokuapp.com/v1/';
 var url = [urlBase, list, '/html/', layout, '?limit=', limit].join('');
 if (list) {
 fetch(url)
