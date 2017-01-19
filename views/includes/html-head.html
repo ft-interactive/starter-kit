@@ -75,9 +75,15 @@
 <meta name="twitter:url" content="{{ url }}">
 <meta property="og:url" content="{{ url }}">
 
+{% if mainImage.url %}
 <link rel="image_src" href="{{ mainImage.url }}">
+{% endif %}
+{% if twitterImage | default(socialImage) | default(mainImage.url) %}
 <meta name="twitter:image" content="{{ twitterImage | default(socialImage) | default(mainImage.url) }}">
+{% endif %}
+{% if facebookImage | default(socialImage) | default(mainImage.url) %}
 <meta property="og:image" content="{{ facebookImage | default(socialImage) | default(mainImage.url) }}">
+{% endif %}
 
 <meta name="twitter:card" content="{{ twitterCard }}">
 <meta name="twitter:site" content="@ft">

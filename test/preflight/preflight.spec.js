@@ -79,25 +79,33 @@ module.exports = {
       .to.have.attribute('content').not.equal('');
   },
 
-  'Image link tag should be present': client => {
-    client.expect.element('link[rel="image_src"]')
-      .to.be.present;
-    client.expect.element('link[rel="image_src"]')
-      .to.have.attribute('href').not.equal('');
+  'Optional image link tag should be present': client => {
+    client.verify.elementPresent('link[rel="image_src"]',
+      'Please add social images to config/article.js!');
   },
 
-  'Twitter meta image should be present': client => {
-    client.expect.element('meta[name="twitter:image"]')
-      .to.be.present;
-    client.expect.element('meta[name="twitter:image"]')
-      .to.have.attribute('content').not.equal('');
+  'Optional Twitter meta image should have content if present': client => {
+    client.perform(done => {
+      client.element('css selector', 'meta[name="twitter:image"]', result => {
+        if (result.value && result.value.ELEMENT) {
+          client.expect.element('meta[name="twitter:image"]')
+            .to.have.attribute('content').not.equal('');
+        }
+        done();
+      });
+    });
   },
 
-  'Open Graph meta image should be present': client => {
-    client.expect.element('meta[property="og:image"]')
-      .to.be.present;
-    client.expect.element('meta[property="og:image"]')
-      .to.have.attribute('content').not.equal('');
+  'Optional OG meta image should have content if present': client => {
+    client.perform(done => {
+      client.element('css selector', 'meta[property="og:image"]', result => {
+        if (result.value && result.value.ELEMENT) {
+          client.expect.element('meta[property="og:image"]')
+            .to.have.attribute('content').not.equal('');
+        }
+        done();
+      });
+    });
   },
 
   'If optional author info is present, check it is defined': client => {
@@ -141,22 +149,6 @@ module.exports = {
     });
   },
 
-  // 2016-09-14 -- Disabling because of no way of reliably checking on front-end. —Æ
-  // 'Tracking code should be present': client => {
-  //   client.execute(
-  //     /* eslint-disable */
-  //     function getResources() { // execute application specific code
-  //       return window.performance.getEntries();
-  //     },
-  //     /* eslint-enable */
-  //     [], // arguments array to be passed
-  //     result => {
-  //       const spoor = result.value.filter(item => item.name.match('spoor'));
-  //       client.assert.ok(spoor.length, 'Spoor tracking image present');
-  //     }
-  //   );
-  // },
-
   'Sharing should be present': client => {
     client.expect.element('.o-share').to.be.present;
   },
@@ -197,33 +189,6 @@ module.exports = {
       .text.to.not.equal('');
   },
 
-  'If optional related article tag is present, check it is defined': client => {
-    client.perform(done => {
-      client.element('css selector', '.o-typography-lead > .o-typography-link', result => {
-        if (result.value && result.value.ELEMENT) {
-          client.expect.element('.o-typography-lead > .o-typography-link')
-            .to.have.attribute('href').not.equal('');
-          client.expect.element('.o-typography-lead > .o-typography-link')
-            .text.to.not.equal('');
-        }
-
-        done();
-      });
-    });
-  },
-
-  'If optional timestamp tag is present, check it is defined': client => {
-    client.perform(done => {
-      client.element('css selector', '.article__timestamp', result => {
-        if (result.value && result.value.ELEMENT) {
-          client.expect.element('.article__timestamp')
-            .text.to.not.equal('');
-        }
-        done();
-      });
-    });
-  },
-
   'If optional byline tag is present, check it is populated': client => {
     client.perform(done => {
       client.element('css selector', '.article__byline', result => {
@@ -235,6 +200,9 @@ module.exports = {
       });
     });
   },
+
+  // @TODO Add Onward Journey test
+  // @TODO Find way of testing that tracking code is installed
 
   '~fin~': client => client.end(),
 };
