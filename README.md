@@ -8,7 +8,6 @@
 
 ### Download
 
-
 Paste this snippet into your terminal and follow the instructions:
 
 ```shell
@@ -28,6 +27,7 @@ Note: this will attempt create a Github repo so you need an [access token](https
 - [Browserify](http://browserify.org/)
 
 ### Licence
+
 This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
 
 <!-- badge URLs -->
