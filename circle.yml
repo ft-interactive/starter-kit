@@ -11,14 +11,16 @@ dependencies:
     - yarn
 
 test:
+  override:
+    - yarn test
   post:
-    - npm run preflight
+    - yarn run preflight
 
 deployment:
   s3: # this is just a custom name, could be anything
     branch: /.*/
     commands:
-      - npm run deploy:confirm
+      - yarn run deploy:confirm
 
 general:
   artifacts:
