@@ -1,4 +1,4 @@
-/* eslint-disable no-console, global-require */
+/* eslint-disable no-console, global-require, import/no-extraneous-dependencies */
 
 import browserify from 'browserify';
 import browserSync from 'browser-sync';
@@ -92,7 +92,7 @@ function handleBuildError(headline, error) {
 
 // function to get an array of objects that handle browserifying
 function getBundlers(useWatchify) {
-  return BROWSERIFY_ENTRIES.map(entry => {
+  return BROWSERIFY_ENTRIES.map((entry) => {
     const bundler = {
       b: browserify(path.posix.resolve('client', entry), {
         cache: {},
@@ -145,7 +145,7 @@ function getBundlers(useWatchify) {
  */
 
 // makes a production build (client => dist)
-gulp.task('default', done => {
+gulp.task('default', (done) => {
   process.env.NODE_ENV = 'production';
   runSequence(
     ['scripts', 'styles', 'build-pages', 'copy'],
@@ -155,7 +155,7 @@ gulp.task('default', done => {
 });
 
 // runs a development server (serving up dist and client)
-gulp.task('watch', ['styles', 'build-pages', 'copy'], done => {
+gulp.task('watch', ['styles', 'build-pages', 'copy'], (done) => {
   const bundlers = getBundlers(true);
 
   // execute all the bundlers once, up front
@@ -193,7 +193,7 @@ gulp.task('watch', ['styles', 'build-pages', 'copy'], done => {
 // copies over miscellaneous files (client => dist)
 gulp.task('copy', () =>
   gulp.src(copyGlob, { dot: true })
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist')),
 );
 
 gulp.task('build-pages', () => {
@@ -204,7 +204,7 @@ gulp.task('build-pages', () => {
 
   return gulp.src('client/**/*.html')
     .pipe(plumber())
-    .pipe(gulpdata(async(d) => await require('./config').default(d)))
+    .pipe(gulpdata(async d => require('./config').default(d)))
     .pipe(gulpnunjucks.compile(null, { env: require('./views').configure() }))
     .pipe(gulp.dest('dist'));
 });
@@ -218,12 +218,12 @@ gulp.task('html', () =>
       processConditionalComments: true,
       minifyJS: true,
     }))
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist')),
 );
 
 // task to do a straightforward browserify bundle (build only)
 gulp.task('scripts', () =>
-  mergeStream(getBundlers().map(bundler => bundler.execute()))
+  mergeStream(getBundlers().map(bundler => bundler.execute())),
 );
 
 // builds stylesheets with sass/autoprefixer
@@ -237,7 +237,7 @@ gulp.task('styles', () =>
       handleBuildError.call(this, 'Error building Sass', error);
     }))
     .pipe(autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }))
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist')),
 );
 
 // renames asset files and adds a rev-manifest.json
@@ -246,14 +246,14 @@ gulp.task('revision', () =>
     .pipe(rev())
     .pipe(gulp.dest('dist'))
     .pipe(rev.manifest())
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist')),
 );
 
 // edits html to reflect changes in rev-manifest.json
 gulp.task('revreplace', ['revision'], () =>
   gulp.src('dist/**/*.html')
     .pipe(revReplace({ manifest: gulp.src('./dist/rev-manifest.json') }))
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist')),
 );
 
 // IMAGE COMPRESSION:
@@ -273,13 +273,13 @@ gulp.task('revreplace', ['revision'], () =>
 function distServer() {
   const serveStatic = require('serve-static');
   const finalhandler = require('finalhandler');
-  const serve = serveStatic('dist', {'index': ['index.html']})
-  return http.createServer(function onRequest (req, res) {
-    serve(req, res, finalhandler(req, res))
+  const serve = serveStatic('dist', { index: ['index.html'] });
+  return http.createServer((req, res) => {
+    serve(req, res, finalhandler(req, res));
   });
 }
 
-gulp.task('test:install-selenium', done => {
+gulp.task('test:install-selenium', (done) => {
   const selenium = require('selenium-standalone');
   selenium.install({}, done);
 });
@@ -302,7 +302,7 @@ gulp.task('test:preflight', ['test:install-selenium'], () => {
   return nightwatch.runner({ // eslint-disable-line consistent-return
     config: 'nightwatch.json',
     group: 'preflight',
-  }, passed => {
+  }, (passed) => {
     if (passed) {
       process.exit();
     } else {

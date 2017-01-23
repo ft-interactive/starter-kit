@@ -2,7 +2,7 @@ import article from './article';
 import getFlags from './flags';
 import getOnwardJourney from './onward-journey';
 
-export default async function() {
+export default async () => {
   const d = await article();
   const flags = await getFlags();
   const onwardJourney = await getOnwardJourney();
@@ -33,4 +33,4 @@ export default async function() {
     flags,
     onwardJourney,
   };
-}
+};
