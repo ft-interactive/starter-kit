@@ -43,6 +43,14 @@ process.on('unhandledRejection', error => {
 
   // gather some facts from git
   const { branchName, githubRepo } = await (async () => {
+    // ensure system git is v1.7 or higher (so we can do `git rev-parse --abbrev-ref HEAD`)
+    {
+      const gitVersion = (await execa.stdout('git', ['--version'], { cwd: projectRoot })).replace(/^[^0-9]*/, '');
+      if (parseFloat(gitVersion) < 1.7) {
+        throw new Error(`Expected git version 32 or higher, but it was: "${gitVersion}"`);
+      }
+    }
+
     const originURL = await execa.stdout('git', ['config', '--get', 'remote.origin.url'], { cwd: projectRoot });
 
     const { repo, host } = parseGitHubURL(originURL);
