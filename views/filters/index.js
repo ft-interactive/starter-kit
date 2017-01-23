@@ -58,7 +58,7 @@ export function plain(str, stripListLeaders = true) {
 export function json(o, prop) {
   try {
     return new SafeString(
-      JSON.stringify(prop ? o[prop] : o).replace(/<\/script/g, '\\x3C/script')
+      JSON.stringify(prop ? o[prop] : o).replace(/<\/script/g, '\\x3C/script'),
     );
   } catch (e) {
     return '';
@@ -67,21 +67,21 @@ export function json(o, prop) {
 
 export function inlineScriptElement(o, name) {
   return new SafeString(
-    `<script>;(function(){window.${name}=${json(o)};}());</script>`
+    `<script>;(function(){window.${name}=${json(o)};}());</script>`,
   );
 }
 
 export function jsonScriptElement(o, id, attr) {
   const idAttr = id ? ` id="${id}"` : '';
   return new SafeString(
-    `<script type="application/json"${idAttr} ${attr}>${json(o)}</script>`
+    `<script type="application/json"${idAttr} ${attr}>${json(o)}</script>`,
   );
 }
 
 export function encodedJSON(str) {
   try {
     return encodeURIComponent(
-      JSON.stringify(JSON.parse(str || ''), null, '')
+      JSON.stringify(JSON.parse(str || ''), null, ''),
     );
   } catch (e) {
     return '';
@@ -95,6 +95,6 @@ export function spoorTrackingPixel(str) {
   `<!--[if lt IE 9]>
   ${img}
   <![endif]-->
-  <noscript data-o-component="o-tracking">${img}</noscript>`
+  <noscript data-o-component="o-tracking">${img}</noscript>`,
   );
 }

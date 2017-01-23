@@ -7,7 +7,7 @@ export function configure() {
   delete require.cache[require.resolve('./filters/index')];
 
   const env = new nunjucks.Environment(
-    new nunjucks.FileSystemLoader(['client', 'views'])
+    new nunjucks.FileSystemLoader(['client', 'views']),
   );
 
   Object.assign(env.filters, require('./filters'));  // eslint-disable-line

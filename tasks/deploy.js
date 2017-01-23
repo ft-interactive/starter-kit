@@ -1,4 +1,4 @@
-/* eslint-disable no-console, prefer-template */
+/* eslint-disable no-console, prefer-template, import/no-extraneous-dependencies */
 
 import figures from 'figures';
 import http from 'http';
@@ -13,7 +13,7 @@ import fs from 'fs';
 import { cyan, green, red, yellow } from 'chalk';
 import execa from 'execa';
 
-process.on('unhandledRejection', error => {
+process.on('unhandledRejection', (error) => {
   console.error('Unhandled rejection', error && error.stack);
   process.exit(1);
 });
@@ -31,7 +31,7 @@ process.on('unhandledRejection', error => {
   // fn to determine if a file is revved
   const isRevved = (() => {
     const revvedFileNames = Object.values(JSON.parse(
-      fs.readFileSync(path.join(localDir, 'rev-manifest.json'), 'utf8'))
+      fs.readFileSync(path.join(localDir, 'rev-manifest.json'), 'utf8')),
     );
 
     return name => revvedFileNames.indexOf(path.relative(localDir, name)) > -1;
@@ -57,7 +57,7 @@ process.on('unhandledRejection', error => {
 
     if (host !== 'github.com') {
       throw new Error(
-        `Expected git remote "origin" to be a github.com URL, but it was: ${originURL}`
+        `Expected git remote "origin" to be a github.com URL, but it was: ${originURL}`,
       );
     }
 
@@ -75,10 +75,10 @@ process.on('unhandledRejection', error => {
 
   // tell user what we're going to sync
   console.log(
-    cyan(`\nTo sync:\n`) +
+    cyan('\nTo sync:\n') +
     `  Local directory: ${yellow(path.relative(process.cwd(), localDir))}\n` +
     `  S3 Bucket: ${yellow(bucketName)}\n` +
-    `  Remote prefix: ${yellow(remotePrefix)}\n`
+    `  Remote prefix: ${yellow(remotePrefix)}\n`,
   );
 
   // ensure needed env vars are set; give friendly explanation if not
@@ -90,7 +90,7 @@ process.on('unhandledRejection', error => {
     if (!expectedEnvVars.every(name => process.env[name])) {
       console.error(red(
         'Cannot continue without the following environment variables:\n  ' +
-        expectedEnvVars.join('\n  ')
+        expectedEnvVars.join('\n  '),
       ));
       process.exit(1);
     }
@@ -136,7 +136,7 @@ process.on('unhandledRejection', error => {
 
   // await confirmation
   if (argv.confirm || await input.confirm('Continue?', { default: false })) {
-    let uploadCount = 0;
+    // const uploadCount = 0;
 
     const spinner = ora({
       text: 'Deploying...',
@@ -154,7 +154,7 @@ process.on('unhandledRejection', error => {
 
     const uploader = client.uploadDir(params);
 
-    uploader.on('error', error => {
+    uploader.on('error', (error) => {
       console.error(`${red(figures.tick)} Failed to upload.`);
       console.error(error.stack);
       process.exit(1);
