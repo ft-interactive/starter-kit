@@ -10,12 +10,10 @@ dependencies:
     - ~/.cache/yarn
     - bower_components
     - node_modules
-    - /home/ubuntu/nvm/versions/node/<version>/bin # [1]
-    - /home/ubuntu/nvm/versions/node/<version>/lib/node_modules # [1]
   override:
     - yarn
   pre:
-    - which yarn || npm install --global yarn # [1]
+    - yarn --version || curl -o- -L https://yarnpkg.com/install.sh | bash # [1]
 
 # [1]:
 # CircleCI's docs say yarn is preinstalled: https://circleci.com/docs/yarn/
