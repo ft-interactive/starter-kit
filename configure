@@ -61,7 +61,7 @@ git commit -m "Initial commit: uses starter kit (commit $rev)"
 
 echo "Installing dependencies..."
 
-npm i --link --no-optional
+yarn || { echo "😭  yarn not found. Falling back to 'npm install' (may be slower)"; npm install --link --no-optional; }
 
 echo "Creating repo on Github"
 
