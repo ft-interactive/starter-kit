@@ -10,17 +10,10 @@ dependencies:
     - ~/.cache/yarn
     - bower_components
     - node_modules
-    - ~/.yarn # [1]
   override:
     - yarn
   pre:
-    - yarn --version || curl -o- -L https://yarnpkg.com/install.sh | bash # [1]
-
-# [1]:
-# CircleCI's docs say yarn is preinstalled: https://circleci.com/docs/yarn/
-# ...but this doesn't seem to be the case. The lines above marked "[1]" are to
-# work around this, and can be removed once the issue is resolved.
-# https://github.com/circleci/circleci-docs/issues/543
+    - yarn --version || curl -o- -L https://yarnpkg.com/install.sh | bash # temporary workaround for https://github.com/circleci/circleci-docs/issues/543
 
 test:
   override:
