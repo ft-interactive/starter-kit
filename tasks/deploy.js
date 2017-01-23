@@ -1,7 +1,6 @@
 /* eslint-disable no-console, prefer-template */
 
 import figures from 'figures';
-import Git from 'nodegit';
 import http from 'http';
 import https from 'https';
 import input from 'input';
@@ -12,6 +11,7 @@ import path from 'path';
 import s3 from 's3';
 import fs from 'fs';
 import { cyan, green, red, yellow } from 'chalk';
+import execa from 'execa';
 
 process.on('unhandledRejection', error => {
   console.error('Unhandled rejection', error && error.stack);
@@ -43,20 +43,26 @@ process.on('unhandledRejection', error => {
 
   // gather some facts from git
   const { branchName, githubRepo } = await (async () => {
-    const repository = await Git.Repository.open(projectRoot);
-    const origin = await repository.getRemote('origin');
-    const originURL = origin.url();
+    // ensure system git is v1.7 or higher (so we can do `git rev-parse --abbrev-ref HEAD`)
+    {
+      const gitVersion = (await execa.stdout('git', ['--version'], { cwd: projectRoot })).replace(/^[^0-9]*/, '');
+      if (parseFloat(gitVersion) < 1.7) {
+        throw new Error(`Expected git version 32 or higher, but it was: "${gitVersion}"`);
+      }
+    }
+
+    const originURL = await execa.stdout('git', ['config', '--get', 'remote.origin.url'], { cwd: projectRoot });
 
     const { repo, host } = parseGitHubURL(originURL);
 
     if (host !== 'github.com') {
       throw new Error(
-        `Expected git remote "origin" to be a github.com URL, but it was: ${origin}`
+        `Expected git remote "origin" to be a github.com URL, but it was: ${originURL}`
       );
     }
 
     return {
-      branchName: (await repository.head()).shorthand(),
+      branchName: await execa.stdout('git', ['rev-parse', '--abbrev-ref', 'HEAD'], { cwd: projectRoot }),
       githubRepo: repo,
     };
   })();

@@ -9,10 +9,6 @@ dependencies:
     - node_modules
   override:
     - npm install
-  pre:
-    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-    - sudo apt-get update
-    - sudo apt-get install -y libstdc++-4.9-dev
 
 test:
   post:
