@@ -10,6 +10,7 @@ dependencies:
     - ~/.cache/yarn
     - bower_components
     - node_modules
+    - ~/.yarn # [1]
   override:
     - yarn
   pre:
