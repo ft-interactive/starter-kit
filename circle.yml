@@ -8,7 +8,7 @@ dependencies:
     - bower_components
     - node_modules
   override:
-    - npm install
+    - yarn
 
 test:
   post:
