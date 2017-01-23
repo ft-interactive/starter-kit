@@ -310,3 +310,7 @@ gulp.task('test:preflight', ['test:install-selenium'], () => {
     }
   });
 });
+
+gulp.task('test:a11y', () => {
+  distServer().listen(process.env.PORT || '3000');
+});
