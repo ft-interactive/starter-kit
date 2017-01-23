@@ -12,6 +12,8 @@ dependencies:
     - node_modules
   override:
     - yarn
+  pre:
+    - npm install --global yarn # temporary measure until circle fixed
 
 test:
   override:
