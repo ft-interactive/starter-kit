@@ -13,7 +13,7 @@ dependencies:
   override:
     - yarn
   pre:
-    - yarn --version || curl -o- -L https://yarnpkg.com/install.sh | bash # temporary workaround for https://github.com/circleci/circleci-docs/issues/543
+    - curl -o- -L https://yarnpkg.com/install.sh | bash # temporary workaround for https://github.com/circleci/circleci-docs/issues/543
 
 test:
   override:
