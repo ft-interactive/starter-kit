@@ -10,10 +10,18 @@ dependencies:
     - ~/.cache/yarn
     - bower_components
     - node_modules
+    - /home/ubuntu/nvm/versions/node/<version>/bin # [1]
+    - /home/ubuntu/nvm/versions/node/<version>/lib/node_modules # [1]
   override:
     - yarn
   pre:
-    - npm install --global yarn # temporary measure until circle fixed
+    - which yarn || npm install --global yarn # [1]
+
+# [1]:
+# CircleCI's docs say yarn is preinstalled: https://circleci.com/docs/yarn/
+# ...but this doesn't seem to be the case. The lines above marked "[1]" are to
+# work around this, and can be removed once the issue is resolved.
+# https://github.com/circleci/circleci-docs/issues/543
 
 test:
   override:
