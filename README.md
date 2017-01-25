@@ -38,11 +38,11 @@ See the [`package.json`](package.json) for other tasks.
   - This includes [Babel](https://babeljs.io/docs/learn-es2015/), [Browserify](http://browserify.org/), [Sass](https://github.com/sass/node-sass), and [Nunjucks templates](https://mozilla.github.io/nunjucks/templating.html).
 - A **CI configuration** that instructs CircleCI to deploy the project to S3 every time it builds.
 
-### Automatic deployment (<abbr title="Continuous Integration">CI</abbr>)
+### Automatic deployment ('continuous integration')
 
 Whenever you add _any_ repository to the [ft-interactive](https://github.com/ft-interactive) GitHub org, our [Buildbot](https://github.com/ft-interactive/ft-ig-github-project-manager) automatically sets up a new CircleCI project linked to the new repo. That means CircleCI will automatically build it whenever you add a commit to that repo (whether on master or other branches).
 
-How does Starter Kit come into this? Starter Kit includes a [`circle.yml`](circle.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes.
+How does Starter Kit come into this? Starter Kit includes a [`circle.yml`](circle.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes. (The deploy script automatically decides what path to upload files to, based on the name of the repo on GitHub.)
 
 ### Licence
 
