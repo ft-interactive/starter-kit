@@ -1,8 +1,6 @@
-# Starter Kit
+# Starter Kit [![Build Status][circle-image]][circle-url] [![Dependency Status][dependencyci-image]][dependencyci-url]
 
-> Boilerplate to kick-start a new project
-
-[![Build Status][circle-image]][circle-url] [![Dependency Status][dependencyci-image]][dependencyci-url]
+A template for IG projects – everything you need to build a standalone web app with FT page furniture, configured to automatically deploy to the web.
 
 ### How to use
 
