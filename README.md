@@ -2,49 +2,59 @@
 
 A template for IG projects – everything you need to build a standalone front end app (including some basic FT page furniture), configured to automatically deploy to the web.
 
-### How to use
+--
 
-#### 1. Run the setup script
+## How to use
 
-Paste this into your terminal to start a new project:
+#### Getting started
 
-```shell
+To start a new project based on Starter Kit, run this setup script in your terminal:
+
+```sh
 eval "$(curl -s https://ig.ft.com/starter-kit/install)"
 ```
 
 What the setup script does:
 
-- Asks you a few questions about your project (like what to call it)
+- Asks you a few questions about your project (e.g. title, description).
 - Clones Starter Kit to your own computer (but reinitialises it as a brand new git repo with no history).
-- Attempts to push it to the ft-interactive org on GitHub
+- Attempts to push it to the ft-interactive org on GitHub.
   - NB. you'll need an [access token](https://github.com/settings/tokens) if you want this bit of the script to work. _(TK: where to put this token?)_
-- Runs `npm install` to grab all the dependencies (takes a few minutes)
+- Runs `npm install` to grab all the dependencies (this takes a few minutes).
 - Runs `npm start` for the first time – now you can start coding.
 
-#### Tasks
+#### Using the built in tasks
 
-You can run these tasks from within your project directory:
+You can run the following tasks from within your project directory:
 
 - `npm start` – starts up a development server and opens your app in a web browser. The dev server will automatically reload your browser when files change.
 - `npm run build` - builds your app and puts it in the `dist` folder.
 - `npm run deploy` – deploys the contents of your `dist` folder to an appropriate location on S3. (You usually don't need to run this yourself – it is run automatically by CircleCI.)
 
-See the [`package.json`](package.json) for other tasks.
+(You can find a few other, less interesting tasks defined in [`package.json`](package.json).)
 
-### What's included in Starter Kit?
+#### Key directories
 
-- A template for a basic **front end app** with FT.com page furniture ([Origami](http://registry.origami.ft.com/components)   components) and various best-practice features such as meta tags for SEO and social network sharing, ready to fill in.
-- A **[gulp](http://gulpjs.com/) build system** including tasks for serving your app locally during development (auto-refreshing when you edit source files) and building an optimised HTML/CSS/JS bundle suitable for deployment.
-  - This includes [Babel](https://babeljs.io/docs/learn-es2015/), [Browserify](http://browserify.org/), [Sass](https://github.com/sass/node-sass), and [Nunjucks templates](https://mozilla.github.io/nunjucks/templating.html).
+- [`client`](client) – the main files that make up your front end, including `index.html` and some Sass and JS files. You should mostly be working in here.
+- [`config`](config) – scripts that pull together some configuration details for your project, including basic facts (UUID, title, etc.) and 'onward journey' story links. These details are used to populate parts of the templates.
+- [`views`](views) – the standard page layout is formed from a few files in here (the project-specific files in `client` extend this layout). You generally don't need to edit this much.
+- `dist` – the optimsed HTML/CSS/JS bundle, generated automatically every time you run `npm run build`. You shouldn't edit files in here manually, as any manual changes would just get overwritten next time you build.
+
+## What's included in Starter Kit?
+
+- A template for a basic **front end app** with FT.com page furniture
+  - Includes [Origami components](http://registry.origami.ft.com/components) and various best-practice features such as meta tags to optimise SEO and social sharing.
+- A **build system** including tasks for serving your app locally during development (auto-refreshing when you edit source files) and building an optimised HTML/CSS/JS bundle suitable for deployment.
+  - This is comprised of [gulp](http://gulpjs.com/), [Babel](https://babeljs.io/docs/learn-es2015/), [Browserify](http://browserify.org/), [Sass](https://github.com/sass/node-sass), and [Nunjucks templates](https://mozilla.github.io/nunjucks/templating.html).
 - A **CI configuration** that instructs CircleCI to deploy the project to S3 every time it builds.
 
-### Automatic deployment ('continuous integration')
+## Understanding automatic deployment ('continuous integration')
 
-Whenever you add _any_ repository to the [ft-interactive](https://github.com/ft-interactive) GitHub org, our [Buildbot](https://github.com/ft-interactive/ft-ig-github-project-manager) automatically sets up a new CircleCI project linked to the new repo. That means CircleCI will automatically build it whenever you add a commit to that repo (whether on master or other branches).
+Whenever you add _any_ repository to the [ft-interactive](https://github.com/ft-interactive) GitHub org, the [IG Buildbot](https://github.com/ft-interactive/ft-ig-github-project-manager) automatically sets up a new CircleCI project linked to the new repo. That means CircleCI will build the project whenever you add a new commit to that repo (whether on master or other branches).
 
-How does Starter Kit come into this? Starter Kit includes a [`circle.yml`](circle.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes. (The deploy script automatically decides what path to upload files to, based on the name of the repo on GitHub.)
+How does Starter Kit come into this? Starter Kit includes a [`circle.yml`](circle.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes. (The deploy script automatically decides what path to upload files to, based on the name of the repo on GitHub.) This process is called **continuous integration**.
 
-### Licence
+## Licence
 
 This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
 
