@@ -9,11 +9,10 @@ dependencies:
   cache_directories:
     - ~/.cache/yarn
     - bower_components
-    - node_modules
-  override:
-    - yarn
   pre:
     - curl -o- -L https://yarnpkg.com/install.sh | bash # temporary workaround for https://github.com/circleci/circleci-docs/issues/543
+  override:
+    - yarn
 
 test:
   override:
