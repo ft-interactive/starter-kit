@@ -95,3 +95,7 @@ $share-button-size: 38px;
 
 .enhanced .o-date {opacity: 0;}
 .enhanced.js-success .o-date {opacity: 1;}
+
+.article-head .o-share--vertical .o-share__action {
+  box-sizing: content-box !important;
+}

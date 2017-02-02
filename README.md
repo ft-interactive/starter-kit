@@ -1,41 +1,66 @@
-# Starter Kit
+# Starter Kit [![Build Status][circle-image]][circle-url] [![Dependency Status][dependencyci-image]][dependencyci-url]
 
-> Boilerplate to kick-start a new project
+A template for IG projects – everything you need to build a standalone front end app (including some basic FT page furniture), configured to automatically deploy to the web.
 
+--
 
-[![Build Status][circle-image]][circle-url] [![Dependency Status][devdeps-image]][devdeps-url] [![Dependency Status][dependencyci-image]][dependencyci-url]
+## How to use
 
+#### Getting started
 
-### Download
+To start a new project based on Starter Kit, run this setup script in your terminal:
 
-Paste this snippet into your terminal and follow the instructions:
-
-```shell
+```sh
 eval "$(curl -s https://ig.ft.com/starter-kit/install)"
 ```
 
-Note: this will attempt create a Github repo so you need an [access token](https://github.com/settings/tokens) if you want this bit of the script to work.
+What the setup script does:
 
-### Included
+- Asks you a few questions about your project (e.g. title, description).
+- Clones Starter Kit to your own computer (but reinitialises it as a brand new git repo with no history).
+- Attempts to push it to the ft-interactive org on GitHub.
+  - NB. you'll need an [access token](https://github.com/settings/tokens) if you want this bit of the script to work. _(TK: where to put this token?)_
+- Runs `npm install` to grab all the dependencies (this takes a few minutes).
+- Runs `npm start` for the first time – now you can start coding.
 
-- [Babel](https://babeljs.io/docs/learn-es2015/)
-- [Sass](https://github.com/sass/node-sass)
-- [Nunjucks templates](https://mozilla.github.io/nunjucks/templating.html)
-- [Browsersync](https://www.browsersync.io/docs)
-- [Origami modules](http://registry.origami.ft.com/components)  
-  –– using [build service](https://build.origami.ft.com/) _and_ [bower components](http://origami.ft.com/docs/developer-guide/modules/choosing-your-build-method/)
-- [Browserify](http://browserify.org/)
+#### Using the built in tasks
 
-### Licence
+You can run the following tasks from within your project directory:
+
+- `npm start` – starts up a development server and opens your app in a web browser. The dev server will automatically reload your browser when files change.
+- `npm run build` - builds your app and puts it in the `dist` folder.
+- `npm run deploy` – deploys the contents of your `dist` folder to an appropriate location on S3. (You usually don't need to run this yourself – it is run automatically by CircleCI.)
+
+(You can find a few other, less interesting tasks defined in [`package.json`](package.json).)
+
+#### Key directories
+
+- [`client`](client) – the main files that make up your front end, including `index.html` and some Sass and JS files. You should mostly be working in here.
+- [`config`](config) – scripts that pull together some configuration details for your project, including basic facts (UUID, title, etc.) and 'onward journey' story links. These details are used to populate parts of the templates.
+- [`views`](views) – the standard page layout is formed from a few files in here (the project-specific files in `client` extend this layout). You generally don't need to edit this much.
+- `dist` – the optimsed HTML/CSS/JS bundle, generated automatically every time you run `npm run build`. You shouldn't edit files in here manually, as any manual changes would just get overwritten next time you build.
+
+## What's included in Starter Kit?
+
+- A template for a basic **front end app** with FT.com page furniture
+  - Includes [Origami components](http://registry.origami.ft.com/components) and various best-practice features such as meta tags to optimise SEO and social sharing.
+- A **build system** including tasks for serving your app locally during development (auto-refreshing when you edit source files) and building an optimised HTML/CSS/JS bundle suitable for deployment.
+  - This is comprised of [gulp](http://gulpjs.com/), [Babel](https://babeljs.io/docs/learn-es2015/), [Browserify](http://browserify.org/), [Sass](https://github.com/sass/node-sass), and [Nunjucks templates](https://mozilla.github.io/nunjucks/templating.html).
+- A **CI configuration** that instructs CircleCI to deploy the project to S3 every time it builds.
+
+## Understanding automatic deployment ('continuous integration')
+
+Whenever you add _any_ repository to the [ft-interactive](https://github.com/ft-interactive) GitHub org, the [IG Buildbot](https://github.com/ft-interactive/ft-ig-github-project-manager) automatically sets up a new CircleCI project linked to the new repo. That means CircleCI will build the project whenever you add a new commit to that repo (whether on master or other branches).
+
+How does Starter Kit come into this? Starter Kit includes a [`circle.yml`](circle.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes. (The deploy script automatically decides what path to upload files to, based on the name of the repo on GitHub.) This process is called **continuous integration**.
+
+## Licence
 
 This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
 
 <!-- badge URLs -->
 [circle-url]: https://circleci.com/gh/ft-interactive/starter-kit
 [circle-image]: https://circleci.com/gh/ft-interactive/starter-kit/tree/master.svg?style=shield
-
-[devdeps-url]: https://david-dm.org/ft-interactive/starter-kit#info=devDependencies
-[devdeps-image]: https://img.shields.io/david/dev/ft-interactive/starter-kit.svg?style=flat-square
 
 [dependencyci-url]: https://dependencyci.com/github/ft-interactive/starter-kit
 [dependencyci-image]: https://dependencyci.com/github/ft-interactive/starter-kit/badge
