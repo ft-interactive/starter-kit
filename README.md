@@ -19,7 +19,7 @@ What the setup script does:
 - Asks you a few questions about your project (e.g. title, description).
 - Clones Starter Kit to your own computer (but reinitialises it as a brand new git repo with no history).
 - Attempts to push it to the ft-interactive org on GitHub.
-  - NB. you'll need an [access token](https://github.com/settings/tokens) if you want this bit of the script to work. _(TK: where to put this token?)_
+  - NB. you'll need an [access token](https://github.com/settings/tokens) and the git [osxkeychain helper](https://help.github.com/articles/caching-your-github-password-in-git/) for this to work.
 - Runs `npm install` to grab all the dependencies (this takes a few minutes).
 - Runs `npm start` for the first time – now you can start coding.
 
