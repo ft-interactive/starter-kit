@@ -281,7 +281,7 @@ function distServer() {
 
 gulp.task('test:install-selenium', (done) => {
   const selenium = require('selenium-standalone');
-  selenium.install({}, done);
+  selenium.install({ version: '2.53.1' }, done);
 });
 
 gulp.task('test:preflight', ['test:install-selenium'], () => {
