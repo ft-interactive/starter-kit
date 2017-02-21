@@ -79,8 +79,7 @@
   "scripts": {
     "build": "gulp",
     "clean": "rm -rf dist",
-    "deploy": "ft-graphics-deploy --assets-prefix=https://ig.ft.com/__v2-static-assets/",
-    "deploy:confirm": "ft-graphics-deploy --assets-prefix=https://ig.ft.com/__v2-static-assets/ --confirm",
+    "deploy": "ft-graphics-deploy --assets-prefix=https://ig.ft.com/v2/__assets/",
     "lint": "eslint --no-eslintrc --config=.eslintrc-ci.yml .",
     "postinstall": "bower install",
     "prebuild": "npm run clean",

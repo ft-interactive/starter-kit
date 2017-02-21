@@ -24,7 +24,7 @@ deployment:
   s3: # this is just a custom name, could be anything
     branch: /.*/
     commands:
-      - yarn run deploy:confirm
+      - if [[ $PREVIEW == "true" ]]; then yarn run deploy -- --confirm --preview; else yarn run deploy -- --confirm; fi
 
 general:
   artifacts:
