@@ -69,7 +69,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
-    "ft-graphics-deploy": "^0.0.5",
+    "ft-graphics-deploy": "^0.1.0",
     "minimist": "^1.2.0",
     "nightwatch": "^0.9.12",
     "phantomjs-prebuilt": "^2.1.14",
@@ -79,8 +79,7 @@
   "scripts": {
     "build": "gulp",
     "clean": "rm -rf dist",
-    "deploy": "ft-graphics-deploy --assets-prefix=https://ig.ft.com/__v2-static-assets/",
-    "deploy:confirm": "ft-graphics-deploy --assets-prefix=https://ig.ft.com/__v2-static-assets/ --confirm",
+    "deploy": "ft-graphics-deploy --assets-prefix=https://ig.ft.com/v2/__assets/",
     "lint": "eslint --no-eslintrc --config=.eslintrc-ci.yml .",
     "postinstall": "bower install",
     "prebuild": "npm run clean",
