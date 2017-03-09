@@ -98,3 +98,6 @@ export function spoorTrackingPixel(str) {
   <noscript data-o-component="o-tracking">${img}</noscript>`,
   );
 }
+
+// Get an item from an object. Useful when combined with `set` and `first()`.
+export const get = (obj, prop) => obj[prop];
