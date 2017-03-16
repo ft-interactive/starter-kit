@@ -64,7 +64,7 @@
     <script async>
     queue([
       'index.js',
-      'https://origami-build.ft.com/v2/bundles/js?export=oDate&modules=o-date@^2.6.0',
+      'https://origami-build.ft.com/v2/bundles/js?modules=o-date@^2.6.0',
       {% if scripts %}{% for script in scripts %}
       ,'{{ script | safe }}'
       {% endfor %}{% endif %}
