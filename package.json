@@ -69,9 +69,10 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
-    "ft-graphics-deploy": "^0.1.0",
+    "ft-graphics-deploy": "^1.0.1",
     "minimist": "^1.2.0",
     "nightwatch": "^0.9.12",
+    "pa11y": "^4.9.0",
     "phantomjs-prebuilt": "^2.1.14",
     "selenium-standalone": "6.0.1"
   },

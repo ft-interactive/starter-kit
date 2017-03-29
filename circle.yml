@@ -21,10 +21,11 @@ test:
     - yarn run preflight
 
 deployment:
-  s3: # this is just a custom name, could be anything
+  s3:
     branch: /.*/
     commands:
       - if [[ $PREVIEW == "true" ]]; then yarn run deploy -- --confirm --preview; else yarn run deploy -- --confirm; fi
+      - if [[ $PREVIEW == "true" ]]; then pa11y --threshold 100 $(ft-graphics-deploy --preview --get-commit-url); else pa11y --threshold 100 $(ft-graphics-deploy --get-commit-url); fi
 
 general:
   artifacts:
