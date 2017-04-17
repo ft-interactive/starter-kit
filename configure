@@ -26,7 +26,7 @@ read -p "Description of the project displayed on Github : " description
 repo=$(echo ${name:-$dir} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 rev=$(git rev-parse --short HEAD)
 
-defaulturl="https://ig.ft.com/sites/${repo}"
+defaulturl="https://ig.ft.com/${repo}"
 
 read -p "Live URL (press enter for default \"${defaulturl}\") : " url
 read -p "If you have a Link File UUID paste if here: " uuid
@@ -34,7 +34,7 @@ url=${url:-$defaulturl}
 
 if [[ ! $url =~ ^https?\:\/\/ ]]
 then
-  url="https://ig.ft.com/sites/${url}"
+  url="https://ig.ft.com/${url}"
 fi
 echo "Setting URL to $url"
 
