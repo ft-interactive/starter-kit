@@ -79,76 +79,6 @@ module.exports = {
       .to.have.attribute('content').not.equal('');
   },
 
-  'Optional image link tag should be present': (client) => {
-    client.verify.elementPresent('link[rel="image_src"]',
-      'Please add social images to config/article.js!');
-  },
-
-  'Optional Twitter meta image should have content if present': (client) => {
-    client.perform((done) => {
-      client.element('css selector', 'meta[name="twitter:image"]', (result) => {
-        if (result.value && result.value.ELEMENT) {
-          client.expect.element('meta[name="twitter:image"]')
-            .to.have.attribute('content').not.equal('');
-        }
-        done();
-      });
-    });
-  },
-
-  'Optional OG meta image should have content if present': (client) => {
-    client.perform((done) => {
-      client.element('css selector', 'meta[property="og:image"]', (result) => {
-        if (result.value && result.value.ELEMENT) {
-          client.expect.element('meta[property="og:image"]')
-            .to.have.attribute('content').not.equal('');
-        }
-        done();
-      });
-    });
-  },
-
-  'If optional author info is present, check it is defined': (client) => {
-    client.perform((done) => {
-      client.element('css selector', 'meta[name="twitter:creator"]', (result) => {
-        if (result.value && result.value.ELEMENT) {
-          client.expect.element('meta[name="twitter:creator"]')
-            .to.have.attribute('content').not.equal('@individual_account');
-          client.expect.element('meta[name="twitter:creator"]')
-            .to.have.attribute('content').not.equal('');
-
-          client.expect.element('meta[property="article:author"]')
-            .to.have.attribute('content').not.equal('');
-        }
-        done();
-      });
-    });
-  },
-
-  'If optional ft.track:product tag is present, check it is defined': (client) => {
-    client.perform((done) => {
-      client.element('css selector', 'meta[property="ft.track:product"]', (result) => {
-        if (result.value && result.value.ELEMENT) {
-          client.expect.element('meta[property="ft.track:product"]')
-            .to.have.attribute('content').not.equal('');
-        }
-        done();
-      });
-    });
-  },
-
-  'If optional ft.track:microsite_name tag is present, check it is defined': (client) => {
-    client.perform((done) => {
-      client.element('css selector', 'meta[property="ft.track:microsite_name"]', (result) => {
-        if (result.value && result.value.ELEMENT) {
-          client.expect.element('meta[property="ft.track:microsite_name"]')
-            .to.have.attribute('content').not.equal('');
-        }
-        done();
-      });
-    });
-  },
-
   'Sharing should be present': (client) => {
     client.expect.element('.o-share').to.be.present;
   },
@@ -189,17 +119,6 @@ module.exports = {
       .text.to.not.equal('');
   },
 
-  'If optional byline tag is present, check it is populated': (client) => {
-    client.perform((done) => {
-      client.element('css selector', '.article__byline', (result) => {
-        if (result.value && result.value.ELEMENT) {
-          client.expect.element('.article__byline')
-            .text.to.not.equal('&#32;by&nbsp;');
-        }
-        done();
-      });
-    });
-  },
 
   // @TODO Add Onward Journey test
   // @TODO Find way of testing that tracking code is installed
