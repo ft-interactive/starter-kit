@@ -80,8 +80,8 @@
     "lint": "eslint --no-eslintrc --config=.eslintrc-ci.yml .",
     "postinstall": "bower install --allow-root",
     "prebuild": "npm run clean",
-    "preflight": "gulp test:preflight",
     "prestart": "npm run clean",
+    "qa": "gulp test:preflight",
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'"
   }
 }
