@@ -1,0 +1,35 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/project
+    docker:
+      - image: node:7
+    steps:
+      - checkout
+      - restore_cache:
+          key: project-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
+      - save_cache:
+          key: project-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules/
+            - bower_components/
+      - run:
+          name: ESLint
+          command: yarn run lint
+      - run:
+          name: Build
+          command: yarn run build
+      - store_artifacts:
+          path: dist/
+      - deploy:
+          name: Deploy
+          command: |
+            if [ $PREVIEW == "true" ]
+            then
+              yarn run deploy -- --confirm --preview
+            else
+              yarn run deploy -- --confirm
+            fi
