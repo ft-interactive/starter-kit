@@ -12,12 +12,11 @@ body {
 .article {
   &-head {
     margin-top: 18px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   &-body {
     div[data-o-grid-colspan] {
-      padding: 0;
       & > div {
         max-width: 700px;
       }
