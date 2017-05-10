@@ -23,11 +23,9 @@
         <div class="article-head o-grid-container">
           <div class="o-grid-row">
             <header data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
-
               {% block article_head %}
               {% include "includes/article-head.html" %}
               {% endblock %}
-
             </header>
           </div>
         </div>
@@ -69,17 +67,7 @@
     {% if flags.footer %}
       {% include "includes/footer.html" %}
     {% endif %}
-    <script async>queue('https://origami-build.ft.com/v2/bundles/js?export=oFooter&modules=o-footer@^5.0.1', null, true)</script>
 
-    <script async>
-    queue([
-      'index.js',
-      'https://origami-build.ft.com/v2/bundles/js?export=oDate&modules=o-date@^2.6.0',
-      {% if scripts %}{% for script in scripts %}
-      ,'{{ script | safe }}'
-      {% endfor %}{% endif %}
-    ]);
-    </script>
-
+    <script src="index.js"></script>
   </body>
 </html>
