@@ -61,7 +61,7 @@
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?callback=client&features=default,fetch" defer async></script>
 
 <!-- Add CTM checks -->
-<script type="text/javascript">
+<script>
   window.cutsTheMustard = ('querySelector' in document && 'localStorage' in window && 'addEventListener' in window && typeof Function.prototype.bind !== 'undefined')
   document.documentElement.className = document.documentElement.className.replace(/core/g, 'enhanced');
 </script>
@@ -75,7 +75,7 @@
   {% if tracking.micrositeName %}
 <meta property="ft.track:microsite_name" content="{{ tracking.micrositeName }}"/>
   {% endif %}
-<script type="text/javascript">
+<script>
   function oTrackinginit() {
     var oTracking = Origami['o-tracking'];
 
@@ -114,10 +114,23 @@
     oTracking.link.init();
   }
 </script>
+{% endif -%}{%- if flags.comments %}
+<script>
+  function oCommentsInit() {
+    if (document.location.hostname === 'ig.ft.com') {
+      window.Origami['o-comments'].setConfig({
+        "loginUrl": "https://accounts-test.ft.com/login",
+        "livefyre": {
+          "network": "ft-1.fyre.co",
+          "domain": "ft-1.auth.fyre.co"
+        }
+      });
+    }
+  }
+</script>
 {% endif -%}
-
 <!-- Add Origami Build Service -->
-<script type="text/javascript">
+<script>
   (function(src) {
     if (cutsTheMustard) {
       var o = document.createElement('script');
@@ -133,6 +146,17 @@
           };
       } else {
           o.onload = oTrackinginit;
+      }
+{% endif -%}
+{%- if flags.comments %}
+      if (o.hasOwnProperty('onreadystatechange')) {
+          o.onreadystatechange = function() {
+              if (o.readyState === "loaded") {
+                  oCommentsInit();
+              }
+          };
+      } else {
+          o.onload = oCommentsInit;
       }
 {% endif -%}
       s.parentNode.insertBefore(o, s);
