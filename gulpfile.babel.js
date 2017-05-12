@@ -99,6 +99,7 @@ function getBundlers(useWatchify) {
         packageCache: {},
         fullPaths: useWatchify,
         debug: useWatchify,
+        standalone: 'client',
       }),
 
       execute() {
