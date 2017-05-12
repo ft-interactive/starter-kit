@@ -16,7 +16,7 @@
 <figure class="graphic graphic-b-1 graphic-pad-1">
   <img alt="" src="{{ mainImage.url }}"></img>
     <figcaption class="o-typography-caption">
-     {{mainImage.description}} 
+     {{mainImage.description}}
      &#xA9;{{mainImage.credit}}
   </figcaption>
 </figure>
@@ -28,10 +28,7 @@
 
 <p>
   {%- if publishedDate -%}
-  <time class="article__timestamp o-date o-typography-timestamp"
-          data-o-component="o-date" datetime="{{ publishedDate | isotime }}"
-          itemprop="datePublished" content="{{ publishedDate | isotime }}"
-          data-o-date-js>{{ publishedDate | ftdate }}</time>
+  <time data-o-component="o-date" class="o-date" datetime="{{ publishedDate | isotime }}">{{ publishedDate | ftdate }}</time>
   {%- endif -%}
   {%- if byline -%}
   &#32;<span class="article__byline">by&nbsp;
