@@ -28,7 +28,7 @@
 
 <p>
   {%- if publishedDate -%}
-  <time data-o-component="o-date" class="o-date">{{ publishedDate | ftdate }}</time>
+  <time data-o-component="o-date" class="o-date" datetime="{{ publishedDate | isotime }}">{{ publishedDate | ftdate }}</time>
   {%- endif -%}
   {%- if byline -%}
   &#32;<span class="article__byline">by&nbsp;
