@@ -44,7 +44,7 @@ jobs:
           command: |
             if [ $PREVIEW == "true" ]
             then
-              echo todo pa11y with preview
+              yarn run check-accessibility:preview
             else
-              echo todo pa11y
+              yarn run check-accessibility
             fi
