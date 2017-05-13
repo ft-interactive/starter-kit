@@ -33,7 +33,7 @@ jobs:
       - deploy:
           name: Deploy
           command: |
-            if [ $PREVIEW == "true" ]
+            if [ "$PREVIEW" == "true" ]
             then
               yarn run deploy -- --confirm --preview
             else
@@ -42,7 +42,7 @@ jobs:
       - run:
           name: Check accessibility of deployed site
           command: |
-            if [ $PREVIEW == "true" ]
+            if [ "$PREVIEW" == "true" ]
             then
               yarn run check-accessibility:preview
             else
