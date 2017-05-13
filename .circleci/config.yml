@@ -26,15 +26,6 @@ jobs:
           name: Build
           command: yarn run build
       - run:
-          name: Accessibility checks (pa11y)
-          command: |
-            if [ $PREVIEW == "true" ]
-            then
-              pa11y --threshold 100 $(ft-graphics-deploy --preview --get-commit-url)
-            else
-              pa11y --threshold 100 $(ft-graphics-deploy --get-commit-url)
-            fi
-      - run:
           name: General QA checks
           command: yarn run qa || echo "Automatic QA checks failed. Continuing anyway"
       - store_artifacts:
@@ -47,4 +38,13 @@ jobs:
               yarn run deploy -- --confirm --preview
             else
               yarn run deploy -- --confirm
+            fi
+      - run:
+          name: Check accessibility of deployed site
+          command: |
+            if [ $PREVIEW == "true" ]
+            then
+              pa11y --threshold 100 $(ft-graphics-deploy --preview --get-commit-url)
+            else
+              pa11y --threshold 100 $(ft-graphics-deploy --get-commit-url)
             fi
