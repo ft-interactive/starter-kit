@@ -23,27 +23,35 @@
         <div class="article-head o-grid-container">
           <div class="o-grid-row">
             <header data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
-
               {% block article_head %}
-
-              {% if flags.shareButtons %}
-                {% include "includes/share.html" %}
-              {% endif %}
-
               {% include "includes/article-head.html" %}
               {% endblock %}
-
             </header>
           </div>
         </div>
         <div class="article-body o-typography-body-wrapper" itemprop="articleBody">
 
-          {% block article_body %}{% endblock %}
+          <div class="o-grid-container">
+            <div class="o-grid-row">
+              <div data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
+                <div>
+                  {% block article_body %}{% endblock %}
+                </div>
+              </div>
+            </div>
+          </div>
 
           <footer class="o-typography-footer" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-            <small><a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright">Copyright</a>
-  					<span itemprop="name">The Financial Times</span> Limited {{ now() | strftime('%Y') }}. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web.</small>
+            <div class="o-grid-container">
+              <div class="o-grid-row">
+                <div data-o-grid-colspan="12 S11 Scenter M9 L8 XL7">
+                  <small><a href="http://www.ft.com/servicestools/help/copyright" data-trackable="link-copyright">Copyright</a>
+                   <span itemprop="name">The Financial Times</span> Limited {{ now() | strftime('%Y') }}. All rights reserved. You may share using our article tools. Please don't cut articles from FT.com and redistribute by email or post to the web.</small>
+                </div>
+              </div>
+            </div>
           </footer>
+
         </div>
       </article>
     </main>
@@ -59,17 +67,7 @@
     {% if flags.footer %}
       {% include "includes/footer.html" %}
     {% endif %}
-    <script async>queue('https://origami-build.ft.com/v2/bundles/js?export=oFooter&modules=o-footer@^5.0.1', null, true)</script>
 
-    <script async>
-    queue([
-      'index.js',
-      'https://origami-build.ft.com/v2/bundles/js?export=oDate&modules=o-date@^2.6.0',
-      {% if scripts %}{% for script in scripts %}
-      ,'{{ script | safe }}'
-      {% endfor %}{% endif %}
-    ]);
-    </script>
-
+    <script src="index.js"></script>
   </body>
 </html>
