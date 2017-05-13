@@ -12,7 +12,7 @@ jobs:
           key: bower_components-{{ checksum "bower.json" }}
       - run:
           name: Install dependencies
-          command: yarn
+          command: yarn --pure-lockfile
       - run:
           name: Rebuild node-sass binary if necessary
           command: npm rebuild node-sass
