@@ -23,7 +23,16 @@ jobs:
           name: Build
           command: yarn run build
       - run:
-          name: Automatic QA checks
+          name: Accessibility checks (pa11y)
+          command: |
+            if [ $PREVIEW == "true" ]
+            then
+              pa11y --threshold 100 $(ft-graphics-deploy --preview --get-commit-url)
+            else
+              pa11y --threshold 100 $(ft-graphics-deploy --get-commit-url)
+            fi
+      - run:
+          name: General QA checks
           command: yarn run qa || echo "Automatic QA checks failed. Continuing anyway"
       - store_artifacts:
           path: dist/
