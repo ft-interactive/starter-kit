@@ -44,7 +44,7 @@ jobs:
           command: |
             if [ $PREVIEW == "true" ]
             then
-              pa11y --threshold 100 $(ft-graphics-deploy --preview --get-commit-url)
+              echo todo pa11y with preview
             else
-              pa11y --threshold 100 $(ft-graphics-deploy --get-commit-url)
+              echo todo pa11y
             fi
