@@ -14,8 +14,8 @@ jobs:
           name: Install dependencies
           command: yarn --pure-lockfile
       - run:
-          name: Rebuild node-sass binary if necessary
-          command: npm rebuild node-sass
+          name: Rebuild problematic node modules
+          command: npm rebuild node-sass phantomjs-prebuilt
       - save_cache:
           key: node_modules-{{ checksum "yarn.lock" }}
           paths:
