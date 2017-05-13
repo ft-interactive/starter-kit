@@ -30,9 +30,6 @@ jobs:
       - run:
           name: Build
           command: yarn run build
-      - run:
-          name: General QA checks
-          command: yarn run qa || echo "Automatic QA checks failed. Continuing anyway"
       - store_artifacts:
           path: dist/
       - deploy:
@@ -53,3 +50,6 @@ jobs:
             else
               yarn run check-accessibility
             fi
+      - run:
+          name: General QA checks
+          command: yarn run qa || echo "Automatic QA checks failed. Continuing anyway"
