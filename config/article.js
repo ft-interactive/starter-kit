@@ -65,13 +65,13 @@ export default () => ({ // eslint-disable-line
   // General social
   // socialImage: '',
   // socialHeadline: '',
-  // socialSummary:  '',
+  // socialSummary: '',
 
   // TWITTER
   // twitterImage: '',
   // twitterCreator: '@individual's_account',
-  // tweetText:  '',
-  // twitterHeadline:  '',
+  // tweetText: '',
+  // twitterHeadline: '',
 
   // FACEBOOK
   // facebookImage: '',
