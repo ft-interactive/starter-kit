@@ -2,7 +2,7 @@
 
 A template for IG projects – everything you need to build a standalone front end app (including some basic FT page furniture), configured to automatically deploy to the web.
 
---
+---
 
 ## How to use
 

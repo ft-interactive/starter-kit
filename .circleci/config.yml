@@ -1,0 +1,55 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/project
+    docker:
+      - image: node:7
+    steps:
+      - checkout
+      - restore_cache:
+          key: node_modules-{{ checksum "yarn.lock" }}
+      - restore_cache:
+          key: bower_components-{{ checksum "bower.json" }}
+      - run:
+          name: Install dependencies
+          command: yarn --pure-lockfile
+      - run:
+          name: Rebuild problematic node modules
+          command: npm rebuild node-sass phantomjs-prebuilt
+      - save_cache:
+          key: node_modules-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules/
+      - save_cache:
+          key: bower_components-{{ checksum "bower.json" }}
+          paths:
+            - bower_components/
+      - run:
+          name: ESLint
+          command: yarn run lint
+      - run:
+          name: Build
+          command: yarn run build
+      - store_artifacts:
+          path: dist/
+      - deploy:
+          name: Deploy
+          command: |
+            if [ "$PREVIEW" == "true" ]
+            then
+              yarn run deploy -- --confirm --preview
+            else
+              yarn run deploy -- --confirm
+            fi
+      - run:
+          name: Check accessibility of deployed site
+          command: |
+            if [ "$PREVIEW" == "true" ]
+            then
+              yarn run check-accessibility:preview
+            else
+              yarn run check-accessibility
+            fi
+      - run:
+          name: General QA checks
+          command: yarn run qa || echo "Automatic QA checks failed. Continuing anyway"
