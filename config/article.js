@@ -65,17 +65,25 @@ export default () => ({ // eslint-disable-line
   // General social
   // socialImage: '',
   // socialHeadline: '',
-  // socialSummary: '',
+  // socialDescription: '',
+  // twitterCreator: '@author's_account', // shows up in summary_large_image cards
 
-  // TWITTER
-  // twitterImage: '',
-  // twitterCreator: '@individual's_account',
+  // TWEET BUTTON CUSTOM TEXT
   // tweetText: '',
+  // twitterRelatedAccounts: ['authors_account_here', 'ftdata'], // Twitter lists these as suggested accounts to follow after a user tweets (do not include @)
+
+  // Fill out the Facebook/Twitter metadata sections below if you want to
+  // override the "General social" options above
+
+  // TWITTER METADATA (for Twitter cards)
+  // twitterImage: '',
   // twitterHeadline: '',
+  // twitterDescription: '',
 
   // FACEBOOK
   // facebookImage: '',
   // facebookHeadline: '',
+  // facebookDescription: '',
 
   tracking: {
 
