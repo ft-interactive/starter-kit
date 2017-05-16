@@ -7,16 +7,9 @@
 <link rel="preconnect" href="https://build.origami.ft.com" crossorigin>
 <link rel="preconnect" href="https://cdn.polyfill.io">
 
-{# Critical JS and CSS #}
-<script inline src="components/core/top.js"></script>
-<!--[if lt IE 9]><script>/**
-* @preserve HTML5 Shiv 3.7.2 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
-*/
-!function(a,b){function c(a,b){var c=a.createElement("p"),d=a.getElementsByTagName("head")[0]||a.documentElement;return c.innerHTML="x<style>"+b+"</style>",d.insertBefore(c.lastChild,d.firstChild)}function d(){var a=t.elements;return"string"==typeof a?a.split(" "):a}function e(a,b){var c=t.elements;"string"!=typeof c&&(c=c.join(" ")),"string"!=typeof a&&(a=a.join(" ")),t.elements=c+" "+a,j(b)}function f(a){var b=s[a[q]];return b||(b={},r++,a[q]=r,s[r]=b),b}function g(a,c,d){if(c||(c=b),l)return c.createElement(a);d||(d=f(c));var e;return e=d.cache[a]?d.cache[a].cloneNode():p.test(a)?(d.cache[a]=d.createElem(a)).cloneNode():d.createElem(a),!e.canHaveChildren||o.test(a)||e.tagUrn?e:d.frag.appendChild(e)}function h(a,c){if(a||(a=b),l)return a.createDocumentFragment();c=c||f(a);for(var e=c.frag.cloneNode(),g=0,h=d(),i=h.length;i>g;g++)e.createElement(h[g]);return e}function i(a,b){b.cache||(b.cache={},b.createElem=a.createElement,b.createFrag=a.createDocumentFragment,b.frag=b.createFrag()),a.createElement=function(c){return t.shivMethods?g(c,a,b):b.createElem(c)},a.createDocumentFragment=Function("h,f","return function(){var n=f.cloneNode(),c=n.createElement;h.shivMethods&&("+d().join().replace(/[\w\-:]+/g,function(a){return b.createElem(a),b.frag.createElement(a),'c("'+a+'")'})+");return n}")(t,b.frag)}function j(a){a||(a=b);var d=f(a);return!t.shivCSS||k||d.hasCSS||(d.hasCSS=!!c(a,"article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}mark{background:#FF0;color:#000}template{display:none}")),l||i(a,d),a}var k,l,m="3.7.2",n=a.html5||{},o=/^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i,p=/^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i,q="_html5shiv",r=0,s={};!function(){try{var a=b.createElement("a");a.innerHTML="<xyz></xyz>",k="hidden"in a,l=1==a.childNodes.length||function(){b.createElement("a");var a=b.createDocumentFragment();return"undefined"==typeof a.cloneNode||"undefined"==typeof a.createDocumentFragment||"undefined"==typeof a.createElement}()}catch(c){k=!0,l=!0}}();var t={elements:n.elements||"abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output picture progress section summary template time video",version:m,shivCSS:n.shivCSS!==!1,supportsUnknownElements:l,shivMethods:n.shivMethods!==!1,type:"default",shivDocument:j,createElement:g,createDocumentFragment:h,addElements:e};a.html5=t,j(b)}(this,document);
-</script><![endif]-->
+{# Stylesheets #}
 <link inline rel="stylesheet" href="components/core/top.css">
-<link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-normalise@^1,o-fonts@^2">
-<link rel="stylesheet" href="https://origami-build.ft.com/v2/bundles/css?modules=o-grid@^4.2.1,o-typography@^4.3.1,o-card@^2.1.8">
+<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-normalise@^1,o-fonts@^2,o-grid@^4.2.1,o-typography@^4.3.1,o-header@^6.5.1,o-card@^2.1.8,o-footer@^5.0.3{{',o-comments@^3.2.0' if flags.comments}}{{ ',o-share@^3' if flags.shareButtons }}">
 <link rel="stylesheet" href="styles.css">
 {%- if stylesheets %}{% for stylesheet in stylesheets %}
 <link rel="stylesheet" href="{{ stylesheet | safe }}">
@@ -60,16 +53,100 @@
 <script type="application/json" data-o-errors-config>
 {"sentryEndpoint": "https://ddbd80489ff549538250bbe37fa52bbd@sentry.io/71130"}
 </script>
-<script async src="https://origami-build.ft.com/v2/bundles/js?export=oErrors&modules=o-errors@^3.5.1"></script>
 {%- endif -%}
+
+{# Prioritised JavaScript #}
+
+<!-- Add Polyfil service -->
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?callback=client&features=default,fetch" defer async></script>
+
+<!-- Add CTM checks -->
+<script type="text/javascript">
+  window.cutsTheMustard = ('querySelector' in document && 'localStorage' in window && 'addEventListener' in window && typeof Function.prototype.bind !== 'undefined')
+  document.documentElement.className = document.documentElement.className.replace(/core/g, 'enhanced');
+</script>
+
+{%- if flags.analytics %}
+<link rel="preconnect" href="https://spoor-api.ft.com">
+<meta property="ft.track:is_live" content="true"/>
+  {% if tracking.product %}
+<meta property="ft.track:product" content="{{ tracking.product }}"/>
+  {% endif %}
+  {% if tracking.micrositeName %}
+<meta property="ft.track:microsite_name" content="{{ tracking.micrositeName }}"/>
+  {% endif %}
+<script type="text/javascript">
+  function oTrackinginit() {
+    var oTracking = Origami['o-tracking'];
+
+    var page_data = {
+      content: { asset_type: 'interactive' }
+    };
+
+    var properties = [].reduce.call(document.querySelectorAll('head meta[property^="ft.track:"]')||[], function(o, el) {
+      o[el.getAttribute('property').replace('ft.track:', '')] = el.getAttribute('content');
+      return o;
+    }, {});
+
+    var id = document.documentElement.getAttribute('data-content-id');
+
+    if (id) {
+      page_data.content.uuid = id;
+    }
+
+    if (properties.microsite_name) {
+      page_data.microsite_name = properties.microsite_name;
+    }
+
+    // Setup
+    oTracking.init({
+      server: 'https://spoor-api.ft.com/px.gif',
+      system: {
+        is_live: typeof properties.is_live === 'string' ? properties.is_live.toLowerCase() : false
+      },
+      context: { product: properties.product || 'IG' }
+    });
+
+    // Page
+    oTracking.page(page_data);
+
+    // Links
+    oTracking.link.init();
+  }
+</script>
+{% endif -%}
+
+<!-- Add Origami Build Service -->
+<script type="text/javascript">
+  (function(src) {
+    if (cutsTheMustard) {
+      var o = document.createElement('script');
+      o.async = o.defer = true;
+      o.src = src;
+      var s = document.getElementsByTagName('script')[0];
+{%- if flags.analytics %}
+      if (o.hasOwnProperty('onreadystatechange')) {
+          o.onreadystatechange = function() {
+              if (o.readyState === "loaded") {
+                  oTrackinginit();
+              }
+          };
+      } else {
+          o.onload = oTrackinginit;
+      }
+{% endif -%}
+      s.parentNode.insertBefore(o, s);
+    }
+  }('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-header@^6.5.1,o-footer@^5.0.3,o-date@^2.8.0,o-errors@^3.5.1{{ ",o-comments@^3.1.0" if flags.comments }}{{ ",o-share@^3" if flags.shareButtons }}'));
+</script>
 
 <title>{{ title | default(headline, true) }} &mdash; FT.com</title>
 <meta name="twitter:title" content="{{ twitterHeadline | default(socialHeadline) | default(headline, true) }}">
 <meta property="og:title" content="{{ facebookHeadline | default (socialHeadline) | default(headline, true) }}">
 
 <meta name="description" content="{{ description }}">
-<meta name="twitter:description" content="{{ description }}">
-<meta property="og:description" content="{{ description }}">
+<meta name="twitter:description" content="{{ twitterDescription | default(socialDescription) | default(description) }}">
+<meta property="og:description" content="{{ facebookDescription | default(socialDescription) | default(description) }}">
 
 <link rel="canonical" href="{{ url }}">
 <meta name="twitter:url" content="{{ url }}">
@@ -90,15 +167,4 @@
 
 {%- if twitterCreator %}
 <meta name="twitter:creator" content="{{ twitterCreator }}">
-{% endif -%}
-
-{%- if flags.analytics %}
-  <link rel="preconnect" href="https://spoor-api.ft.com">
-  <meta property="ft.track:is_live" content="true"/>
-  {% if tracking.product %}
-  <meta property="ft.track:product" content="{{ tracking.product }}"/>
-  {% endif %}
-  {% if tracking.micrositeName %}
-  <meta property="ft.track:microsite_name" content="{{ tracking.micrositeName }}"/>
-  {% endif %}
 {% endif -%}
