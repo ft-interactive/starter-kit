@@ -145,8 +145,8 @@
 <meta property="og:title" content="{{ facebookHeadline | default (socialHeadline) | default(headline, true) }}">
 
 <meta name="description" content="{{ description }}">
-<meta name="twitter:description" content="{{ description }}">
-<meta property="og:description" content="{{ description }}">
+<meta name="twitter:description" content="{{ twitterDescription | default(socialDescription) | default(description) }}">
+<meta property="og:description" content="{{ facebookDescription | default(socialDescription) | default(description) }}">
 
 <link rel="canonical" href="{{ url }}">
 <meta name="twitter:url" content="{{ url }}">
