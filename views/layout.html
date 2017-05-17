@@ -1,4 +1,5 @@
 {% set test_comments_uuid = "3a499586-b2e0-11e4-a058-00144feab7de" if not flags.prod and flags.comments else "" %}
+{% import "./macros.html" as macros %}
 <!doctype html>
 <html lang="en-GB" class="core"
     data-buildtime="{{ now() | isotime }}"
@@ -7,7 +8,6 @@
     {% block prependhead %}{% endblock -%}
     {% include "includes/html-head.html" %}
     {% block appendhead %}{% endblock -%}
-    {% include "includes/ads-head.html" %}
   </head>
   <body>
 
@@ -15,9 +15,7 @@
       {% include "includes/analytics.html" %}
     {% endif %}
 
-    {% if ads != undefined  %}
-    {% include "includes/ads-body-leaderboard.html" %}
-    {% endif %}
+    {% if ads %}{{ macros.topAd() }}{% endif %}
 
     {% if flags.header %}
       {% include "includes/header.html" %}

@@ -1,15 +1,20 @@
+{% import "./macros.html" as macros %}
 {% extends "layout.html" %}
 
 {% block article_body %}
-	
+
 {% markdown %}
 
-To begin with it has nothing to do with archaism, with the salvaging of obsolete words and turns of speech, or with the setting up of a "standard English" which must never be departed from. On the contrary, it isespecially concerned with the scrapping of every word or idiom which has outworn its usefulness. 
+To begin with it has nothing to do with archaism, with the salvaging of obsolete words and turns of speech, or with the setting up of a "standard English" which must never be departed from. On the contrary, it isespecially concerned with the scrapping of every word or idiom which has outworn its usefulness.
 
-It has nothing to do with correct grammar and syntax,which are of no importance so long as one makes one's meaning clear, or with the avoidance of Americanisms, or with having what is called a "good prose style." 
+It has nothing to do with correct grammar and syntax,which are of no importance so long as one makes one's meaning clear, or with the avoidance of Americanisms, or with having what is called a "good prose style."
 
-<!-- This is the mid ad slot. You can move it wherever it works best in your page's design -->
-{% endmarkdown %}{% include "components/ads/template.html" %}{% markdown %}
+{# START MID AD SLOT
+    You can move this wherever it works best in your page's design.
+    For more control over the size, write your own o-ads div - see
+    https://financial-times.github.io/o-ads/docs/developer-guide/display #}
+{% if ads %}{{ macros.middleAd() }}{% endif %}
+{# END MID AD SLOT #}
 
 On the other hand, it is not concerned with fake simplicity and
 the attempt to make written English colloquial. Nor does it even imply in every
