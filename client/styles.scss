@@ -1,6 +1,8 @@
+$o-ads-is-silent: false;
 @import 'o-colors/main';
 @import 'components/core/main';
-
+//@import 'components/ads/styles';
+@import 'o-ads/main';
 /*
       TODO: delete this comment
 
@@ -14,3 +16,5 @@
                 - index.js
                 - template.html
 */
+
+
