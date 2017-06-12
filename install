@@ -12,16 +12,15 @@ if [[ -d "$DIR/.git" ]]; then
 	echo -n "This directory already contains a .git folder."
 	echo -n "Do you wish to backup the existing master branch and create a new Starter Kit project on master? [y/N]"
 	read MOVE_MASTER
-	if [[ "${MOVE_MASTER,,}" == "y" ]]; then
+	cd "$DIR"
+	if [[ `tr "[:upper:]" "[:lower:]" <<< "${MOVE_MASTER:=y}"` == "y" ]]; then
 		echo "What do you wish to call your backup master branch?"
 		read NEW_MASTER_NAME
-		cd "$DIR"
-		git remote add upstream ssh://git@github.com/ft-interactive/starter-kit.git
-		git fetch --depth 1 upstream "${BRANCH}"
-		git branch -m master "${NEW_MASTER_NAME}"
-		git checkout --orphan master "upstream/${BRANCH}"
-		./configure && npm start -- --open
+
+		git checkout -b "${NEW_MASTER_NAME}" # Backup to new branch
+		git checkout master # Checkout master again
 	fi
+	git remote add upstream ssh://git@github.com/ft-interactive/starter-kit.git
 else
 	echo ""
 	git clone -b ${BRANCH} --single-branch --depth 1 ssh://git@github.com/ft-interactive/starter-kit.git $DIR && cd $DIR && ./configure && npm start -- --open
