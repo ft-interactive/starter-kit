@@ -23,13 +23,17 @@ fi
 if `git ls-remote --exit-code upstream &>/dev/null`; then
   EXISTING_REPO=true
   echo "Existing repo detected!"
-  REPO=`basename $(git remote get-url origin) | sed 's/\.git$//'`
-  REV=`git rev-parse upstream/$STARTERKIT_BRANCH_NAME`
-  echo "Setting repo to current origin ${ORIGIN}"
+  ORIGIN_URL=`git remote get-url origin`
+  if [ -z "$ORIGIN_URL" ]; then
+    REPO=`basename $ORIGIN_URL | sed 's/\.git$//'`
+    REV=`git rev-parse --short upstream/$STARTERKIT_BRANCH_NAME`
+  else
+    REPO=`basename $PWD`
+    REV=`git rev-parse --short HEAD`
+  fi
 else
   EXISTING_REPO=false
-  echo -n "Do you want to create a new GitHub repo? [Y/n]"
-  read CREATE_NEW_REPO
+  read -p "Do you want to create a new GitHub repo? [Y/n] " CREATE_NEW_REPO
 
   if [[ `tr "[:upper:]" "[:lower:]" <<< "${CREATE_NEW_REPO:=y}"` != "n" ]]; then
     read -p "New Github repo name (press enter to use default \"$DIR\") : " NAME
@@ -62,7 +66,7 @@ then
   echo $UUID > uuid
 fi
 
-if [[ EXISTING_REPO == true ]]
+if [[ EXISTING_REPO == true ]]; then
   git remote remove upstream
 else
   echo "Trash git history for starter-kit"

@@ -9,9 +9,8 @@ BRANCH=${BRANCH:-master}
 export STARTERKIT_BRANCH_NAME=$BRANCH # For use in configure
 
 if [[ -d "$DIR/.git" ]]; then
-	echo -n "This directory already contains a .git folder."
-	echo -n "Do you wish to backup the existing master branch and create a new Starter Kit project on master? [y/N]"
-	read MOVE_MASTER
+	echo "This directory already contains a .git folder."
+	read -p "Do you wish to backup the existing master branch and create a new Starter Kit project on master? [y/N] " MOVE_MASTER
 	cd "$DIR"
 	if [[ `tr "[:upper:]" "[:lower:]" <<< "${MOVE_MASTER:=y}"` == "y" ]]; then
 		echo "What do you wish to call your backup master branch?"
@@ -28,9 +27,11 @@ if [[ -d "$DIR/.git" ]]; then
   git clean -d -x -f
   git commit -am "<starter-kit> Committing after cleaning out master"
 
+	echo -n "Adding Starter Kit files..."
   git fetch --depth 1 upstream "$BRANCH"
   git checkout "upstream/$BRANCH" -- .
   git add .
+	REV=$(git rev-parse --short upstream/$BRANCH)
   git commit -am "<starter-kit> Adding latest Starter Kit files ($REV)"
 	./configure && npm start -- --open
 else
