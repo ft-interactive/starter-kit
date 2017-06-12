@@ -4,14 +4,14 @@ echo ""
 echo "STARTER KIT"
 echo "==========="
 echo ""
-echo "Configuratoring code for your new project..."
+echo "Configuring code for your new project..."
 echo ""
 
-dir=$(echo ${PWD##*/} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
+DIR=$(echo ${PWD##*/} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 
-if [ $dir == "starter-kit" ]
+if [ $DIR == "starter-kit" ]
 then
-  echo "DANGER: the directory name is \"$dir\""
+  echo "DANGER: the directory name is \"$DIR\""
   read -e -n 1 -p "Are you sure you want to continue? [y/N] : " -r
   if [[ ! $REPLY =~ ^[Yy]$ ]]
   then
@@ -20,67 +20,96 @@ then
   fi
 fi
 
-read -p "New Github repo name (press enter to use default \"$dir\") : " name
-read -p "Description of the project displayed on Github : " description
+if `git ls-remote --exit-code upstream &>/dev/null`; then
+  EXISTING_REPO=true
+  echo "Existing repo detected!"
+  ORIGIN_URL=`git remote get-url origin`
+  if [ -z "$ORIGIN_URL" ]; then
+    REPO=`basename $ORIGIN_URL | sed 's/\.git$//'`
+    REV=`git rev-parse --short upstream/$STARTERKIT_BRANCH_NAME`
+  else
+    REPO=`basename $PWD`
+    REV=`git rev-parse --short HEAD`
+  fi
+else
+  EXISTING_REPO=false
+  read -p "Do you want to create a new GitHub repo? [Y/n] " CREATE_NEW_REPO
 
-repo=$(echo ${name:-$dir} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
-rev=$(git rev-parse --short HEAD)
-
-defaulturl="https://ig.ft.com/${repo}"
-
-read -p "Live URL (press enter for default \"${defaulturl}\") : " url
-read -p "If you have a Link File UUID paste if here: " uuid
-url=${url:-$defaulturl}
-
-if [[ ! $url =~ ^https?\:\/\/ ]]
-then
-  url="https://ig.ft.com/${url}"
+  if [[ `tr "[:upper:]" "[:lower:]" <<< "${CREATE_NEW_REPO:=y}"` != "n" ]]; then
+    read -p "New Github repo name (press enter to use default \"$DIR\") : " NAME
+    read -p "Description of the project displayed on Github : " DESCRIPTION
+    REPO=$(echo ${NAME:-$DIR} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
+  else
+    read -p "What do you want to call this project? (press enter to use default \"$DIR\") : " NAME
+    REPO=$(echo ${NAME:-$DIR} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
+  fi
+  REV=$(git rev-parse --short HEAD)
 fi
-echo "Setting URL to $url"
+
+DEFAULTURL="https://ig.ft.com/${REPO}"
+
+read -p "Live URL (press enter for default \"${DEFAULTURL}\") : " URL
+read -p "If you have a Link File UUID paste if here: " UUID
+URL=${URL:-$DEFAULTURL}
+
+if [[ ! $URL =~ ^https?\:\/\/ ]]
+then
+  URL="https://ig.ft.com/${URL}"
+fi
+echo "Setting URL to $URL"
 
 template_str=$(cat readme.md.template)
 
-if [ -n "$uuid" ]
+if [ -n "$UUID" ]
 then
-  echo "Adding $uuid to ./uuid file"
-  echo $uuid > uuid
+  echo "Adding $UUID to ./uuid file"
+  echo $UUID > uuid
 fi
 
-echo "Trash git history for starter-kit"
-rm -rf .git
-echo "Delete $(rm -rfv configure readme.md.template)"
+if [[ EXISTING_REPO == true ]]; then
+  git remote remove upstream
+else
+  echo "Trash git history for starter-kit"
+  rm -rf .git
+  git init
+  git add .
+  git commit -m "<starter-kit@$REV> Initial commit"
+fi
 
-echo "Directory: $dir"
-echo "Repo name: $repo"
-eval "echo \"${template_str}\"" > README.md
+echo "Delete $(rm -rfv configure install readme.md.template)"
+
+echo "Directory: $DIR"
+echo "Repo name: $REPO"
+eval "echo \"${TEMPLATE_STR}\"" > README.md
 eval "echo \"$(cat config/article.js)\"" > config/article.js
 
-git init
-git add .
-git commit -m "Initial commit: uses starter kit (commit $rev)"
 
 echo "Installing dependencies..."
 
 yarn || { echo "😭  yarn not found. Falling back to 'npm install' (may be slower)"; npm install --link --no-optional; }
 
-echo "Creating repo on Github"
+if [[ `tr "[:upper:]" "[:lower:]" <<< "${CREATE_NEW_REPO:=y}"` != "n" ]]; then
+  echo "Creating repo on Github"
+  RESP=$(curl -n -v https://api.github.com/orgs/ft-interactive/repos \
+  -d "{\"name\": \"${REPO}\", \"homepage\":\"${URL}\",\"description\": \"${DESCRIPTION}\", \"private\":true, \"team_id\":260487, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}"  | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin').toString()).message")
 
-RESP=$(curl -n -v https://api.github.com/orgs/ft-interactive/repos \
--d "{\"name\": \"${repo}\", \"homepage\":\"${url}\",\"description\": \"${description}\", \"private\":true, \"team_id\":260487, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}"  | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin').toString()).message")
-echo $RESP
-git remote add origin ssh://git@github.com/ft-interactive/$repo.git
+  echo $RESP
+  git remote add origin ssh://git@github.com/ft-interactive/$REPO.git
 
-if [[ $RESP =~ "upgrade your plan" ]];
-then
-  echo ""
-  echo "No more private repos 😭 -- please manually create repo and then run:"
-  echo ""
-  echo "    git push origin master"
+  if [[ $RESP =~ "upgrade your plan" ]];
+  then
+    echo ""
+    echo "No more private repos 😭 -- please manually create repo and then run:"
+    echo ""
+    echo "    git push origin master"
+  else
+    echo "Push to Github"
+    git push origin master -u
+  fi
 else
-  echo "Push to Github"
-  git push origin master -u
-
-  echo ""
-  echo "DONE !!"
-  echo ""
+  echo "Skipping repo creation."
 fi
+
+echo ""
+echo "DONE !!"
+echo ""
