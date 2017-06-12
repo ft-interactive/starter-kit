@@ -20,18 +20,18 @@ then
   fi
 fi
 
-if ! `git ls-remote --exit-code upstream &>/dev/null`; then
+if `git ls-remote --exit-code upstream &>/dev/null`; then
   EXISTING_REPO=true
   echo "Existing repo detected!"
-  repo=basename $(git remote get-url origin) | sed 's/\.git$//'
-  rev=git rev-parse upstream/$STARTERKIT_BRANCH_NAME
+  repo=`basename $(git remote get-url origin) | sed 's/\.git$//'`
+  rev=`git rev-parse upstream/$STARTERKIT_BRANCH_NAME`
   echo "Setting repo to current origin ${ORIGIN}"
 else
   EXISTING_REPO=false
   echo -n "Do you want to create a new GitHub repo? [Y/n]"
   read CREATE_NEW_REPO
 
-  if [[ "${CREATE_NEW_REPO,,}" != "n" ]]; then
+  if [[ `tr "[:upper:]" "[:lower:]" <<< "${CREATE_NEW_REPO:=Y}"` != "n" ]]; then
     read -p "New Github repo name (press enter to use default \"$dir\") : " name
     read -p "Description of the project displayed on Github : " description
     repo=$(echo ${name:-$dir} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
