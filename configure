@@ -63,17 +63,6 @@ then
 fi
 
 if [[ EXISTING_REPO == true ]]
-  echo -n "Clearing out master..."
-  git add .
-  git commit -am "<starter-kit> Committing before cleaning out master"
-  git rm -r *
-  git clean -d -x -f
-  git commit -am "<starter-kit> Committing after cleaning out master"
-
-  git fetch --depth 1 upstream "$BRANCH"
-  git checkout "upstream/$BRANCH" -- .
-  git add .
-  git commit -am "<starter-kit> Adding latest Starter Kit files ($REV)"
   git remote remove upstream
 else
   echo "Trash git history for starter-kit"
