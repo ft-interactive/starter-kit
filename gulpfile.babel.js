@@ -149,7 +149,8 @@ function getBundlers(useWatchify) {
 gulp.task('default', (done) => {
   process.env.NODE_ENV = 'production';
   runSequence(
-    ['scripts', 'styles', 'build-pages', 'copy'],
+    ['copy'],
+    ['scripts', 'styles', 'build-pages'],
     ['html'/* 'images' */],
     ['revreplace'],
   done);

@@ -9,11 +9,12 @@
 
 {# Stylesheets #}
 <link inline rel="stylesheet" href="components/core/top.css">
-<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-normalise@^1,o-fonts@^2,o-grid@^4.2.1,o-typography@^4.3.1,o-header@^6.5.1,o-card@^2.1.8,o-footer@^5.0.3{{',o-comments@^3.2.0' if flags.comments}}{{ ',o-share@^3' if flags.shareButtons }}">
+<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-ads@^6.1.5,o-normalise@^1,o-fonts@^2,o-grid@^4.2.1,o-typography@^4.3.1,o-header@^6.5.1,o-card@^2.1.8,o-footer@^5.0.3{{',o-comments@^3.2.0' if flags.comments}}{{ ',o-share@^3' if flags.shareButtons }}">
 <link rel="stylesheet" href="styles.css">
 {%- if stylesheets %}{% for stylesheet in stylesheets %}
 <link rel="stylesheet" href="{{ stylesheet | safe }}">
 {% endfor %}{% endif -%}
+
 
 <link href="https://plus.google.com/113457471429583444041/" rel="publisher" />
 <meta property="fb:app_id" content="429755910551755" />
@@ -57,8 +58,8 @@
 
 {# Prioritised JavaScript #}
 
-<!-- Add Polyfil service -->
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js?callback=client&features=default,fetch" defer async></script>
+<!-- Add polyfill service -->
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?callback=client&amp;features=default,fetch"></script>
 
 <!-- Add CTM checks -->
 <script type="text/javascript">
@@ -137,7 +138,7 @@
 {% endif -%}
       s.parentNode.insertBefore(o, s);
     }
-  }('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-header@^6.5.1,o-footer@^5.0.3,o-date@^2.8.0,o-errors@^3.5.1{{ ",o-comments@^3.1.0" if flags.comments }}{{ ",o-share@^3" if flags.shareButtons }}'));
+  }('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-ads@^6.1.5,o-header@^6.5.1,o-footer@^5.0.3,o-date@^2.8.0,o-errors@^3.5.1{{ ",o-comments@^3.1.0" if flags.comments }}{{ ",o-share@^3" if flags.shareButtons }}{{ ",o-tracking@^1.2.3" if flags.analytics }}'));
 </script>
 
 <title>{{ title | default(headline, true) }} &mdash; FT.com</title>
@@ -145,8 +146,8 @@
 <meta property="og:title" content="{{ facebookHeadline | default (socialHeadline) | default(headline, true) }}">
 
 <meta name="description" content="{{ description }}">
-<meta name="twitter:description" content="{{ description }}">
-<meta property="og:description" content="{{ description }}">
+<meta name="twitter:description" content="{{ twitterDescription | default(socialDescription) | default(description) }}">
+<meta property="og:description" content="{{ facebookDescription | default(socialDescription) | default(description) }}">
 
 <link rel="canonical" href="{{ url }}">
 <meta name="twitter:url" content="{{ url }}">
@@ -170,3 +171,15 @@
 {%- if twitterCreator %}
 <meta name="twitter:creator" content="{{ twitterCreator }}">
 {% endif -%}
+
+{% if ads  %}
+<script data-o-ads-config type="application/json">
+{
+ "gpt": {
+   "network": 5887,
+   "adUnit": "{{ ads.gptAdunit }}"
+ },
+ "dfp_targeting": "{{ ads.dftTargeting }}"
+}
+</script>
+{% endif %}
