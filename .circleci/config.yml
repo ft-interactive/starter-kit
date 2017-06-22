@@ -4,6 +4,7 @@ jobs:
     working_directory: ~/project
     docker:
       - image: node:7
+      - image: justinribeiro/chrome-headless:latest
     steps:
       - checkout
       - restore_cache:
