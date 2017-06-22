@@ -2,7 +2,3 @@ rules:
   no-unused-expressions: 0
 env:
   mocha: true
-  browser: true
-globals:
-  should: true
-  __html__: true
