@@ -26,18 +26,18 @@
   font: 16px/1.3 'Georgia', serif;
 }
 
-
-
 .onward-journey__header {
   position: relative;
   padding: 0;
   margin-top: 10px;
   overflow: hidden;
   margin-left: 0;
-  &.onward-journey--standout {
-    margin-bottom: 10px;
-  }
 }
+
+.onward-journey__header.onward-journey--standout {
+  margin-bottom: 10px;
+}
+
 .onward-journey__title:after {
   display: initial;
   content: '';
@@ -62,7 +62,6 @@
 .onward-journey__link {
   font-family: MetricWeb,sans-serif;
   line-height: 16px;
-  font-size: 14px;
   font-weight: 600;
   font-size: 16px;
   position: relative;
@@ -77,9 +76,10 @@
   color: #27757b;
   text-decoration: none;
   display: none;
-  &:hover {
-    color: #333;
-  }
+}
+
+.onward-journey__link:hover {
+  color: #333;
 }
 
 .onward-journey__link:after {
