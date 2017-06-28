@@ -1,5 +1,5 @@
 /**
- * Preflight rules
+ * QA rules
  * @author Ændrew Rininsland <andrew.rininsland@ft.com>
  *
  * These mainly check the existence of various meta data fields and ensures
@@ -15,7 +15,7 @@ const index = readFileSync(`${__dirname}/../../dist/index.html`, { encoding: 'ut
 const { document } = new JSDOM(index).window;
 const should = chai.should();
 
-describe('preflight tests', () => {
+describe('QA tests', () => {
   describe('dist/index.html', () => {
     // Parse index.html into a DOM and run tests
 
