@@ -44,15 +44,15 @@ jobs:
             else
               npm run deploy -- --confirm
             fi
-      - run:
-          name: Check accessibility of deployed site
-          command: |
-            if [ "$PREVIEW" == "true" ]
-            then
-              npm run check-accessibility:preview
-            else
-              npm run check-accessibility
-            fi
+      # - run:
+      #     name: Check accessibility of deployed site
+      #     command: |
+      #       if [ "$PREVIEW" == "true" ]
+      #       then
+      #         npm run check-accessibility:preview
+      #       else
+      #         npm run check-accessibility
+      #       fi
       - run:
           name: General QA checks
           command: npm run qa || echo "Automatic QA checks failed. Continuing anyway"
