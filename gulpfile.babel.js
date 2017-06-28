@@ -19,7 +19,6 @@ import sass from 'gulp-sass';
 import util from 'gulp-util';
 import autoprefixer from 'gulp-autoprefixer';
 import plumber from 'gulp-plumber';
-import http from 'http';
 
 const ansiToHTML = new AnsiToHTML();
 
@@ -271,43 +270,3 @@ gulp.task('revreplace', ['revision'], () =>
 //   }))
 //   .pipe(gulp.dest('dist'))
 // );
-function distServer() {
-  const serveStatic = require('serve-static');
-  const finalhandler = require('finalhandler');
-  const serve = serveStatic('dist', { index: ['index.html'] });
-  return http.createServer((req, res) => {
-    serve(req, res, finalhandler(req, res));
-  });
-}
-
-gulp.task('test:install-selenium', (done) => {
-  const selenium = require('selenium-standalone');
-  selenium.install({ version: '2.53.1' }, done);
-});
-
-gulp.task('test:preflight', ['test:install-selenium'], () => {
-  const nightwatch = require('nightwatch');
-
-  if (process.env.CIRCLE_PROJECT_REPONAME === 'starter-kit') {
-    console.info('Project is base starter-kit; bypassing preflight checks...');
-    return process.exit();
-  }
-
-  if (process.env.CIRCLE_BUILD_NUM === 1) {
-    console.info('Initial build; bypassing preflight checks...');
-    return process.exit();
-  }
-
-  distServer().listen(process.env.PORT || '3000');
-
-  return nightwatch.runner({ // eslint-disable-line consistent-return
-    config: 'nightwatch.json',
-    group: 'preflight',
-  }, (passed) => {
-    if (passed) {
-      process.exit();
-    } else {
-      process.exit(1);
-    }
-  });
-});

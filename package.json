@@ -58,6 +58,7 @@
   },
   "optionalDependencies": {
     "babel-eslint": "^7.2.3",
+    "chai": "^4.0.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-config-ft-graphics": "ft-interactive/eslint-config-ft-graphics",
@@ -66,11 +67,10 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
     "ft-graphics-deploy": "^1.0.2",
+    "jsdom": "^11.0.0",
     "minimist": "^1.2.0",
-    "nightwatch": "^0.9.15",
-    "pa11y": "^4.10.0",
-    "phantomjs-prebuilt": "^2.1.14",
-    "selenium-standalone": "6.4.1"
+    "mocha": "^3.4.2",
+    "pa11y": "^4.10.0"
   },
   "private": true,
   "scripts": {
@@ -81,7 +81,7 @@
     "postinstall": "bower install --allow-root",
     "prebuild": "npm run clean",
     "prestart": "npm run clean",
-    "qa": "gulp test:preflight",
+    "qa": "mocha ./test/**/*.spec.js",
     "check-accessibility": "pa11y --threshold 100 $(ft-graphics-deploy --get-commit-url)",
     "check-accessibility:preview": "pa11y --threshold 100 $(ft-graphics-deploy --preview --get-commit-url)",
     "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'"

@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+echo ""
+echo -n "Local directory for the project (use lowercase with dashes) : "
+read DIR
+echo -n "Which branch to use? (press enter to use default branch \"master\") : "
+read BRANCH
+BRANCH=${BRANCH:-master}
+export STARTERKIT_BRANCH_NAME=$BRANCH # For use in configure
+
+if [[ -d "$DIR/.git" ]]; then
+	echo "This directory already contains a .git folder."
+	read -p "Do you wish to backup the existing master branch and create a new Starter Kit project on master? [y/N] " MOVE_MASTER
+	cd "$DIR"
+	if [[ `tr "[:upper:]" "[:lower:]" <<< "${MOVE_MASTER:=y}"` == "y" ]]; then
+		echo "What do you wish to call your backup master branch?"
+		read NEW_MASTER_NAME
+
+		git checkout -b "${NEW_MASTER_NAME}" # Backup to new branch
+		git checkout master # Checkout master again
+	fi
+	git remote add upstream ssh://git@github.com/ft-interactive/starter-kit.git
+	echo -n "Clearing out master..."
+  git add .
+  git commit -am "<starter-kit> Committing before cleaning out master"
+  git rm -r *
+  git clean -d -x -f
+  git commit -am "<starter-kit> Committing after cleaning out master"
+
+	echo -n "Adding Starter Kit files..."
+  git fetch --depth 1 upstream "$BRANCH"
+  git checkout "upstream/$BRANCH" -- .
+  git add .
+	REV=$(git rev-parse --short upstream/$BRANCH)
+  git commit -am "<starter-kit> Adding latest Starter Kit files ($REV)"
+	./configure && npm start -- --open
+else
+	echo ""
+	git clone -b ${BRANCH} --single-branch --depth 1 ssh://git@github.com/ft-interactive/starter-kit.git $DIR && cd $DIR && ./configure && npm start -- --open
+	echo ""
+fi

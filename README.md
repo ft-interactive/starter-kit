@@ -18,10 +18,21 @@ What the setup script does:
 
 - Asks you a few questions about your project (e.g. title, description).
 - Clones Starter Kit to your own computer (but reinitialises it as a brand new git repo with no history).
-- Attempts to push it to the ft-interactive org on GitHub.
+- If selected, attempts to push it to the ft-interactive org on GitHub.
   - NB. you'll need an [access token](https://github.com/settings/tokens) and the git [osxkeychain helper](https://help.github.com/articles/caching-your-github-password-in-git/) for this to work.
 - Runs `npm install` to grab all the dependencies (this takes a few minutes).
 - Runs `npm start` for the first time – now you can start coding.
+
+You can also re-initialise a Starter Kit project to use the latest version by providing a path
+to an existing project in the first step of the wizard. This will put everything in the folder into
+a new commit (*including* things that aren't version controlled and aren't in .gitignore), wipe the
+folder, then add Starter Kit as a new commit. It doesn't try to upgrade your code at all, though
+you can generally restore everything by running the following afterwards:
+
+```bash
+git checkout HEAD~1 -- client config
+```
+This assumes your project keeps most of your data in the `client/` and `config/` folders.
 
 #### Using the built in tasks
 

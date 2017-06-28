@@ -12,12 +12,12 @@
 </p>
 <meta itemprop="dateModified" content="{{ publishedDate | isotime }}">
 
-{% if mainImage.url %}
+{% if mainImage.url or mainImage.uuid %}
 <figure class="graphic graphic-b-1 graphic-pad-1">
-  <img alt="" src="{{ mainImage.url }}"></img>
+  <img alt="" src="{{ mainImage | getMainImage }}"></img>
     <figcaption class="o-typography-caption">
      {{mainImage.description}}
-     &#xA9;{{mainImage.credit}}
+     {{mainImage.credit}}
   </figcaption>
 </figure>
 {% endif %}
@@ -28,7 +28,7 @@
 
 <p>
   {%- if publishedDate -%}
-  <time data-o-component="o-date" class="o-date" datetime="{{ publishedDate | isotime }}">{{ publishedDate | ftdate }}</time>
+  <time data-o-component="o-date" class="o-date o-typography-timestamp" datetime="{{ publishedDate | isotime }}">{{ publishedDate | ftdate }}</time>
   {%- endif -%}
   {%- if byline -%}
   &#32;<span class="article__byline">by&nbsp;
