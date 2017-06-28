@@ -7,17 +7,20 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: node_modules-{{ checksum "yarn.lock" }}
+          # TODO switch to package-lock.json
+          key: node_modules-{{ checksum "package.json" }}
       - restore_cache:
           key: bower_components-{{ checksum "bower.json" }}
       - run:
           name: Install dependencies
-          command: yarn --pure-lockfile
+          # NB. this also does bower install as postinstall step
+          command: npm install
       - run:
           name: Rebuild problematic node modules
           command: npm rebuild
       - save_cache:
-          key: node_modules-{{ checksum "yarn.lock" }}
+          # TODO switch to package-lock.json
+          key: node_modules-{{ checksum "package.json" }}
           paths:
             - node_modules/
       - save_cache:
@@ -26,10 +29,10 @@ jobs:
             - bower_components/
       - run:
           name: ESLint
-          command: yarn run lint
+          command: npm run lint
       - run:
           name: Build
-          command: yarn run build
+          command: npm run build
       - store_artifacts:
           path: dist/
       - deploy:
@@ -37,19 +40,19 @@ jobs:
           command: |
             if [ "$PREVIEW" == "true" ]
             then
-              yarn run deploy -- --confirm --preview
+              npm run deploy -- --confirm --preview
             else
-              yarn run deploy -- --confirm
+              npm run deploy -- --confirm
             fi
       - run:
           name: Check accessibility of deployed site
           command: |
             if [ "$PREVIEW" == "true" ]
             then
-              yarn run check-accessibility:preview
+              npm run check-accessibility:preview
             else
-              yarn run check-accessibility
+              npm run check-accessibility
             fi
       - run:
           name: General QA checks
-          command: yarn run qa || echo "Automatic QA checks failed. Continuing anyway"
+          command: npm run qa || echo "Automatic QA checks failed. Continuing anyway"
