@@ -59,6 +59,7 @@
     "nodemon": "^1.11.0",
     "nunjucks": "^3.0.1",
     "nunjucks-markdown": "^2.0.1",
+    "pa11y": "^4.11.0",
     "remove-markdown": "^0.2.0",
     "run-sequence": "^1.2.2",
     "serve-static": "^1.12.3",
