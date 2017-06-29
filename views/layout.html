@@ -15,7 +15,7 @@
       {% include "includes/analytics.html" %}
     {% endif %}
 
-    {% if ads %}{{ macros.topAd() }}{% endif %}
+    {% if flags.ads %}{{ macros.topAd() }}{% endif %}
 
     {% if flags.header %}
       {% include "includes/header.html" %}
