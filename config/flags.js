@@ -5,7 +5,7 @@ export default () => ({ // eslint-disable-line
   errorReporting: prod,
   analytics: prod,
   googleAnalytics: prod,
-  ads: false,
+  ads: true,
   onwardjourney: true,
   shareButtons: true,
   header: true,
