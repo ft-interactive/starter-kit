@@ -39,20 +39,15 @@ const BROWSERIFY_TRANSFORMS = [
   'debowerify',
 ];
 
-const OTHER_SCRIPTS = [
-  'components/core/top.js',
-];
-
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-const copyGlob = OTHER_SCRIPTS.concat([
+const copyGlob = [
   'client/**/*',
   '!client/**/*.{html,scss}',
 
   // REPLACE: if using imagmin
   // '!client/**/*.{jpg,png,gif,svg}',
-
-]);
+].concat(BROWSERIFY_ENTRIES.map(entry => `!client/${entry}`));
 
 // helpers
 let preventNextReload; // hack to keep a BS error notification on the screen
