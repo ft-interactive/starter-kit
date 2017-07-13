@@ -7,8 +7,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          # TODO switch to package-lock.json
-          key: node_modules-{{ checksum "package.json" }}
+          key: node_modules-{{ checksum "package-lock.json" }}
       - restore_cache:
           key: bower_hack1-{{ checksum "bower.json" }}
       - run:
