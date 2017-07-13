@@ -41,7 +41,11 @@ jobs:
           name: Build
           command: npm run build
       - store_artifacts:
+          name: Store artifacts (dist)
           path: dist/
+      - store_artifacts:
+          name: Store artifact (package-lock.json)
+          path: package-lock.json
       - deploy:
           name: Deploy
           command: |
