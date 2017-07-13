@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/project
     docker:
-      - image: node:8
+      - image: circleci/node:latest
     steps:
       - checkout
       - restore_cache:
