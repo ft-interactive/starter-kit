@@ -25,10 +25,12 @@ jobs:
           name: Rebuild problematic node modules
           command: npm rebuild
       - save_cache:
+          name: Save cache (node_modules)
           key: node_modules-{{ checksum "/tmp/package-lock.json" }}
           paths:
             - node_modules/
       - save_cache:
+          name: Save cache (bower_components)
           key: bower_components-hack1-{{ checksum "bower.json" }}
           paths:
             - bower_components/
