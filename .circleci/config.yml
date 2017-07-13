@@ -6,11 +6,19 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
+      - run:
+          name: Backup package-lock.json
+          # This file gets modified during setup, which would break our use of
+          # it as a cache key. So we back it up to tmp first.
+          command: |
+            mkdir /tmp
+            cp package-lock.json /tmp/
       - restore_cache:
-          # TODO use package-lock.json for key, once node has an equiv to yarn's --pure-lockfile
-          key: node_modules-{{ checksum "package.json" }}
+          name: Restore cache (node_modules)
+          key: node_modules-{{ checksum "/tmp/package-lock.json" }}
       - restore_cache:
-          key: bower_hack1-{{ checksum "bower.json" }}
+          name: Restore cache (bower_components)
+          key: bower_components-hack1-{{ checksum "bower.json" }}
       - run:
           name: Install dependencies
           # NB. this also does bower install as postinstall step
@@ -19,12 +27,11 @@ jobs:
           name: Rebuild problematic node modules
           command: npm rebuild
       - save_cache:
-          # TODO use package-lock.json (as above)
-          key: node_modules-{{ checksum "package.json" }}
+          key: node_modules-{{ checksum "/tmp/package-lock.json" }}
           paths:
             - node_modules/
       - save_cache:
-          key: bower_hack1-{{ checksum "bower.json" }}
+          key: bower_components-hack1-{{ checksum "bower.json" }}
           paths:
             - bower_components/
       - run:
