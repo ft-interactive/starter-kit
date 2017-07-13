@@ -10,7 +10,7 @@ jobs:
           # TODO switch to package-lock.json
           key: node_modules-{{ checksum "package.json" }}
       - restore_cache:
-          key: bower_components-hack1-{{ checksum "bower.json" }}
+          key: bower_hack1-{{ checksum "bower.json" }}
       - run:
           name: Install dependencies
           # NB. this also does bower install as postinstall step
