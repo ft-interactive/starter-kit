@@ -18,12 +18,11 @@ jobs:
           name: Rebuild problematic node modules
           command: npm rebuild
       - save_cache:
-          # TODO switch to package-lock.json
-          key: node_modules-{{ checksum "package.json" }}
+          key: node_modules-{{ checksum "package-lock.json" }}
           paths:
             - node_modules/
       - save_cache:
-          key: bower_components-{{ checksum "bower.json" }}
+          key: bower_hack1-{{ checksum "bower.json" }}
           paths:
             - bower_components/
       - run:
