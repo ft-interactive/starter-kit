@@ -8,9 +8,9 @@ import { readFileSync, writeFileSync } from 'fs';
 import { configure as configureNunjucks } from './views';
 import getContext from './config';
 
-const env = configureNunjucks();
+const nunjucksEnv = configureNunjucks();
 
-module.exports = async () => ({
+module.exports = async (env = {}) => ({
   entry: {
     bundle: './client/index.js',
   },
@@ -18,7 +18,7 @@ module.exports = async () => ({
     modules: ['node_modules', 'bower_components'],
   },
   output: {
-    filename: '[name].[hash].js',
+    filename: env.production ? '[name].[hash].js' : '[name].js',
     path: resolve(__dirname, 'dist'),
   },
   module: {
@@ -57,8 +57,8 @@ module.exports = async () => ({
   devtool: 'source-map',
   plugins: [
     new ExtractTextPlugin({
-      filename: '[name].[contenthash].css',
-      disable: process.env.NODE_ENV === 'development',
+      filename: env.production ? '[name].[contenthash].css' : '[name].css',
+      // disable: process.env.NODE_ENV !== 'production',
     }),
     // new ManifestPlugin(),
     new NunjucksWebpackPlugin({
@@ -68,7 +68,7 @@ module.exports = async () => ({
         context: await getContext(),
       }],
       context: {},
-      environment: env,
+      environment: nunjucksEnv,
     }),
     new CopyWebpackPlugin([
       { from: 'client/components/core/top.css', to: 'top.css' },
@@ -77,6 +77,8 @@ module.exports = async () => ({
     }),
     function revReplace() {
       this.plugin('done', (stats) => {
+        if (!env.production) return; // Only rev in prod
+
         const items = stats.toJson().assetsByChunkName.bundle.reduce((col, item) => {
           if (extname(item) === '.map') return col;
           col[`bundle${extname(item)}`] = item; // eslint-disable-line
