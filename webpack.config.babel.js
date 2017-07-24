@@ -1,13 +1,16 @@
 import 'babel-polyfill';
 import NunjucksWebpackPlugin from 'nunjucks-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import * as path from 'path';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+// import ManifestPlugin from 'webpack-manifest-plugin';
+import { resolve, extname } from 'path';
+import { readFileSync, writeFileSync } from 'fs';
 import { configure as configureNunjucks } from './views';
 import getContext from './config';
 
 const env = configureNunjucks();
 
-module.exports = async () => ([{
+module.exports = async () => ({
   entry: {
     bundle: './client/index.js',
   },
@@ -15,8 +18,8 @@ module.exports = async () => ([{
     modules: ['node_modules', 'bower_components'],
   },
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[hash].js',
+    path: resolve(__dirname, 'dist'),
   },
   module: {
     rules: [
@@ -32,34 +35,6 @@ module.exports = async () => ([{
         exclude: /(node_modules|bower_components)/,
         loader: 'nunjucks-loader',
       },
-    ],
-  },
-  devtool: 'source-map',
-  plugins: [
-    new NunjucksWebpackPlugin({
-      template: [{
-        from: path.resolve(__dirname, 'client/index.html'),
-        to: path.resolve(__dirname, 'dist/index.html'),
-      }],
-      context: await getContext(),
-      environment: env,
-    }),
-  ],
-},
-{
-  entry: {
-    styles: './client/styles.scss',
-  },
-  output: {
-    filename: '.styles.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
-  resolve: {
-    modules: [path.resolve(__dirname, 'bower_components'), 'node_modules'],
-    extensions: ['.scss', '.js'],
-  },
-  module: {
-    rules: [
       {
         test: /\.s?css/,
         use: ExtractTextPlugin.extract({
@@ -85,5 +60,34 @@ module.exports = async () => ([{
       filename: '[name].[contenthash].css',
       disable: process.env.NODE_ENV === 'development',
     }),
+    // new ManifestPlugin(),
+    new NunjucksWebpackPlugin({
+      template: [{
+        from: resolve(__dirname, 'client/index.html'),
+        to: resolve(__dirname, 'dist/index.html'),
+        context: await getContext(),
+      }],
+      context: {},
+      environment: env,
+    }),
+    new CopyWebpackPlugin([
+      { from: 'client/components/core/top.css', to: 'top.css' },
+    ], {
+      copyUnmodified: true,
+    }),
+    function revReplace() {
+      this.plugin('done', (stats) => {
+        const items = stats.toJson().assetsByChunkName.bundle.reduce((col, item) => {
+          if (extname(item) === '.map') return col;
+          col[`bundle${extname(item)}`] = item; // eslint-disable-line
+          return col;
+        }, {});
+        let html = readFileSync(resolve(__dirname, 'dist', 'index.html'), { encoding: 'utf-8' });
+        Object.entries(items).forEach(([orig, rev]) => {
+          html = html.replace(new RegExp(orig, 'g'), rev);
+        });
+        writeFileSync(resolve(__dirname, 'dist', 'index.html'), html, { encoding: 'utf-8' });
+      });
+    },
   ],
-}]);
+});

@@ -1,4 +1,3 @@
-import './components/core/_main.scss';
 import './styles.scss';
 
 /*
