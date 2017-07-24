@@ -14,6 +14,7 @@
     ]
   },
   "devDependencies": {
+    "ajv": "^5.2.2",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.0",
@@ -30,18 +31,23 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
+    "extract-text-webpack-plugin": "^3.0.0",
     "ft-graphics-deploy": "^2.1.2",
     "jsdom": "^11.1.0",
     "markdown-it": "^8.3.1",
     "minimist": "^1.2.0",
     "mocha": "^3.4.2",
+    "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
     "nunjucks": "^3.0.1",
     "nunjucks-loader": "^2.4.8",
     "nunjucks-markdown": "^2.0.1",
     "nunjucks-webpack-plugin": "github:ft-interactive/nunjucks-webpack-plugin#use-env",
     "pa11y": "^4.11.0",
+    "postcss-cssnext": "^3.0.2",
+    "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.6",
+    "postcss-scss": "^1.0.2",
     "remove-markdown": "^0.2.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
@@ -53,7 +59,7 @@
   },
   "private": true,
   "scripts": {
-    "build": "gulp",
+    "build": "webpack",
     "check-accessibility": "pa11y --threshold 100 $(ft-graphics-deploy --get-commit-url)",
     "check-accessibility:preview": "pa11y --threshold 100 $(ft-graphics-deploy --preview --get-commit-url)",
     "clean": "rm -rf dist",
@@ -63,7 +69,7 @@
     "prebuild": "npm run clean",
     "prestart": "npm run clean",
     "qa": "mocha ./test/**/*.spec.js",
-    "start": "nodemon --watch gulpfile.babel.js --exec 'gulp watch'"
+    "start": "webpack-dev-server"
   },
   "dependencies": {
     "babel-loader": "^7.1.1",

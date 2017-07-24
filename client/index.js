@@ -1,3 +1,6 @@
+import './components/core/_main.scss';
+import './styles.scss';
+
 /*
   TODO: delete this comment
 
