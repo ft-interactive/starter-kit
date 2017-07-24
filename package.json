@@ -56,7 +56,7 @@
   },
   "engines": {
     "node": ">=8",
-    "npm": ">=5.1.x"
+    "npm": ">=5.3.x"
   },
   "private": true,
   "scripts": {
