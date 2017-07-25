@@ -51,6 +51,7 @@
     "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.6",
     "postcss-scss": "^1.0.2",
+    "raw-loader": "^0.5.1",
     "remove-markdown": "^0.2.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",

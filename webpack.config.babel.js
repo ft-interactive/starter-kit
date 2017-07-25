@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import NunjucksWebpackPlugin from 'nunjucks-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import { HotModuleReplacementPlugin } from 'webpack';
 // import ManifestPlugin from 'webpack-manifest-plugin';
 import { resolve, extname } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
@@ -12,7 +13,7 @@ const nunjucksEnv = configureNunjucks();
 
 module.exports = async (env = {}) => ({
   entry: {
-    bundle: './client/index.js',
+    bundle: ['babel-polyfill', './client/index.js'],
   },
   resolve: {
     modules: ['node_modules', 'bower_components'],
@@ -24,10 +25,33 @@ module.exports = async (env = {}) => ({
   module: {
     rules: [
       {
+        test: /\.(txt|csv|tsv|xml)$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'raw-loader',
+        },
+      },
+      {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                'env',
+                {
+                  // Via: https://docs.google.com/document/d/1mByh6sT8zI4XRyPKqWVsC2jUfXHZvhshS5SlHErWjXU/view
+                  browsers: [
+                    'last 2 versions',
+                    'ie >= 11',
+                    'safari >= 10',
+                    'ios >= 9',
+                  ],
+                },
+              ],
+            ],
+          },
         },
       },
       {
@@ -54,8 +78,13 @@ module.exports = async (env = {}) => ({
       },
     ],
   },
+  devServer: {
+    hot: true,
+    contentBase: resolve(__dirname, 'client'),
+  },
   devtool: 'source-map',
   plugins: [
+    new HotModuleReplacementPlugin(),
     new ExtractTextPlugin({
       filename: env.production ? '[name].[contenthash].css' : '[name].css',
       // disable: process.env.NODE_ENV !== 'production',
