@@ -73,7 +73,9 @@ export default () => ({ // eslint-disable-line
 
   // TWEET BUTTON CUSTOM TEXT
   // tweetText: '',
-  // twitterRelatedAccounts: ['authors_account_here', 'ftdata'], // Twitter lists these as suggested accounts to follow after a user tweets (do not include @)
+  //
+  // Twitter lists these as suggested accounts to follow after a user tweets (do not include @)
+  // twitterRelatedAccounts: ['authors_account_here', 'ftdata'],
 
   // Fill out the Facebook/Twitter metadata sections below if you want to
   // override the "General social" options above
@@ -88,12 +90,14 @@ export default () => ({ // eslint-disable-line
   // facebookHeadline: '',
   // facebookDescription: '',
 
-  //ADVERTISING
+  // ADVERTISING
   ads: {
-    // ad unit hierarchy makes ads more granular. Start with ft.com and /companies /markets /world as appropriate to your story
-    gptAdunit: 'ft.com/companies/european',
+    // Ad unit hierarchy makes ads more granular.
+    gptSite: 'ft.com',
+    // Start with ft.com and /companies /markets /world as appropriate to your story
+    gptZone: false,
     // granular targeting is optional and will be specified by the ads team
-    dftTargeting: '',
+    dfpTargeting: false,
   },
 
   tracking: {
