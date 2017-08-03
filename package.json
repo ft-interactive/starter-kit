@@ -64,7 +64,7 @@
   },
   "private": true,
   "scripts": {
-    "build": "webpack --env=production",
+    "build": "webpack -p --env=production",
     "check-accessibility": "pa11y --threshold 100 $(ft-graphics-deploy --get-commit-url)",
     "check-accessibility:preview": "pa11y --threshold 100 $(ft-graphics-deploy --preview --get-commit-url)",
     "clean": "rm -rf dist",
