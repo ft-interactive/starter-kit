@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Install dependencies
           # NB. this also does bower install as postinstall step
-          command: npm install
+          command: npm install --unsafe-perm
       - run:
           name: Rebuild problematic node modules
           command: npm rebuild
