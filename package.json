@@ -37,6 +37,7 @@
     "eslint-plugin-react": "^7.1.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "ft-graphics-deploy": "^2.1.2",
+    "imagemin-webpack-plugin": "^1.5.0-beta.0",
     "jsdom": "^11.1.0",
     "markdown-it": "^8.3.1",
     "minimist": "^1.2.0",

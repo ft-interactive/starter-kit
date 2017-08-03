@@ -2,8 +2,8 @@ import 'babel-polyfill';
 import NunjucksWebpackPlugin from 'nunjucks-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import ImageminWebpackPlugin from 'imagemin-webpack-plugin';
 import { HotModuleReplacementPlugin } from 'webpack';
-// import ManifestPlugin from 'webpack-manifest-plugin';
 import { resolve, extname } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
 import { configure as configureNunjucks } from './views';
@@ -87,9 +87,8 @@ module.exports = async (env = {}) => ({
     new HotModuleReplacementPlugin(),
     new ExtractTextPlugin({
       filename: env.production ? '[name].[contenthash].css' : '[name].css',
-      // disable: process.env.NODE_ENV !== 'production',
+      disable: process.env.NODE_ENV !== 'production',
     }),
-    // new ManifestPlugin(),
     new NunjucksWebpackPlugin({
       template: [{
         from: resolve(__dirname, 'client/index.html'),
@@ -101,9 +100,11 @@ module.exports = async (env = {}) => ({
     }),
     new CopyWebpackPlugin([
       { from: 'client/components/core/top.css', to: 'top.css' },
+      { from: 'client/images/*.+(jpg|jpeg|svg|png|gif)', to: 'images/', flatten: true },
     ], {
       copyUnmodified: true,
     }),
+    env.production ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }) : undefined,
     function revReplace() {
       this.plugin('done', (stats) => {
         if (!env.production) return; // Only rev in prod
@@ -120,5 +121,5 @@ module.exports = async (env = {}) => ({
         writeFileSync(resolve(__dirname, 'dist', 'index.html'), html, { encoding: 'utf-8' });
       });
     },
-  ],
+  ].filter(i => i),
 });
