@@ -11,7 +11,7 @@ import getContext from './config';
 
 const nunjucksEnv = configureNunjucks();
 
-module.exports = async (env = {}) => ({
+module.exports = async (env = 'development') => ({
   entry: {
     bundle: ['babel-polyfill', './client/index.js'],
   },
@@ -19,7 +19,7 @@ module.exports = async (env = {}) => ({
     modules: ['node_modules', 'bower_components'],
   },
   output: {
-    filename: env.production ? '[name].[hash].js' : '[name].js',
+    filename: env === 'production' ? '[name].[hash].js' : '[name].js',
     path: resolve(__dirname, 'dist'),
   },
   module: {
@@ -86,8 +86,8 @@ module.exports = async (env = {}) => ({
   plugins: [
     new HotModuleReplacementPlugin(),
     new ExtractTextPlugin({
-      filename: env.production ? '[name].[contenthash].css' : '[name].css',
-      disable: process.env.NODE_ENV !== 'production',
+      filename: env === 'production' ? '[name].[contenthash].css' : '[name].css',
+      disable: env !== 'production',
     }),
     new NunjucksWebpackPlugin({
       template: [{
@@ -104,10 +104,10 @@ module.exports = async (env = {}) => ({
     ], {
       copyUnmodified: true,
     }),
-    env.production ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }) : undefined,
+    env === 'production' ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }) : undefined,
     function revReplace() {
       this.plugin('done', (stats) => {
-        if (!env.production) return; // Only rev in prod
+        if (!env === 'production') return; // Only rev in prod
 
         const items = stats.toJson().assetsByChunkName.bundle.reduce((col, item) => {
           if (extname(item) === '.map') return col;
