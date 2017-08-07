@@ -73,7 +73,7 @@
     "lint": "eslint --no-eslintrc --config=.eslintrc-ci.yml .",
     "postinstall": "bower install --allow-root",
     "prebuild": "npm run clean",
-    "prestart": "npm run clean",
+    "pretest": "npm run build",
     "qa": "mocha ./test/**/*.spec.js",
     "start": "webpack-dev-server"
   },

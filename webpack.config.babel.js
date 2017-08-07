@@ -107,7 +107,7 @@ module.exports = async (env = 'development') => ({
     env === 'production' ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }) : undefined,
     function revReplace() {
       this.plugin('done', (stats) => {
-        if (!env === 'production') return; // Only rev in prod
+        if (env !== 'production') return; // Only rev in prod
 
         const items = stats.toJson().assetsByChunkName.bundle.reduce((col, item) => {
           if (extname(item) === '.map') return col;
