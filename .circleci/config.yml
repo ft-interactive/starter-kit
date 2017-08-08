@@ -35,9 +35,6 @@ jobs:
           paths:
             - bower_components/
       - run:
-          name: ESLint
-          command: npm run lint
-      - run:
           name: Build
           command: npm run build
       - store_artifacts:
