@@ -36,6 +36,7 @@
     "eslint-plugin-react": "^7.1.0",
     "finalhandler": "^1.0.3",
     "ft-graphics-deploy": "^2.1.2",
+    "github": "^9.2.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-data": "^1.2.1",
