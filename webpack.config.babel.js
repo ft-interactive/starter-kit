@@ -42,12 +42,7 @@ module.exports = async (env = 'development') => ({
                 'env',
                 {
                   // Via: https://docs.google.com/document/d/1mByh6sT8zI4XRyPKqWVsC2jUfXHZvhshS5SlHErWjXU/view
-                  browsers: [
-                    'last 2 versions',
-                    'ie >= 11',
-                    'safari >= 10',
-                    'ios >= 9',
-                  ],
+                  browsers: ['last 2 versions', 'ie >= 11', 'safari >= 10', 'ios >= 9'],
                 },
               ],
             ],
@@ -65,13 +60,13 @@ module.exports = async (env = 'development') => ({
           use: [
             { loader: 'css-loader', options: { sourceMap: true } },
             { loader: 'postcss-loader', options: { sourceMap: true } },
-            { loader: 'sass-loader',
+            {
+              loader: 'sass-loader',
               options: {
                 sourceMap: true,
-                includePaths: [
-                  'bower_components',
-                ],
-              } },
+                includePaths: ['bower_components'],
+              },
+            },
           ],
           fallback: 'style-loader',
         }),
@@ -87,24 +82,30 @@ module.exports = async (env = 'development') => ({
     new HotModuleReplacementPlugin(),
     new ExtractTextPlugin({
       filename: env === 'production' ? '[name].[contenthash].css' : '[name].css',
-      disable: env !== 'production',
     }),
     new NunjucksWebpackPlugin({
-      template: [{
-        from: resolve(__dirname, 'client/index.html'),
-        to: resolve(__dirname, 'dist/index.html'),
-        context: await getContext(),
-      }],
+      template: [
+        {
+          from: resolve(__dirname, 'client/index.html'),
+          to: resolve(__dirname, 'dist/index.html'),
+          context: await getContext(),
+        },
+      ],
       context: {},
       environment: nunjucksEnv,
     }),
-    new CopyWebpackPlugin([
-      { from: 'client/components/core/top.css', to: 'top.css' },
-      { from: 'client/images/*.+(jpg|jpeg|svg|png|gif)', to: 'images/', flatten: true },
-    ], {
-      copyUnmodified: true,
-    }),
-    env === 'production' ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }) : undefined,
+    new CopyWebpackPlugin(
+      [
+        { from: 'client/components/core/top.css', to: 'top.css' },
+        { from: 'client/images/*.+(jpg|jpeg|svg|png|gif)', to: 'images/', flatten: true },
+      ],
+      {
+        copyUnmodified: true,
+      },
+    ),
+    env === 'production'
+      ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i })
+      : undefined,
     function revReplace() {
       this.plugin('done', (stats) => {
         if (env !== 'production') return; // Only rev in prod
