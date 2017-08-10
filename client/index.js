@@ -1,3 +1,5 @@
+import './styles.scss';
+
 /*
   TODO: delete this comment
 
