@@ -1,8 +1,8 @@
 <div>
-  <a href="{{ topic.url }}" class="o-typography-link-topic o-typography-link-topic--medium">{{ topic.name }}</a>
+  <a href="{{ topic.url }}" class="o-typography-topic">{{ topic.name }}</a>
 </div>
 
-<h1 class="o-typography-heading1" itemprop="headline">{{ headline | md(true) }}</h1>
+<h1 class="o-typography-headline" itemprop="headline">{{ headline | md(true) }}</h1>
 
 <p>
   {{ summary | md(true) }}
@@ -36,7 +36,7 @@
     {%- for author in byline -%}
       {{ " and " if not loop.first and loop.last else (", " if not loop.first else "") }}
       {%- if author.url -%}
-        <a href="{{ author.url }}" class="o-typography-link-topic o-typography-link-topic--small" itemprop="author">{{ author.name }}</a>
+        <a href="{{ author.url }}" class="o-typography-topic" itemprop="author">{{ author.name }}</a>
       {%- else -%}
         {{ author.name }}
       {%- endif -%}

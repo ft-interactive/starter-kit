@@ -9,7 +9,7 @@
 
 {# Stylesheets #}
 <link inline rel="stylesheet" href="top.css">
-<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-normalise@^1,o-fonts@^2,o-grid@^4.2.1,o-typography@^4.3.1,o-header@^6.5.1,o-card@^2.1.8,o-footer@^5.0.3{{',o-comments@^3.2.0' if flags.comments}}{{ ',o-share@^3' if flags.shareButtons }}{{ ',o-ads@^6.1.5' if flags.ads}}">
+<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-normalise@^1.2.1,o-fonts@^3.0.1,o-grid@^4.3.3,o-typography@^5.1.1,o-header@^7.0.4,o-card@^3.0.0,o-footer@^6.0.2{{',o-comments@^4.0.2' if flags.comments}}{{ ',o-share@^5.0.0' if flags.shareButtons }}{{ ',o-ads@^7.0.0' if flags.ads}}">
 <link rel="stylesheet" href="bundle.css">
 {%- if stylesheets %}{% for stylesheet in stylesheets %}
 <link rel="stylesheet" href="{{ stylesheet | safe }}">
@@ -23,7 +23,7 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="robots" content="index,follow">
 <meta name="copyright" content="Financial Times">
-<meta name="theme-color" content="#fff1e0" />
+<meta name="theme-color" content="#fff1e5" />
 <script type="application/ld+json">
 {
   "@context": "http://schema.org",
@@ -138,7 +138,7 @@
 {% endif -%}
       s.parentNode.insertBefore(o, s);
     }
-  }('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-header@^6.5.1,o-footer@^5.0.3,o-date@^2.8.0,o-errors@^3.5.1{{ ",o-comments@^3.1.0" if flags.comments }}{{ ",o-share@^3" if flags.shareButtons }}{{ ",o-tracking@^1.2.3" if flags.analytics }}{{ ",o-ads@^6.1.5" if flags.ads}}'));
+  }('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-header@^7.0.4,o-footer@^6.0.2,o-date@^2.8.0,o-errors@^3.5.1{{ ",o-comments@^4.0.2" if flags.comments }}{{ ",o-share@^5.0.0" if flags.shareButtons }}{{ ",o-tracking@^1.2.3" if flags.analytics }}{{ ",o-ads@^7.0.0" if flags.ads}}'));
 </script>
 
 <title>{{ title | default(headline, true) }} &mdash; FT.com</title>
