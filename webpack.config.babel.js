@@ -93,6 +93,7 @@ module.exports = async (env = 'development') => ({
       ],
       context: {},
       environment: nunjucksEnv,
+      writeToFileWhenMemoryFs: true,
     }),
     new CopyWebpackPlugin(
       [
