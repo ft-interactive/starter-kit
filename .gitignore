@@ -3,6 +3,7 @@
 /dist/
 /.tmp/
 /.sass-cache/
+/yarn.lock
 *.log
 npm-debug.log*
 .env
