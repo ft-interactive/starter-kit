@@ -1,15 +1,13 @@
 import 'babel-polyfill';
-import NunjucksWebpackPlugin from 'nunjucks-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ImageminWebpackPlugin from 'imagemin-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { readFileSync, writeFileSync } from 'fs';
 import { HotModuleReplacementPlugin } from 'webpack';
 import { resolve, extname } from 'path';
-import { readFileSync, writeFileSync } from 'fs';
-import { configure as configureNunjucks } from './views';
 import getContext from './config';
-
-const nunjucksEnv = configureNunjucks();
+import * as nunjucksFilters from './views/filters';
 
 module.exports = async (env = 'development') => ({
   entry: {
@@ -51,8 +49,21 @@ module.exports = async (env = 'development') => ({
       },
       {
         test: /\.(html|njk)$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'nunjucks-loader',
+        use: [
+          {
+            loader: 'html-loader',
+          },
+          {
+            loader: 'nunjucks-html-loader',
+            options: {
+              searchPaths: [
+                resolve(__dirname, 'views'),
+              ],
+              filters: nunjucksFilters,
+              context: await getContext(),
+            }
+          },
+        ]
       },
       {
         test: /\.s?css/,
@@ -74,25 +85,16 @@ module.exports = async (env = 'development') => ({
     ],
   },
   devServer: {
-    hot: true,
-    contentBase: resolve(__dirname, 'client'),
+    hot: false, // Needed for live-reloading Nunjucks templates.
   },
   devtool: 'source-map',
   plugins: [
-    new HotModuleReplacementPlugin(),
+    // new HotModuleReplacementPlugin(), // Re-enable if devServer.hot is set to true
     new ExtractTextPlugin({
       filename: env === 'production' ? '[name].[contenthash].css' : '[name].css',
     }),
-    new NunjucksWebpackPlugin({
-      template: [
-        {
-          from: resolve(__dirname, 'client/index.html'),
-          to: resolve(__dirname, 'dist/index.html'),
-          context: await getContext(),
-        },
-      ],
-      context: {},
-      environment: nunjucksEnv,
+    new HtmlWebpackPlugin({
+      template: 'client/index.html',
     }),
     new CopyWebpackPlugin(
       [
@@ -106,21 +108,5 @@ module.exports = async (env = 'development') => ({
     env === 'production'
       ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i })
       : undefined,
-    function revReplace() {
-      this.plugin('done', (stats) => {
-        if (env !== 'production') return; // Only rev in prod
-
-        const items = stats.toJson().assetsByChunkName.bundle.reduce((col, item) => {
-          if (extname(item) === '.map') return col;
-          col[`bundle${extname(item)}`] = item; // eslint-disable-line
-          return col;
-        }, {});
-        let html = readFileSync(resolve(__dirname, 'dist', 'index.html'), { encoding: 'utf-8' });
-        Object.entries(items).forEach(([orig, rev]) => {
-          html = html.replace(new RegExp(orig, 'g'), rev);
-        });
-        writeFileSync(resolve(__dirname, 'dist', 'index.html'), html, { encoding: 'utf-8' });
-      });
-    },
   ].filter(i => i),
 });

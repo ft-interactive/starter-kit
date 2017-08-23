@@ -48,7 +48,7 @@ const markdown = markdownIt({
 
 export function md(str, inline) {
   return !str ? '' :
-    new SafeString(inline ? markdown.renderInline(str) : markdown.render(str));
+    inline ? markdown.renderInline(str) : markdown.render(str);
 }
 
 export function plain(str, stripListLeaders = true) {
