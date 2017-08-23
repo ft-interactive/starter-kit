@@ -35,7 +35,11 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
     "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^0.11.2",
     "ft-graphics-deploy": "^2.1.2",
+    "html-loader": "^0.5.1",
+    "html-webpack-harddisk-plugin": "^0.1.0",
+    "html-webpack-plugin": "^2.30.1",
     "imagemin-webpack-plugin": "^1.5.0-beta.0",
     "jsdom": "^11.1.0",
     "markdown-it": "^8.3.1",
@@ -44,9 +48,8 @@
     "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
     "nunjucks": "^3.0.1",
-    "nunjucks-loader": "^2.4.8",
+    "nunjucks-html-loader": "github:ft-interactive/nunjucks-html-loader",
     "nunjucks-markdown": "^2.0.1",
-    "nunjucks-webpack-plugin": "github:ft-interactive/nunjucks-webpack-plugin#use-env",
     "pa11y": "^4.11.0",
     "postcss-cssnext": "^3.0.2",
     "postcss-import": "^10.0.0",
@@ -73,7 +76,7 @@
     "prebuild": "npm run clean",
     "pretest": "npm run build",
     "qa": "mocha ./test/**/*.spec.js",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server -w"
   },
   "dependencies": {
     "babel-loader": "^7.1.1",
