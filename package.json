@@ -38,7 +38,6 @@
     "file-loader": "^0.11.2",
     "ft-graphics-deploy": "^2.1.2",
     "html-loader": "^0.5.1",
-    "html-webpack-harddisk-plugin": "^0.1.0",
     "html-webpack-plugin": "^2.30.1",
     "imagemin-webpack-plugin": "^1.5.0-beta.0",
     "jsdom": "^11.1.0",
@@ -59,7 +58,9 @@
     "remove-markdown": "^0.2.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "webpack-dev-server": "^2.5.1"
+    "webpack-dev-server": "^2.5.1",
+    "babel-loader": "^7.1.1",
+    "webpack": "^3.3.0"
   },
   "engines": {
     "node": ">=8",
@@ -76,10 +77,7 @@
     "prebuild": "npm run clean",
     "pretest": "npm run build",
     "qa": "mocha ./test/**/*.spec.js",
-    "start": "webpack-dev-server -w"
+    "start": "webpack-dev-server --watch"
   },
-  "dependencies": {
-    "babel-loader": "^7.1.1",
-    "webpack": "^3.3.0"
-  }
+  "dependencies": {}
 }

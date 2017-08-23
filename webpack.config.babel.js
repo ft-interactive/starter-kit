@@ -3,10 +3,10 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ImageminWebpackPlugin from 'imagemin-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import getContext from './config';
+import { readFileSync, writeFileSync } from 'fs';
 import { HotModuleReplacementPlugin } from 'webpack';
 import { resolve, extname } from 'path';
-import { readFileSync, writeFileSync } from 'fs';
+import getContext from './config';
 import * as nunjucksFilters from './views/filters';
 
 module.exports = async (env = 'development') => ({
@@ -108,21 +108,5 @@ module.exports = async (env = 'development') => ({
     env === 'production'
       ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i })
       : undefined,
-    function revReplace() {
-      this.plugin('done', (stats) => {
-        if (env !== 'production') return; // Only rev in prod
-
-        const items = stats.toJson().assetsByChunkName.bundle.reduce((col, item) => {
-          if (extname(item) === '.map') return col;
-          col[`bundle${extname(item)}`] = item; // eslint-disable-line
-          return col;
-        }, {});
-        let html = readFileSync(resolve(__dirname, 'dist', 'index.html'), { encoding: 'utf-8' });
-        Object.entries(items).forEach(([orig, rev]) => {
-          html = html.replace(new RegExp(orig, 'g'), rev);
-        });
-        writeFileSync(resolve(__dirname, 'dist', 'index.html'), html, { encoding: 'utf-8' });
-      });
-    },
   ].filter(i => i),
 });
