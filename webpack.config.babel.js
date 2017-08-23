@@ -14,7 +14,7 @@ module.exports = async (env = 'development') => ({
     bundle: ['babel-polyfill', './client/index.js'],
   },
   resolve: {
-    modules: ['node_modules', 'bower_components', resolve(__dirname, 'client')],
+    modules: ['node_modules', 'bower_components'],
   },
   output: {
     filename: env === 'production' ? '[name].[hash].js' : '[name].js',
@@ -85,12 +85,11 @@ module.exports = async (env = 'development') => ({
     ],
   },
   devServer: {
-    hot: false,
-    // contentBase: resolve(__dirname, 'client'),
+    hot: false, // Needed for live-reloading Nunjucks templates.
   },
   devtool: 'source-map',
   plugins: [
-    new HotModuleReplacementPlugin(),
+    // new HotModuleReplacementPlugin(), // Re-enable if devServer.hot is set to true
     new ExtractTextPlugin({
       filename: env === 'production' ? '[name].[contenthash].css' : '[name].css',
     }),
