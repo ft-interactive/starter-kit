@@ -1,11 +1,9 @@
 import 'babel-polyfill';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ImageminWebpackPlugin from 'imagemin-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { readFileSync, writeFileSync } from 'fs';
-import { HotModuleReplacementPlugin } from 'webpack';
-import { resolve, extname } from 'path';
+// import { HotModuleReplacementPlugin } from 'webpack';
+import { resolve } from 'path';
 import getContext from './config';
 import * as nunjucksFilters from './views/filters';
 
@@ -48,10 +46,45 @@ module.exports = async (env = 'development') => ({
         },
       },
       {
+        test: /\.(png|jpe?g|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'images/',
+              name: '[name]--[hash].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name]--[hash].[ext]',
+            },
+          },
+          {
+            loader: 'extract-loader',
+          },
+          { loader: 'css-loader', options: { sourceMap: true, url: true } },
+          { loader: 'postcss-loader', options: { sourceMap: true } },
+        ],
+      },
+      {
         test: /\.(html|njk)$/,
         use: [
           {
             loader: 'html-loader',
+            options: {
+              attrs: [
+                'img:src',
+                'link:href',
+              ],
+              root: resolve(__dirname, 'client'),
+            },
           },
           {
             loader: 'nunjucks-html-loader',
@@ -61,12 +94,12 @@ module.exports = async (env = 'development') => ({
               ],
               filters: nunjucksFilters,
               context: await getContext(),
-            }
+            },
           },
-        ]
+        ],
       },
       {
-        test: /\.s?css/,
+        test: /\.scss/,
         use: ExtractTextPlugin.extract({
           use: [
             { loader: 'css-loader', options: { sourceMap: true } },
@@ -96,15 +129,6 @@ module.exports = async (env = 'development') => ({
     new HtmlWebpackPlugin({
       template: 'client/index.html',
     }),
-    new CopyWebpackPlugin(
-      [
-        { from: 'client/components/core/top.css', to: 'top.css' },
-        { from: 'client/images/*.+(jpg|jpeg|svg|png|gif)', to: 'images/', flatten: true },
-      ],
-      {
-        copyUnmodified: true,
-      },
-    ),
     env === 'production'
       ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i })
       : undefined,
