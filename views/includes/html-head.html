@@ -62,9 +62,9 @@
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?callback=client&amp;features=default,fetch"></script>
 
 <!-- Add CTM checks -->
-<script type="text/javascript">
-  window.cutsTheMustard = ('querySelector' in document && 'localStorage' in window && 'addEventListener' in window && typeof Function.prototype.bind !== 'undefined')
-  document.documentElement.className = document.documentElement.className.replace(/core/g, 'enhanced');
+<script>
+  cutsTheMustard = ('querySelector' in document && 'localStorage' in window && 'addEventListener' in window && typeof Function.prototype.bind !== 'undefined');
+  if (cutsTheMustard) document.documentElement.className = document.documentElement.className.replace(/core/g, 'enhanced');
 </script>
 
 {%- if flags.analytics %}
@@ -76,7 +76,7 @@
   {% if tracking.micrositeName %}
 <meta property="ft.track:microsite_name" content="{{ tracking.micrositeName }}"/>
   {% endif %}
-<script type="text/javascript">
+<script>
   function oTrackinginit() {
     var oTracking = Origami['o-tracking'];
 
@@ -118,7 +118,7 @@
 {% endif -%}
 
 <!-- Add Origami Build Service -->
-<script type="text/javascript">
+<script>
   (function(src) {
     if (cutsTheMustard) {
       var o = document.createElement('script');
