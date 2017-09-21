@@ -86,7 +86,7 @@ eval "echo \"$(cat config/article.js)\"" > config/article.js
 
 echo "Installing dependencies..."
 
-npm install --link
+npm install
 
 if [[ `tr "[:upper:]" "[:lower:]" <<< "${CREATE_NEW_REPO:=y}"` != "n" ]]; then
   echo "Creating repo on Github"
