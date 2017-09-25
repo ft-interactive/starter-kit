@@ -4,7 +4,7 @@
 
 <h1 class="o-typography-headline" itemprop="headline">{{ headline | md(true) }}</h1>
 
-<p>
+<p class="o-typography-standfirst">
   {{ summary | md(true) }}
   {% if relatedArticle %}
   <a href="{{ relatedArticle.url }}" class="o-typography-link">{{ relatedArticle.text }}</a>
