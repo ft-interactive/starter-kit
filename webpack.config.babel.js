@@ -121,6 +121,7 @@ module.exports = async (env = 'development') => ({
     hot: false, // Needed for live-reloading Nunjucks templates.
     allowedHosts: [
       '.ngrok.io',
+      'local.ft.com',
     ],
   },
   devtool: 'source-map',
