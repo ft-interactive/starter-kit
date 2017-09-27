@@ -9,7 +9,7 @@
 
 {# Stylesheets #}
 <link rel="stylesheet" href="components/core/top.css">
-<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-normalise@^1.2.1,o-fonts@^3.0.1,o-grid@^4.3.3,o-typography@^5.1.1,o-header@^7.0.4,o-card@^3.0.0,o-footer@^6.0.2{{',o-comments@^4.0.2' if flags.comments}}{{ ',o-share@^5.0.0' if flags.shareButtons }}{{ ',o-ads@^7.0.0' if flags.ads}}">
+<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-normalise@^1.2.1,o-fonts@^3.0.1,o-grid@^4.3.3,o-typography@^5.2.0,o-header@^7.0.4,o-card@^3.0.0,o-footer@^6.0.2{{',o-comments@^4.0.2' if flags.comments}}{{ ',o-share@^5.0.0' if flags.shareButtons }}{{ ',o-ads@^7.0.0' if flags.ads}}">
 
 {%- if stylesheets %}{% for stylesheet in stylesheets %}
 <link rel="stylesheet" href="{{ stylesheet | safe }}">
@@ -141,7 +141,7 @@
   }('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-header@^7.0.4,o-footer@^6.0.2,o-date@^2.8.0,o-errors@^3.5.1{{ ",o-comments@^4.0.2" if flags.comments }}{{ ",o-share@^5.0.0" if flags.shareButtons }}{{ ",o-tracking@^1.2.3" if flags.analytics }}{{ ",o-ads@^7.0.0" if flags.ads}}'));
 </script>
 
-<title>{{ title | default(headline, true) }} &mdash; FT.com</title>
+<title>{{ title | default(headline, true) }}</title>
 <meta name="twitter:title" content="{{ twitterHeadline | default(socialHeadline) | default(headline, true) }}">
 <meta property="og:title" content="{{ facebookHeadline | default (socialHeadline) | default(headline, true) }}">
 
