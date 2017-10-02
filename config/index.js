@@ -2,10 +2,10 @@ import article from './article';
 import getFlags from './flags';
 import getOnwardJourney from './onward-journey';
 
-export default async () => {
-  const d = await article();
-  const flags = await getFlags();
-  const onwardJourney = await getOnwardJourney();
+export default async (environment = 'development') => {
+  const d = await article(environment);
+  const flags = await getFlags(environment);
+  const onwardJourney = await getOnwardJourney(environment);
   /*
   An experimental demo that gets content from the API
   and overwrites some model values. This requires the Link File

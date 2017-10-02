@@ -1,10 +1,8 @@
-const prod = process.env.NODE_ENV === 'production';
-
-export default () => ({ // eslint-disable-line
-  prod,
-  errorReporting: prod,
-  analytics: prod,
-  googleAnalytics: prod,
+export default (environment = 'development') => ({ // eslint-disable-line
+  prod: environment === 'production',
+  errorReporting: environment === 'production',
+  analytics: environment === 'production',
+  googleAnalytics: environment === 'production',
   ads: true,
   onwardjourney: true,
   shareButtons: true,
