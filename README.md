@@ -1,6 +1,6 @@
 # Starter Kit [![Build Status][circle-image]][circle-url] [![Dependency Status][dependencyci-image]][dependencyci-url]
 
-A template for IG projects – everything you need to build a standalone front end app (including some basic FT page furniture), configured to automatically deploy to the web.
+A template for IG projects â everything you need to build a standalone front end app (including some basic FT page furniture), configured to automatically deploy to the web.
 
 ---
 
@@ -21,7 +21,7 @@ What the setup script does:
 - If selected, attempts to push it to the ft-interactive org on GitHub.
   - NB. you'll need an [access token](https://github.com/settings/tokens) and the git [osxkeychain helper](https://help.github.com/articles/caching-your-github-password-in-git/) for this to work.
 - Runs `npm install` to grab all the dependencies (this takes a few minutes).
-- Runs `npm start` for the first time – now you can start coding.
+- Runs `npm start` for the first time â now you can start coding.
 
 You can also re-initialise a Starter Kit project to use the latest version by providing a path
 to an existing project in the first step of the wizard. This will put everything in the folder into
@@ -38,23 +38,23 @@ This assumes your project keeps most of your data in the `client/` and `config/`
 
 You can run the following tasks from within your project directory:
 
-- `npm start` – starts up a development server and opens your app in a web browser. The dev server will automatically reload your browser when files change.
+- `npm start` â starts up a development server and opens your app in a web browser. The dev server will automatically reload your browser when files change.
 - `npm run build` - builds your app and puts it in the `dist` folder.
-- `npm run deploy` – deploys the contents of your `dist` folder to an appropriate location on S3. (You usually don't need to run this yourself – it is run automatically by CircleCI.)
+- `npm run deploy` â deploys the contents of your `dist` folder to an appropriate location on S3. (You usually don't need to run this yourself â it is run automatically by CircleCI.)
 
 (You can find a few other, less interesting tasks defined in [`package.json`](package.json).)
 
 #### Key directories
 
-- [`client`](client) – the main files that make up your front end, including `index.html` and some Sass and JS files. You should mostly be working in here.
-- [`config`](config) – scripts that pull together some configuration details for your project, including basic facts (UUID, title, etc.) and 'onward journey' story links. These details are used to populate parts of the templates.
-- [`views`](views) – the standard page layout is formed from a few files in here (the project-specific files in `client` extend this layout). You generally don't need to edit this much.
-- `dist` – the optimsed HTML/CSS/JS bundle, generated automatically every time you run `npm run build`. You shouldn't edit files in here manually, as any manual changes would just get overwritten next time you build.
+- [`client`](client) â the main files that make up your front end, including `index.html` and some Sass and JS files. You should mostly be working in here.
+- [`config`](config) â scripts that pull together some configuration details for your project, including basic facts (UUID, title, etc.) and 'onward journey' story links. These details are used to populate parts of the templates.
+- [`views`](views) â the standard page layout is formed from a few files in here (the project-specific files in `client` extend this layout). You generally don't need to edit this much.
+- `dist` â the optimsed HTML/CSS/JS bundle, generated automatically every time you run `npm run build`. You shouldn't edit files in here manually, as any manual changes would just get overwritten next time you build.
 
 ## What's included in Starter Kit?
 
 - A template for a basic **front end app** with FT.com page furniture
-  - Includes [Origami components](http://registry.origami.ft.com/components) and various best-practice features such as meta tags to optimise SEO and social sharing.
+  - Includes [Origami components](https://origami-bower-registry.ft.com/components) and various best-practice features such as meta tags to optimise SEO and social sharing.
 - A **build system** including tasks for serving your app locally during development (auto-refreshing when you edit source files) and building an optimised HTML/CSS/JS bundle suitable for deployment.
   - This is comprised of [gulp](http://gulpjs.com/), [Babel](https://babeljs.io/docs/learn-es2015/), [Browserify](http://browserify.org/), [Sass](https://github.com/sass/node-sass), and [Nunjucks templates](https://mozilla.github.io/nunjucks/templating.html).
 - A **CI configuration** that instructs CircleCI to deploy the project to S3 every time it builds.
