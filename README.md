@@ -1,6 +1,6 @@
 # Starter Kit [![Build Status][circle-image]][circle-url] [![Dependency Status][dependencyci-image]][dependencyci-url]
 
-A template for IG projects â everything you need to build a standalone front end app (including some basic FT page furniture), configured to automatically deploy to the web.
+A template for IG projects » Everything you need to build a standalone front end app (including some basic FT page furniture), configured to automatically deploy to the web.
 
 ---
 
