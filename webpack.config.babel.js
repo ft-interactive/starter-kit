@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ImageminWebpackPlugin from 'imagemin-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -9,7 +8,7 @@ import * as nunjucksFilters from './views/filters';
 
 module.exports = async (env = 'development') => ({
   entry: {
-    bundle: ['babel-polyfill', './client/index.js'],
+    bundle: ['./client/index.js'],
   },
   resolve: {
     modules: ['node_modules', 'bower_components'],
