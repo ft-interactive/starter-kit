@@ -14,6 +14,7 @@
     ]
   },
   "devDependencies": {
+    "@sonarwhal/sonar": "^0.13.0",
     "ajv": "^5.2.2",
     "axios": "^0.16.2",
     "babel-eslint": "^7.2.3",
@@ -78,6 +79,7 @@
     "prebuild": "npm run clean",
     "pretest": "npm run build",
     "qa": "mocha ./test/**/*.spec.js",
+    "sonar": "sonar $(ft-graphics-deploy --get-commit-url)",
     "start": "webpack-dev-server --watch"
   },
   "dependencies": {}

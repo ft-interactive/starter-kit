@@ -64,3 +64,6 @@ jobs:
       - run:
           name: General QA checks
           command: npm run qa || echo "Automatic QA checks failed. Continuing anyway"
+      - run:
+          name: sonar
+          command: npm run sonar
