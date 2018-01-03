@@ -1,6 +1,6 @@
+<!doctype html>
 {% set test_comments_uuid = "3a499586-b2e0-11e4-a058-00144feab7de" if not flags.prod and flags.comments else "" %}
 {% import "./macros.html" as macros %}
-<!doctype html>
 <html lang="en-GB" class="core"
     data-buildtime="{{ now() | isotime }}"
     data-content-id="{{ id if id else test_comments_uuid }}">
@@ -32,7 +32,7 @@
             </header>
           </div>
         </div>
-        <div class="article-body o-typography-body-wrapper" itemprop="articleBody">
+        <div class="article-body o-typography-wrapper" itemprop="articleBody">
 
           <div class="o-grid-container">
             <div class="o-grid-row">
@@ -70,7 +70,5 @@
     {% if flags.footer %}
       {% include "includes/footer.html" %}
     {% endif %}
-
-    <script src="bundle.js"></script>
   </body>
 </html>

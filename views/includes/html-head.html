@@ -7,9 +7,9 @@
 <link rel="preconnect" href="https://cdn.polyfill.io">
 
 {# Stylesheets #}
-<link inline rel="stylesheet" href="top.css">
-<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-normalise@^1,o-fonts@^2,o-grid@^4.2.1,o-typography@^4.3.1,o-header@^6.5.1,o-card@^2.1.8,o-footer@^5.0.3{{',o-comments@^3.2.0' if flags.comments}}{{ ',o-share@^3' if flags.shareButtons }}{{ ',o-ads@^6.1.5' if flags.ads}}">
-<link rel="stylesheet" href="bundle.css">
+<link rel="stylesheet" href="components/core/top.css">
+<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-normalise@^1.2.1,o-fonts@^3.0.1,o-grid@^4.3.3,o-typography@^5.2.0,o-header@^7.0.4,o-card@^3.0.0,o-footer@^6.0.2{{',o-comments@^4.0.2' if flags.comments}}{{ ',o-share@^5.0.0' if flags.shareButtons }}{{ ',o-ads@^7.0.0' if flags.ads}}">
+
 {%- if stylesheets %}{% for stylesheet in stylesheets %}
 <link rel="stylesheet" href="{{ stylesheet | safe }}">
 {% endfor %}{% endif -%}
@@ -17,12 +17,13 @@
 
 <link href="https://plus.google.com/113457471429583444041/" rel="publisher" />
 <meta property="fb:app_id" content="429755910551755" />
-<link rel="shortcut icon" href="https://ig.ft.com/favicon.ico" type="image/x-icon">
-<link rel="apple-touch-icon" href="https://ig.ft.com/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=update-logos&width=32&height=32&format=png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=update-logos&width=194&height=194&format=png" sizes="194x194">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=update-logos&width=180&height=180&format=png">
 <meta name="format-detection" content="telephone=no">
 <meta name="robots" content="index,follow">
 <meta name="copyright" content="Financial Times">
-<meta name="theme-color" content="#fff1e0" />
+<meta name="theme-color" content="#fff1e5" />
 <script type="application/ld+json">
 {
   "@context": "http://schema.org",
@@ -58,12 +59,12 @@
 {# Prioritised JavaScript #}
 
 <!-- Add polyfill service -->
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js?callback=client&amp;features=default,fetch"></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
 <!-- Add CTM checks -->
-<script type="text/javascript">
-  window.cutsTheMustard = ('querySelector' in document && 'localStorage' in window && 'addEventListener' in window && typeof Function.prototype.bind !== 'undefined')
-  document.documentElement.className = document.documentElement.className.replace(/core/g, 'enhanced');
+<script>
+  cutsTheMustard = ('querySelector' in document && 'localStorage' in window && 'addEventListener' in window && typeof Function.prototype.bind !== 'undefined');
+  if (cutsTheMustard) document.documentElement.className = document.documentElement.className.replace(/core/g, 'enhanced');
 </script>
 
 {%- if flags.analytics %}
@@ -75,7 +76,7 @@
   {% if tracking.micrositeName %}
 <meta property="ft.track:microsite_name" content="{{ tracking.micrositeName }}"/>
   {% endif %}
-<script type="text/javascript">
+<script>
   function oTrackinginit() {
     var oTracking = Origami['o-tracking'];
 
@@ -117,7 +118,7 @@
 {% endif -%}
 
 <!-- Add Origami Build Service -->
-<script type="text/javascript">
+<script>
   (function(src) {
     if (cutsTheMustard) {
       var o = document.createElement('script');
@@ -137,10 +138,10 @@
 {% endif -%}
       s.parentNode.insertBefore(o, s);
     }
-  }('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-header@^6.5.1,o-footer@^5.0.3,o-date@^2.8.0,o-errors@^3.5.1{{ ",o-comments@^3.1.0" if flags.comments }}{{ ",o-share@^3" if flags.shareButtons }}{{ ",o-tracking@^1.2.3" if flags.analytics }}{{ ",o-ads@^6.1.5" if flags.ads}}'));
+  }('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-header@^7.0.4,o-footer@^6.0.2,o-date@^2.8.0,o-errors@^3.5.1{{ ",o-comments@^4.0.2" if flags.comments }}{{ ",o-share@^5.0.0" if flags.shareButtons }}{{ ",o-tracking@^1.2.3" if flags.analytics }}{{ ",o-ads@^7.0.0" if flags.ads}}'));
 </script>
 
-<title>{{ title | default(headline, true) }} &mdash; FT.com</title>
+<title>{{ title | default(headline, true) }}</title>
 <meta name="twitter:title" content="{{ twitterHeadline | default(socialHeadline) | default(headline, true) }}">
 <meta property="og:title" content="{{ facebookHeadline | default (socialHeadline) | default(headline, true) }}">
 
@@ -170,6 +171,14 @@
 {%- if twitterCreator %}
 <meta name="twitter:creator" content="{{ twitterCreator }}">
 {% endif -%}
+
+{# open graph tags for Financial Times, FT World News, Financial Times Italy,
+  FT MBA and FT Health #}
+<meta property="fb:pages" content="8860325749">
+<meta property="fb:pages" content="121862597867466">
+<meta property="fb:pages" content="622419751233155">
+<meta property="fb:pages" content="23117544640">
+<meta property="fb:pages" content="293710391064899">
 
 {% if flags.ads  %}
 <script data-o-ads-config="" type="application/json">

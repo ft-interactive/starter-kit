@@ -1,16 +1,16 @@
 <div>
-  <a href="{{ topic.url }}" class="o-typography-link-topic o-typography-link-topic--medium">{{ topic.name }}</a>
+  <a href="{{ topic.url }}" class="o-typography-topic">{{ topic.name }}</a>
 </div>
 
-<h1 class="o-typography-heading1" itemprop="headline">{{ headline | md(true) }}</h1>
+<h1 class="o-typography-headline" itemprop="headline">{{ headline | md(true) }}</h1>
 
-<p>
+<p class="o-typography-standfirst">
   {{ summary | md(true) }}
   {% if relatedArticle %}
   <a href="{{ relatedArticle.url }}" class="o-typography-link">{{ relatedArticle.text }}</a>
   {% endif %}
 </p>
-<meta itemprop="dateModified" content="{{ publishedDate | isotime }}">
+<meta itemprop="dateModified" content="{{ publishedDate | isotime }}" />
 
 {% if mainImage.url or mainImage.uuid %}
 <figure class="graphic graphic-b-1 graphic-pad-1">
@@ -26,24 +26,22 @@
   {% include "includes/share.html" %}
 {% endif %}
 
-<p>
-  {%- if publishedDate -%}
-  <time data-o-component="o-date" class="o-date o-typography-timestamp" datetime="{{ publishedDate | isotime }}">{{ publishedDate | ftdate }}</time>
-  {%- endif -%}
-  {%- if byline -%}
-  &#32;<span class="article__byline">by&nbsp;
-  {%- if byline.push -%}
-    {%- for author in byline -%}
-      {{ " and " if not loop.first and loop.last else (", " if not loop.first else "") }}
-      {%- if author.url -%}
-        <a href="{{ author.url }}" class="o-typography-link-topic o-typography-link-topic--small" itemprop="author">{{ author.name }}</a>
-      {%- else -%}
-        {{ author.name }}
-      {%- endif -%}
-    {%- endfor -%}
-  {%- else -%}
-    {{ byline | md(true) }}
-  {%- endif -%}
-  </span>
-  {%- endif -%}
-</p>
+{%- if publishedDate -%}
+<span data-o-component="o-date" class="o-date o-typography-timestamp" datetime="{{ publishedDate | isotime }}">{{ publishedDate | ftdate }}</span>
+{%- endif -%}
+{%- if byline -%}
+<div class="o-typography-author">&nbsp;by&nbsp;
+{%- if byline.push -%}
+  {%- for author in byline -%}
+    {{ " and " if not loop.first and loop.last else (", " if not loop.first else "") }}
+    {%- if author.url -%}
+      <a href="{{ author.url }}">{{ author.name }}</a>
+    {%- else -%}
+      {{ author.name }}
+    {%- endif -%}
+  {%- endfor -%}
+{%- else -%}
+  {{ byline | md(true) }}
+{%- endif -%}
+</div>
+{%- endif -%}

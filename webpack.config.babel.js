@@ -1,19 +1,14 @@
-import 'babel-polyfill';
-import NunjucksWebpackPlugin from 'nunjucks-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ImageminWebpackPlugin from 'imagemin-webpack-plugin';
-import { HotModuleReplacementPlugin } from 'webpack';
-import { resolve, extname } from 'path';
-import { readFileSync, writeFileSync } from 'fs';
-import { configure as configureNunjucks } from './views';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+// import { HotModuleReplacementPlugin } from 'webpack';
+import { resolve } from 'path';
 import getContext from './config';
-
-const nunjucksEnv = configureNunjucks();
+import * as nunjucksFilters from './views/filters';
 
 module.exports = async (env = 'development') => ({
   entry: {
-    bundle: ['babel-polyfill', './client/index.js'],
+    bundle: ['./client/index.js'],
   },
   resolve: {
     modules: ['node_modules', 'bower_components'],
@@ -33,7 +28,7 @@ module.exports = async (env = 'development') => ({
       },
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -50,12 +45,60 @@ module.exports = async (env = 'development') => ({
         },
       },
       {
-        test: /\.(html|njk)$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'nunjucks-loader',
+        test: /\.(png|jpe?g|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'images/',
+              name: '[name]--[hash].[ext]',
+            },
+          },
+        ],
       },
       {
-        test: /\.s?css/,
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name]--[hash].[ext]',
+            },
+          },
+          {
+            loader: 'extract-loader',
+          },
+          { loader: 'css-loader', options: { sourceMap: true, url: true } },
+          { loader: 'postcss-loader', options: { sourceMap: true } },
+        ],
+      },
+      {
+        test: /\.(html|njk)$/,
+        use: [
+          {
+            loader: 'html-loader',
+            options: {
+              attrs: [
+                'img:src',
+                'link:href',
+              ],
+              root: resolve(__dirname, 'client'),
+            },
+          },
+          {
+            loader: 'nunjucks-html-loader',
+            options: {
+              searchPaths: [
+                resolve(__dirname, 'views'),
+              ],
+              filters: nunjucksFilters,
+              context: await getContext(env),
+            },
+          },
+        ],
+      },
+      {
+        test: /\.scss/,
         use: ExtractTextPlugin.extract({
           use: [
             { loader: 'css-loader', options: { sourceMap: true } },
@@ -74,53 +117,23 @@ module.exports = async (env = 'development') => ({
     ],
   },
   devServer: {
-    hot: true,
-    contentBase: resolve(__dirname, 'client'),
+    hot: false, // Needed for live-reloading Nunjucks templates.
+    allowedHosts: [
+      '.ngrok.io',
+      'local.ft.com',
+    ],
   },
   devtool: 'source-map',
   plugins: [
-    new HotModuleReplacementPlugin(),
+    // new HotModuleReplacementPlugin(), // Re-enable if devServer.hot is set to true
     new ExtractTextPlugin({
       filename: env === 'production' ? '[name].[contenthash].css' : '[name].css',
     }),
-    new NunjucksWebpackPlugin({
-      template: [
-        {
-          from: resolve(__dirname, 'client/index.html'),
-          to: resolve(__dirname, 'dist/index.html'),
-          context: await getContext(),
-        },
-      ],
-      context: {},
-      environment: nunjucksEnv,
+    new HtmlWebpackPlugin({
+      template: 'client/index.html',
     }),
-    new CopyWebpackPlugin(
-      [
-        { from: 'client/components/core/top.css', to: 'top.css' },
-        { from: 'client/images/*.+(jpg|jpeg|svg|png|gif)', to: 'images/', flatten: true },
-      ],
-      {
-        copyUnmodified: true,
-      },
-    ),
     env === 'production'
       ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i })
       : undefined,
-    function revReplace() {
-      this.plugin('done', (stats) => {
-        if (env !== 'production') return; // Only rev in prod
-
-        const items = stats.toJson().assetsByChunkName.bundle.reduce((col, item) => {
-          if (extname(item) === '.map') return col;
-          col[`bundle${extname(item)}`] = item; // eslint-disable-line
-          return col;
-        }, {});
-        let html = readFileSync(resolve(__dirname, 'dist', 'index.html'), { encoding: 'utf-8' });
-        Object.entries(items).forEach(([orig, rev]) => {
-          html = html.replace(new RegExp(orig, 'g'), rev);
-        });
-        writeFileSync(resolve(__dirname, 'dist', 'index.html'), html, { encoding: 'utf-8' });
-      });
-    },
   ].filter(i => i),
 });
