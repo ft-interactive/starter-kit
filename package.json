@@ -50,7 +50,7 @@
     "extract-loader": "^1.0.1",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
-    "ft-graphics-deploy": "^2.1.2",
+    "ft-graphics-deploy": "^2.2.2",
     "html-loader": "^0.5.1",
     "html-webpack-plugin": "^2.30.1",
     "imagemin-webpack-plugin": "^1.5.0-beta.0",
