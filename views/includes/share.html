@@ -3,16 +3,16 @@
     <div data-o-component="o-share" class="o-share">
       <ul>
         <li class="o-share__action o-share__action--twitter">
-          <a href="https://twitter.com/intent/tweet?url={{ url }}&amp;text={{ tweetText | default(twitterHeadline) | default(socialHeadline) | default(headline) }}{% if twitterRelatedAccounts %}&amp;related={{ twitterRelatedAccounts | join(',') }}{% endif %}&amp;via=FinancialTimes" rel="noopener"><i><span cass="o-header--visually-hidden"></span>Share on Twitter</i></a>
+          <a href="https://twitter.com/intent/tweet?url={{ url }}&amp;text={{ tweetText | default(twitterHeadline) | default(socialHeadline) | default(headline) }}{% if twitterRelatedAccounts %}&amp;related={{ twitterRelatedAccounts | join(',') }}{% endif %}&amp;via=FinancialTimes" rel="noopener"><i><span cass="o-header--visually-hidden"></span>Share on Twitter. Opens in a new window.</i></a>
         </li>
         <li class="o-share__action o-share__action--facebook">
-          <a href="http://www.facebook.com/sharer.php?u={{ url }}" rel="noopener"><i><span cass="o-header--visually-hidden"></span>Share on Facebook</i></a>
+          <a href="http://www.facebook.com/sharer.php?u={{ url }}" rel="noopener"><i><span cass="o-header--visually-hidden"></span>Share on Facebook. Opens in a new window.</i></a>
         </li>
         <li class="o-share__action o-share__action--linkedin">
-          <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ url }}&amp;source=Financial%20Times" rel="noopener"><i><span cass="o-header--visually-hidden"></span>Share on LinkedIn</i></a>
+          <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ url }}&amp;source=Financial%20Times" rel="noopener"><i><span cass="o-header--visually-hidden"></span>Share on LinkedIn. Opens in a new window.</i></a>
         </li>
         <li class="o-share__action o-share__action--whatsapp">
-          <a target="_blank" href="whatsapp://send?text={{ socialHeadline | default(headline) }}%20-%20{{ url }}" data-trackable="whatsapp" rel="noopener"><i><span cass="o-header--visually-hidden"></span>Share on Whatsapp</i></a>
+          <a target="_blank" href="whatsapp://send?text={{ socialHeadline | default(headline) }}%20-%20{{ url }}" data-trackable="whatsapp" rel="noopener"><i><span cass="o-header--visually-hidden"></span>Share on Whatsapp. Opens in a new window.</i></a>
         </li>
       </ul>
     </div>
