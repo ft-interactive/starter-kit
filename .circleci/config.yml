@@ -57,9 +57,9 @@ jobs:
           command: |
             if [ "$PREVIEW" == "true" ]
             then
-              npm run check-accessibility:preview
+              npm run a11y:preview
             else
-              npm run check-accessibility
+              npm run a11y
             fi
       - run:
           name: General QA checks
