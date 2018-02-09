@@ -8,7 +8,7 @@
 
 {# Stylesheets #}
 <link rel="stylesheet" href="components/core/top.css">
-<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-normalise@^1.2.1,o-fonts@^3.0.1,o-grid@^4.3.3,o-typography@^5.2.0,o-header@^7.0.4,o-card@^3.0.0,o-footer@^6.0.2{{',o-comments@^4.0.2' if flags.comments}}{{ ',o-share@^5.0.0' if flags.shareButtons }}{{ ',o-ads@^7.0.0' if flags.ads}}">
+<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-normalise@^1.2.1,o-fonts@^3.0.1,o-grid@^4.3.3,o-typography@^5.2.0,o-header@^7.0.4,o-footer@^6.0.2,o-teaser@^2.2.2{{',o-comments@^4.0.2' if flags.comments}}{{ ',o-share@^5.0.0' if flags.shareButtons }}{{ ',o-ads@^7.0.0' if flags.ads}}">
 
 {%- if stylesheets %}{% for stylesheet in stylesheets %}
 <link rel="stylesheet" href="{{ stylesheet | safe }}">
@@ -63,8 +63,16 @@
 
 <!-- Add CTM checks -->
 <script>
-  cutsTheMustard = ('querySelector' in document && 'localStorage' in window && 'addEventListener' in window && typeof Function.prototype.bind !== 'undefined');
-  if (cutsTheMustard) document.documentElement.className = document.documentElement.className.replace(/core/g, 'enhanced');
+cutsTheMustard =
+  'querySelector' in document &&
+  'localStorage' in window &&
+  'addEventListener' in window &&
+  typeof Function.prototype.bind !== 'undefined';
+if (cutsTheMustard)
+  document.documentElement.className = document.documentElement.className.replace(
+    /core/g,
+    'enhanced',
+  );
 </script>
 
 {%- if flags.analytics %}
@@ -77,43 +85,47 @@
 <meta property="ft.track:microsite_name" content="{{ tracking.micrositeName }}"/>
   {% endif %}
 <script>
-  function oTrackinginit() {
-    var oTracking = Origami['o-tracking'];
+function oTrackinginit() {
+  var oTracking = Origami['o-tracking'];
 
-    var page_data = {
-      content: { asset_type: 'interactive' }
-    };
+  var page_data = {
+    content: { asset_type: 'interactive' },
+  };
 
-    var properties = [].reduce.call(document.querySelectorAll('head meta[property^="ft.track:"]')||[], function(o, el) {
+  var properties = [].reduce.call(
+    document.querySelectorAll('head meta[property^="ft.track:"]') || [],
+    function(o, el) {
       o[el.getAttribute('property').replace('ft.track:', '')] = el.getAttribute('content');
       return o;
-    }, {});
+    },
+    {},
+  );
 
-    var id = document.documentElement.getAttribute('data-content-id');
+  var id = document.documentElement.getAttribute('data-content-id');
 
-    if (id) {
-      page_data.content.uuid = id;
-    }
-
-    if (properties.microsite_name) {
-      page_data.microsite_name = properties.microsite_name;
-    }
-
-    // Setup
-    oTracking.init({
-      server: 'https://spoor-api.ft.com/px.gif',
-      system: {
-        is_live: typeof properties.is_live === 'string' ? properties.is_live.toLowerCase() : false
-      },
-      context: { product: properties.product || 'IG' }
-    });
-
-    // Page
-    oTracking.page(page_data);
-
-    // Links
-    oTracking.link.init();
+  if (id) {
+    page_data.content.uuid = id;
   }
+
+  if (properties.microsite_name) {
+    page_data.microsite_name = properties.microsite_name;
+  }
+
+  // Setup
+  oTracking.init({
+    server: 'https://spoor-api.ft.com/px.gif',
+    system: {
+      is_live: typeof properties.is_live === 'string' ? properties.is_live.toLowerCase() : false,
+    },
+    context: { product: properties.product || 'IG' },
+  });
+
+  // Page
+  oTracking.page(page_data);
+
+  // Links
+  oTracking.link.init();
+}
 </script>
 {% endif -%}
 
@@ -138,7 +150,7 @@
 {% endif -%}
       s.parentNode.insertBefore(o, s);
     }
-  }('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-header@^7.0.4,o-footer@^6.0.2,o-date@^2.8.0,o-errors@^3.5.1{{ ",o-comments@^4.0.2" if flags.comments }}{{ ",o-share@^5.0.0" if flags.shareButtons }}{{ ",o-tracking@^1.2.3" if flags.analytics }}{{ ",o-ads@^7.0.0" if flags.ads}}'));
+  }('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-header@^7.0.4,o-footer@^6.0.2,o-date@^2.8.0,o-errors@^3.5.1,o-teaser@^2.2.2{{ ",o-comments@^4.0.2" if flags.comments }}{{ ",o-share@^5.0.0" if flags.shareButtons }}{{ ",o-tracking@^1.2.3" if flags.analytics }}{{ ",o-ads@^7.0.0" if flags.ads}}'));
 </script>
 
 <title>{{ title | default(headline, true) }}</title>
