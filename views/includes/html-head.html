@@ -8,7 +8,7 @@
 
 {# Stylesheets #}
 <link rel="stylesheet" href="components/core/top.css">
-<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-normalise@^1.2.1,o-fonts@^3.0.1,o-grid@^4.3.3,o-typography@^5.4.2,o-header@^7.2.8,o-footer@^6.0.8,o-teaser@^2.2.2{{',o-comments@^4.0.2' if flags.comments}}{{ ',o-share@^5.0.0' if flags.shareButtons }}{{ ',o-ads@^7.0.0' if flags.ads}}">
+<link rel="stylesheet" href="https://www.ft.com/__origami/service/build/v2/bundles/css?modules=o-normalise@^1.5.3,o-fonts@^3.0.4,o-grid@^4.3.7,o-typography@^5.4.2,o-header@^7.2.8,o-footer@^6.0.8,o-teaser@^2.2.2{{',o-comments@^4.0.7' if flags.comments}}{{ ',o-share@^6.1.0' if flags.shareButtons }}{{ ',o-ads@^7.0.0' if flags.ads}}">
 
 {%- if stylesheets %}{% for stylesheet in stylesheets %}
 <link rel="stylesheet" href="{{ stylesheet | safe }}">
@@ -150,7 +150,7 @@ function oTrackinginit() {
 {% endif -%}
       s.parentNode.insertBefore(o, s);
     }
-  }('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-header@^7.2.8,o-footer@^6.0.8,o-date@^2.8.0,o-errors@^3.5.1,o-teaser@^2.2.2{{ ",o-comments@^4.0.2" if flags.comments }}{{ ",o-share@^5.0.0" if flags.shareButtons }}{{ ",o-tracking@^1.2.3" if flags.analytics }}{{ ",o-ads@^7.0.0" if flags.ads}}'));
+  }('https://www.ft.com/__origami/service/build/v2/bundles/js?modules=o-header@^7.2.8,o-footer@^6.0.8,o-date@^2.8.0,o-errors@^3.5.1,o-teaser@^2.2.2{{ ",o-comments@^4.0.7" if flags.comments }}{{ ",o-share@^6.1.0" if flags.shareButtons }}{{ ",o-tracking@^1.2.3" if flags.analytics }}{{ ",o-ads@^7.0.0" if flags.ads}}'));
 </script>
 
 <title>{{ title | default(headline, true) }}</title>
