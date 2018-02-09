@@ -59,7 +59,7 @@
     "minimist": "^1.2.0",
     "mocha": "^3.4.2",
     "node-sass": "^4.5.3",
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.14.12",
     "nunjucks": "^3.0.1",
     "nunjucks-html-loader": "github:ft-interactive/nunjucks-html-loader",
     "nunjucks-markdown": "^2.0.1",
@@ -68,6 +68,8 @@
     "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.6",
     "postcss-scss": "^1.0.2",
+    "prettier": "^1.10.2",
+    "prettier-eslint": "^8.8.1",
     "raw-loader": "^0.5.1",
     "remove-markdown": "^0.2.0",
     "sass-loader": "^6.0.6",
@@ -82,16 +84,19 @@
   "private": true,
   "scripts": {
     "build": "webpack -p --env=production",
-    "a11y": "pa11y --ignore \"warning;notice\" --hide-elements \"iframe[src*=google],iframe[id*=google],.o-comments\" --threshold 100 $(ft-graphics-deploy --get-commit-url)",
-    "a11y:preview": "pa11y --ignore \"warning;notice\" --hide-elements \"iframe[src*=google],iframe[id*=google],.o-comments\" --threshold 100 $(ft-graphics-deploy --preview --get-commit-url)",
-    "a11y:local": "pa11y --ignore \"warning;notice\" localhost:8080 --hide-elements \"iframe[src*=google],iframe[id*=google],.o-comments\"",
+    "a11y":
+      "pa11y --ignore \"warning;notice\" --hide-elements \"iframe[src*=google],iframe[id*=google],.o-comments\" --threshold 100 $(ft-graphics-deploy --get-commit-url)",
+    "a11y:preview":
+      "pa11y --ignore \"warning;notice\" --hide-elements \"iframe[src*=google],iframe[id*=google],.o-comments\" --threshold 100 $(ft-graphics-deploy --preview --get-commit-url)",
+    "a11y:local":
+      "pa11y --ignore \"warning;notice\" localhost:8080 --hide-elements \"iframe[src*=google],iframe[id*=google],.o-comments\"",
     "clean": "rm -rf dist",
     "deploy": "ft-graphics-deploy --assets-prefix=https://ig.ft.com/v2/__assets/",
     "postinstall": "bower install --allow-root",
     "prebuild": "npm run clean",
     "pretest": "npm run build",
     "qa": "mocha ./test/**/*.spec.js",
-    "start": "webpack-dev-server --watch"
+    "start": "nodemon -e html,njk,js --watch views --watch config --exec webpack-dev-server"
   },
   "dependencies": {}
 }
