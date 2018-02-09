@@ -1,6 +1,7 @@
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ImageminWebpackPlugin from 'imagemin-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+
 // import { HotModuleReplacementPlugin } from 'webpack';
 import { resolve } from 'path';
 import getContext from './config';
@@ -78,19 +79,14 @@ module.exports = async (env = 'development') => ({
           {
             loader: 'html-loader',
             options: {
-              attrs: [
-                'img:src',
-                'link:href',
-              ],
+              attrs: ['img:src', 'link:href'],
               root: resolve(__dirname, 'client'),
             },
           },
           {
             loader: 'nunjucks-html-loader',
             options: {
-              searchPaths: [
-                resolve(__dirname, 'views'),
-              ],
+              searchPaths: [resolve(__dirname, 'views')],
               filters: nunjucksFilters,
               context: await getContext(env),
             },
@@ -118,10 +114,7 @@ module.exports = async (env = 'development') => ({
   },
   devServer: {
     hot: false, // Needed for live-reloading Nunjucks templates.
-    allowedHosts: [
-      '.ngrok.io',
-      'local.ft.com',
-    ],
+    allowedHosts: ['.ngrok.io', 'local.ft.com'],
   },
   devtool: 'source-map',
   plugins: [
