@@ -122,6 +122,7 @@ module.exports = async (env = 'development') => ({
     new ExtractTextPlugin({
       filename: env === 'production' ? '[name].[contenthash].css' : '[name].css',
     }),
+    // instructions for generating multiple HTML files: https://github.com/jantimon/html-webpack-plugin#generating-multiple-html-files
     new HtmlWebpackPlugin({
       template: 'client/index.html',
     }),
