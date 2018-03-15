@@ -7,27 +7,16 @@ function getCookie(cookieName) {
   return null;
 }
 
-function getURLQueryParams(url) {
-  const urlParams = {};
-  url.replace(
-    new RegExp('([^?=&]+)(=([^&]*))?', 'g'),
-    ($0, $1, $2, $3) => {
-      urlParams[$1] = $3;
-    },
-  );
-  return urlParams;
-}
-
 /**
  * Get cohorts from Ammit
- * @return {Object}           Hash where key is the test name, value is
+ * @return { Map }           Map object where key is the test name, value is
  * User's variant group (e.g. control, variant), will be overriden by
  * URL query parameter value if the key matches the Ammit test name
  */
 export default async function getAmmitVariantGroups() {
-  const urlOverrides = getURLQueryParams(location.search);
+  const urlOverrides = new URLSearchParams(location.search);
 
-  const ftSessionToken = getCookie('FTSession');
+  const ftSessionToken = getCookie('FTSession_s');
   return fetch('https://ammit-api.ft.com/allocate', {
     headers: {
       'ft-session-token': ftSessionToken,
@@ -35,13 +24,19 @@ export default async function getAmmitVariantGroups() {
   })
   .then(res => res.headers.get('x-ft-ab'))
   .then((allocation) => {
-    const allocations = allocation.split(',');
-    const ammitVariantGroups = {};
-    for (let i = 0; i < allocations.length; i += 1) {
-      const testName = allocations[i].split(':')[0];
-      const variantGroup = allocations[i].split(':')[1];
-      ammitVariantGroups[testName] = urlOverrides[testName] || variantGroup;
+    // convert allocations string to a Map
+    const allocations = allocation.split(',').map(v => v.split(':'));
+    const ammitVariantGroups = new Map(allocations);
+
+    // apply the overrides
+    for (const urlOverride of urlOverrides.entries()) {
+      ammitVariantGroups.set(urlOverride[0], urlOverride[1]);
     }
-    return ammitVariantGroups;
-  }).catch(() => urlOverrides);
+
+    // return Map object
+    return new Map(ammitVariantGroups);
+  }).catch((e) => {
+    console.error(e);
+    return new Map(urlOverrides);
+  });
 }

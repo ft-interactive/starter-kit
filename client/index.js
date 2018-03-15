@@ -33,6 +33,6 @@ import './styles.scss';
   import getABTestGroups from './components/core/get-abtest-groups';
 
   getABTestGroups()
-    .then(testGroups => console.log(testGroups));
+    .then(testGroups => console.log(testGroups, testGroups.get('testName')));
   ```
 */
