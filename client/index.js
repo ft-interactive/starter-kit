@@ -26,4 +26,13 @@ import './styles.scss';
 
   You can import CSV, TSV, TXT, XML and JSON this way! Note, however, that it will increase your
   bundle size, which may increase the time to first render in some cases!
+
+  To run an AB test and get a user's cohort group, use the following:
+
+  ```
+  import getABTestGroups from './components/core/get-abtest-groups';
+
+  getABTestGroups()
+    .then(testGroups => console.log(testGroups, testGroups.get('testName')));
+  ```
 */
