@@ -11,8 +11,13 @@ const chai = require('chai');
 const { JSDOM } = require('jsdom');
 const { readFileSync } = require('fs');
 
-const index = readFileSync(`${__dirname}/../../dist/index.html`, { encoding: 'utf-8' });
+const index = readFileSync(`${__dirname}/../../dist/index.html`, {
+  encoding: 'utf-8',
+});
 const { document } = new JSDOM(index).window;
+
+const testCommentsUUID = '3a499586-b2e0-11e4-a058-00144feab7de';
+
 const should = chai.should();
 
 describe('QA tests', () => {
@@ -91,6 +96,14 @@ describe('QA tests', () => {
 
       should.exist(headline);
       headline.textContent.should.not.equal('');
+    });
+
+    it('has UUID set', () => {
+      const dataContentId = document.documentElement.getAttribute('data-content-id');
+
+      should.exist(dataContentId);
+      dataContentId.should.not.equal(testCommentsUUID);
+      dataContentId.should.not.equal('');
     });
 
     // @TODO Add Onward Journey test
