@@ -63,4 +63,10 @@ jobs:
             fi
       - run:
           name: General QA checks
-          command: npm run qa || echo "Automatic QA checks failed. Continuing anyway"
+          command: |
+            if [ $CIRCLE_BRANCH = "master" ]
+            then
+              npm run qa
+            else
+              npm run qa || echo "Automatic QA checks failed. Continuing anyway"
+            fi
