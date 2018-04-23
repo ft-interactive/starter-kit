@@ -1,0 +1,11 @@
+{
+	"ignore": [
+		"warning",
+		"notice"
+	],
+	"hideElements": "iframe[src*=google],iframe[id*=google],.o-comments",
+	"threshold": 100,
+	"chromeLaunchConfig": {
+		"args": ["--no-sandbox", "--disable-setuid-sandbox"]
+	}
+}

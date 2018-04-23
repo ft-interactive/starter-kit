@@ -85,9 +85,9 @@
   "private": true,
   "scripts": {
     "build": "webpack -p --env=production",
-    "a11y": "pa11y --ignore \"warning;notice\" --hide-elements \"iframe[src*=google],iframe[id*=google],.o-comments\" --threshold 100 $(ft-graphics-deploy --get-commit-url)",
-    "a11y:preview": "pa11y --ignore \"warning;notice\" --hide-elements \"iframe[src*=google],iframe[id*=google],.o-comments\" --threshold 100 $(ft-graphics-deploy --preview --get-commit-url)",
-    "a11y:local": "pa11y --ignore \"warning;notice\" localhost:8080 --hide-elements \"iframe[src*=google],iframe[id*=google],.o-comments\"",
+    "a11y": "pa11y $(ft-graphics-deploy --get-commit-url)",
+    "a11y:preview": "pa11y $(ft-graphics-deploy --preview --get-commit-url)",
+    "a11y:local": "pa11y localhost:8080",
     "clean": "rm -rf dist",
     "deploy": "ft-graphics-deploy --assets-prefix=https://ig.ft.com/v2/__assets/",
     "postinstall": "bower install --allow-root",
