@@ -58,7 +58,7 @@ then
 fi
 echo "Setting URL to $URL"
 
-template_str=$(cat readme.md.template)
+TEMPLATE_STR=$(cat readme.md.template)
 
 if [ -n "$UUID" ]
 then
