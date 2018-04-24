@@ -1,4 +1,4 @@
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ImageminWebpackPlugin from 'imagemin-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
@@ -8,6 +8,7 @@ import getContext from './config';
 import * as nunjucksFilters from './views/filters';
 
 module.exports = async (env = 'development') => ({
+  mode: env,
   entry: {
     bundle: ['./client/index.js'],
   },
@@ -95,20 +96,18 @@ module.exports = async (env = 'development') => ({
       },
       {
         test: /\.scss/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            { loader: 'css-loader', options: { sourceMap: true } },
-            { loader: 'postcss-loader', options: { sourceMap: true } },
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true,
-                includePaths: ['bower_components'],
-              },
+        use: [
+          env === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+          { loader: 'css-loader', options: { sourceMap: true } },
+          { loader: 'postcss-loader', options: { sourceMap: true } },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+              includePaths: ['bower_components'],
             },
-          ],
-          fallback: 'style-loader',
-        }),
+          }
+        ],
       },
     ],
   },
@@ -119,7 +118,7 @@ module.exports = async (env = 'development') => ({
   devtool: 'source-map',
   plugins: [
     // new HotModuleReplacementPlugin(), // Re-enable if devServer.hot is set to true
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: env === 'production' ? '[name].[contenthash].css' : '[name].css',
     }),
     // instructions for generating multiple HTML files: https://github.com/jantimon/html-webpack-plugin#generating-multiple-html-files
