@@ -1,11 +1,11 @@
 export default (environment = 'development') => ({ // eslint-disable-line
 
   // link file UUID
-  id: '$uuid',
+  id: '$UUID',
 
   // canonical URL of the published page
-  // "$url" get filled in by the ./configure script
-  url: '$url',
+  // "$URL" get filled in by the ./configure script
+  url: '$URL',
 
   // To set an exact publish date do this:
   //       new Date('2016-05-17T17:11:22Z')
