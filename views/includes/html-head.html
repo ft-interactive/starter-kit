@@ -157,9 +157,9 @@ function oTrackinginit() {
 <meta name="twitter:title" content="{{ twitterHeadline | default(socialHeadline) | default(headline, true) }}">
 <meta property="og:title" content="{{ facebookHeadline | default (socialHeadline) | default(headline, true) }}">
 
-<meta name="description" content="{{ description }}">
-<meta name="twitter:description" content="{{ twitterDescription | default(socialDescription) | default(description) }}">
-<meta property="og:description" content="{{ facebookDescription | default(socialDescription) | default(description) }}">
+<meta name="description" content="{{ description | default(summary, true) }}">
+<meta name="twitter:description" content="{{ twitterDescription | default(socialDescription) | default(description) | default(summary, true) }}">
+<meta property="og:description" content="{{ facebookDescription | default(socialDescription) | default(description) | default(summary, true) }}">
 
 <link rel="canonical" href="{{ url }}">
 <meta name="twitter:url" content="{{ url }}">
