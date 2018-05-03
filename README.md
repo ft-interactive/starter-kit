@@ -11,7 +11,7 @@ A template for IG projects — everything you need to build a standalone front e
 To start a new project based on Starter Kit, run this setup script in your terminal:
 
 ```sh
-eval "$(curl -s https://ig.ft.com/starter-kit/install)"
+eval "$(curl -s https://raw.githubusercontent.com/ft-interactive/starter-kit/master/install)"
 ```
 
 What the setup script does:
