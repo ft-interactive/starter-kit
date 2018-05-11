@@ -1,6 +1,10 @@
+$o-typography-is-silent: false;
+
 @import 'o-colors/main';
 @import 'o-grid/main';
+@import 'o-typography/main';
 @import 'components/core/main';
+@import 'components/core/dark';
 
 /*
       TODO: delete this comment

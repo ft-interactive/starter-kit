@@ -1,6 +1,6 @@
 <div class="article__share article__share--top n-util-clearfix" data-trackable="share | top">
-  <div class="container">
-    <div data-o-component="o-share" class="o-share">
+  <div class="container {% if flags.dark %}container-inverse{% endif %}">
+    <div data-o-component="o-share" class="o-share {% if flags.dark %}o-share--inverse{% endif %}">
       <ul>
         <li class="o-share__action o-share__action--twitter">
           <a class="o-share__icon o-share__icon--twitter" href="https://twitter.com/intent/tweet?url={{ url }}&amp;text={{ tweetText | default(twitterHeadline) | default(socialHeadline) | default(headline) }}{% if twitterRelatedAccounts %}&amp;related={{ twitterRelatedAccounts | join(',') }}{% endif %}&amp;via=FinancialTimes" rel="noopener"><span class="o-share__text">Share on Twitter. Opens in a new window.</span></a>

@@ -28,4 +28,5 @@ export default (environment = 'development') => ({ // eslint-disable-line
 
   */
   comments: true,
+  dark: false, // Enable dark theme
 });

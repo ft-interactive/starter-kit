@@ -23,7 +23,7 @@ export default (environment = 'development') => ({ // eslint-disable-line
   },
 
   relatedArticle: {
-    text: 'Related article »',
+    text: 'Related article',
     url: 'https://en.wikipedia.org/wiki/Politics_and_the_English_Language',
   },
 
