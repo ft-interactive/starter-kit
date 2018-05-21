@@ -36,12 +36,15 @@ module.exports = async (env = 'development') => ({
           options: {
             presets: [
               [
-                'env',
+                '@babel/preset-env',
                 {
-                  // Via: https://docs.google.com/document/d/1mByh6sT8zI4XRyPKqWVsC2jUfXHZvhshS5SlHErWjXU/view
-                  browsers: ['last 2 versions', 'ie >= 11', 'safari >= 10', 'ios >= 9'],
+                  browsers: 'defaults'
                 },
               ],
+            ],
+            plugins: [
+              '@babel/plugin-proposal-object-rest-spread',
+              '@babel/plugin-proposal-class-properties',
             ],
           },
         },
