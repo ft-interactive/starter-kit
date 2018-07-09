@@ -6,12 +6,9 @@ jobs:
       - image: aendrew/starter-kit-docker:latest # https://github.com/aendrew/starter-kit-docker
     steps:
       - checkout
-      - run:
-          name: update-npm
-          command: 'npm install -g npm@latest'
       - restore_cache: # special step to restore the dependency cache
-          namr: Restore cache (node_modules)
-          key: node_modules-{{ checksum "package-lock.json" }}
+          namr: Restore cache (npm cache)
+          key: npm-cache-{{ checksum "package-lock.json" }}
       - restore_cache: # special step to restore the dependency cache
           name: Restore cache (bower_components)
           key: bower_components-{{ checksum "bower.json" }}
@@ -23,9 +20,9 @@ jobs:
           command: npm rebuild
       - save_cache:
           name: Save cache (node_modules)
-          key: node_modules-{{ checksum "package-lock.json" }}
+          key: npm-cache-{{ checksum "package-lock.json" }}
           paths:
-            - ./node_modules/
+            - $HOME/.npm
       - save_cache:
           name: Save cache (bower_components)
           key: bower_components-{{ checksum "bower.json" }}
