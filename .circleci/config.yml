@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: update-npm
-          command: 'sudo npm install -g npm@latest'
+          command: 'npm install -g npm@latest'
       - restore_cache: # special step to restore the dependency cache
           namr: Restore cache (node_modules)
           key: node_modules-{{ checksum "package-lock.json" }}
