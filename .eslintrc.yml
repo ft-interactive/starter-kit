@@ -5,3 +5,4 @@ extends: airbnb
 root: true
 rules:
   import/no-extraneous-dependencies: [2, {}]
+  react/jsx-filename-extension: [0]
