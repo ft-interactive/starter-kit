@@ -5,7 +5,16 @@
 
 import React from 'react';
 import { hydrate } from 'react-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import App from './app';
 import getContext from '../config';
 
-(async () => hydrate(React.createElement(App, await getContext()), document.getElementById('app')))();
+(async () => {
+  const ctx = await getContext();
+  hydrate(
+    <HelmetProvider>
+      <App {...ctx} />
+    </HelmetProvider>,
+    document.getElementById('app'),
+  );
+})();

@@ -7,13 +7,14 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ImageminWebpackPlugin from 'imagemin-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackHarddiskPlugin from 'html-webpack-harddisk-plugin';
 import { HotModuleReplacementPlugin } from 'webpack';
 import { resolve } from 'path';
 import getContext from './config';
 
 module.exports = async (env = 'development') => ({
   mode: env,
-  entry: './client/index.js',
+  entry: ['./client/index.js'],
   resolve: {
     modules: ['node_modules', 'bower_components'],
   },
@@ -82,7 +83,7 @@ module.exports = async (env = 'development') => ({
       {
         test: /\.scss/,
         use: [
-          env === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+          // env === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
           { loader: 'css-loader', options: { sourceMap: true } },
           { loader: 'postcss-loader', options: { sourceMap: true } },
           {
@@ -112,6 +113,7 @@ module.exports = async (env = 'development') => ({
       templateParameters: await getContext(),
       filename: 'index.html',
     }),
+    new HtmlWebpackHarddiskPlugin(),
     env === 'production'
       ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i })
       : undefined,

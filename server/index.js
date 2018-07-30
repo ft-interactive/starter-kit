@@ -9,29 +9,33 @@
  */
 
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import Helmet from 'react-helmet';
+import { renderToString } from 'react-dom/server';
+import { HelmetProvider } from 'react-helmet-async';
 import App from '../client/app';
 
 export default (context) => {
-  const helmet = Helmet.renderStatic();
-  const htmlAttrs = helmet.htmlAttributes.toComponent();
-  const bodyAttrs = helmet.bodyAttributes.toComponent();
-
-  const Page = props => (
-    <html lang="en" {...htmlAttrs}>
-      <head>
-        {helmet.title.toComponent()}
-        {helmet.meta.toComponent()}
-        {helmet.link.toComponent()}
-      </head>
-      <body {...bodyAttrs}>
-        <div id="content">
-          <App {...props} />
-        </div>
-      </body>
-    </html>
+  const helmetCtx = {};
+  const app = renderToString(
+    <HelmetProvider context={helmetCtx}>
+      <App {...context} />
+    </HelmetProvider>,
   );
 
-  return ReactDOMServer.renderToString(<Page {...context} />);
+  const { helmet } = helmetCtx;
+
+  return `
+    <!doctype html>
+    <html ${helmet.htmlAttributes.toString()}>
+      <head>
+            ${helmet.title.toString()}
+            ${helmet.meta.toString()}
+            ${helmet.link.toString()}
+      </head>
+      <body ${helmet.bodyAttributes.toString()}>
+          <div id="app">
+            ${app}
+          </div>
+      </body>
+    </html>
+  `.trim();
 };

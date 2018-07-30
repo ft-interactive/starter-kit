@@ -6,9 +6,13 @@
         {
           "targets": {
             "node": "current"
-          }
+          },
+          "useBuiltIns": "usage"
         }
       ]
+    ],
+    "plugins": [
+      "@babel/plugin-transform-runtime"
     ]
   },
   "devDependencies": {
@@ -33,6 +37,7 @@
     "extract-loader": "^2.0.1",
     "file-loader": "^1.1.11",
     "ft-graphics-deploy": "^2.2.2",
+    "html-webpack-harddisk-plugin": "^0.2.0",
     "html-webpack-plugin": "^3.2.0",
     "imagemin-webpack-plugin": "^2.1.5",
     "jsdom": "^11.11.0",
@@ -47,9 +52,6 @@
     "prettier": "^1.10.2",
     "prettier-eslint": "^8.8.1",
     "raw-loader": "^0.5.1",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-helmet": "^5.2.0",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "webpack": "^4.16.2",
@@ -73,6 +75,13 @@
     "start": "webpack-dev-server"
   },
   "dependencies": {
-    "@financial-times/g-components": "^1.0.0"
+    "@babel/polyfill": "^7.0.0-beta.54",
+    "@financial-times/g-components": "^1.1.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-helmet-async": "0.1.0-alpha",
+    "react-markdown": "^3.4.1",
+    "remove-markdown": "^0.3.0"
   }
 }

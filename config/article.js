@@ -1,4 +1,5 @@
-export default (environment = 'development') => ({ // eslint-disable-line
+export default (environment = 'development') => ({
+  // eslint-disable-line
 
   // link file UUID
   id: '$UUID',
@@ -11,11 +12,12 @@ export default (environment = 'development') => ({ // eslint-disable-line
   //       new Date('2016-05-17T17:11:22Z')
   publishedDate: new Date(),
 
-  headline: 'Politics and the English Language',
+  headline: 'Ik kie neġi æpude pōsÞpriskribo',
 
   // summary === standfirst (Summary is what the content API calls it)
-  summary: 'Political language is designed to make lies sound truthful' +
-           'and murder respectable, and to give an appearance of solidity to pure wind',
+  summary:
+    'Ik kie neġi æpude pōsÞpriskribo, anċ ēg tiel subtegmenÞo.'
+    + 'Giga gārði esperǣntigo vi jes. Ċit plēj esceptīnte hu, ōl vola eksploðæ poǽ.',
 
   topic: {
     name: 'Starter Kit',
@@ -24,27 +26,26 @@ export default (environment = 'development') => ({ // eslint-disable-line
 
   relatedArticle: {
     text: 'Related article »',
-    url: 'https://en.wikipedia.org/wiki/Politics_and_the_English_Language',
+    url: 'https://en.wikipedia.org/wiki/Esperanto',
   },
 
   mainImage: {
-    title: '',
-    description: '',
-    credit: '',
+    title: 'Map of Esperanto groups in Europe in 1905',
+    description:
+      '"Disvastiĝo de Esperanto". Mapo pri Esperanto-grupoj en Eŭropo, farita de la frankfurta grupo, en Germana Esperantisto, marto 1905',
+    credit: 'Wikipedia',
 
     // You can provide a UUID to an image and it was populate everything else
-    uuid: 'c4bf0be4-7c15-11e4-a7b8-00144feabdc0',
+    // uuid: 'c4bf0be4-7c15-11e4-a7b8-00144feabdc0',
 
     // You can also provide a URL
-    // url: 'https://image.webservices.ft.com/v1/images/raw/http%3A%2F%2Fcom.ft.imagepublish.prod.s3.amazonaws.com%2Fc4bf0be4-7c15-11e4-a7b8-00144feabdc0?source=ig&fit=scale-down&width=700',
+    url:
+      'https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F3%2F3a%2F1905-03-ge-frankf-mapo.jpg?source=ig',
   },
 
   // Byline can by a plain string, markdown, or array of authors
   // if array of authors, url is optional
-  byline: [
-    { name: 'Author One', url: '/foo/bar' },
-    { name: 'Author Two' },
-  ],
+  byline: [{ name: 'Author One', url: '/foo/bar' }, { name: 'Author Two' }],
 
   // Appears in the HTML <title>
   title: '',
@@ -101,7 +102,6 @@ export default (environment = 'development') => ({ // eslint-disable-line
   },
 
   tracking: {
-
     /*
 
     Microsite Name
@@ -113,7 +113,6 @@ export default (environment = 'development') => ({ // eslint-disable-line
     Also used for pages that do not have a UUID for whatever reason
     */
     // micrositeName: '',
-
     /*
     Product name
 
