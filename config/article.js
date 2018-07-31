@@ -2,15 +2,15 @@ export default (environment = 'development') => ({
   // eslint-disable-line
 
   // link file UUID
-  id: '$UUID',
+  id: '3a499586-b2e0-11e4-a058-00144feab7de',
 
   // canonical URL of the published page
   // "$URL" get filled in by the ./configure script
-  url: '$URL',
+  url: 'http://local.ft.com:8080',
 
   // To set an exact publish date do this:
   //       new Date('2016-05-17T17:11:22Z')
-  publishedDate: new Date(),
+  publishedDate: new Date().toISOString().replace(/:\d{2}\.\d{3}Z$/i, ''),
 
   headline: 'Ik kie neġi æpude pōsÞpriskribo',
 

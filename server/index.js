@@ -10,31 +10,36 @@
 
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { HelmetProvider } from 'react-helmet-async';
+import { HtmlHead } from '@financial-times/g-components';
 import App from '../client/app';
 
 export default (context) => {
-  const helmetCtx = {};
-  const app = renderToString(
-    <HelmetProvider context={helmetCtx}>
-      <App {...context} />
-    </HelmetProvider>,
-  );
+  const { buildTime, id, testCommentsUuid } = context;
 
-  const { helmet } = helmetCtx;
+  // These get added to the opening <html> element below.
+  const htmlAttributes = Object.entries({
+    lang: 'en-GB',
+    class: 'core',
+    'data-buildtime': buildTime,
+    'data-content-id': process.env.NODE_ENV === 'production' ? id || testCommentsUuid : id || '',
+  }).map(([k, v]) => `${k}="${v}"`);
+
+  /*
+    Here's where we generate the server-side template. We render the g-components
+    <HtmlHead> element as a string (it contains wrapping <head> elements), then
+    stringify the entire React app inside of body > #app.
+
+    Later, in the client-side code, the stringified React app gets updated ("hydrated")
+    with current state. This is probably overkill for most SK projects but will be
+    useful in anything even slightly more advanced.
+   */
 
   return `
     <!doctype html>
-    <html ${helmet.htmlAttributes.toString()}>
-      <head>
-            ${helmet.title.toString()}
-            ${helmet.meta.toString()}
-            ${helmet.link.toString()}
-      </head>
-      <body ${helmet.bodyAttributes.toString()}>
-          <div id="app">
-            ${app}
-          </div>
+    <html ${htmlAttributes.join(' ')}>
+      ${renderToString(<HtmlHead {...context} />)}
+      <body>
+        <div id="app">${renderToString(<App {...context} />)}</div>
       </body>
     </html>
   `.trim();

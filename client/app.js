@@ -45,15 +45,14 @@
 import Layout from '@financial-times/g-components';
 import React from 'react';
 import PropTypes from 'prop-types';
-import './styles.scss';
 
 const App = ({ context, ...props }) => (
   <Layout context={context} {...props}>
     <p>
       Ik kie neġi æpude pōsÞpriskribo, anċ ēg tiel subtegmenÞo. Giga gārði esperǣntigo vi jes. Ċit
-      plēj esceptīnte hu, ōl vola eksploðæ poǽ. Ōīð gh pǽƿjo s'joro pronomeċa, mi paki vice fiksa
-      vir. Trǣ kibi multa ok, sur ðū īnfāno kæŭze. Om ene modō sekvanta proksimumecō, ānÞ sh tiele
-      hiper defīnītive.
+      plēj esceptīnte hu, ōl vola eksploðæ poǽ. Ōīð gh pǽƿjo s&apos;joro pronomeċa, mi paki vice
+      fiksa vir. Trǣ kibi multa ok, sur ðū īnfāno kæŭze. Om ene modō sekvanta proksimumecō, ānÞ sh
+      tiele hiper defīnītive.
     </p>
 
     <p>
@@ -71,10 +70,10 @@ const App = ({ context, ...props }) => (
     </p>
 
     <p>
-      Fri ok ðekǣ hūrā, ho resÞi fīnāĵvorto substǽnÞivā ǽjn. Oz ūƿ' mēġā okej' perlæbori, ēl ǣŭ pobo
-      līgvokālo, tio esÞiel finnlanðo il. Ad oƿī ðeko ālternaÞivǣ, i kvær fuÞuro tabelvorto iēl, veo
-      mo mālpli alimǣnierē. Movi ilīard anÞāŭpǣrto īli om, sorī popolnomo prēpozīcīō ul tiē, prā
-      mīria kurÞā praaƿtaŭhieraŭ lo.
+      Fri ok ðekǣ hūrā, ho resÞi fīnāĵvorto substǽnÞivā ǽjn. Oz ūƿ&apos; mēġā okej&apos; perlæbori,
+      ēl ǣŭ pobo līgvokālo, tio esÞiel finnlanðo il. Ad oƿī ðeko ālternaÞivǣ, i kvær fuÞuro
+      tabelvorto iēl, veo mo mālpli alimǣnierē. Movi ilīard anÞāŭpǣrto īli om, sorī popolnomo
+      prēpozīcīō ul tiē, prā mīria kurÞā praaƿtaŭhieraŭ lo.
     </p>
 
     <p>
@@ -102,7 +101,7 @@ const App = ({ context, ...props }) => (
     </p>
 
     <p>
-      Atō iz velā disðē, ālīo ōkej' neoficiālæ for al, āliom ælīel kioma unū kv. Intere nēniæĵō
+      Atō iz velā disðē, ālīo ōkej&apos; neoficiālæ for al, āliom ælīel kioma unū kv. Intere nēniæĵō
       eksteren mia is, pako mīloj demanðosignō vir je, grupǽ kromakcento iu meƿ. Ido Þiǽl kōmbi
       fræto po, ko iēs vǽto ġlotā lǽndonomo, he vīc ēkōo ƿanō. Anƿo sekviƿȝero uk tet, us mekæo
       iomete træ. Int co onjo finnlæƿðo subjunkċiō, kaj faka eblecō mīnimumē ōƿ. Ore verba ðuonhoro

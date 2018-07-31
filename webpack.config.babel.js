@@ -7,10 +7,11 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ImageminWebpackPlugin from 'imagemin-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import HtmlWebpackHarddiskPlugin from 'html-webpack-harddisk-plugin';
-import { HotModuleReplacementPlugin } from 'webpack';
+import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import { resolve } from 'path';
 import getContext from './config';
+
+const buildTime = new Date().toISOString().replace(/:\d{2}\.\d{3}Z$/i, '');
 
 module.exports = async (env = 'development') => ({
   mode: env,
@@ -83,7 +84,7 @@ module.exports = async (env = 'development') => ({
       {
         test: /\.scss/,
         use: [
-          // env === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+          env === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
           { loader: 'css-loader', options: { sourceMap: true } },
           { loader: 'postcss-loader', options: { sourceMap: true } },
           {
@@ -110,10 +111,12 @@ module.exports = async (env = 'development') => ({
     // instructions for generating multiple HTML files: https://github.com/jantimon/html-webpack-plugin#generating-multiple-html-files
     new HtmlWebpackPlugin({
       template: './server/index.js',
-      templateParameters: await getContext(),
+      templateParameters: { ...(await getContext()), buildTime },
       filename: 'index.html',
     }),
-    new HtmlWebpackHarddiskPlugin(),
+    new DefinePlugin({
+      'window.BUILD_TIME': JSON.stringify(buildTime),
+    }),
     env === 'production'
       ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i })
       : undefined,

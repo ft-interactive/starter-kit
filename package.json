@@ -39,7 +39,7 @@
     "ft-graphics-deploy": "^2.2.2",
     "html-webpack-harddisk-plugin": "^0.2.0",
     "html-webpack-plugin": "^3.2.0",
-    "imagemin-webpack-plugin": "^2.1.5",
+    "imagemin-webpack-plugin": "^2.2.0",
     "jsdom": "^11.11.0",
     "mini-css-extract-plugin": "^0.4.0",
     "mocha": "^5.1.1",
@@ -76,7 +76,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.54",
-    "@financial-times/g-components": "^1.1.2",
+    "@financial-times/g-components": "^1.2.4",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
