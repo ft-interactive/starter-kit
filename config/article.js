@@ -1,8 +1,6 @@
 export default (environment = 'development') => ({
-  // eslint-disable-line
-
   // link file UUID
-  id: '3a499586-b2e0-11e4-a058-00144feab7de',
+  id: environment === 'development' ? '3a499586-b2e0-11e4-a058-00144feab7de' : '$URL',
 
   // canonical URL of the published page
   // "$URL" get filled in by the ./configure script
@@ -45,7 +43,7 @@ export default (environment = 'development') => ({
 
   // Byline can by a plain string, markdown, or array of authors
   // if array of authors, url is optional
-  byline: [{ name: 'Author One', url: '/foo/bar' }, { name: 'Author Two' }],
+  bylines: [{ name: 'Author One', url: '/foo/bar' }, { name: 'Author Two' }],
 
   // Appears in the HTML <title>
   title: '',
