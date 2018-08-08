@@ -126,4 +126,59 @@ export default (environment = 'development') => ({
     */
     // product: '',
   },
+
+  // If you include a data set, uncomment and fill out the following to
+  // surface via Google.
+  //
+  // See: https://developers.google.com/search/docs/data-types/dataset
+  //
+  // dataMeta: {
+  //   '@context': 'http://schema.org/',
+  //   '@type': 'Dataset',
+  //   name: '<Name of the dataset>',
+  //   description: '<Brief description of the dataset>',
+  //   url: '<dataset url>',
+  //   sameAs: '<another canonical URL for dataset>',
+  //   keywords: [
+  //     // Set of strings in the following format:
+  //     'ATMOSPHERE > ATMOSPHERIC PHENOMENA > CYCLONES',
+  //   ],
+  //   creator: {
+  //     '@type': 'Organization',
+  //     url: '<url of org>',
+  //     name: '<name of org>',
+  //     contactPoint: {
+  //       '@type': 'ContactPoint',
+  //       contactType: 'customer service',
+  //       telephone: '<source telephone>',
+  //       email: '<source email>',
+  //     },
+  //   },
+  //   includedInDataCatalog: {
+  //     '@type': 'DataCatalog',
+  //     name: '<name of data catalog>',
+  //   },
+  //   distribution: [
+  //     {
+  //       '@type': 'DataDownload',
+  //       encodingFormat: 'CSV',
+  //       contentUrl: '<url of datafile>',
+  //     },
+  //     {
+  //       '@type': 'DataDownload',
+  //       encodingFormat: 'XML',
+  //       contentUrl: '<url of datafile>',
+  //     },
+  //   ],
+  //   // Dates the dataset covers
+  //   temporalCoverage: '<yyyy-mm-dd>/<yyyy-mm-dd>',
+  //   // Where the dataset covers. See spec.
+  //   spatialCoverage: {
+  //     '@type': 'Place',
+  //     geo: {
+  //       '@type': 'GeoShape',
+  //       box: '18.0 -65.0 72.0 172.0',
+  //     },
+  //   },
+  // },
 });
