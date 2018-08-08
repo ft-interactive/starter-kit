@@ -20,8 +20,10 @@ module.exports = async (env = 'development') => ({
     modules: ['node_modules', 'bower_components'],
   },
   output: {
-    filename: env === 'production' ? '[name].[hash].js' : '[name].js',
     path: resolve(__dirname, 'dist'),
+    filename: '[name].[hash:8].js',
+    sourceMapFilename: '[name].[hash:8].map',
+    chunkFilename: '[id].[hash:8].js',
   },
   module: {
     rules: [
