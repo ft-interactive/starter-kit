@@ -12,21 +12,27 @@
       ]
     ],
     "plugins": [
-      "@babel/plugin-transform-runtime"
+      "@babel/plugin-transform-runtime",
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-syntax-dynamic-import"
     ]
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.54",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.56",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.56",
     "@babel/plugin-transform-runtime": "^7.0.0-beta.54",
     "@babel/preset-env": "^7.0.0-beta.54",
     "@babel/preset-react": "^7.0.0-beta.54",
     "@babel/register": "^7.0.0-beta.54",
     "@babel/runtime": "^7.0.0-beta.54",
     "axios": "^0.18.0",
+    "babel-eslint": "^8.2.6",
     "babel-loader": "^8.0.0-beta.4",
     "bower": "^1.8.0",
     "chai": "^4.1.0",
     "css-loader": "^1.0.0",
+    "csv-loader": "^3.0.2",
     "d3-time-format": "^2.0.5",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",
@@ -45,6 +51,7 @@
     "mocha": "^5.1.1",
     "node-sass": "^4.9.2",
     "pa11y": "^5.0.3",
+    "papaparse": "^4.6.0",
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.0.6",

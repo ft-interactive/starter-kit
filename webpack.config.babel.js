@@ -26,10 +26,19 @@ module.exports = async (env = 'development') => ({
   module: {
     rules: [
       {
-        test: /\.(txt|csv|tsv|xml)$/,
+        test: /\.(txt|xml)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'raw-loader',
+        },
+      },
+      {
+        test: /\.(csv|tsv)$/,
+        loader: 'csv-loader',
+        options: {
+          dynamicTyping: true,
+          header: true,
+          skipEmptyLines: true,
         },
       },
       {

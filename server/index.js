@@ -30,7 +30,7 @@ export default (context) => {
     stringify the entire React app inside of body > #app.
 
     Later, in the client-side code, the stringified React app gets updated ("hydrated")
-    with current state. This is probably overkill for most SK projects but will be
+    with current state. This is probably overkill for most IG projects but will be
     useful in anything even slightly more advanced.
    */
 

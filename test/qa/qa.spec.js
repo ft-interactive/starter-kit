@@ -1,6 +1,9 @@
 /**
+ * @file
  * QA rules
- * @author Ændrew Rininsland <andrew.rininsland@ft.com>
+ *
+ * @author
+ * Ændrew Rininsland <andrew.rininsland@ft.com>
  *
  * These mainly check the existence of various meta data fields and ensures
  * tracking is installed. It does not verify whether tracking is working or

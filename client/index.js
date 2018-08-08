@@ -1,6 +1,9 @@
 /**
  * @file
  * Main client-side entry point.
+ *
+ * You probably don't want to touch anything in here unless you know what
+ * you're doing. #justsayin
  */
 
 import React from 'react';

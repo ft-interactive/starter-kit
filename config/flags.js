@@ -1,4 +1,9 @@
-export default (environment = 'development') => ({ // eslint-disable-line
+/**
+ * @file
+ * Defines flags used to customise page behaviour.
+ */
+
+export default (environment = 'development') => ({
   prod: environment === 'production',
   errorReporting: environment === 'production',
   analytics: environment === 'production',

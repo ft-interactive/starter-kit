@@ -1,3 +1,10 @@
+/**
+ * @file
+ * Article-level configuration.
+ *
+ * @TODO Please ensure this file is filled out before publishing!!!
+ */
+
 export default (environment = 'development') => ({
   // link file UUID
   id: environment === 'development' ? '3a499586-b2e0-11e4-a058-00144feab7de' : '$URL',
