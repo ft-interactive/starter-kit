@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/project
     docker:
-      - image: aendrew/starter-kit-docker:latest # https://github.com/aendrew/starter-kit-docker
+      - image: 833471025268.dkr.ecr.eu-west-1.amazonaws.com/starter-kit:latest
     steps:
       - checkout
       - restore_cache: # special step to restore the dependency cache
