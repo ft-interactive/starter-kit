@@ -61,6 +61,7 @@ module.exports = async (env = 'development') => ({
               ],
               '@babel/preset-react',
             ],
+            plugins: ['@babel/plugin-syntax-dynamic-import'],
           },
         },
       },
@@ -92,10 +93,30 @@ module.exports = async (env = 'development') => ({
           { loader: 'postcss-loader', options: { sourceMap: true } },
         ],
       },
+      // Critical path CSS used by server
       {
-        test: /\.scss/,
+        test: /critical-path.scss/,
         use: [
-          env === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].css',
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+              includePaths: ['bower_components'],
+            },
+          },
+        ],
+      },
+      // Remaining CSS
+      {
+        test: /client\/.+\.scss/,
+        use: [
+          MiniCssExtractPlugin.loader,
           { loader: 'css-loader', options: { sourceMap: true } },
           { loader: 'postcss-loader', options: { sourceMap: true } },
           {

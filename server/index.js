@@ -8,14 +8,16 @@
  * You shouldn't need to mess with it, generally.
  */
 
+import 'undom/register';
+import './register'; // Remove when o- deps are fixed.
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { HtmlHead } from '@financial-times/g-components';
+import criticalPath from '@financial-times/g-components/shared/critical-path.scss';
 import App from '../client/app';
 
 export default (context) => {
   const { buildTime, id, testCommentsUuid } = context;
-
   // These get added to the opening <html> element below.
   const htmlAttributes = Object.entries({
     lang: 'en-GB',
@@ -37,6 +39,8 @@ export default (context) => {
   return `
     <!doctype html>
     <html ${htmlAttributes.join(' ')}>
+      <!-- Critical path CSS -->
+      <link rel="stylesheet" href="${criticalPath}" />
       ${renderToString(<HtmlHead {...context} />)}
       <body>
         <div id="app">${renderToString(<App {...context} />)}</div>

@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "o-colors": "^4.1.5",
-    "o-grid": "^4.3.7"
+    "o-grid": "^4.3.7",
+    "mathsass": "^0.10.1"
   }
 }
