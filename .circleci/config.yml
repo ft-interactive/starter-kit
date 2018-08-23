@@ -70,11 +70,11 @@ jobs:
               npm run a11y
             fi
       - run:
-          name: General QA checks
+          name: General QA tests
           command: |
             if [ $CIRCLE_BRANCH = "master" ]
             then
-              npm run qa
+              npm run test
             else
-              npm run qa || echo "Automatic QA checks failed. Continuing anyway"
+              npm run test || echo "General QA tests failed. Continuing anyway"
             fi
