@@ -7,11 +7,11 @@
 
 export default (environment = 'development') => ({
   // link file UUID
-  id: environment === 'development' ? '3a499586-b2e0-11e4-a058-00144feab7de' : '$URL',
+  id: environment === 'development' ? '3a499586-b2e0-11e4-a058-00144feab7de' : '$UUID',
 
   // canonical URL of the published page
-  // "$URL" get filled in by the ./configure script
-  url: 'http://local.ft.com:8080',
+  // url below gets filled in by the ./configure script
+  url: '$URL',
 
   // To set an exact publish date do this:
   //       new Date('2016-05-17T17:11:22Z')
