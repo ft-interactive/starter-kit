@@ -39,6 +39,7 @@ export default (context) => {
   return `
     <!doctype html>
     <html ${htmlAttributes.join(' ')}>
+      <script>window.__STATE__ = ${JSON.stringify(context)}</script>
       <!-- Critical path CSS -->
       <link rel="stylesheet" href="${criticalPath}" />
       ${renderToString(<HtmlHead {...context} />)}
