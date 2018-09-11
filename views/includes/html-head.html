@@ -63,15 +63,17 @@
 
 <!-- Add CTM checks -->
 <script>
-cutsTheMustard =
-  'querySelector' in document &&
-  'localStorage' in window &&
-  'addEventListener' in window &&
-  typeof Function.prototype.bind !== 'undefined';
-if (cutsTheMustard)
+var script = document.createElement('script');
+var supportsDeferredScripts = "defer" in script && "async" in script;
+window.cutsTheMustard = (
+	typeof document.documentElement.dataset === 'object'
+	&& ('visibilityState' in document)
+	&& supportsDeferredScripts
+);
+if (window.cutsTheMustard)
   document.documentElement.className = document.documentElement.className.replace(
-    /core/g,
-    'enhanced',
+    /\bcore\b/,
+    'enhanced'
   );
 </script>
 
@@ -132,7 +134,7 @@ function oTrackinginit() {
 <!-- Add Origami Build Service -->
 <script>
   (function(src) {
-    if (cutsTheMustard) {
+    if (window.cutsTheMustard) {
       var o = document.createElement('script');
       o.async = o.defer = true;
       o.src = src;
