@@ -9,3 +9,5 @@ global.location = {
 global.document.location = {
   href: 'ig.ft.com',
 };
+
+global.document.getElementsByTagName = () => [];
