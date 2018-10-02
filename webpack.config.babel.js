@@ -66,7 +66,7 @@ module.exports = async (env = 'development') => ({
         },
       },
       {
-        test: /\.(png|jpe?g|gif)$/,
+        test: /\.(png|jpe?g|gif|svg)$/,
         use: [
           {
             loader: 'file-loader',
