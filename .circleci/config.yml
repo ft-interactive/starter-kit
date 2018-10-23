@@ -14,7 +14,7 @@ jobs:
           key: bower_components-{{ checksum "bower.json" }}
       - run: # N.B., this does bower install on postinstall.
           name: Install dependencies
-          command: npm ci --unsafe-perm
+          command: npm install --unsafe-perm
       - run:
           name: Rebuild problematic node modules
           command: npm rebuild
