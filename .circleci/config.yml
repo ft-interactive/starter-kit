@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/project
     docker:
-      - image: 833471025268.dkr.ecr.eu-west-1.amazonaws.com/starter-kit:latest
+      - image: circleci/node:8-browsers
     steps:
       - checkout
       - restore_cache: # special step to restore the dependency cache
