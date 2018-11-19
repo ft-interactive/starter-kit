@@ -11,7 +11,7 @@ import getOnwardJourney from './onward-journey';
 export default async (environment = 'development') => {
   const d = await article(environment);
   const flags = await getFlags(environment);
-  const onwardJourney = await getOnwardJourney(environment);
+  const { relatedContent } = await getOnwardJourney(environment);
 
   /**
    * @NB if you want pull some remote data into the app, here is probably
@@ -21,6 +21,6 @@ export default async (environment = 'development') => {
   return {
     ...d,
     flags,
-    onwardJourney,
+    relatedContent,
   };
 };

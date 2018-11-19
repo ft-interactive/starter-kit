@@ -13,6 +13,10 @@ import getContext from '../config';
 import './styles.scss';
 
 (async () => {
-  const ctx = { ...(await getContext()), buildTime: window.BUILD_TIME };
-  hydrate(<App {...ctx} />, document.getElementById('app'));
+  try {
+    const ctx = { ...(await getContext(process.env.NODE_ENV)), buildTime: window.BUILD_TIME };
+    hydrate(<App {...ctx} />, document.getElementById('app'));
+  } catch (e) {
+    console.error(e);
+  }
 })();

@@ -148,6 +148,7 @@ module.exports = async (env = 'development') => ({
     }),
     new DefinePlugin({
       'window.BUILD_TIME': JSON.stringify(buildTime),
+      'process.env.NODE_ENV': JSON.stringify(env),
     }),
     env === 'production'
       ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i })
