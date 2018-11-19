@@ -11,7 +11,7 @@ import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import { resolve } from 'path';
 import getContext from './config';
 
-const buildTime = new Date().toISOString().replace(/:\d{2}\.\d{3}Z$/i, '');
+const buildTime = new Date();
 
 module.exports = async (env = 'development') => ({
   mode: env,
@@ -147,7 +147,7 @@ module.exports = async (env = 'development') => ({
       filename: 'index.html',
     }),
     new DefinePlugin({
-      'window.BUILD_TIME': JSON.stringify(buildTime),
+      'window.BUILD_TIME': JSON.stringify(buildTime.toISOString()),
       'process.env.NODE_ENV': JSON.stringify(env),
     }),
     env === 'production'
