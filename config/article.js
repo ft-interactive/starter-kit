@@ -15,7 +15,7 @@ export default (environment = 'development') => ({
 
   // To set an exact publish date do this:
   //       new Date('2016-05-17T17:11:22Z')
-  publishedDate: new Date().toISOString().replace(/:\d{2}\.\d{3}Z$/i, ''),
+  publishedDate: new Date(),
 
   headline: 'Ik kie neġi æpude pōsÞpriskribo',
 
