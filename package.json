@@ -36,6 +36,7 @@
     "cssnano": "^4.0.5",
     "csv-loader": "^3.0.2",
     "d3-time-format": "^2.0.5",
+    "dotenv": "^6.1.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-babel": "^5.1.0",
@@ -81,11 +82,11 @@
     "postinstall": "bower install --allow-root",
     "pretest": "npm run build",
     "test": "mocha ./test/**/*.spec.js",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server -r dotenv/config"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@financial-times/g-components": "^2.1.18",
+    "@financial-times/g-components": "^2.1.21",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
