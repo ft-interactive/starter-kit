@@ -143,7 +143,7 @@ module.exports = async (env = 'development') => ({
     // instructions for generating multiple HTML files: https://github.com/jantimon/html-webpack-plugin#generating-multiple-html-files
     new HtmlWebpackPlugin({
       template: './server/index.js',
-      templateParameters: { ...(await getContext()), buildTime },
+      templateParameters: { ...(await getContext(env)), buildTime },
       filename: 'index.html',
     }),
     new DefinePlugin({
