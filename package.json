@@ -26,7 +26,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.0.0",
-    "@financial-times/g-deploy": "^3.0.2",
+    "@financial-times/g-deploy": "^3.0.8",
     "axios": "^0.18.0",
     "babel-eslint": "^8.2.6",
     "babel-loader": "^8.0.0-beta.4",
@@ -74,7 +74,7 @@
   },
   "private": true,
   "scripts": {
-    "build": "webpack -p",
+    "build": "webpack -p --env=production",
     "a11y": "pa11y $(g-deploy --get-commit-url)",
     "a11y:preview": "pa11y $(g-deploy --preview --get-commit-url)",
     "a11y:local": "pa11y localhost:8080",
@@ -86,7 +86,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@financial-times/g-components": "^2.1.23",
+    "@financial-times/g-components": "^2.1.24",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
