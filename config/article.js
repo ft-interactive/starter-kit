@@ -52,6 +52,11 @@ export default (environment = 'development') => ({ // eslint-disable-line
   // meta data
   description: '',
 
+  oGridColspan: {
+    header: '12 S11 Scenter M9 L8 XL7',
+    body: '12 S11 Scenter M9 L8 XL7'
+  },
+
   /*
   TODO: Select Twitter card type -
         "summary" or "summary_large_image"
