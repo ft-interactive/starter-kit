@@ -86,7 +86,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@financial-times/g-components": "^2.1.24",
+    "@financial-times/g-components": "^2.1.29",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
