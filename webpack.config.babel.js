@@ -96,6 +96,9 @@ module.exports = async (env = 'development') => ({
       // Critical path CSS used by server
       {
         test: /critical-path.scss/,
+        resolve: {
+          extensions: ['.scss', '.sass'],
+        },
         use: [
           {
             loader: 'file-loader',
@@ -115,6 +118,9 @@ module.exports = async (env = 'development') => ({
       // Remaining CSS
       {
         test: /client\/.+\.scss/,
+        resolve: {
+          extensions: ['.scss', '.sass'],
+        },
         use: [
           MiniCssExtractPlugin.loader,
           { loader: 'css-loader', options: { sourceMap: true } },
