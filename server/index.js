@@ -17,11 +17,16 @@ import criticalPath from '@financial-times/g-components/shared/critical-path.scs
 import App from '../client/app';
 
 export default (context) => {
-  const { buildTime, id, testCommentsUuid } = context;
+  const {
+    buildTime, id, testCommentsUuid, flags: { dark },
+  } = context;
+
+  const pageClasses = ['core', dark && 'dark'];
+
   // These get added to the opening <html> element below.
   const htmlAttributes = Object.entries({
     lang: 'en-GB',
-    class: 'core',
+    class: pageClasses.filter(i => i).join(' '),
     'data-buildtime': buildTime,
     'data-content-id': process.env.NODE_ENV === 'production' ? id || testCommentsUuid : id || '',
   }).map(([k, v]) => `${k}="${v}"`);
