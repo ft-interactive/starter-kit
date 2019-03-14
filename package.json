@@ -45,6 +45,7 @@
     "eslint-plugin-react": "^7.10.0",
     "extract-loader": "^2.0.1",
     "file-loader": "^1.1.11",
+    "generate-json-webpack-plugin": "^0.3.1",
     "html-webpack-harddisk-plugin": "^0.2.0",
     "html-webpack-plugin": "^3.2.0",
     "imagemin-webpack-plugin": "^2.2.0",
