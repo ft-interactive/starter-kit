@@ -36,12 +36,19 @@ module.exports = async (env = 'development') => ({
           options: {
             presets: [
               [
-                'env',
+                '@babel/preset-env',
                 {
-                  // Via: https://docs.google.com/document/d/1mByh6sT8zI4XRyPKqWVsC2jUfXHZvhshS5SlHErWjXU/view
-                  browsers: ['last 2 versions', 'ie >= 11', 'safari >= 10', 'ios >= 9'],
+                  targets: {
+                    ie: '9',
+                    safari: '6',
+                    ios: '8',
+                  },
                 },
               ],
+            ],
+            plugins: [
+              '@babel/plugin-proposal-object-rest-spread',
+              '@babel/plugin-proposal-class-properties',
             ],
           },
         },
@@ -106,7 +113,7 @@ module.exports = async (env = 'development') => ({
               sourceMap: true,
               includePaths: ['bower_components'],
             },
-          }
+          },
         ],
       },
     ],
