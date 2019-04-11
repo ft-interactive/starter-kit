@@ -42,7 +42,7 @@ module.exports = async (env = 'development') => ({
                     ie: '9',
                     safari: '6',
                     ios: '8',
-                    chromeAndroid: '4',
+                    and_chr: '4',
                   },
                 },
               ],
