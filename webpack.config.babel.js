@@ -144,7 +144,7 @@ module.exports = async (env = 'development') => {
       hot: true,
       allowedHosts: ['.ngrok.io', 'local.ft.com'],
     },
-    devtool: 'source-map',
+    devtool: env === 'development' ? 'inline-source-map' : 'source-map',
     plugins: [
       new HotModuleReplacementPlugin(),
       new MiniCssExtractPlugin({
