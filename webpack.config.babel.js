@@ -38,7 +38,12 @@ module.exports = async (env = 'development') => ({
               [
                 '@babel/preset-env',
                 {
-                  browsers: 'defaults'
+                  targets: {
+                    ie: '9',
+                    safari: '6',
+                    ios: '8',
+                    chromeAndroid: '4',
+                  },
                 },
               ],
             ],
@@ -109,7 +114,7 @@ module.exports = async (env = 'development') => ({
               sourceMap: true,
               includePaths: ['bower_components'],
             },
-          }
+          },
         ],
       },
     ],
