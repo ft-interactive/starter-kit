@@ -60,6 +60,7 @@
     "postcss-scss": "^1.0.2",
     "prettier": "^1.10.2",
     "prettier-eslint": "^8.8.1",
+    "prettier-eslint-cli": "^4.7.1",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.21.0",
@@ -82,7 +83,10 @@
     "postinstall": "bower install --allow-root",
     "pretest": "npm run build",
     "test": "mocha ./test/**/*.spec.js",
-    "start": "webpack-dev-server -r dotenv/config"
+    "start": "webpack-dev-server -r dotenv/config",
+    "lint": "eslint server/**/*.js client/**/*.js test/**/*.js",
+    "prettier":
+      "prettier-eslint --write server/**/*.js client/**/*.js test/**/*.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
