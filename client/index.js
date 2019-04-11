@@ -13,11 +13,11 @@ import './styles.scss';
 
 (async () => {
   try {
-    window.ctx = {
+    window.context = {
       ...(await (await fetch('./context.json')).json()),
       buildTime: window.BUILD_TIME,
     };
-    hydrate(<App {...window.ctx} />, document.getElementById('app'));
+    hydrate(<App {...window.context} />, document.getElementById('app'));
   } catch (e) {
     console.error(e);
   }
