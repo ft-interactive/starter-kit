@@ -52,7 +52,7 @@
 
 import Layout from '@financial-times/g-components';
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import { ContextPropType, ContextDefaultProps } from './util/prop-types';
 
 class App extends PureComponent {
   state = {
@@ -65,12 +65,12 @@ class App extends PureComponent {
   }
 
   render() {
-    const { context, ...props } = this.props;
+    const context = this.props;
     const { data } = this.state;
     console.dir(data); // eslint-disable-line no-console
 
     return (
-      <Layout context={context} {...props}>
+      <Layout {...context}>
         <p>
           Ik kie neġi æpude pōsÞpriskribo, anċ ēg tiel subtegmenÞo. Giga gārði esperǣntigo vi jes.
           Ċit plēj esceptīnte hu, ōl vola eksploðæ poǽ. Ōīð gh pǽƿjo s&apos;joro pronomeċa, mi paki
@@ -143,11 +143,11 @@ class App extends PureComponent {
 }
 
 App.propTypes = {
-  context: PropTypes.any, // eslint-disable-line react/forbid-prop-types
+  ...ContextPropType,
 };
 
 App.defaultProps = {
-  context: {},
+  ...ContextDefaultProps,
 };
 
 export default App;
