@@ -10,6 +10,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import GenerateJsonPlugin from 'generate-json-webpack-plugin';
 import { resolve } from 'path';
+import dartSass from 'sass';
 import getContext from './config';
 
 const buildTime = new Date();
@@ -113,6 +114,7 @@ module.exports = async (env = 'development') => {
             {
               loader: 'sass-loader',
               options: {
+                implementation: dartSass,
                 sourceMap: true,
                 includePaths: ['bower_components'],
               },
@@ -132,6 +134,7 @@ module.exports = async (env = 'development') => {
             {
               loader: 'sass-loader',
               options: {
+                implementation: dartSass,
                 sourceMap: true,
                 includePaths: ['bower_components'],
               },
@@ -161,9 +164,7 @@ module.exports = async (env = 'development') => {
         'window.BUILD_TIME': JSON.stringify(buildTime.toISOString()),
         'process.env.NODE_ENV': JSON.stringify(env),
       }),
-      env === 'production'
-        ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i })
-        : undefined,
+      env === 'production' ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }) : undefined,
     ].filter(i => i),
   };
 };
