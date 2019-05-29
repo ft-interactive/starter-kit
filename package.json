@@ -43,6 +43,7 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.0",
     "eslint-plugin-react": "^7.10.0",
+    "extract-css-chunks-webpack-plugin": "^4.5.1",
     "extract-loader": "^2.0.1",
     "file-loader": "^1.1.11",
     "generate-json-webpack-plugin": "^0.3.1",

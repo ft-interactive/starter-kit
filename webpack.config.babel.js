@@ -4,7 +4,7 @@
  * specified via the `env` value (changeable via CLI flag).
  */
 
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import ExtractCssChunksPlugin from 'extract-css-chunks-webpack-plugin';
 import ImageminWebpackPlugin from 'imagemin-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
@@ -128,7 +128,7 @@ module.exports = async (env = 'development') => {
             extensions: ['.scss', '.sass'],
           },
           use: [
-            MiniCssExtractPlugin.loader,
+            ExtractCssChunksPlugin.loader,
             { loader: 'css-loader', options: { sourceMap: true } },
             { loader: 'postcss-loader', options: { sourceMap: true } },
             {
@@ -150,7 +150,7 @@ module.exports = async (env = 'development') => {
     devtool: env === 'development' ? 'inline-source-map' : 'source-map',
     plugins: [
       new HotModuleReplacementPlugin(),
-      new MiniCssExtractPlugin({
+      new ExtractCssChunksPlugin({
         filename: env === 'production' ? '[name].[contenthash].css' : '[name].css',
       }),
       // instructions for generating multiple HTML files: https://github.com/jantimon/html-webpack-plugin#generating-multiple-html-files
