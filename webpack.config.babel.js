@@ -128,7 +128,12 @@ module.exports = async (env = 'development') => {
             extensions: ['.scss', '.sass'],
           },
           use: [
-            MiniCssExtractPlugin.loader,
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: env === 'development',
+              },
+            },
             { loader: 'css-loader', options: { sourceMap: true } },
             { loader: 'postcss-loader', options: { sourceMap: true } },
             {
