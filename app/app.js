@@ -66,7 +66,7 @@ const App = (context) => {
       const { default: data } = await import('../data/example.csv');
       setState({ data });
     })();
-  });
+  }, []);
 
   const { data } = state;
 

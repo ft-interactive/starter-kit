@@ -20,7 +20,7 @@ module.exports = async (env = 'development') => {
 
   return {
     mode: env,
-    entry: ['./client/index.js'],
+    entry: ['./app/index.js'],
     resolve: {
       modules: ['node_modules', 'bower_components'],
     },
@@ -123,7 +123,7 @@ module.exports = async (env = 'development') => {
         },
         // Remaining CSS
         {
-          test: /client\/.+\.scss/,
+          test: /app\/.+\.scss/,
           resolve: {
             extensions: ['.scss', '.sass'],
           },
@@ -159,11 +159,7 @@ module.exports = async (env = 'development') => {
         filename: env === 'production' ? '[name].[contenthash].css' : '[name].css',
       }),
       // instructions for generating multiple HTML files: https://github.com/jantimon/html-webpack-plugin#generating-multiple-html-files
-      new HtmlWebpackPlugin({
-        template: './server/index.js',
-        templateParameters: initialState,
-        filename: 'index.html',
-      }),
+      new HtmlWebpackPlugin(),
       new GenerateJsonPlugin('context.json', initialState),
       new DefinePlugin({
         'window.BUILD_TIME': JSON.stringify(buildTime.toISOString()),
