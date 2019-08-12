@@ -17,18 +17,22 @@ const buildTime = new Date();
 
 module.exports = async (env = 'development') => {
   const initialState = { ...(await getContext(env)), buildTime };
+  const IS_DEV = env === 'development';
 
   return {
     mode: env,
-    entry: ['./app/index.js'],
+    entry: ['react-hot-loader/patch', './app/index.js'],
     resolve: {
       modules: ['node_modules', 'bower_components'],
+      alias: {
+        'react-dom': '@hot-loader/react-dom',
+      },
     },
     output: {
       path: resolve(__dirname, 'dist'),
-      filename: '[name].[hash:8].js',
-      sourceMapFilename: '[name].[hash:8].map',
-      chunkFilename: '[id].[hash:8].js',
+      filename: IS_DEV ? '[name].js' : '[name].[hash:8].js',
+      sourceMapFilename: IS_DEV ? '[name].map' : '[name].[hash:8].map',
+      chunkFilename: IS_DEV ? '[id].js' : '[id].[hash:8].js',
     },
     module: {
       rules: [
@@ -66,7 +70,7 @@ module.exports = async (env = 'development') => {
                 ],
                 '@babel/preset-react',
               ],
-              plugins: ['@babel/plugin-syntax-dynamic-import'],
+              plugins: ['react-hot-loader/babel', '@babel/plugin-syntax-dynamic-import'],
             },
           },
         },
@@ -131,7 +135,7 @@ module.exports = async (env = 'development') => {
             {
               loader: MiniCssExtractPlugin.loader,
               options: {
-                hmr: env === 'development',
+                hmr: IS_DEV,
               },
             },
             { loader: 'css-loader', options: { sourceMap: true } },
@@ -152,11 +156,11 @@ module.exports = async (env = 'development') => {
       hot: true,
       allowedHosts: ['.ngrok.io', 'local.ft.com'],
     },
-    devtool: env === 'development' ? 'inline-source-map' : 'source-map',
+    devtool: IS_DEV ? 'inline-source-map' : 'source-map',
     plugins: [
       new HotModuleReplacementPlugin(),
       new MiniCssExtractPlugin({
-        filename: env === 'production' ? '[name].[contenthash].css' : '[name].css',
+        filename: IS_DEV ? '[name].css' : '[name].[contenthash].css',
       }),
       new HtmlWebpackPlugin(),
       new GenerateJsonPlugin('context.json', initialState),
@@ -164,7 +168,7 @@ module.exports = async (env = 'development') => {
         'window.BUILD_TIME': JSON.stringify(buildTime.toISOString()),
         'process.env.NODE_ENV': JSON.stringify(env),
       }),
-      env === 'production' ? new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }) : undefined,
+      IS_DEV ? undefined : new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
     ].filter(i => i),
   };
 };

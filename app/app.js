@@ -47,8 +47,9 @@
  *  See below for complete example.
  */
 
-import Layout from '@financial-times/g-components';
 import React, { useEffect, useState } from 'react';
+import { hot } from 'react-hot-loader/root';
+import Layout from '@financial-times/g-components';
 import { ContextPropType, ContextDefaultProps } from './util/prop-types';
 
 const App = (context) => {
@@ -88,6 +89,10 @@ const App = (context) => {
         Korūso ekskluzive ǽnÞǣŭprīskrībo ȝo ena, ilī hā duonvokalō sekviƿȝēro. Lo esti adjēktivo duǣ, san simil
         multekostā iƿfinitīvo ēj. Is pakī rolfinaĵō sāt, kūƿ æl jaro sæmtempē, milo īmperǣtīvo ba ƿiǣ. Malebliġi
         esperantiġo pri rē, dum et duōno grupo sekstiliono.
+      </p>
+
+      <p>
+        <TestComp />
       </p>
 
       <p>
@@ -142,4 +147,4 @@ App.defaultProps = {
   ...ContextDefaultProps,
 };
 
-export default App;
+export default hot(App);
