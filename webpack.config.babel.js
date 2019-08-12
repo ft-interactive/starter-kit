@@ -158,7 +158,6 @@ module.exports = async (env = 'development') => {
       new MiniCssExtractPlugin({
         filename: env === 'production' ? '[name].[contenthash].css' : '[name].css',
       }),
-      // instructions for generating multiple HTML files: https://github.com/jantimon/html-webpack-plugin#generating-multiple-html-files
       new HtmlWebpackPlugin(),
       new GenerateJsonPlugin('context.json', initialState),
       new DefinePlugin({

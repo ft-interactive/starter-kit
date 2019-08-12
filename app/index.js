@@ -44,7 +44,7 @@ const IS_DEV = process.env.NODE_ENV === 'development';
     let rootElement = document.getElementById('app');
     if (!rootElement) {
       const el = document.createElement('div');
-      el.id = 'app';
+      el.setAttribute('id', 'app');
       document.body.appendChild(el);
       rootElement = el;
     }
@@ -68,10 +68,9 @@ const IS_DEV = process.env.NODE_ENV === 'development';
         document.documentElement.classList.add('enhanced');
       }
 
-      const link = document
-        .createElement('link')
-        .setAttribute('rel', 'stylesheet')
-        .setAttribute('href', criticalPath);
+      const link = document.createElement('link');
+      link.setAttribute('rel', 'stylesheet');
+      link.setAttribute('href', criticalPath);
 
       document.head.appendChild(link);
       document.head.innerHTML += renderToString(<HtmlHead {...context} />);
