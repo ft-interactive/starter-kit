@@ -14,12 +14,16 @@ import criticalPath from '@financial-times/g-components/shared/critical-path.scs
 import App from './app';
 import './styles.scss';
 
+// This sets up the initial render and subsequent renders
 (async () => {
+  // Get context from JSON
   try {
-    const context = (window.context = {
+    const context = {
       ...(await (await fetch('./context.json')).json()),
       buildTime: window.BUILD_TIME,
-    });
+    };
+
+    window.context = context; // Useful for debugging context issues
 
     const {
       buildTime, id, testCommentsUuid, flags: { dark },
@@ -44,16 +48,29 @@ import './styles.scss';
     }
 
     if (rootElement.hasChildNodes()) {
+      console.info('hydrating');
+      document.documentElement.classList.remove('core');
+      document.documentElement.classList.add('enhanced');
       // Client, post-build.
       hydrate(<App {...window.context} />, rootElement);
     } else {
+      console.info('Initial render');
       // Server, and client while developing
       htmlAttributes.forEach(([k, v]) => {
         document.documentElement.setAttribute(k, v);
       });
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = criticalPath;
+
+      // Set "enhanced" while developing
+      if (process.env.NODE_ENV === 'development') {
+        console.log(process.env.NODE_ENV);
+        document.documentElement.classList.remove('core');
+        document.documentElement.classList.add('enhanced');
+      }
+
+      const link = document
+        .createElement('link')
+        .setAttribute('rel', 'stylesheet')
+        .setAttribute('href', criticalPath);
 
       document.head.appendChild(link);
       document.head.innerHTML += renderToString(<HtmlHead {...context} />);
