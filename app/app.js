@@ -60,6 +60,7 @@ const App = (context) => {
 
   // Asynchronous effects should update state as per below
   useEffect(() => {
+    // N.b., do async in an async IIFE, don't make the useEffect callback async
     (async () => {
       const { default: data } = await import('../data/example.csv');
       setState({ data });
