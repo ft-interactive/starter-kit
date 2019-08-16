@@ -26,7 +26,7 @@ export default (environment = 'development') => ({
 
   topic: {
     name: 'Starter Kit',
-    url: '/foo',
+    url: '/' /* '/foo', // Must be absolute path */,
   },
 
   relatedArticle: {
@@ -50,7 +50,7 @@ export default (environment = 'development') => ({
 
   // Byline can by a plain string, markdown, or array of authors
   // if array of authors, url is optional
-  bylines: [{ name: 'Author One', url: '/foo/bar' }, { name: 'Author Two' }],
+  bylines: [{ name: 'Author One' /* , url: '/foo/bar' // Must be absolute path */ }, { name: 'Author Two' }],
 
   // Appears in the HTML <title>
   title: '',
