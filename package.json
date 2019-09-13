@@ -88,8 +88,8 @@
     "postinstall": "bower install --allow-root",
     "test": "mocha ./test/**/*.spec.js",
     "start": "webpack-dev-server -r dotenv/config",
-    "lint": "eslint server/**/*.js client/**/*.js test/**/*.js",
-    "lint:fix": "eslint --fix server/**/*.js client/**/*.js test/**/*.js"
+    "lint": "eslint app/**/*.js test/**/*.js",
+    "lint:fix": "eslint --fix app/**/*.js test/**/*.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
