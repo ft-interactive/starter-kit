@@ -3,45 +3,34 @@ jobs:
   build:
     working_directory: ~/project
     docker:
-      - image: node:8
+      - image: circleci/node:10-browsers
     steps:
       - checkout
-      - run:
-          name: Update container to support Puppeteer (pa11y)
-          command: |
-            apt-get update && apt-get install -yq gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
-            libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
-            libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 \
-            libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
-            ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
       - run:
           name: Backup package-lock.json
           # This file gets modified during setup, which would break our use of
           # it as a cache key. So we back it up to tmp first.
           command: cp package-lock.json /tmp/
-      - restore_cache:
-          name: Restore cache (node_modules)
-          key: node_modules-{{ checksum "/tmp/package-lock.json" }}
-      - restore_cache:
-          name: Restore cache (bower_components)
-          key: bower_components-hack1-{{ checksum "bower.json" }}
+      # - restore_cache:
+      #     name: Restore cache (node_modules)
+      #     key: node_modules-{{ checksum "/tmp/package-lock.json" }}
+      # - restore_cache:
+      #     name: Restore cache (bower_components)
+      #     key: bower_components-hack1-{{ checksum "bower.json" }}
       - run:
           name: Install dependencies
           # NB. this also does bower install as postinstall step
           command: npm install --unsafe-perm
-      - run:
-          name: Rebuild problematic node modules
-          command: npm rebuild
-      - save_cache:
-          name: Save cache (node_modules)
-          key: node_modules-{{ checksum "/tmp/package-lock.json" }}
-          paths:
-            - node_modules/
-      - save_cache:
-          name: Save cache (bower_components)
-          key: bower_components-hack1-{{ checksum "bower.json" }}
-          paths:
-            - bower_components/
+      # - save_cache:
+      #     name: Save cache (node_modules)
+      #     key: node_modules-{{ checksum "/tmp/package-lock.json" }}
+      #     paths:
+      #       - node_modules/
+      # - save_cache:
+      #     name: Save cache (bower_components)
+      #     key: bower_components-{{ checksum "bower.json" }}
+      #     paths:
+      #       - bower_components/
       - run:
           name: Build
           command: npm run build

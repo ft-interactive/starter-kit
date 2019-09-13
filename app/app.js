@@ -1,19 +1,9 @@
 /**
  * @file
  * This is the root component for your project.
- *
- * It is imported by ../server to generate the first pass of the page, and
- * then later used by ./index to "hydrate" content on the client-side.
- *
- * This file is where you bootstrap your JS code.
- * For example import stuff here:
- *
- *    import { select } from 'd3-selection';
- *    import myComponent from './components/my-component';
- *
  * Split logical parts of you project into components e.g.
  *
- *    /client
+ *    /app
  *      - /components
  *          - /component-name
  *              - styles.scss
@@ -28,16 +18,20 @@
  * can be customised in webpack.config.babel.js.
  *
  * Note, however, that doing it this way will increase your bundle size, which
- * might slow down time to first render. A better way is to dynamically import
- * data inside of a component's `componentDidMount()` lifecycle method — this
+ * might slow down time to interactive (TTI).
+ *
+ * A better way is to dynamically import data inside the useEffect() hook — this
  * way your application can load its UI components and then get data piped in
  * once all the components are on page:
  *
- *    async componentDidMount() {
+ * ```
+ *  useEffect(() => {
+ *    (async () => {
  *      const { default: data } = await import('../data/example.csv');
- *      this.setState({ data });
- *    }
- *
+ *      setState({ data });
+ *    })();
+ *  }, []);
+ * ```
  * A couple things to note:
  *   - `import()` returns a promise, so you have to either use `.then()` or
  *     the `await` keyword in an `async` function.
@@ -46,12 +40,16 @@
  *     object. This is what's happening above with `const { default: data }`, it's
  *     destructuring the result of `import()` and assigning the default export
  *     to a constant named `data`.
+ *   - It's recommended that if you want to use an async function for this, you
+ *     do this as an IIFE inside of `useEffect` — not make `useEffect`'s callback
+ *     `async`. Bit weird, I know.
  *
  *  See below for complete example.
  */
 
-import Layout from '@financial-times/g-components';
 import React, { useEffect, useState } from 'react';
+import { hot } from 'react-hot-loader/root';
+import Layout from '@financial-times/g-components';
 import { ContextPropType, ContextDefaultProps } from './util/prop-types';
 
 const App = (context) => {
@@ -62,11 +60,12 @@ const App = (context) => {
 
   // Asynchronous effects should update state as per below
   useEffect(() => {
+    // N.b., do async in an async IIFE, don't make the useEffect callback async
     (async () => {
       const { default: data } = await import('../data/example.csv');
       setState({ data });
     })();
-  });
+  }, []);
 
   const { data } = state;
 
@@ -145,4 +144,4 @@ App.defaultProps = {
   ...ContextDefaultProps,
 };
 
-export default App;
+export default hot(App);
