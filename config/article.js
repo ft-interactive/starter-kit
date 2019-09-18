@@ -7,7 +7,7 @@
 
 export default (environment = 'development') => ({
   // link file UUID
-  id: environment === 'development' ? '3a499586-b2e0-11e4-a058-00144feab7de' : '$UUID',
+  id: '', // @TODO put the UUID from Methode story/link file here
 
   // canonical URL of the published page
   // url below gets filled in by the ./configure script
