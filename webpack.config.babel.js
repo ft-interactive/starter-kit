@@ -162,13 +162,15 @@ module.exports = async (env = 'development') => {
       new MiniCssExtractPlugin({
         filename: IS_DEV ? '[name].css' : '[name].[contenthash].css',
       }),
-      new HtmlWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        title: initialState.title || initialState.headline,
+      }),
       new GenerateJsonPlugin('context.json', initialState),
       new DefinePlugin({
         'window.BUILD_TIME': JSON.stringify(buildTime.toISOString()),
         'process.env.NODE_ENV': JSON.stringify(env),
       }),
       IS_DEV ? undefined : new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
-    ].filter(i => i),
+    ].filter((i) => i),
   };
 };
