@@ -186,7 +186,7 @@ export default (environment = 'development') => {
 
   // This explicitly sets the comments URL to the link page
   if (!config.linkPageUrl) {
-    config.linkPageUrl = `https://www.ft.com/content/${config.uuid}`;
+    config.linkPageUrl = `https://www.ft.com/content/${config.id}`;
   }
 
   return config;
