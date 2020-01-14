@@ -74,7 +74,9 @@ How does Starter Kit come into this? Starter Kit includes a [`circle.yml`](circl
 
 ## Licence
 
-This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
+This software is published by the Financial Times under the [MIT licence](https://opensource.org/licenses/MIT).
+
+Please note the MIT licence only covers the software, and does not cover any FT content or branding incorporated into the software or made available using the software. FT content is copyright © The Financial Times Limited, and FT and ‘Financial Times’ are trademarks of The Financial Times Limited, all rights reserved. For more information about republishing FT content, please contact our [republishing department](https://ft.com/republishing).
 
 <!-- badge URLs -->
 [circle-url]: https://circleci.com/gh/ft-interactive/starter-kit
