@@ -15,18 +15,22 @@ import { promises as fs } from 'fs';
 import getContext from './config';
 
 const buildTime = new Date();
-
+const checkSymlink = async dep => {
+  try {
+    return (
+      await fs.lstat(resolve(__dirname, 'node_modules', '@financial-times', dep))
+    ).isSymbolicLink();
+  } catch (e) {
+    return false;
+  }
+};
 module.exports = async (env = 'development') => {
   const initialState = { ...(await getContext(env)), buildTime };
   const IS_DEV = env === 'development';
 
   // Check whether we're using linked versions of our libs
-  const VVC_IS_SYMLINK = (
-    await fs.lstat(resolve(__dirname, 'node_modules', '@financial-times', 'vvc'))
-  ).isSymbolicLink();
-  const GCOMPS_IS_SYMLINK = (
-    await fs.lstat(resolve(__dirname, 'node_modules', '@financial-times', 'g-components'))
-  ).isSymbolicLink();
+  const VVC_IS_SYMLINK = await checkSymlink('vvc');
+  const GCOMPS_IS_SYMLINK = await checkSymlink('g-components');
 
   return {
     mode: env,
