@@ -106,6 +106,20 @@ describe('QA tests', () => {
       dataContentId.should.not.equal('');
     });
 
+    if('has a grid set for article header', () => {
+      const articleHeaderContainer = document.querySelector('.article-head.o-grid-container .o-grid-row div').getAttribute('data-o-grid-colspan');
+
+      should.exist(articleHeaderContainer);
+      articleHeaderContainer.should.not.equal('');
+    });
+
+    if('has a grid set for article body', () => {
+      const articleBodyContainer = document.querySelector('.article-body .o-grid-container .o-grid-row div').getAttribute('data-o-grid-colspan');
+
+      should.exist(articleBodyContainer);
+      articleBodyContainer.should.not.equal('');
+    });
+
     // @TODO Add Onward Journey test
     // @TODO Find way of testing that tracking code is installed
   });
