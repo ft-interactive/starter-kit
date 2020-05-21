@@ -11,13 +11,26 @@ import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import GenerateJsonPlugin from 'generate-json-webpack-plugin';
 import { resolve } from 'path';
 import dartSass from 'sass';
+import { promises as fs } from 'fs';
 import getContext from './config';
 
 const buildTime = new Date();
-
+const checkSymlink = async dep => {
+  try {
+    return (
+      await fs.lstat(resolve(__dirname, 'node_modules', '@financial-times', dep))
+    ).isSymbolicLink();
+  } catch (e) {
+    return false;
+  }
+};
 module.exports = async (env = 'development') => {
   const initialState = { ...(await getContext(env)), buildTime };
   const IS_DEV = env === 'development';
+
+  // Check whether we're using linked versions of our libs
+  const VVC_IS_SYMLINK = await checkSymlink('vvc');
+  const GCOMPS_IS_SYMLINK = await checkSymlink('g-components');
 
   return {
     mode: env,
@@ -25,7 +38,8 @@ module.exports = async (env = 'development') => {
     resolve: {
       modules: ['node_modules', 'bower_components'],
       alias: {
-        'react-dom': '@hot-loader/react-dom',
+        react: resolve(__dirname, 'node_modules', 'react'),
+        'react-dom': resolve(__dirname, 'node_modules', 'react-dom'),
       },
     },
     output: {
@@ -53,8 +67,18 @@ module.exports = async (env = 'development') => {
           },
         },
         {
-          test: /\.js$/,
-          exclude: /node_modules/,
+          test: /\.jsx?$/,
+          /* eslint-disable no-nested-ternary */
+          // Sorry for this... Anyone know a better way?
+          exclude:
+            VVC_IS_SYMLINK && GCOMPS_IS_SYMLINK
+              ? /node_modules(?!@financial-times)/
+              : VVC_IS_SYMLINK
+              ? /node_modules\/(?!@financial-times\/vvc)/
+              : GCOMPS_IS_SYMLINK
+              ? /node_modules\/(?!@financial-times\/g-components)/
+              : /node_modules/,
+          /* eslint-enable no-nested-ternary */
           use: {
             loader: 'babel-loader',
             options: {
@@ -171,6 +195,6 @@ module.exports = async (env = 'development') => {
         'process.env.NODE_ENV': JSON.stringify(env),
       }),
       IS_DEV ? undefined : new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
-    ].filter((i) => i),
+    ].filter(i => i),
   };
 };
