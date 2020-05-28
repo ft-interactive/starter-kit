@@ -10,7 +10,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import GenerateJsonPlugin from 'generate-json-webpack-plugin';
 import { resolve } from 'path';
-import dartSass from 'sass';
 import { promises as fs } from 'fs';
 import getContext from './config';
 
@@ -142,7 +141,6 @@ module.exports = async (env = 'development') => {
             {
               loader: 'sass-loader',
               options: {
-                implementation: dartSass,
                 sourceMap: true,
                 includePaths: ['node_modules', 'node_modules/@financial-times'],
               },
@@ -167,7 +165,6 @@ module.exports = async (env = 'development') => {
             {
               loader: 'sass-loader',
               options: {
-                implementation: dartSass,
                 sourceMap: true,
                 includePaths: ['node_modules', 'node_modules/@financial-times'],
               },
