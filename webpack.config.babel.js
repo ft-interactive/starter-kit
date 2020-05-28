@@ -35,7 +35,7 @@ module.exports = async (env = 'development') => {
     mode: env,
     entry: ['react-hot-loader/patch', './app/index.js'],
     resolve: {
-      modules: ['node_modules', 'bower_components'],
+      modules: ['node_modules'],
       alias: {
         react: resolve(__dirname, 'node_modules', 'react'),
         'react-dom': resolve(__dirname, 'node_modules', 'react-dom'),
@@ -51,7 +51,7 @@ module.exports = async (env = 'development') => {
       rules: [
         {
           test: /\.(txt|xml)$/,
-          exclude: /(node_modules|bower_components)/,
+          exclude: /(node_modules)/,
           use: {
             loader: 'raw-loader',
           },
