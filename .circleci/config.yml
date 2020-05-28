@@ -7,39 +7,14 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Backup package-lock.json
-          # This file gets modified during setup, which would break our use of
-          # it as a cache key. So we back it up to tmp first.
-          command: cp package-lock.json /tmp/
-      # - restore_cache:
-      #     name: Restore cache (node_modules)
-      #     key: node_modules-{{ checksum "/tmp/package-lock.json" }}
-      # - restore_cache:
-      #     name: Restore cache (bower_components)
-      #     key: bower_components-hack1-{{ checksum "bower.json" }}
-      - run:
           name: Install dependencies
-          # NB. this also does bower install as postinstall step
-          command: npm install --unsafe-perm
-      # - save_cache:
-      #     name: Save cache (node_modules)
-      #     key: node_modules-{{ checksum "/tmp/package-lock.json" }}
-      #     paths:
-      #       - node_modules/
-      # - save_cache:
-      #     name: Save cache (bower_components)
-      #     key: bower_components-{{ checksum "bower.json" }}
-      #     paths:
-      #       - bower_components/
+          command: npm install
       - run:
           name: Build
           command: npm run build
       - store_artifacts:
           name: Store artifacts (dist)
           path: dist/
-      - store_artifacts:
-          name: Store artifact (package-lock.json)
-          path: package-lock.json
       - deploy:
           name: Deploy
           command: |
