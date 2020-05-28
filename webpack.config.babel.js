@@ -144,7 +144,7 @@ module.exports = async (env = 'development') => {
               options: {
                 implementation: dartSass,
                 sourceMap: true,
-                includePaths: ['bower_components'],
+                includePaths: ['node_modules', 'node_modules/@financial-times'],
               },
             },
           ],
