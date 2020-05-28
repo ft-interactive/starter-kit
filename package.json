@@ -93,7 +93,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
-    "@financial-times/g-components": "^6",
+    "@financial-times/g-components": "^6.0.2",
     "@financial-times/vvc": "github:financial-times/visual-vocabulary-components",
     "@hot-loader/react-dom": "^16.11.0",
     "core-js": "^3.6.4",
