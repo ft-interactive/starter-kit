@@ -94,7 +94,6 @@
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
     "@financial-times/g-components": "^6.0.2",
-    "@financial-times/vvc": "github:financial-times/visual-vocabulary-components",
     "@hot-loader/react-dom": "^16.11.0",
     "core-js": "^3.6.4",
     "prop-types": "^15.6.2",
@@ -103,6 +102,9 @@
     "react-helmet-async": "0.1.0-alpha",
     "react-hot-loader": "^4.12.18",
     "react-markdown": "^3.4.1"
+  },
+  "peerDependencies": {
+    "@financial-times/vvc": "github:financial-times/visual-vocabulary-components"
   },
   "reactSnap": {
     "source": "dist"
