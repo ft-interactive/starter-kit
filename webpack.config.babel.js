@@ -10,7 +10,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import GenerateJsonPlugin from 'generate-json-webpack-plugin';
 import { resolve } from 'path';
-import dartSass from 'sass';
 import { promises as fs } from 'fs';
 import getContext from './config';
 
@@ -36,7 +35,7 @@ module.exports = async (env = 'development') => {
     mode: env,
     entry: ['react-hot-loader/patch', './app/index.js'],
     resolve: {
-      modules: ['node_modules', 'bower_components'],
+      modules: ['node_modules'],
       alias: {
         react: resolve(__dirname, 'node_modules', 'react'),
         'react-dom': resolve(__dirname, 'node_modules', 'react-dom'),
@@ -52,7 +51,7 @@ module.exports = async (env = 'development') => {
       rules: [
         {
           test: /\.(txt|xml)$/,
-          exclude: /(node_modules|bower_components)/,
+          exclude: /(node_modules)/,
           use: {
             loader: 'raw-loader',
           },
@@ -142,9 +141,8 @@ module.exports = async (env = 'development') => {
             {
               loader: 'sass-loader',
               options: {
-                implementation: dartSass,
                 sourceMap: true,
-                includePaths: ['bower_components'],
+                includePaths: ['node_modules', 'node_modules/@financial-times'],
               },
             },
           ],
@@ -167,9 +165,8 @@ module.exports = async (env = 'development') => {
             {
               loader: 'sass-loader',
               options: {
-                implementation: dartSass,
                 sourceMap: true,
-                includePaths: ['bower_components'],
+                includePaths: ['node_modules', 'node_modules/@financial-times'],
               },
             },
           ],
