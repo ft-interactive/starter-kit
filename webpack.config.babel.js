@@ -27,6 +27,13 @@ module.exports = async (env = 'development') => {
       alias: {
         react: resolve(__dirname, 'node_modules', 'react'),
         'react-dom': resolve(__dirname, 'node_modules', 'react-dom'),
+        '@financial-times/g-components': resolve(
+          __dirname,
+          'node_modules',
+          '@financial-times',
+          'g-components',
+          'src'
+        ),
       },
     },
     output: {
