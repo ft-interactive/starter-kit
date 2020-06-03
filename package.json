@@ -89,7 +89,9 @@
     "test": "mocha ./test/**/*.spec.js",
     "start": "webpack-dev-server -r dotenv/config",
     "lint": "eslint app/**/*.js test/**/*.js",
-    "lint:fix": "eslint --fix app/**/*.js test/**/*.js"
+    "lint:fix": "eslint --fix app/**/*.js test/**/*.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
@@ -103,9 +105,11 @@
     "react-dom": "^16.12.0",
     "react-helmet-async": "0.1.0-alpha",
     "react-hot-loader": "^4.12.18",
-    "react-markdown": "^3.4.1"
+    "react-markdown": "^3.4.1",
+    "snyk": "^1.335.0"
   },
   "reactSnap": {
     "source": "dist"
-  }
+  },
+  "snyk": true
 }
