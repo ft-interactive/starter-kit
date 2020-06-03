@@ -9,7 +9,7 @@
 import React from 'react';
 import { hydrate, render } from 'react-dom';
 import { renderToString } from 'react-dom/server';
-import { HtmlHead } from '@financial-times/g-components';
+import HtmlHead from '@financial-times/g-components/html-head';
 import criticalPath from '@financial-times/g-components/shared/critical-path.scss';
 import App from './app';
 import './styles.scss';
@@ -28,7 +28,10 @@ const IS_DEV = process.env.NODE_ENV === 'development';
     window.context = context; // Useful for debugging context issues
 
     const {
-      buildTime, id, testCommentsUuid, flags: { dark },
+      buildTime,
+      id,
+      testCommentsUuid,
+      flags: { dark },
     } = context;
 
     const pageClasses = ['core', dark && 'dark'];

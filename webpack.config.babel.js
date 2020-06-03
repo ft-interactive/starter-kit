@@ -14,22 +14,10 @@ import { promises as fs } from 'fs';
 import getContext from './config';
 
 const buildTime = new Date();
-const checkSymlink = async dep => {
-  try {
-    return (
-      await fs.lstat(resolve(__dirname, 'node_modules', '@financial-times', dep))
-    ).isSymbolicLink();
-  } catch (e) {
-    return false;
-  }
-};
+
 module.exports = async (env = 'development') => {
   const initialState = { ...(await getContext(env)), buildTime };
   const IS_DEV = env === 'development';
-
-  // Check whether we're using linked versions of our libs
-  const VVC_IS_SYMLINK = await checkSymlink('vvc');
-  const GCOMPS_IS_SYMLINK = await checkSymlink('g-components');
 
   return {
     mode: env,
@@ -39,6 +27,13 @@ module.exports = async (env = 'development') => {
       alias: {
         react: resolve(__dirname, 'node_modules', 'react'),
         'react-dom': resolve(__dirname, 'node_modules', 'react-dom'),
+        '@financial-times/g-components': resolve(
+          __dirname,
+          'node_modules',
+          '@financial-times',
+          'g-components',
+          'src'
+        ),
       },
     },
     output: {
@@ -69,14 +64,7 @@ module.exports = async (env = 'development') => {
           test: /\.jsx?$/,
           /* eslint-disable no-nested-ternary */
           // Sorry for this... Anyone know a better way?
-          exclude:
-            VVC_IS_SYMLINK && GCOMPS_IS_SYMLINK
-              ? /node_modules(?!@financial-times)/
-              : VVC_IS_SYMLINK
-              ? /node_modules\/(?!@financial-times\/vvc)/
-              : GCOMPS_IS_SYMLINK
-              ? /node_modules\/(?!@financial-times\/g-components)/
-              : /node_modules/,
+          exclude: /node_modules\/(?!@financial-times)/,
           /* eslint-enable no-nested-ternary */
           use: {
             loader: 'babel-loader',
@@ -125,31 +113,8 @@ module.exports = async (env = 'development') => {
             { loader: 'postcss-loader', options: { sourceMap: true } },
           ],
         },
-        // Critical path CSS used by server
         {
-          test: /critical-path.scss/,
-          resolve: {
-            extensions: ['.scss', '.sass'],
-          },
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: '[path][name].css',
-              },
-            },
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true,
-                includePaths: ['node_modules', 'node_modules/@financial-times'],
-              },
-            },
-          ],
-        },
-        // Remaining CSS
-        {
-          test: /app\/.+\.scss/,
+          test: /\.scss$/,
           resolve: {
             extensions: ['.scss', '.sass'],
           },
@@ -161,12 +126,15 @@ module.exports = async (env = 'development') => {
               },
             },
             { loader: 'css-loader', options: { sourceMap: true } },
-            { loader: 'postcss-loader', options: { sourceMap: true } },
             {
               loader: 'sass-loader',
               options: {
                 sourceMap: true,
-                includePaths: ['node_modules', 'node_modules/@financial-times'],
+                includePaths: [
+                  'node_modules',
+                  'node_modules/@financial-times',
+                  'node_modules/@financial-times/g-components/node_modules/@financial-times', // npm link deps
+                ],
               },
             },
           ],
