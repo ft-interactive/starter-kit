@@ -10,7 +10,9 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import GenerateJsonPlugin from 'generate-json-webpack-plugin';
 import { resolve } from 'path';
-import { promises as fs } from 'fs';
+// import { renderToString } from 'react-dom';
+// import HtmlHead from '@financial-times/g-components/html-head';
+// import criticalPath from '@financial-times/g-components/shared/critical-path.scss';
 import getContext from './config';
 
 const buildTime = new Date();
@@ -23,7 +25,7 @@ module.exports = async (env = 'development') => {
     mode: env,
     entry: ['react-hot-loader/patch', './app/index.js'],
     resolve: {
-      modules: ['node_modules'],
+      modules: ['node_modules', 'node_modules/@financial-times/g-components/node_modules'],
       alias: {
         react: resolve(__dirname, 'node_modules', 'react'),
         'react-dom': resolve(__dirname, 'node_modules', 'react-dom'),
@@ -153,6 +155,11 @@ module.exports = async (env = 'development') => {
       }),
       new HtmlWebpackPlugin({
         title: initialState.title || initialState.headline,
+        template: './app/index.html',
+        context: {
+          ...initialState,
+          pageClasses: `core${initialState.flags.dark ? ' dark' : ''}`,
+        },
       }),
       new GenerateJsonPlugin('context.json', initialState),
       new DefinePlugin({
