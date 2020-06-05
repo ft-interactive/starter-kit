@@ -21,13 +21,11 @@ export default (environment = 'development') => {
     headline: 'Ik kie neġi æpude pōsÞpriskribo',
 
     // summary === standfirst (Summary is what the content API calls it)
-    summary:
-      'Ik kie neġi æpude pōsÞpriskribo, anċ ēg tiel subtegmenÞo.'
-      + 'Giga gārði esperǣntigo vi jes. Ċit plēj esceptīnte hu, ōl vola eksploðæ poǽ.',
+    summary: 'Ik kie neġi æpude pōsÞpriskribo, anċ ēg tiel subtegmenÞo.',
 
     topic: {
-      name: 'Starter Kit',
-      url: '/' /* '/foo', // Must be absolute path */,
+      name: 'Visual & Data Journalism',
+      url: 'https://www.ft.com/visual-and-data-journalism',
     },
 
     relatedArticle: {
@@ -36,28 +34,30 @@ export default (environment = 'development') => {
     },
 
     mainImage: {
-      title: 'Map of Esperanto groups in Europe in 1905',
-      description:
-        '"Disvastiĝo de Esperanto". Mapo pri Esperanto-grupoj en Eŭropo, farita de la frankfurta grupo, en Germana Esperantisto, marto 1905',
-      credit: 'Wikipedia',
-
       // You can provide a UUID to an image and it was populate everything else
       // uuid: 'c4bf0be4-7c15-11e4-a7b8-00144feabdc0',
 
-      // You can also provide a URL
-      url:
-        'https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F3%2F3a%2F1905-03-ge-frankf-mapo.jpg?source=ig',
+      // Or you can provide a URL
+      url: 'https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F3%2F3a%2F1905-03-ge-frankf-mapo.jpg?source=ig',
+      title: 'Map of Esperanto groups in Europe in 1905',
+      description: 'Mapo pri Esperanto-grupoj en Eŭropo, farita de la frankfurta grupo, en Germana Esperantisto, marto 1905',
+      credit: 'Wikipedia',
     },
 
     // Byline can by a plain string, markdown, or array of authors
     // if array of authors, url is optional
-    bylines: [{ name: 'Author One' /* , url: '/foo/bar' // Must be absolute path */ }, { name: 'Author Two' }],
+    bylines: [
+      {
+        name: 'FT Visual & Data Journalism team',
+        url: 'https://www.ft.com/visual-and-data-journalism',
+      }
+    ],
 
     // Appears in the HTML <title>
-    title: '',
+    // title: '',
 
     // meta data
-    description: '',
+    // description: '',
 
     /*
     TODO: Select Twitter card type -
@@ -66,7 +66,7 @@ export default (environment = 'development') => {
           Twitter card docs:
           https://dev.twitter.com/cards/markup
     */
-    twitterCard: 'summary_large_image',
+    // twitterCard: 'summary_large_image',
 
     /*
     TODO: Do you want to tweak any of the
@@ -100,11 +100,11 @@ export default (environment = 'development') => {
     // ADVERTISING
     ads: {
       // Ad unit hierarchy makes ads more granular.
-      gptSite: 'ft.com',
+      // gptSite: 'ft.com',
       // Start with ft.com and /companies /markets /world as appropriate to your story
-      gptZone: false,
+      // gptZone: false,
       // granular targeting is optional and will be specified by the ads team
-      dfpTargeting: false,
+      // targeting: false,
     },
 
     tracking: {
