@@ -10,9 +10,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import GenerateJsonPlugin from 'generate-json-webpack-plugin';
 import { resolve } from 'path';
-// import { renderToString } from 'react-dom';
-// import HtmlHead from '@financial-times/g-components/html-head';
-// import criticalPath from '@financial-times/g-components/shared/critical-path.scss';
 import getContext from './config';
 
 const buildTime = new Date();
