@@ -51,7 +51,7 @@ import React, { useEffect, useState } from 'react';
 import { hot } from 'react-hot-loader/root';
 import Layout from '@financial-times/g-components/layout';
 import ArticleHead from '@financial-times/g-components/article-head';
-import Epilogue from '@financial-times/g-components/Epilogue';
+import Epilogue from '@financial-times/g-components/epilogue';
 import { GridChild, GridRow, GridContainer } from '@financial-times/g-components/grid';
 import { ContextPropType, ContextDefaultProps } from './util/prop-types';
 
