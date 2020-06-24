@@ -49,8 +49,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { hot } from 'react-hot-loader/root';
-import Layout from '@financial-times/g-components/layout';
-import ArticleHead from '@financial-times/g-components/article-head';
+import Layout from '@financial-times/g-components/article-layout';
+import StoryTopper from '@financial-times/g-components/story-topper';
 import Epilogue from '@financial-times/g-components/epilogue';
 import { GridChild, GridRow, GridContainer } from '@financial-times/g-components/grid';
 import { ContextPropType, ContextDefaultProps } from './util/prop-types';
@@ -92,7 +92,7 @@ const App = () => {
           <GridContainer className="article-head">
             <GridRow>
               <GridChild colspan="12 S11 Scenter M9 L8 XL7">
-                <ArticleHead {...context} />
+                <StoryTopper {...context} />
               </GridChild>
             </GridRow>
           </GridContainer>
