@@ -1,5 +1,11 @@
 {
-  "extends": ["airbnb", "airbnb/hooks", "plugin:mdx/recommended", "plugin:prettier/recommended", "prettier/react"],
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:mdx/recommended",
+    "plugin:prettier/recommended",
+    "prettier/react"
+  ],
   "root": true,
   "rules": {
     "import/no-extraneous-dependencies": [2, {}],
@@ -16,8 +22,9 @@
   "parser": "babel-eslint",
   "settings": {
     "import/resolver": {
-      "node": {
-        "moduleDirectory": ["node_modules", "bower_components"]
+      "alias": {
+        "map": [["@financial-times/g-components", "@financial-times/g-components/src"]],
+        "extensions": [".ts", ".js", ".jsx", ".json", ".scss"]
       }
     }
   }
