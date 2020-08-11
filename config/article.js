@@ -100,8 +100,8 @@ export default (environment = 'development') => {
     // ADVERTISING
     ads: {
       // Ad unit hierarchy makes ads more granular.
-      gptSite: 'ft.com',
-      // Start with ft.com and /companies /markets /world as appropriate to your story
+      gptSite: 'ft.com/world',
+      // Start with ft.com and /companies /markets /world as appropriate to your story. The default is /world
       gptZone: false,
       // granular targeting is optional and will be specified by the ads team
       dfpTargeting: false,
@@ -186,7 +186,7 @@ export default (environment = 'development') => {
 
   // This explicitly sets the comments URL to the link page
   if (!config.linkPageUrl) {
-    config.linkPageUrl = 'https://www.ft.com/content' + config.id;
+    config.linkPageUrl = 'https://www.ft.com/content/' + config.id;
   }
 
   return config;
