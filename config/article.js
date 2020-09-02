@@ -127,6 +127,8 @@ export default (environment = 'development') => {
       */
       // product: '',
     },
+    
+    polyfillFeatures: ['default', 'fetch', 'es2019'],
 
     // If you include a data set, uncomment and fill out the following to
     // surface via Google.
