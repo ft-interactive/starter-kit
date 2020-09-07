@@ -22,17 +22,9 @@ module.exports = async (env = 'development') => {
     mode: env,
     entry: ['react-hot-loader/patch', './app/index.js'],
     resolve: {
-      modules: ['node_modules', 'node_modules/@financial-times/g-components/node_modules'],
       alias: {
-        react: resolve(__dirname, 'node_modules', 'react'),
-        'react-dom': resolve(__dirname, 'node_modules', 'react-dom'),
-        '@financial-times/g-components': resolve(
-          __dirname,
-          'node_modules',
-          '@financial-times',
-          'g-components',
-          'src'
-        ),
+        '@financial-times/g-components': resolve('@financial-times/g-components', 'src'),
+        '@financial-times/vvc': resolve('@financial-times/vvc', 'src'),
       },
     },
     output: {
@@ -61,10 +53,7 @@ module.exports = async (env = 'development') => {
         },
         {
           test: /\.jsx?$/,
-          /* eslint-disable no-nested-ternary */
-          // Sorry for this... Anyone know a better way?
           exclude: /node_modules\/(?!@financial-times)/,
-          /* eslint-enable no-nested-ternary */
           use: {
             loader: 'babel-loader',
             options: {
@@ -130,11 +119,7 @@ module.exports = async (env = 'development') => {
               loader: 'sass-loader',
               options: {
                 sourceMap: true,
-                includePaths: [
-                  'node_modules',
-                  'node_modules/@financial-times',
-                  'node_modules/@financial-times/g-components/node_modules/@financial-times', // npm link deps
-                ],
+                includePaths: ['node_modules', 'node_modules/@financial-times'],
               },
             },
           ],
