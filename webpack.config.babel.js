@@ -9,22 +9,27 @@ import ImageminWebpackPlugin from 'imagemin-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import GenerateJsonPlugin from 'generate-json-webpack-plugin';
-import { resolve } from 'path';
+import { resolve, dirname } from 'path';
 import getContext from './config';
+import { getVVCRoot } from './app/util/isVVCInstalled';
 
 const buildTime = new Date();
 
 module.exports = async (env = 'development') => {
   const initialState = { ...(await getContext(env)), buildTime };
   const IS_DEV = env === 'development';
+  const vvcRoot = getVVCRoot();
 
   return {
     mode: env,
     entry: ['react-hot-loader/patch', './app/index.js'],
     resolve: {
       alias: {
-        '@financial-times/g-components': resolve('@financial-times/g-components', 'src'),
-        '@financial-times/vvc': resolve('@financial-times/vvc', 'src'),
+        '@financial-times/g-components': resolve(
+          dirname(require.resolve('@financial-times/g-components/package.json')),
+          'src'
+        ),
+        '@financial-times/vvc': vvcRoot || '',
       },
     },
     output: {

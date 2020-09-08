@@ -1,17 +1,12 @@
-let vvcInstalled;
-
-try {
-  vvcInstalled = require('@financial-times/vvc');
-} catch (e) {
-  vvcInstalled = false;
-}
+const { getVVCRoot } = require('../app/util/isVVCInstalled');
+const vvcRoot = getVVCRoot();
 
 module.exports = {
   stories: [
     '../app/components/**/*.stories.mdx',
     '../app/components/**/*.stories.@(js|jsx|ts|tsx)',
     '../node_modules/@financial-times/g-components/src/**/*.stories.@(js|mdx)',
-    vvcInstalled && '../node_modules/@financial-times/vvc/src/**/*.stories.@(js|mdx)',
+    vvcRoot && `${vvcRoot}/**/*.stories.@(js|mdx)`,
   ].filter(i => i),
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   webpackFinal: async (config, { configType }) => {
