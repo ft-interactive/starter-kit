@@ -48,7 +48,7 @@ This assumes your project keeps most of your data in the `app/` and `config/` fo
 You can run the following tasks from within your project directory:
 
 - `npm start` — starts up a development server and opens your app in a web browser. The dev server will automatically reload your browser when files change.
-- `npm run storybook` — loads up [StorybookJS](https://storybook.js.org/) as a development environment for building components.
+- `npm run storybook` — loads up [StorybookJS](https://storybook.js.org/) as a development environment for building components. Stories created in the `app/components` folder will automatically show up in the storybook.
 - `npm run build` — builds your app and puts it in the `dist` folder.
 - `npm run deploy` — deploys the contents of your `dist` folder to an appropriate location on S3. (You usually don't need to run this yourself — it is run automatically by CircleCI.)
 - `npm run a11y:local` - checks accessibility of your app running locally
