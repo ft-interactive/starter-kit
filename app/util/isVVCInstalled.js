@@ -10,7 +10,7 @@ module.exports.getVVCRoot = () => {
   } catch (e) {
     if (!runOnce) {
       console.info(
-        'VVC not installed. To install, ensure you have your GitHub SSH key added to the SSH agent, then npm install'
+        'VVC not installed. To install, ensure you have your GitHub SSH key added to the SSH agent (https://docs.github.com/en/enterprise/2.17/user/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent), then npm install'
       );
       runOnce = true;
     }
