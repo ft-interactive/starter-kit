@@ -20,31 +20,35 @@ What the setup script does:
 - Clones Starter Kit to your own computer (but reinitialises it as a brand new git repo with no history).
 - If selected, attempts to push it to the ft-interactive org on GitHub.
   - NB. you'll need an [access token](https://github.com/settings/tokens) and the git [osxkeychain helper](https://help.github.com/articles/caching-your-github-password-in-git/) for this to work. Create a file in your home directory called `.netrc` containing the following:
+
 ```
 machine api.github.com
 login <your-github-username>
 password <your-github-access-token>
 protocol https
 ```
+
 - Runs `npm install` to grab all the dependencies (this takes a few minutes).
 - Runs `npm start` for the first time — now you can start coding.
 
 You can also re-initialise a Starter Kit project to use the latest version by providing a path
 to an existing project in the first step of the wizard. This will put everything in the folder into
-a new commit (*including* things that aren't version controlled and aren't in .gitignore), wipe the
+a new commit (_including_ things that aren't version controlled and aren't in .gitignore), wipe the
 folder, then add Starter Kit as a new commit. It doesn't try to upgrade your code at all, though
 you can generally restore everything by running the following afterwards:
 
 ```bash
 git checkout HEAD~1 -- client config
 ```
-This assumes your project keeps most of your data in the `client/` and `config/` folders.
+
+This assumes your project keeps most of your data in the `app/` and `config/` folders.
 
 #### Using the built in tasks
 
 You can run the following tasks from within your project directory:
 
 - `npm start` — starts up a development server and opens your app in a web browser. The dev server will automatically reload your browser when files change.
+- `npm run storybook` — loads up [StorybookJS](https://storybook.js.org/) as a development environment for building components.
 - `npm run build` — builds your app and puts it in the `dist` folder.
 - `npm run deploy` — deploys the contents of your `dist` folder to an appropriate location on S3. (You usually don't need to run this yourself — it is run automatically by CircleCI.)
 - `npm run a11y:local` - checks accessibility of your app running locally
@@ -53,9 +57,8 @@ You can run the following tasks from within your project directory:
 
 #### Key directories
 
-- [`client`](client) — the main files that make up your front end, including `index.html` and some Sass and JS files. You should mostly be working in here.
+- [`app`](client) — the main files that make up your front end, including `index.html` and some Sass and JS files. You should mostly be working in here.
 - [`config`](config) — scripts that pull together some configuration details for your project, including basic facts (UUID, title, etc.) and 'onward journey' story links. These details are used to populate parts of the templates.
-- [`views`](views) — the standard page layout is formed from a few files in here (the project-specific files in `client` extend this layout). You generally don't need to edit this much.
 - `dist` — the optimsed HTML/CSS/JS bundle, generated automatically every time you run `npm run build`. You shouldn't edit files in here manually, as any manual changes would just get overwritten next time you build.
 
 ## What's included in Starter Kit?
@@ -63,7 +66,6 @@ You can run the following tasks from within your project directory:
 - A template for a basic **front end app** with FT.com page furniture
   - Includes [Origami components](https://origami-bower-registry.ft.com/components) and various best-practice features such as meta tags to optimise SEO and social sharing.
 - A **build system** including tasks for serving your app locally during development (auto-refreshing when you edit source files) and building an optimised HTML/CSS/JS bundle suitable for deployment.
-  - This is comprised of [gulp](http://gulpjs.com/), [Babel](https://babeljs.io/docs/learn-es2015/), [Browserify](http://browserify.org/), [Sass](https://github.com/sass/node-sass), and [Nunjucks templates](https://mozilla.github.io/nunjucks/templating.html).
 - A **CI configuration** that instructs CircleCI to deploy the project to S3 every time it builds.
 
 ## Understanding automatic deployment ('continuous integration')
@@ -79,8 +81,8 @@ This software is published by the Financial Times under the [MIT licence](https:
 Please note the MIT licence only covers the software, and does not cover any FT content or branding incorporated into the software or made available using the software. FT content is copyright © The Financial Times Limited, and FT and ‘Financial Times’ are trademarks of The Financial Times Limited, all rights reserved. For more information about republishing FT content, please contact our [republishing department](https://ft.com/republishing).
 
 <!-- badge URLs -->
+
 [circle-url]: https://circleci.com/gh/ft-interactive/starter-kit
 [circle-image]: https://circleci.com/gh/ft-interactive/starter-kit/tree/master.svg?style=shield
-
 [dependencyci-url]: https://dependencyci.com/github/ft-interactive/starter-kit
 [dependencyci-image]: https://dependencyci.com/github/ft-interactive/starter-kit/badge
