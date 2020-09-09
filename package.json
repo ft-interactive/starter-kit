@@ -102,7 +102,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
-    "@financial-times/g-components": "^7.0.9",
+    "@financial-times/g-components": "^7.1.0",
     "@financial-times/o-colors": "^5.2.4",
     "@financial-times/o-grid": "^5.2.6",
     "@hot-loader/react-dom": "^16.11.0",
