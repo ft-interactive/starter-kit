@@ -1,4 +1,5 @@
 const { getVVCRoot } = require('../app/util/isVVCInstalled');
+
 const vvcRoot = getVVCRoot();
 
 module.exports = {
@@ -9,6 +10,10 @@ module.exports = {
     vvcRoot && `${vvcRoot}/**/*.stories.@(js|mdx)`,
   ].filter(i => i),
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+  babel: config => {
+    config.presets.push(require.resolve('@emotion/babel-preset-css-prop'));
+    return config;
+  },
   webpackFinal: async (config, { configType }) => {
     // Transpile dependencies from @financial-times scope
     config.module.rules[0].exclude = /node_modules\/(?!@financial-times)/;
@@ -33,5 +38,5 @@ module.exports = {
     });
 
     return config;
-  }
+  },
 };
