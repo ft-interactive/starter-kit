@@ -35,13 +35,13 @@ module.exports = {
 
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
-        '@financial-times/g-components': resolve(
-          dirname(require.resolve('@financial-times/g-components/package.json')),
-          'src'
-        ),
-        '@financial-times/vvc': vvcRoot || '',
-    }
+      '@financial-times/g-components': resolve(
+        dirname(require.resolve('@financial-times/g-components/package.json')),
+        'src'
+      ),
+      '@financial-times/vvc': vvcRoot || '',
+    };
 
     return config;
-  }
+  },
 };
