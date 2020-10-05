@@ -87,7 +87,7 @@ describe('QA tests', () => {
     });
 
     it('has a populated topic link', () => {
-      const topicLink = document.querySelector('.o-typography-topic');
+      const topicLink = document.querySelector('.o-editorial-typography-topic');
 
       should.exist(topicLink);
       topicLink.textContent.should.not.equal('');
@@ -95,7 +95,7 @@ describe('QA tests', () => {
     });
 
     it('has a populated headline', () => {
-      const headline = document.querySelector('h1.o-typography-headline');
+      const headline = document.querySelector('h1.o-editorial-layout-heading-1');
 
       should.exist(headline);
       headline.textContent.should.not.equal('');
