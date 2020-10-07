@@ -53,7 +53,6 @@ import Layout from '@financial-times/g-components/article-layout';
 import StoryTopper from '@financial-times/g-components/story-topper';
 import Epilogue from '@financial-times/g-components/epilogue';
 import { GridChild, GridRow, GridContainer } from '@financial-times/g-components/grid';
-import { ContextPropType, ContextDefaultProps } from './util/prop-types';
 
 const App = () => {
   // This sets the initial state of the application. We need
@@ -149,14 +148,6 @@ const App = () => {
       </main>
     </Layout>
   ) : null;
-};
-
-App.propTypes = {
-  ...ContextPropType,
-};
-
-App.defaultProps = {
-  ...ContextDefaultProps,
 };
 
 export default hot(App);
