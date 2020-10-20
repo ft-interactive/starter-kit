@@ -22,8 +22,8 @@ export default (environment = 'development') => {
 
     // summary === standfirst (Summary is what the content API calls it)
     summary:
-      'Ik kie neġi æpude pōsÞpriskribo, anċ ēg tiel subtegmenÞo.'
-      + 'Giga gārði esperǣntigo vi jes. Ċit plēj esceptīnte hu, ōl vola eksploðæ poǽ.',
+      'Ik kie neġi æpude pōsÞpriskribo, anċ ēg tiel subtegmenÞo.' +
+      'Giga gārði esperǣntigo vi jes. Ċit plēj esceptīnte hu, ōl vola eksploðæ poǽ.',
 
     topic: {
       name: 'Starter Kit',
@@ -51,7 +51,10 @@ export default (environment = 'development') => {
 
     // Byline can by a plain string, markdown, or array of authors
     // if array of authors, url is optional
-    bylines: [{ name: 'Author One' /* , url: '/foo/bar' // Must be absolute path */ }, { name: 'Author Two' }],
+    bylines: [
+      { name: 'Author One' /* , url: '/foo/bar' // Must be absolute path */ },
+      { name: 'Author Two' },
+    ],
 
     // Appears in the HTML <title>
     title: '',
@@ -104,7 +107,7 @@ export default (environment = 'development') => {
       // Start with ft.com and /companies /markets /world as appropriate to your story. The default is /world
       gptZone: false,
       // granular targeting is optional and will be specified by the ads team
-      dfpTargeting: false,
+      targeting: false,
     },
 
     tracking: {
@@ -127,7 +130,7 @@ export default (environment = 'development') => {
       */
       // product: '',
     },
-    
+
     polyfillFeatures: ['default', 'fetch', 'es2019'],
 
     // If you include a data set, uncomment and fill out the following to
@@ -188,7 +191,7 @@ export default (environment = 'development') => {
 
   // This explicitly sets the comments URL to the link page
   if (!config.linkPageUrl) {
-    config.linkPageUrl = 'https://www.ft.com/content/' + config.id;
+    config.linkPageUrl = `https://www.ft.com/content/${config.id}`;
   }
 
   return config;
