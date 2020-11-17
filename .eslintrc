@@ -4,6 +4,7 @@
     "airbnb/hooks",
     "plugin:mdx/recommended",
     "plugin:prettier/recommended",
+    "prettier",
     "prettier/react"
   ],
   "root": true,
