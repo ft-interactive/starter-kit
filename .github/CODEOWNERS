@@ -4,4 +4,4 @@
 # the repo. Unless a later match takes precedence,
 # @global-owner1 and @global-owner2 will be requested for
 # review when someone opens a pull request.
-*       @financial-times/visual-data-journalism @financial-times/visual-data-journalism-admins
+*       @financial-times/visual-data-journalism-admins
