@@ -13,6 +13,7 @@ export default (environment = 'development') => ({
   shareButtons: true,
   header: true,
   footer: true,
+  mainImage: true,
   dark: false, // Dark theme support requires g-components >= 2.2.x
   /*
     NOTE ABOUT COMMENTS:
