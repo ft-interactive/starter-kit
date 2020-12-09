@@ -120,7 +120,7 @@
     <% } %> <% if (htmlWebpackPlugin.options.context.twitterImage ||
     htmlWebpackPlugin.options.context.socialImage || htmlWebpackPlugin.options.context.mainImageUrl)
     { %>
-    <meta name="twitter:image" content="<%= twitterImage || socialImage || mainImageUrl %>" />
+    <meta name="twitter:image" content="<%= htmlWebpackPlugin.options.context.twitterImage || htmlWebpackPlugin.options.context.socialImage || htmlWebpackPlugin.options.context.mainImageUrl %>" />
     <% } %> <% if (htmlWebpackPlugin.options.context.facebookImage ||
     htmlWebpackPlugin.options.context.socialImage || htmlWebpackPlugin.options.context.mainImageUrl)
     { %>
