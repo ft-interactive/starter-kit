@@ -40,11 +40,6 @@ export default (environment = 'development') => {
       description:
         '"Disvastiĝo de Esperanto". Mapo pri Esperanto-grupoj en Eŭropo, farita de la frankfurta grupo, en Germana Esperantisto, marto 1905',
       credit: 'Wikipedia',
-
-      // You can provide a UUID to an image and it was populate everything else
-      // uuid: 'c4bf0be4-7c15-11e4-a7b8-00144feabdc0',
-
-      // You can also provide a URL
       url:
         'https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F3%2F3a%2F1905-03-ge-frankf-mapo.jpg?source=ig',
     },
@@ -127,7 +122,7 @@ export default (environment = 'development') => {
       */
       // product: '',
     },
-    
+
     polyfillFeatures: ['default', 'fetch', 'es2019'],
 
     // If you include a data set, uncomment and fill out the following to
@@ -188,7 +183,7 @@ export default (environment = 'development') => {
 
   // This explicitly sets the comments URL to the link page
   if (!config.linkPageUrl) {
-    config.linkPageUrl = 'https://www.ft.com/content/' + config.id;
+    config.linkPageUrl = `https://www.ft.com/content/${config.id}`;
   }
 
   return config;
