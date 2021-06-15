@@ -64,9 +64,15 @@ You can run the following tasks from within your project directory:
 
 ## Understanding automatic deployment ('continuous integration')
 
-Whenever you add _any_ repository to the [ft-interactive](https://github.com/ft-interactive) GitHub org, the [IG Buildbot](https://github.com/ft-interactive/buildbot) automatically sets up a new CircleCI project linked to the new repo. That means CircleCI will build the project whenever you add a new commit to that repo (whether on master or other branches).
+To enable continuous integeration with CircleCI on a project you first need to run `buildbot reinit Financial-Times/PROJECT-NAME` in the `#ig-buildbot` Slack channel. New projects should be created in the [`Financial-Times`](https://github.com/Financial-Times/) GitHub organisation.
 
-How does Starter Kit come into this? Starter Kit includes a [`config.yml`](.circleci/config.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes. (The deploy script automatically decides what path to upload files to, based on the name of the repo on GitHub.) This process is called **continuous integration**.
+CircleCI will build the project whenever you add a new commit to that repo (whether on master or other branches). Starter Kit includes a [`config.yml`](.circleci/config.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes. (The deploy script automatically decides what path to upload files to, based on the name of the repo on GitHub.) This process is called **continuous integration**.
+
+More information on deploying Starter Kit can be found [here](https://github.com/Financial-Times/visual-data-playbook/blob/main/publishing-workflow/ig-page-workflow.md#deploying).
+
+## Using Visual vocabularly components or templates in a Starter Kit project
+
+To use the [Visual vocabularly components (VVC)](https://github.com/Financial-Times/visual-vocabulary-components) chart library in a project you will need to have a working GitHub SSH key in your keychain. Follow the instructions [here](https://github.com/Financial-Times/visual-vocabulary-components#integrating-vvc-into-a-project) for more details. To use VVC in production you will need to add the SSH key in the Project settings for a given repository in CircleCI. Within Project Settings you can find this under `SSH Keys -> Additional SSH Keys -> Add SSH Key`. Make sure to set the `Hostname` to `github.com`.
 
 ## Licence
 
