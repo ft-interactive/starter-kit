@@ -41,14 +41,18 @@ You can run the following tasks from within your project directory:
 - `npm run storybook` — loads up [StorybookJS](https://storybook.js.org/) as a development environment for building components. Stories created in the `app/components` folder will automatically show up in the storybook.
 - `npm run build` — builds your app and puts it in the `dist` folder.
 - `npm run deploy` — deploys the contents of your `dist` folder to an appropriate location on S3. (You usually don't need to run this yourself — it is run automatically by CircleCI.)
-- `npm run a11y:local` - checks accessibility of your app running locally
+- `npm run a11y:local` - checks accessibility of your app running locally (must be running at localhost:8080 to work)
 
 (You can find a few other, less interesting tasks defined in [`package.json`](package.json).)
 
 #### Key directories
 
-- [`app`](client) — the main files that make up your front end, including `index.html` and some Sass and JS files. You should mostly be working in here.
+- [`app`](app) — the main files that make up your front end, including `index.html` and some Sass and JS files. You should mostly be working in here.
 - [`config`](config) — scripts that pull together some configuration details for your project, including basic facts (UUID, title, etc.) and 'onward journey' story links. These details are used to populate parts of the templates.
+  - [`article.js`](config/article.js) — article metadata which replicates most metadata found on FT.com. Add or remove required polyfills here with the `polyfillFeatures` attribute
+  - [`flags.js`](config/flags.js) — flags to control page behaviour including ads and comments
+  - [`onward-journey.js`](config/index.js) — sets the stream page used to populate the onward journey at the bottom of the page
+  - [`index.js`](config/index.js) — the function that collects together all the configuration files in this folder. Use this file to pull in and parse remote data on build. The output of this function is written to `context.json` which `app.js` fetches after initial render
 - `dist` — the optimsed HTML/CSS/JS bundle, generated automatically every time you run `npm run build`. You shouldn't edit files in here manually, as any manual changes would just get overwritten next time you build.
 
 ## What's included in Starter Kit?
