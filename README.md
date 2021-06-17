@@ -18,16 +18,6 @@ What the setup script does:
 
 - Asks you a few questions about your project (e.g. title, description).
 - Clones Starter Kit to your own computer (but reinitialises it as a brand new git repo with no history).
-- If selected, attempts to push it to the ft-interactive org on GitHub.
-  - NB. you'll need an [access token](https://github.com/settings/tokens) and the git [osxkeychain helper](https://help.github.com/articles/caching-your-github-password-in-git/) for this to work. Create a file in your home directory called `.netrc` containing the following:
-
-```
-machine api.github.com
-login <your-github-username>
-password <your-github-access-token>
-protocol https
-```
-
 - Runs `npm install` to grab all the dependencies (this takes a few minutes).
 - Runs `npm start` for the first time — now you can start coding.
 
@@ -51,28 +41,39 @@ You can run the following tasks from within your project directory:
 - `npm run storybook` — loads up [StorybookJS](https://storybook.js.org/) as a development environment for building components. Stories created in the `app/components` folder will automatically show up in the storybook.
 - `npm run build` — builds your app and puts it in the `dist` folder.
 - `npm run deploy` — deploys the contents of your `dist` folder to an appropriate location on S3. (You usually don't need to run this yourself — it is run automatically by CircleCI.)
-- `npm run a11y:local` - checks accessibility of your app running locally
+- `npm run a11y:local` - checks accessibility of your app running locally (must be running at localhost:8080 to work)
 
 (You can find a few other, less interesting tasks defined in [`package.json`](package.json).)
 
 #### Key directories
 
-- [`app`](client) — the main files that make up your front end, including `index.html` and some Sass and JS files. You should mostly be working in here.
+- [`app`](app) — the main files that make up your front end, including `index.html` and some Sass and JS files. You should mostly be working in here.
 - [`config`](config) — scripts that pull together some configuration details for your project, including basic facts (UUID, title, etc.) and 'onward journey' story links. These details are used to populate parts of the templates.
+  - [`article.js`](config/article.js) — article metadata which replicates most metadata found on FT.com. Add or remove required polyfills here with the `polyfillFeatures` attribute
+  - [`flags.js`](config/flags.js) — flags to control page behaviour including ads and comments
+  - [`onward-journey.js`](config/index.js) — sets the stream page used to populate the onward journey at the bottom of the page
+  - [`index.js`](config/index.js) — the function that collects together all the configuration files in this folder. Use this file to pull in and parse remote data on build. The output of this function is written to `context.json` which `app.js` fetches after initial render
 - `dist` — the optimsed HTML/CSS/JS bundle, generated automatically every time you run `npm run build`. You shouldn't edit files in here manually, as any manual changes would just get overwritten next time you build.
 
 ## What's included in Starter Kit?
 
 - A template for a basic **front end app** with FT.com page furniture
-  - Includes [Origami components](https://origami-bower-registry.ft.com/components) and various best-practice features such as meta tags to optimise SEO and social sharing.
+  - Includes [Origami components](https://registry.origami.ft.com/components) and various best-practice features such as meta tags to optimise SEO and social sharing.
 - A **build system** including tasks for serving your app locally during development (auto-refreshing when you edit source files) and building an optimised HTML/CSS/JS bundle suitable for deployment.
 - A **CI configuration** that instructs CircleCI to deploy the project to S3 every time it builds.
+- A [**StorybookJS configuration**](.storybook/main.js) that looks for stories in the [`app/components`](app/components) folder (including nested folders) and also includes stories from g-components and VVC (if installed). Story files must end in `.stories.mdx` or `.stories.js/jsx/ts/tsx`.
 
 ## Understanding automatic deployment ('continuous integration')
 
-Whenever you add _any_ repository to the [ft-interactive](https://github.com/ft-interactive) GitHub org, the [IG Buildbot](https://github.com/ft-interactive/ft-ig-github-project-manager) automatically sets up a new CircleCI project linked to the new repo. That means CircleCI will build the project whenever you add a new commit to that repo (whether on master or other branches).
+To enable continuous integration with CircleCI on a project and to allow you to use buildbot you first need to invite the `visual-data-journalism-admins` group to the repository and [assign them the `Admin` role](https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/managing-teams-and-people-with-access-to-your-repository#inviting-a-team-or-person). You can then run `buildbot reinit Financial-Times/PROJECT-NAME` in the `#ig-buildbot` Slack channel. New projects should be created in the [`Financial-Times`](https://github.com/Financial-Times/) GitHub organisation.
 
-How does Starter Kit come into this? Starter Kit includes a [`circle.yml`](circle.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes. (The deploy script automatically decides what path to upload files to, based on the name of the repo on GitHub.) This process is called **continuous integration**.
+CircleCI will build the project whenever you add a new commit to that repo (whether on master or other branches). Starter Kit includes a [`config.yml`](.circleci/config.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes. (The deploy script automatically decides what path to upload files to, based on the name of the repo on GitHub.) This process is called **continuous integration**.
+
+More information on deploying Starter Kit can be found [here](https://github.com/Financial-Times/visual-data-playbook/blob/main/publishing-workflow/ig-page-workflow.md#deploying).
+
+## Using Visual vocabularly components or templates in a Starter Kit project
+
+To use the [Visual vocabularly components (VVC)](https://github.com/Financial-Times/visual-vocabulary-components) chart library in a project you will need to have a working GitHub SSH key in your keychain. Follow the instructions [here](https://github.com/Financial-Times/visual-vocabulary-components#integrating-vvc-into-a-project) for more details. To use VVC in production you will need to add the SSH key in the Project settings for a given repository in CircleCI. Within Project Settings you can find this under `SSH Keys -> Additional SSH Keys -> Add SSH Key`. Make sure to set the `Hostname` to `github.com`.
 
 ## Licence
 
