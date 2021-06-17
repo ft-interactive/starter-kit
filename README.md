@@ -61,10 +61,11 @@ You can run the following tasks from within your project directory:
   - Includes [Origami components](https://registry.origami.ft.com/components) and various best-practice features such as meta tags to optimise SEO and social sharing.
 - A **build system** including tasks for serving your app locally during development (auto-refreshing when you edit source files) and building an optimised HTML/CSS/JS bundle suitable for deployment.
 - A **CI configuration** that instructs CircleCI to deploy the project to S3 every time it builds.
+- A [**StorybookJS configuration**](.storybook/main.js) that looks for stories in the [`app/components`](app/components) folder (including nested folders) and also includes stories from g-components and VVC (if installed). Story files must end in `.stories.mdx` or `.stories.js/jsx/ts/tsx`.
 
 ## Understanding automatic deployment ('continuous integration')
 
-To enable continuous integeration with CircleCI on a project you first need to run `buildbot reinit Financial-Times/PROJECT-NAME` in the `#ig-buildbot` Slack channel. New projects should be created in the [`Financial-Times`](https://github.com/Financial-Times/) GitHub organisation.
+To enable continuous integration with CircleCI on a project and to allow you to use buildbot you first need to invite the `visual-data-journalism-admins` group to the repository and [assign them the `Admin` role](https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/managing-teams-and-people-with-access-to-your-repository#inviting-a-team-or-person). You can then run `buildbot reinit Financial-Times/PROJECT-NAME` in the `#ig-buildbot` Slack channel. New projects should be created in the [`Financial-Times`](https://github.com/Financial-Times/) GitHub organisation.
 
 CircleCI will build the project whenever you add a new commit to that repo (whether on master or other branches). Starter Kit includes a [`config.yml`](.circleci/config.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes. (The deploy script automatically decides what path to upload files to, based on the name of the repo on GitHub.) This process is called **continuous integration**.
 
