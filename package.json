@@ -109,7 +109,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-helmet-async": "0.1.0-alpha",
+    "react-helmet-async": "0.2.0",
     "react-hot-loader": "^4.12.18",
     "react-markdown": "^3.4.1"
   },
