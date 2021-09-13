@@ -101,10 +101,10 @@ if [[ `tr "[:upper:]" "[:lower:]" <<< "${CREATE_NEW_REPO:=y}"` != "n" ]]; then
     echo ""
     echo "No more private repos 😭 -- please manually create repo and then run:"
     echo ""
-    echo "    git push origin master"
+    echo "    git push origin main"
   else
     echo "Push to Github"
-    git push origin master -u
+    git push origin main -u
   fi
 else
   echo "Skipping repo creation."

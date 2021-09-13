@@ -11,7 +11,7 @@ A template for IG projects — everything you need to build a standalone front e
 To start a new project based on Starter Kit, run this setup script in your terminal:
 
 ```sh
-eval "$(curl -s https://raw.githubusercontent.com/ft-interactive/starter-kit/master/install)"
+eval "$(curl -s https://raw.githubusercontent.com/ft-interactive/starter-kit/main/install)"
 ```
 
 What the setup script does:
@@ -70,7 +70,7 @@ You can run the following tasks from within your project directory:
 
 ## Understanding automatic deployment ('continuous integration')
 
-Whenever you add _any_ repository to the [ft-interactive](https://github.com/ft-interactive) GitHub org, the [IG Buildbot](https://github.com/ft-interactive/ft-ig-github-project-manager) automatically sets up a new CircleCI project linked to the new repo. That means CircleCI will build the project whenever you add a new commit to that repo (whether on master or other branches).
+Whenever you add _any_ repository to the [ft-interactive](https://github.com/ft-interactive) GitHub org, the [IG Buildbot](https://github.com/ft-interactive/ft-ig-github-project-manager) automatically sets up a new CircleCI project linked to the new repo. That means CircleCI will build the project whenever you add a new commit to that repo (whether on main or other branches).
 
 How does Starter Kit come into this? Starter Kit includes a [`circle.yml`](circle.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes. (The deploy script automatically decides what path to upload files to, based on the name of the repo on GitHub.) This process is called **continuous integration**.
 
@@ -83,6 +83,6 @@ Please note the MIT licence only covers the software, and does not cover any FT 
 <!-- badge URLs -->
 
 [circle-url]: https://circleci.com/gh/ft-interactive/starter-kit
-[circle-image]: https://circleci.com/gh/ft-interactive/starter-kit/tree/master.svg?style=shield
+[circle-image]: https://circleci.com/gh/ft-interactive/starter-kit/tree/main.svg?style=shield
 [dependencyci-url]: https://dependencyci.com/github/ft-interactive/starter-kit
 [dependencyci-image]: https://dependencyci.com/github/ft-interactive/starter-kit/badge

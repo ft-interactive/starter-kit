@@ -19,7 +19,7 @@ Build/compile, start a dev server and watches for changes.
     * build and test the branch
     * deploy green builds to the review site
 3. Do quick smoke testing of the review build
-4. Get a code review. Once you get a thumbs up, merge into master.
+4. Get a code review. Once you get a thumbs up, merge into main.
 5. CI will build, test and deploy a build to Production.
 
 
@@ -34,7 +34,7 @@ Please note the MIT licence includes only the software, and does not cover any F
 
 <!-- badge URLs -->
 [circle-url]: https://circleci.com/gh/ft-interactive/$REPO
-[circle-image]: https://circleci.com/gh/ft-interactive/$REPO/tree/master.svg?style=shield
+[circle-image]: https://circleci.com/gh/ft-interactive/$REPO/tree/main.svg?style=shield
 
 [devdeps-url]: https://david-dm.org/ft-interactive/$REPO#info=devDependencies
 [devdeps-image]: https://img.shields.io/david/dev/ft-interactive/$REPO.svg?style=flat-square
