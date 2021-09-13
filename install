@@ -3,29 +3,29 @@
 echo ""
 echo -n "Local directory for the project (use lowercase with dashes) : "
 read DIR
-echo -n "Which branch to use? (press enter to use default branch \"master\") : "
+echo -n "Which branch to use? (press enter to use default branch \"main\") : "
 read BRANCH
-BRANCH=${BRANCH:-master}
+BRANCH=${BRANCH:-main}
 export STARTERKIT_BRANCH_NAME=$BRANCH # For use in configure
 
 if [[ -d "$DIR/.git" ]]; then
 	echo "This directory already contains a .git folder."
-	read -p "Do you wish to backup the existing master branch and create a new Starter Kit project on master? [y/N] " MOVE_MASTER
+	read -p "Do you wish to backup the existing main branch and create a new Starter Kit project on main? [y/N] " MOVE_MAIN
 	cd "$DIR"
-	if [[ `tr "[:upper:]" "[:lower:]" <<< "${MOVE_MASTER:=y}"` == "y" ]]; then
-		echo "What do you wish to call your backup master branch?"
-		read NEW_MASTER_NAME
+	if [[ `tr "[:upper:]" "[:lower:]" <<< "${MOVE_MAIN:=y}"` == "y" ]]; then
+		echo "What do you wish to call your backup main branch?"
+		read NEW_MAIN_NAME
 
-		git checkout -b "${NEW_MASTER_NAME}" # Backup to new branch
-		git checkout master # Checkout master again
+		git checkout -b "${NEW_MAIN_NAME}" # Backup to new branch
+		git checkout main # Checkout main again
 	fi
 	git remote add upstream ssh://git@github.com/ft-interactive/starter-kit.git
-	echo -n "Clearing out master..."
+	echo -n "Clearing out main..."
   git add .
-  git commit -am "<starter-kit> Committing before cleaning out master"
+  git commit -am "<starter-kit> Committing before cleaning out main"
   git rm -r *
   git clean -d -x -f
-  git commit -am "<starter-kit> Committing after cleaning out master"
+  git commit -am "<starter-kit> Committing after cleaning out main"
 
 	echo -n "Adding Starter Kit files..."
   git fetch --depth 1 upstream "$BRANCH"

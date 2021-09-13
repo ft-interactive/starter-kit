@@ -36,7 +36,7 @@ jobs:
       - run:
           name: General QA tests
           command: |
-            if [ $CIRCLE_BRANCH = "master" ]
+            if [ $CIRCLE_BRANCH = "main" ]
             then
               npm run test
             else
