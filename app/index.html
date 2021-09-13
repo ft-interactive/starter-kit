@@ -115,18 +115,18 @@
     <link rel="canonical" href="<%= htmlWebpackPlugin.options.context.url %>" />
     <meta name="twitter:url" content="<%= htmlWebpackPlugin.options.context.url %>" />
     <meta property="og:url" content="<%= htmlWebpackPlugin.options.context.url %>" />
-    <% if (htmlWebpackPlugin.options.context.mainImageUrl) { %>
-    <link rel="image_src" href="<%= htmlWebpackPlugin.options.context.mainImageUrl %>" />
+    <% if (htmlWebpackPlugin.options.context.mainImage.url) { %>
+    <link rel="image_src" href="<%= htmlWebpackPlugin.options.context.mainImage.url %>" />
     <% } %> <% if (htmlWebpackPlugin.options.context.twitterImage ||
-    htmlWebpackPlugin.options.context.socialImage || htmlWebpackPlugin.options.context.mainImageUrl)
+    htmlWebpackPlugin.options.context.socialImage || htmlWebpackPlugin.options.context.mainImage.url)
     { %>
-    <meta name="twitter:image" content="<%= twitterImage || socialImage || mainImageUrl %>" />
+    <meta name="twitter:image" content="<%= htmlWebpackPlugin.options.context.twitterImage || htmlWebpackPlugin.options.context.socialImage || htmlWebpackPlugin.options.context.mainImage.url %>" />
     <% } %> <% if (htmlWebpackPlugin.options.context.facebookImage ||
-    htmlWebpackPlugin.options.context.socialImage || htmlWebpackPlugin.options.context.mainImageUrl)
+    htmlWebpackPlugin.options.context.socialImage || htmlWebpackPlugin.options.context.mainImage.url)
     { %>
     <meta
       property="og:image"
-      content="<%= htmlWebpackPlugin.options.context.facebookImage || htmlWebpackPlugin.options.context.socialImage || htmlWebpackPlugin.options.context.mainImageUrl %>"
+      content="<%= htmlWebpackPlugin.options.context.facebookImage || htmlWebpackPlugin.options.context.socialImage || htmlWebpackPlugin.options.context.mainImage.url %>"
     />
     <% } %>
 

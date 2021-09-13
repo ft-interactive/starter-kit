@@ -33,16 +33,8 @@ if `git ls-remote --exit-code upstream &>/dev/null`; then
   fi
 else
   EXISTING_REPO=false
-  read -p "Do you want to create a new GitHub repo? [Y/n] " CREATE_NEW_REPO
-
-  if [[ `tr "[:upper:]" "[:lower:]" <<< "${CREATE_NEW_REPO:=y}"` != "n" ]]; then
-    read -p "New Github repo name (press enter to use default \"$DIR\") : " NAME
-    read -p "Description of the project displayed on Github : " DESCRIPTION
-    REPO=$(echo ${NAME:-$DIR} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
-  else
-    read -p "What do you want to call this project? (press enter to use default \"$DIR\") : " NAME
-    REPO=$(echo ${NAME:-$DIR} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
-  fi
+  read -p "What do you want to call this project? (press enter to use default \"$DIR\") : " NAME
+  REPO=$(echo ${NAME:-$DIR} | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
   REV=$(git rev-parse --short HEAD)
 fi
 
@@ -87,28 +79,6 @@ eval "echo \"$(cat config/article.js)\"" > config/article.js
 echo "Installing dependencies..."
 
 npm install
-
-if [[ `tr "[:upper:]" "[:lower:]" <<< "${CREATE_NEW_REPO:=y}"` != "n" ]]; then
-  echo "Creating repo on Github"
-  RESP=$(curl -n -v https://api.github.com/orgs/ft-interactive/repos \
-  -d "{\"name\": \"${REPO}\", \"homepage\":\"${URL}\",\"description\": \"${DESCRIPTION}\", \"private\":true, \"team_id\":260487, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}"  | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin').toString()).message")
-
-  echo $RESP
-  git remote add origin ssh://git@github.com/ft-interactive/$REPO.git
-
-  if [[ $RESP =~ "upgrade your plan" ]];
-  then
-    echo ""
-    echo "No more private repos 😭 -- please manually create repo and then run:"
-    echo ""
-    echo "    git push origin main"
-  else
-    echo "Push to Github"
-    git push origin main -u
-  fi
-else
-  echo "Skipping repo creation."
-fi
 
 echo ""
 echo "DONE !!"

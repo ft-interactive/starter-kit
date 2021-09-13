@@ -22,8 +22,8 @@ export default (environment = 'development') => {
 
     // summary === standfirst (Summary is what the content API calls it)
     summary:
-      'Ik kie neġi æpude pōsÞpriskribo, anċ ēg tiel subtegmenÞo.'
-      + 'Giga gārði esperǣntigo vi jes. Ċit plēj esceptīnte hu, ōl vola eksploðæ poǽ.',
+      'Ik kie neġi æpude pōsÞpriskribo, anċ ēg tiel subtegmenÞo.' +
+      'Giga gārði esperǣntigo vi jes. Ċit plēj esceptīnte hu, ōl vola eksploðæ poǽ.',
 
     topic: {
       name: 'Starter Kit',
@@ -40,18 +40,16 @@ export default (environment = 'development') => {
       description:
         '"Disvastiĝo de Esperanto". Mapo pri Esperanto-grupoj en Eŭropo, farita de la frankfurta grupo, en Germana Esperantisto, marto 1905',
       credit: 'Wikipedia',
-
-      // You can provide a UUID to an image and it was populate everything else
-      // uuid: 'c4bf0be4-7c15-11e4-a7b8-00144feabdc0',
-
-      // You can also provide a URL
       url:
         'https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F3%2F3a%2F1905-03-ge-frankf-mapo.jpg?source=ig',
     },
 
     // Byline can by a plain string, markdown, or array of authors
     // if array of authors, url is optional
-    bylines: [{ name: 'Author One' /* , url: '/foo/bar' // Must be absolute path */ }, { name: 'Author Two' }],
+    bylines: [
+      { name: 'Author One' /* , url: '/foo/bar' // Must be absolute path */ },
+      { name: 'Author Two' },
+    ],
 
     // Appears in the HTML <title>
     title: '',
@@ -127,7 +125,7 @@ export default (environment = 'development') => {
       */
       // product: '',
     },
-    
+
     polyfillFeatures: ['default', 'fetch', 'es2019'],
 
     // If you include a data set, uncomment and fill out the following to
