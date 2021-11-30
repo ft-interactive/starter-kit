@@ -10,12 +10,14 @@
           "useBuiltIns": "usage",
           "corejs": 3
         }
-      ]
+      ],
+      "@babel/preset-react"
     ],
     "plugins": [
       "@babel/plugin-transform-runtime",
       "@babel/plugin-proposal-class-properties",
-      "@babel/plugin-syntax-dynamic-import"
+      "@babel/plugin-syntax-dynamic-import",
+      "@babel/plugin-transform-modules-commonjs"
     ]
   },
   "devDependencies": {
@@ -104,9 +106,9 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
-    "@financial-times/g-components": "^7.1.0",
-    "@financial-times/o-colors": "^5.2.4",
-    "@financial-times/o-grid": "^5.2.6",
+    "@financial-times/g-components": "^7.3.0",
+    "@financial-times/o-colors": "^6.4.0",
+    "@financial-times/o-grid": "^6.1.0",
     "@hot-loader/react-dom": "^16.11.0",
     "core-js": "^3.6.4",
     "prop-types": "^15.6.2",
