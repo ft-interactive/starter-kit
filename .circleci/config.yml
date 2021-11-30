@@ -6,7 +6,7 @@ jobs:
     working_directory: ~/project
     executor:
       name: node/default
-      tag: '16.13'
+      tag: '16.13-browsers'
     steps:
       - checkout
       - run:
