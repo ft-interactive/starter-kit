@@ -133,7 +133,7 @@ module.exports = async (env = 'development') => {
     },
     devServer: {
       hot: true,
-      allowedHosts: ['.ngrok.io', 'local.ft.com'],
+      allowedHosts: ['.ngrok.io', 'local.ft.com', 'bs-local.com'],
     },
     devtool: IS_DEV ? 'inline-source-map' : 'source-map',
     plugins: [
