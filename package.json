@@ -82,7 +82,7 @@
     "npm": ">=5.3.x"
   },
   "optionalDependencies": {
-    "@financial-times/g-deploy": "^3.0.8",
+    "@financial-times/g-deploy": "^3.1.0",
     "@financial-times/vvc": "github:financial-times/visual-vocabulary-components#prerelease",
     "react-snap": "^1.23.0"
   },
