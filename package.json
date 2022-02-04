@@ -104,7 +104,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
-    "@financial-times/g-components": "^7.3.0",
+    "@financial-times/g-components": "^7.4.1",
     "@financial-times/o-colors": "^6.4.0",
     "@financial-times/o-grid": "^6.1.0",
     "@hot-loader/react-dom": "^16.11.0",
