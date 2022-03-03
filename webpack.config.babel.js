@@ -114,7 +114,7 @@ module.exports = async (env = 'development') => {
           },
           use: [
             {
-              loader: MiniCssExtractPlugin.loader,
+              loader: IS_DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
               options: {
                 hmr: IS_DEV,
               },
@@ -155,6 +155,6 @@ module.exports = async (env = 'development') => {
         'process.env.NODE_ENV': JSON.stringify(env),
       }),
       IS_DEV ? undefined : new ImageminWebpackPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
-    ].filter(i => i),
+    ].filter((i) => i),
   };
 };
