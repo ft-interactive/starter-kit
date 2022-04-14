@@ -63,6 +63,22 @@ You can run the following tasks from within your project directory:
 - A **CI configuration** that instructs CircleCI to deploy the project to S3 every time it builds.
 - A [**StorybookJS configuration**](.storybook/main.js) that looks for stories in the [`app/components`](app/components) folder (including nested folders) and also includes stories from g-components and VVC (if installed). Story files must end in `.stories.mdx` or `.stories.js/jsx/ts/tsx`.
 
+## What do I do with images/videos/other binary assets?
+
+It's generally a bad idea to store big binary files in Git repos, however, we've added support for [git-lfs (Large File Support)](https://git-lfs.github.com/) and suggest you use that to store assets
+that are critical to generating a build of your project. You'll be prompted to install git-lfs after cloning the repo if you don't have it already, please install it before committing large binary files.
+The file types managed by git-lfs are all defined within `.gitattributes` in the project root; feel free to edit that if you need to adjust how large files are stored (e.g., adding a new file type).
+
+To use such files in your project, import them in your code like you would a JavaScript module:
+
+```jsx
+import file from './image.png';
+
+const MyImage = () => <img src={file} alt="My image" />;
+```
+
+The build process will automatically replace the imports with the correct path to the file. ✨
+
 ## Understanding automatic deployment ('continuous integration')
 
 To enable continuous integration with CircleCI on a project and to allow you to use buildbot you first need to invite the `visual-data-journalism-admins` group to the repository and [assign them the `Admin` role](https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/managing-teams-and-people-with-access-to-your-repository#inviting-a-team-or-person). You can then run `buildbot reinit Financial-Times/PROJECT-NAME` in the `#ig-buildbot` Slack channel. New projects should be created in the [`Financial-Times`](https://github.com/Financial-Times/) GitHub organisation.

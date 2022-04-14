@@ -80,7 +80,7 @@ module.exports = async (env = 'development') => {
           },
         },
         {
-          test: /\.(png|jpe?g|gif|svg)$/,
+          test: /\.(png|jpe?g|psd|pdf|gif|webp|mov|mp4|wmv|avi|mkv|webm|mp3|ogg|svg)$/,
           use: [
             {
               loader: 'file-loader',
