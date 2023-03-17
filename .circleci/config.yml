@@ -7,7 +7,6 @@ workflows:
             - djd-starter-kit-s3-deployment # context is named the same in both orgs
 orbs:
   node: circleci/node@4.7.0
-  doppler: conpago/doppler@1.3.5
 jobs:
   build:
     working_directory: ~/project
@@ -15,8 +14,9 @@ jobs:
       name: node/default
       tag: '16.13-browsers'
     steps:
-      - doppler/install
-      - doppler/load_secrets
+      - run:
+          name: Install Doppler CLI to current directory
+          command: (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh -s -- --no-install --no-package-manager
       - run:
           name: Install git-lfs
           command: curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash && sudo apt-get install git-lfs && git lfs install    
@@ -35,9 +35,9 @@ jobs:
           command: |
             if [ "$PREVIEW" == "true" ]
             then
-              npm run deploy -- --confirm --preview
+              doppler run --command "npm run deploy -- --confirm --preview"
             else
-              npm run deploy -- --confirm
+              doppler run --command "npm run deploy -- --confirm"
             fi
       - run:
           name: Check accessibility of deployed site
