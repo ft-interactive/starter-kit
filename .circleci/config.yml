@@ -35,9 +35,9 @@ jobs:
           command: |
             if [ "$PREVIEW" == "true" ]
             then
-              doppler run --command "npm run deploy -- --confirm --preview"
+              ./doppler run --command "npm run deploy -- --confirm --preview"
             else
-              doppler run --command "npm run deploy -- --confirm"
+              ./doppler run --command "npm run deploy -- --confirm"
             fi
       - run:
           name: Check accessibility of deployed site
