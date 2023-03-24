@@ -1,6 +1,6 @@
 version: 2.1
 workflows:
-  starter-kit-s3-deployment:
+  build:
     jobs:
       - build:
           context:
@@ -20,13 +20,13 @@ jobs:
           command: (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh -s -- --no-install --no-package-manager
       - run:
           name: Install git-lfs
-          command: curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash && sudo apt-get install git-lfs && git lfs install    
+          command: curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash && sudo apt-get install git-lfs && git lfs install
       - run:
           name: Install dependencies
           command: npm install
       - run:
           name: Build
-          command: npm run build
+          command: ./doppler run --command "npm run build"
       - store_artifacts:
           name: Store artifacts (dist)
           path: dist/
