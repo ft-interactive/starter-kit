@@ -1,10 +1,14 @@
 version: 2.1
 workflows:
-  starter-kit-s3-deployment:
+  build:
     jobs:
       - build:
           context:
             - djd-starter-kit-s3-deployment # context is named the same in both orgs
+parameters:
+  PREVIEW:
+    type: boolean
+    default: FALSE
 orbs:
   node: circleci/node@4.7.0
 jobs:
@@ -20,20 +24,20 @@ jobs:
           command: (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh -s -- --no-install --no-package-manager
       - run:
           name: Install git-lfs
-          command: curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash && sudo apt-get install git-lfs && git lfs install    
+          command: curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash && sudo apt-get install git-lfs && git lfs install
       - run:
           name: Install dependencies
           command: npm install
       - run:
           name: Build
-          command: npm run build
+          command: ./doppler run --command "npm run build"
       - store_artifacts:
           name: Store artifacts (dist)
           path: dist/
       - deploy:
           name: Deploy
           command: |
-            if [ "$PREVIEW" == "true" ]
+            if [ "<< pipeline.parameters.PREVIEW >>" == "true" ]
             then
               ./doppler run --command "npm run deploy -- --confirm --preview"
             else
@@ -42,7 +46,7 @@ jobs:
       - run:
           name: Check accessibility of deployed site
           command: |
-            if [ "$PREVIEW" == "true" ]
+            if [ "<< pipeline.parameters.PREVIEW >>" == "true" ]
             then
               npm run a11y:preview
             else
