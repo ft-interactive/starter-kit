@@ -5,6 +5,10 @@ workflows:
       - build:
           context:
             - djd-starter-kit-s3-deployment # context is named the same in both orgs
+parameters:
+  PREVIEW:
+    type: boolean
+    default: FALSE
 orbs:
   node: circleci/node@4.7.0
 jobs:
