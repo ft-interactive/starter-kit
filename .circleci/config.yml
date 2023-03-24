@@ -33,7 +33,7 @@ jobs:
       - deploy:
           name: Deploy
           command: |
-            if [ "<< pipeline.PREVIEW >>" == "true" ]
+            if [ "<< pipeline.parameters.PREVIEW >>" == "true" ]
             then
               ./doppler run --command "npm run deploy -- --confirm --preview"
             else
@@ -42,7 +42,7 @@ jobs:
       - run:
           name: Check accessibility of deployed site
           command: |
-            if [ "<< pipeline.PREVIEW >>" == "true" ]
+            if [ "<< pipeline.parameters.PREVIEW >>" == "true" ]
             then
               npm run a11y:preview
             else
