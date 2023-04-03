@@ -78,8 +78,8 @@
     "webpack-dev-server": "^3.10.1"
   },
   "engines": {
-    "node": ">=8",
-    "npm": ">=5.3.x"
+    "node": ">=16",
+    "npm": ">=7"
   },
   "optionalDependencies": {
     "@financial-times/g-deploy": "^3.1.0",
