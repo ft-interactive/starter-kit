@@ -48,11 +48,15 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { hot } from 'react-hot-loader/root';
-import Layout from '@financial-times/g-components/article-layout';
-import StoryTopper from '@financial-times/g-components/story-topper';
-import Epilogue from '@financial-times/g-components/epilogue';
-import { GridChild, GridRow, GridContainer } from '@financial-times/g-components/grid';
+import {
+  ArticleLayout as Layout,
+  StoryTopper,
+  Epilogue,
+  Grid,
+} from '@financial-times/g-components';
+import '@financial-times/g-components/styles.css';
+
+const { GridChild, GridRow, GridContainer } = Grid;
 
 const App = () => {
   // This sets the initial state of the application. We need
@@ -62,14 +66,14 @@ const App = () => {
 
   const [context, setContext] = useState(null);
 
-  // Asynchronous effects should update state as per below
-  useEffect(() => {
-    // N.b., do async in an async IIFE, don't make the useEffect callback async
-    (async () => {
-      const { default: data } = await import('../data/example.csv');
-      setState({ data });
-    })();
-  }, []);
+  // // Asynchronous effects should update state as per below
+  // useEffect(() => {
+  //   // N.b., do async in an async IIFE, don't make the useEffect callback async
+  //   (async () => {
+  //     const { default: data } = await import('../data/example.csv');
+  //     setState({ data });
+  //   })();
+  // }, []);
 
   useEffect(() => {
     (async () => {
@@ -150,4 +154,4 @@ const App = () => {
   ) : null;
 };
 
-export default hot(App);
+export default App;

@@ -4,9 +4,9 @@
  * to app as `context`.
  */
 
-import article from './article';
-import getFlags from './flags';
-import getOnwardJourney from './onward-journey';
+import article from './article.js';
+import getFlags from './flags.js';
+import getOnwardJourney from './onward-journey.js';
 
 export default async (environment = 'development') => {
   const d = await article(environment);

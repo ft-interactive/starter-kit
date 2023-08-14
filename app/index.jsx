@@ -8,7 +8,6 @@
 
 import React from 'react';
 import { hydrate, render } from 'react-dom';
-import '@financial-times/g-components/g-components.css';
 import App from './app';
 import './styles.scss';
 

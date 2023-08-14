@@ -13,10 +13,10 @@
     "browser": true,
     "jest": true
   },
-  "parser": "babel-eslint",
   "settings": {
     "import/resolver": {
       "alias": {
+        "map": [["@financial-times/g-components", "@financial-times/g-components/dist"]],
         "extensions": [".ts", ".js", ".jsx", ".json", ".scss"]
       }
     }
