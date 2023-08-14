@@ -22,5 +22,6 @@ export default async (environment = 'development') => {
     ...d,
     flags,
     relatedContent,
+    buildTime: new Date().toISOString(),
   };
 };

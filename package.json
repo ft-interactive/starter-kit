@@ -21,6 +21,7 @@
     "prettier": "^2.8.8",
     "sass": "^1.62.1",
     "vite": "^4.3.9",
+    "vite-plugin-ejs": "^1.6.4",
     "vite-plugin-generate-file": "^0.0.4"
   },
   "engines": {
