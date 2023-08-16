@@ -8,6 +8,7 @@ const context = await getContext();
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [
     ViteEjsPlugin(context, {
       ejs: {
