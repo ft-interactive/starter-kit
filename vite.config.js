@@ -3,6 +3,7 @@ import generateFile from 'vite-plugin-generate-file';
 import react from '@vitejs/plugin-react';
 import getContext from './config/index.js';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
+import dsv from '@rollup/plugin-dsv';
 
 const context = await getContext();
 
@@ -24,5 +25,6 @@ export default defineConfig({
       },
     ]),
     react(),
+    dsv(),
   ],
 });
