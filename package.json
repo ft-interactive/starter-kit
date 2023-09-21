@@ -42,7 +42,7 @@
     "a11y:local": "pa11y localhost:8080",
     "deploy": "g-deploy --assets-prefix=https://ig.ft.com/v2/__assets/",
     "test": "mocha ./test/**/*.spec.js",
-    "start": "vite",
+    "start": "vite --port 8080",
     "lint": "eslint app/**/*.js test/**/*.js",
     "lint:fix": "eslint --fix app/**/*.js test/**/*.js",
     "prepare": "husky install"
