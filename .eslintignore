@@ -1,2 +1,5 @@
 /dist/
 /.tmp/
+
+# eslint doesn't support top-level await
+vite.config.js
