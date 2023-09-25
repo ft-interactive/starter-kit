@@ -54,12 +54,13 @@ import {
   Epilogue,
   Grid,
 } from '@financial-times/g-components';
-import '@financial-times/g-components/styles.css';
+import '@financial-times/g-components/dist/style.css';
 
 const { GridChild, GridRow, GridContainer } = Grid;
 
 const App = () => {
   // This sets the initial state of the application. We need
+  // eslint-disable-next-line
   const [state, setState] = useState({
     data: [],
   });
