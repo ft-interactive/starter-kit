@@ -54,7 +54,7 @@ import {
   Epilogue,
   Grid,
 } from '@financial-times/g-components';
-import '@financial-times/g-components/dist/style.css';
+import '@financial-times/g-components/styles.css';
 
 const { GridChild, GridRow, GridContainer } = Grid;
 

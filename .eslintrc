@@ -8,6 +8,7 @@
     "react/jsx-fragments": [2, "element"],
     "react/state-in-constructor": [0],
     "react/jsx-props-no-spreading": [0],
+    "import/ignore": [".css$"],
     "react/function-component-definition": [
       1,
       {
