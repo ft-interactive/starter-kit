@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "airbnb/hooks", "plugin:mdx/recommended", "prettier", "prettier/react"],
+  "extends": ["airbnb", "airbnb/hooks", "plugin:mdx/recommended", "prettier"],
   "root": true,
   "rules": {
     "import/no-extraneous-dependencies": [2, {}],
