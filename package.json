@@ -41,7 +41,7 @@
     "a11y:preview": "pa11y $(g-deploy --preview --get-commit-url)",
     "a11y:local": "pa11y localhost:8080",
     "deploy": "g-deploy --assets-prefix=https://ig.ft.com/v2/__assets/",
-    "test": "mocha ./test/**/*.spec.js",
+    "test": "mocha ./test/**/*.spec.cjs",
     "start": "vite --port 8080",
     "lint": "eslint app/**/*.js test/**/*.js",
     "lint:fix": "eslint --fix app/**/*.js test/**/*.js",
