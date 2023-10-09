@@ -8,30 +8,7 @@ A template for IG projects — everything you need to build a standalone front e
 
 #### Getting started
 
-To start a new project based on Starter Kit, run this setup script in your terminal:
-
-```sh
-eval "$(curl -s https://raw.githubusercontent.com/ft-interactive/starter-kit/main/install)"
-```
-
-What the setup script does:
-
-- Asks you a few questions about your project (e.g. title, description).
-- Clones Starter Kit to your own computer (but reinitialises it as a brand new git repo with no history).
-- Runs `npm install` to grab all the dependencies (this takes a few minutes).
-- Runs `npm start` for the first time — now you can start coding.
-
-You can also re-initialise a Starter Kit project to use the latest version by providing a path
-to an existing project in the first step of the wizard. This will put everything in the folder into
-a new commit (_including_ things that aren't version controlled and aren't in .gitignore), wipe the
-folder, then add Starter Kit as a new commit. It doesn't try to upgrade your code at all, though
-you can generally restore everything by running the following afterwards:
-
-```bash
-git checkout HEAD~1 -- client config
-```
-
-This assumes your project keeps most of your data in the `app/` and `config/` folders.
+Select the green `Use this template` button at the top of the page to Create a new repository. Follow the steps as prompted to clone your repository locally. If it is your first time running a Starter Kit project follow the [setup instructions for vs-components](https://github.com/ft-interactive/vs-components#setup). Then run `npm install` in your terminal at the project root directory.
 
 #### Using the built in tasks
 
