@@ -27,7 +27,10 @@ jobs:
           command: (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh -s -- --no-install --no-package-manager
       - run:
           name: Install dependencies
-          command: npm install
+          command: |
+            echo "@ft-interactive:registry=https://npm.pkg.github.com/" >> .npmrc
+            ./doppler run --command 'echo "//npm.pkg.github.com/:_authToken=$GPR_AUTH_TOKEN" >> .npmrc'
+            npm install
       - run:
           name: Build
           command: ./doppler run --command "npm run build"
