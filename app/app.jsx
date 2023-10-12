@@ -60,6 +60,7 @@ const { GridChild, GridRow, GridContainer } = Grid;
 
 const App = () => {
   // This sets the initial state of the application. We need
+  // eslint-disable-next-line no-unused-vars
   const [state, setState] = useState({
     data: [],
   });

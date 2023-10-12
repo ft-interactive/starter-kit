@@ -21,6 +21,7 @@ export default async (environment = 'development') => {
   return {
     ...d,
     flags,
+    pageClasses: `core${flags.dark ? ' dark' : ''}`,
     relatedContent,
     buildTime: new Date().toISOString(),
   };

@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "airbnb/hooks", "plugin:mdx/recommended", "prettier"],
+  "extends": ["airbnb", "airbnb/hooks", "prettier"],
   "root": true,
   "rules": {
     "import/no-extraneous-dependencies": [2, {}],
@@ -7,7 +7,8 @@
     "react/jsx-filename-extension": [0],
     "react/jsx-fragments": [2, "element"],
     "react/state-in-constructor": [0],
-    "react/jsx-props-no-spreading": [0]
+    "react/jsx-props-no-spreading": [0],
+    "react/function-component-definition": [0]
   },
   "env": {
     "browser": true,
@@ -16,7 +17,12 @@
   "settings": {
     "import/resolver": {
       "alias": {
-        "map": [["@financial-times/g-components", "@financial-times/g-components/dist"]],
+        "map": [
+          [
+            "@financial-times/g-components/styles.css",
+            "@financial-times/g-components/dist/styles.css"
+          ]
+        ],
         "extensions": [".ts", ".js", ".jsx", ".json", ".scss"]
       }
     }
