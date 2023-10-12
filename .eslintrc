@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "airbnb/hooks", "plugin:mdx/recommended", "prettier"],
+  "extends": ["airbnb", "airbnb/hooks", "prettier"],
   "root": true,
   "rules": {
     "import/no-extraneous-dependencies": [2, {}],
@@ -17,6 +17,12 @@
   "settings": {
     "import/resolver": {
       "alias": {
+        "map": [
+          [
+            "@financial-times/g-components/styles.css",
+            "@financial-times/g-components/dist/styles.css"
+          ]
+        ],
         "extensions": [".ts", ".js", ".jsx", ".json", ".scss"]
       }
     }
