@@ -37,7 +37,7 @@
   },
   "private": true,
   "scripts": {
-    "build": "vite build",
+    "build": "vite build --mode=production",
     "a11y": "pa11y $(g-deploy --get-commit-url)",
     "a11y:preview": "pa11y $(g-deploy --preview --get-commit-url)",
     "a11y:local": "pa11y localhost:8080",
