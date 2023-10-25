@@ -8,7 +8,7 @@ A template for IG projects — everything you need to build a standalone front e
 
 #### Getting started
 
-Select the green `Use this template` button at the top of the page to Create a new repository. Follow the steps as prompted to clone your repository locally. If it is your first time running a Starter Kit project follow the [setup instructions for vs-components](https://github.com/ft-interactive/vs-components#setup). Then run `npm install` in your terminal at the project root directory.
+Select the green `Use this template` button at the top of the page to Create a new repository. New projects should be created in the [`ft-interactive`](https://github.com/ft-interactive/) GitHub organisation. Follow the steps as prompted to clone your repository locally. If it is your first time running a Starter Kit project follow the [setup instructions for vs-components](https://github.com/ft-interactive/vs-components#setup). Then run `npm install` in your terminal at the project root directory.
 
 #### Using the built in tasks
 
@@ -58,7 +58,7 @@ The build process will automatically replace the imports with the correct path t
 
 ## Understanding automatic deployment ('continuous integration')
 
-To enable continuous integration with CircleCI on a project and to allow you to use buildbot you first need to invite the `visual-data-journalism-admins` group to the repository and [assign them the `Admin` role](https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/managing-teams-and-people-with-access-to-your-repository#inviting-a-team-or-person). You can then run `buildbot reinit ft-interactive/PROJECT-NAME` in the `#ig-buildbot` Slack channel. New projects should be created in the [`ft-interactive`](https://github.com/ft-interactive/) GitHub organisation.
+To enable continuous integration with CircleCI on a project first invite the `visual-data-journalism-admins` group to the repository and [assign them the `Admin` role](https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/managing-teams-and-people-with-access-to-your-repository#inviting-a-team-or-person). Then go to the [`ft-interactive`](https://github.com/ft-interactive/) GitHub organisation on CircleCi and click [Projects](https://app.circleci.com/projects/project-dashboard/github/ft-interactive/). Find the name of your repo and there should be a button that either says "Follow Project" or "Set Up Project", click either button. If the button was "Set up Project" a pop up should appear and specify "main" as the branch to look for the config.yml file. This will create a new project.
 
 CircleCI will build the project whenever you add a new commit to that repo (whether on main or other branches). Starter Kit includes a [`config.yml`](.circleci/config.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes. (The deploy script automatically decides what path to upload files to, based on the name of the repo on GitHub.) This process is called **continuous integration**.
 
