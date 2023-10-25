@@ -8,7 +8,7 @@ A template for IG projects — everything you need to build a standalone front e
 
 #### Getting started
 
-Select the green `Use this template` button at the top of the page to Create a new repository. Follow the steps as prompted to clone your repository locally. If it is your first time running a Starter Kit project follow the [setup instructions for vs-components](https://github.com/ft-interactive/vs-components#setup). Then run `npm install` in your terminal at the project root directory.
+Select the green `Use this template` button at the top of the page to Create a new repository. New projects should be created in the [`ft-interactive`](https://github.com/ft-interactive/) GitHub organisation. Follow the steps as prompted to clone your repository locally. If it is your first time running a Starter Kit project follow the [setup instructions for vs-components](https://github.com/ft-interactive/vs-components#setup). Then run `npm install` in your terminal at the project root directory.
 
 #### Using the built in tasks
 
