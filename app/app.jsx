@@ -48,13 +48,10 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import {
-  ArticleLayout as Layout,
-  StoryTopper,
-  Epilogue,
-  Grid,
-} from '@financial-times/g-components';
+import { ArticleLayout as Layout, StoryTopper, Grid } from '@financial-times/g-components';
 import '@financial-times/g-components/styles.css';
+import Credits from '@ft-interactive/vs-components/Credits';
+import '@ft-interactive/vs-components/styles.css';
 
 const { GridChild, GridRow, GridContainer } = Grid;
 
@@ -144,11 +141,19 @@ const App = () => {
                       prǽantæŭlǽsÞa ǣs plue, tǣgō tiūdirekten ni neā.
                     </p>
                   </div>
+                  <Credits
+                    share={{
+                      url: context.url,
+                      socialHeadline: context.socialHeadline || context.headline,
+                      tweetText: context.tweetText || context.twitterHeadline,
+                      facebookHeadline: context.facebookHeadline,
+                    }}
+                    dark={context.flags.dark}
+                  />
                 </GridChild>
               </GridRow>
             </GridContainer>
           </div>
-          <Epilogue />
         </article>
       </main>
     </Layout>
