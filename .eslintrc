@@ -21,6 +21,10 @@
           [
             "@financial-times/g-components/styles.css",
             "@financial-times/g-components/dist/styles.css"
+          ],
+          [
+            "@ft-interactive/vs-components$",
+            "node-modules/@ft-interactive/vs-components/dist/vs-components.js"
           ]
         ],
         "extensions": [".ts", ".js", ".jsx", ".json", ".scss"]
