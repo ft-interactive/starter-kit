@@ -5,14 +5,15 @@
  * @TODO Please ensure this file is filled out before publishing!!!
  */
 
+// eslint-disable-next-line no-unused-vars
 export default (environment = 'development') => {
   const config = {
     // link file UUID
     id: '', // @TODO put the UUID from Methode story/link file here
 
     // canonical URL of the published page
-    // url below gets filled in by the ./configure script
-    url: '$URL',
+    // This should look like 'https://ig.ft.com/your-project'
+    url: null, // @TODO update the final IG link
 
     // To set an exact publish date do this:
     //       new Date('2016-05-17T17:11:22Z')
@@ -40,8 +41,7 @@ export default (environment = 'development') => {
       description:
         '"Disvastiĝo de Esperanto". Mapo pri Esperanto-grupoj en Eŭropo, farita de la frankfurta grupo, en Germana Esperantisto, marto 1905',
       credit: 'Wikipedia',
-      url:
-        'https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F3%2F3a%2F1905-03-ge-frankf-mapo.jpg?source=ig',
+      url: 'https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F3%2F3a%2F1905-03-ge-frankf-mapo.jpg?source=ig',
     },
 
     // Byline can by a plain string, markdown, or array of authors
@@ -186,7 +186,7 @@ export default (environment = 'development') => {
 
   // This explicitly sets the comments URL to the link page
   if (!config.linkPageUrl) {
-    config.linkPageUrl = 'https://www.ft.com/content/' + config.id;
+    config.linkPageUrl = `https://www.ft.com/content/${  config.id}`;
   }
 
   return config;

@@ -6,10 +6,12 @@
 
 import article from './article.js';
 import getFlags from './flags.js';
+import getUrl from './url.js';
 import getOnwardJourney from './onward-journey.js';
 
 export default async (environment = 'development') => {
   const d = await article(environment);
+  const url = await getUrl(d.url, environment);
   const flags = await getFlags(environment);
   const { relatedContent } = await getOnwardJourney(environment);
 
@@ -20,6 +22,7 @@ export default async (environment = 'development') => {
 
   return {
     ...d,
+    url,
     flags,
     pageClasses: `core${flags.dark ? ' dark' : ''}`,
     relatedContent,
