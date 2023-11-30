@@ -16,8 +16,8 @@ export default (environment = 'development') => {
     url: null, // @TODO update the final IG link
 
     // To set an exact publish date do this:
-    //       new Date('2016-05-17T17:11:22Z')
-    publishedDate: new Date(),
+    //       new Date('2016-05-17T17:11:22Z').toISOString()
+    publishedDate: new Date().toISOString(),
 
     headline: 'Ik kie neġi æpude pōsÞpriskribo',
 
@@ -102,7 +102,7 @@ export default (environment = 'development') => {
       // Start with ft.com and /companies /markets /world as appropriate to your story. The default is /world
       gptZone: false,
       // granular targeting is optional and will be specified by the ads team
-      dfpTargeting: false,
+      targeting: false,
     },
 
     tracking: {
@@ -186,7 +186,7 @@ export default (environment = 'development') => {
 
   // This explicitly sets the comments URL to the link page
   if (!config.linkPageUrl) {
-    config.linkPageUrl = `https://www.ft.com/content/${  config.id}`;
+    config.linkPageUrl = `https://www.ft.com/content/${config.id}`;
   }
 
   return config;

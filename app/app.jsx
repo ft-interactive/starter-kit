@@ -48,10 +48,13 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ArticleLayout as Layout, StoryTopper, Grid } from '@financial-times/g-components';
 import '@financial-times/g-components/styles.css';
 import Credits from '@ft-interactive/vs-components/Credits';
 import '@ft-interactive/vs-components/styles.css';
+
+import { ContextPropType } from './util/prop-types';
 
 const { GridChild, GridRow, GridContainer } = Grid;
 
@@ -126,5 +129,9 @@ const App = ({ context }) => (
     </main>
   </Layout>
 );
+
+App.propTypes = {
+  context: PropTypes.shape(ContextPropType),
+};
 
 export default App;
