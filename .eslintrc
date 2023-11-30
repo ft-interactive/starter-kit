@@ -8,7 +8,8 @@
     "react/jsx-fragments": [2, "element"],
     "react/state-in-constructor": [0],
     "react/jsx-props-no-spreading": [0],
-    "react/function-component-definition": [0]
+    "react/function-component-definition": [0],
+    "no-restricted-syntax": 0
   },
   "env": {
     "browser": true,
@@ -30,5 +31,9 @@
         "extensions": [".ts", ".js", ".jsx", ".json", ".scss"]
       }
     }
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   }
 }

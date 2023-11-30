@@ -23,6 +23,7 @@ const template = compile(indexTemplate);
 export async function render() {
   // Get story context and settings to pass to the client
   const context = await getContext(import.meta.env.NODE_ENV);
+  console.log('data', context.data);
 
   // Render React app to HTML
   const appHtml = ReactDOMServer.renderToString(<App context={context} />);

@@ -11,7 +11,7 @@ import getContext from './config/index.js';
 
 // https://vitejs.dev/config/
 export default defineConfig(async ({ mode }) => {
-  const context = await getContext(mode);
+  const context = await getContext(mode, { withData: false });
 
   return {
     root: '.',
