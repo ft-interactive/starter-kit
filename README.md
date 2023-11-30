@@ -61,6 +61,47 @@ The build process will automatically replace the imports with the correct path t
 
 If you have other files you need to reference, but can't import (e.g. a large set of files with names that correspond to IDs), you can add them inside the `public/` folder.
 
+## Understanding SSG (HTML pre-generation)
+
+The starter-kit runs your React code twice: first, during the `npm run build` process, when it produces an `index.html` file that contains all your code.
+Then, it runs again inside readers' browser, to _hydrate_ the static HTML with your react components and make them interactive.
+
+This process means any browser-only code (e.g. anything that touches `window` or `document`) needs to run inside a `useEffect()` block, where it will be deferred to the client. Additionally,
+you need to be sure to not conditionally render any elements depending on client — because the pre-rendered HTML must match the client-rendered text. (If you do this, you will see an "Hydration error"
+in the browser console.)
+
+Instead, consider controlling the rendering a server-side version in a `useState` variable and updating it using a `useEffect`.
+
+```jsx
+// DON'T do this:
+{
+  isClient && <div>{/* client-only stuff here */}</div>;
+}
+
+// This is better:
+const [elements, setElements] = useState(null);
+useEffect(() => {
+  // This will only run once the client has hydrated
+  setElements(<div>{/* client-only stuff here */}</div>);
+});
+
+return <div>{elements}</div>;
+```
+
+Alternatively, you can use the included `LazyLoad` helper in the `utils` directory, which will lazy-load any component and only render it on the client. This is both useful for components
+that only run in the browser (e.g. WebGL or Canvas) and ones that are very large (e.g. complicated SVG diagrams) and low in the page. By lazy-loading components on the client, you reduce the size
+of the initial JS bundle and speed up the initial rendering and loading of the page.
+
+Usage of the `LazyLoad` looks like this:
+
+```jsx
+import LazyLoad from './util/LazyLoad';
+
+<LazyLoad component={() => import('./MyComponent')} props={{ ... }} />
+```
+
+You can also optionally pass a custom loading message or component (displayed while waiting for the component to load) with the `loading` prop.
+
 ## Understanding automatic deployment ('continuous integration')
 
 To enable continuous integration with CircleCI on a project first invite the `visual-data-journalism-admins` group to the repository and [assign them the `Admin` role](https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/managing-teams-and-people-with-access-to-your-repository#inviting-a-team-or-person). Then go to the [`ft-interactive`](https://github.com/ft-interactive/) GitHub organisation on CircleCi and click [Projects](https://app.circleci.com/projects/project-dashboard/github/ft-interactive/). Find the name of your repo and there should be a button that either says "Follow Project" or "Set Up Project", click either button. If the button was "Set up Project" a pop up should appear and specify "main" as the branch to look for the config.yml file. This will create a new project.
