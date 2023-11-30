@@ -16,9 +16,11 @@ You can run the following tasks from within your project directory:
 
 - `npm start` — starts up a development server and opens your app in a web browser. The dev server will automatically reload your browser when files change.
 - `npm run storybook` — loads up [StorybookJS](https://storybook.js.org/) as a development environment for building components. Stories created in the `app/components` folder will automatically show up in the storybook.
-- `npm run build` — builds your app and puts it in the `dist` folder.
-- `npm run deploy` — deploys the contents of your `dist` folder to an appropriate location on S3. (You usually don't need to run this yourself — it is run automatically by CircleCI.)
+- `npm run build` — builds your app in production and puts it in the `dist` folder.
+- `npm run preview` — builds your app in production mode and starts a webserver from the `dist` folder, to preview the production bundle
 - `npm run a11y:local` - checks accessibility of your app running locally (must be running at localhost:8080 to work)
+- `npm run deploy` — deploys the contents of your `dist` folder to an appropriate location on S3. (You usually don't need to run this yourself — it is run automatically by CircleCI.)
+- `npm run data` - runs any data-fetching code in `config/data.js` and caches the results in `config/data.json`. (If you run this script, the config setup will read from the file instead of fetching data each time.)
 
 (You can find a few other, less interesting tasks defined in [`package.json`](package.json).)
 
@@ -29,7 +31,8 @@ You can run the following tasks from within your project directory:
   - [`article.js`](config/article.js) — article metadata which replicates most metadata found on FT.com. Add or remove required polyfills here with the `polyfillFeatures` attribute
   - [`flags.js`](config/flags.js) — flags to control page behaviour including ads and comments
   - [`onward-journey.js`](config/index.js) — sets the stream page used to populate the onward journey at the bottom of the page
-  - [`index.js`](config/index.js) — the function that collects together all the configuration files in this folder. Use this file to pull in and parse remote data on build. The output of this function is written to `context.json` which `app.js` fetches after initial render
+  - [`data.js`](config/data.js) — an empty method where you can add data-fetching or -loading logic
+  - [`index.js`](config/index.js) — the function that collects together all the configuration files in this folder and makes it available to the app inside the `context` provider
 - `dist` — the optimsed HTML/CSS/JS bundle, generated automatically every time you run `npm run build`. You shouldn't edit files in here manually, as any manual changes would just get overwritten next time you build.
 
 ## What's included in Starter Kit?
@@ -55,6 +58,8 @@ const MyImage = () => <img src={file} alt="My image" />;
 ```
 
 The build process will automatically replace the imports with the correct path to the file. ✨
+
+If you have other files you need to reference, but can't import (e.g. a large set of files with names that correspond to IDs), you can add them inside the `public/` folder.
 
 ## Understanding automatic deployment ('continuous integration')
 

@@ -45,7 +45,7 @@
     "deploy": "g-deploy --assets-prefix=https://ig.ft.com/v2/__assets/ --local-dir dist/client",
     "test": "mocha ./test/**/*.spec.cjs",
     "start": "vite --port 8080",
-    "preview": "npm run build && vite preview",
+    "preview": "NODE_ENV=production npm run build && vite preview",
     "lint": "eslint app/**/*.js test/**/*.js",
     "lint:fix": "eslint --fix app/**/*.js test/**/*.js",
     "prepare": "husky install"
