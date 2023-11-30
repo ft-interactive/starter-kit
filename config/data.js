@@ -50,8 +50,12 @@ export default async function getData(mode = 'development') {
  * This de-couples your data loading process from the build step — which can be useful
  * e.g. if you want to verify changes (like pulling in text from a Google Doc).
  */
+
 if (filePath.includes(nodePath)) {
-  console.log('Calling fetchData() and saving the results to config/data.json...');
-  const data = await fetchData(process.env.MODE || 'development');
-  await fs.writeFile(dataFile, JSON.stringify(data));
+  console.log('Calling fetchData()...'); // eslint-disable-line no-console
+  fetchData(process.env.MODE || 'development')
+    .then((data) => fs.writeFile(dataFile, JSON.stringify(data)))
+    .then(() => {
+      console.log('✓ Cached results in config/data.json'); // eslint-disable-line no-console
+    });
 }
