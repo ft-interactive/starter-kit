@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
  *
  * @param {function} component A function that dynamically imports a React component
  * @param {object} props A set of props to pass to the component
+ * @param {node} loading A string or node to render on the server and while the component is loading
  * @returns
  */
 const LazyLoad = ({ component, props = {}, loading = 'Loading...' }) => {
