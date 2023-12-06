@@ -27,7 +27,8 @@ async function fetchData(mode) {
    * The return value of this method will be available
    * inside the context provider as "context.data."
    *
-   * If 'mode' is set (either 'development' or 'production'), the function is running at build time.
+   * If 'mode' is either 'development' or 'production', the function is running at build time.
+   * If 'mode' is 'cli', the function is running manually via "npm run download."
    *
    */
 
@@ -53,7 +54,7 @@ export default async function getData(mode = 'development') {
 
 if (filePath.includes(nodePath)) {
   console.log('Calling fetchData()...'); // eslint-disable-line no-console
-  fetchData(process.env.MODE || 'development')
+  fetchData('cli')
     .then((data) => fs.writeFile(dataFile, JSON.stringify(data)))
     .then(() => {
       console.log('✓ Cached results in config/data.json'); // eslint-disable-line no-console
