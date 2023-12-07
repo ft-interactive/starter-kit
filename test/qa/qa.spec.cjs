@@ -14,7 +14,7 @@ const chai = require('chai');
 const { JSDOM } = require('jsdom');
 const { readFileSync } = require('fs');
 
-const index = readFileSync(`${__dirname}/../../dist/index.html`, {
+const index = readFileSync(`${__dirname}/../../dist/client/index.html`, {
   encoding: 'utf-8',
 });
 const { document } = new JSDOM(index).window;
@@ -24,7 +24,7 @@ const testCommentsUUID = '3a499586-b2e0-11e4-a058-00144feab7de';
 const should = chai.should();
 
 describe('QA tests', () => {
-  describe('dist/index.html', () => {
+  describe('dist/client/index.html', () => {
     // Parse index.html into a DOM and run tests
 
     it('has a HTML title tag', () => {
