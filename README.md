@@ -16,9 +16,11 @@ You can run the following tasks from within your project directory:
 
 - `npm start` — starts up a development server and opens your app in a web browser. The dev server will automatically reload your browser when files change.
 - `npm run storybook` — loads up [StorybookJS](https://storybook.js.org/) as a development environment for building components. Stories created in the `app/components` folder will automatically show up in the storybook.
-- `npm run build` — builds your app and puts it in the `dist` folder.
-- `npm run deploy` — deploys the contents of your `dist` folder to an appropriate location on S3. (You usually don't need to run this yourself — it is run automatically by CircleCI.)
+- `npm run build` — builds your app in production and puts it in the `dist` folder.
+- `npm run preview` — builds your app in production mode and starts a webserver from the `dist` folder, to preview the production bundle
 - `npm run a11y:local` - checks accessibility of your app running locally (must be running at localhost:8080 to work)
+- `npm run deploy` — deploys the contents of your `dist` folder to an appropriate location on S3. (You usually don't need to run this yourself — it is run automatically by CircleCI.)
+- `npm run data` - runs any data-fetching code in `config/data.js` and caches the results in `config/data.json`. (If you run this script, the config setup will read from the file instead of fetching data each time.)
 
 (You can find a few other, less interesting tasks defined in [`package.json`](package.json).)
 
@@ -29,7 +31,8 @@ You can run the following tasks from within your project directory:
   - [`article.js`](config/article.js) — article metadata which replicates most metadata found on FT.com. Add or remove required polyfills here with the `polyfillFeatures` attribute
   - [`flags.js`](config/flags.js) — flags to control page behaviour including ads and comments
   - [`onward-journey.js`](config/index.js) — sets the stream page used to populate the onward journey at the bottom of the page
-  - [`index.js`](config/index.js) — the function that collects together all the configuration files in this folder. Use this file to pull in and parse remote data on build. The output of this function is written to `context.json` which `app.js` fetches after initial render
+  - [`data.js`](config/data.js) — an empty method where you can add data-fetching or -loading logic
+  - [`index.js`](config/index.js) — the function that collects together all the configuration files in this folder and makes it available to the app inside the `context` provider
 - `dist` — the optimsed HTML/CSS/JS bundle, generated automatically every time you run `npm run build`. You shouldn't edit files in here manually, as any manual changes would just get overwritten next time you build.
 
 ## What's included in Starter Kit?
@@ -55,6 +58,49 @@ const MyImage = () => <img src={file} alt="My image" />;
 ```
 
 The build process will automatically replace the imports with the correct path to the file. ✨
+
+If you have other files you need to reference, but can't import (e.g. a large set of files with names that correspond to IDs), you can add them inside the `public/` folder.
+
+## Understanding SSG (HTML pre-generation)
+
+The starter-kit runs your React code twice: first, during the `npm run build` process, when it produces an `index.html` file that contains all your code.
+Then, it runs again inside readers' browser, to _hydrate_ the static HTML with your react components and make them interactive.
+
+This process means any browser-only code (e.g. anything that touches `window` or `document`) needs to run inside a `useEffect()` block, where it will be deferred to the client. Additionally,
+you need to be sure to not conditionally render any elements depending on client — because the pre-rendered HTML must match the client-rendered text. (If you do this, you will see an "Hydration error"
+in the browser console.)
+
+Instead, consider controlling the rendering a server-side version in a `useState` variable and updating it using a `useEffect`.
+
+```jsx
+// DON'T do this:
+{
+  isClient && <div>{/* client-only stuff here */}</div>;
+}
+
+// This is better:
+const [elements, setElements] = useState(null);
+useEffect(() => {
+  // This will only run once the client has hydrated
+  setElements(<div>{/* client-only stuff here */}</div>);
+});
+
+return <div>{elements}</div>;
+```
+
+Alternatively, you can use the included `LazyLoad` helper in the `utils` directory, which will lazy-load any component and only render it on the client. This is both useful for components
+that only run in the browser (e.g. WebGL or Canvas) and ones that are very large (e.g. complicated SVG diagrams) and low in the page. By lazy-loading components on the client, you reduce the size
+of the initial JS bundle and speed up the initial rendering and loading of the page.
+
+Usage of the `LazyLoad` looks like this:
+
+```jsx
+import LazyLoad from './util/LazyLoad';
+
+<LazyLoad component={() => import('./MyComponent')} props={{ ... }} />
+```
+
+You can also optionally pass a custom loading message or component (displayed while waiting for the component to load) with the `loading` prop.
 
 ## Understanding automatic deployment ('continuous integration')
 

@@ -5,9 +5,13 @@
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",
     "@vitejs/plugin-react": "^4.0.0",
+    "archieml": "^0.5.0",
     "axios": "^1.4.0",
     "chai": "^4.3.7",
+    "classnames": "^2.3.2",
     "d3-time-format": "^4.1.0",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
     "eslint": "^8.41.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.8.0",
@@ -16,15 +20,16 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "googleapis": "^129.0.0",
     "husky": "^8.0.3",
     "jsdom": "^22.1.0",
     "mocha": "^10.2.0",
     "pa11y": "^6.2.3",
     "prettier": "^2.8.8",
+    "prop-types": "^15.8.1",
     "sass": "^1.62.1",
-    "vite": "^4.3.9",
-    "vite-plugin-ejs": "^1.6.4",
-    "vite-plugin-generate-file": "^0.0.4"
+    "vike": "^0.4.147",
+    "vite": "^4.3.9"
   },
   "engines": {
     "node": ">=16",
@@ -37,25 +42,34 @@
   },
   "private": true,
   "scripts": {
+    "data": "node config/data.js",
     "build": "vite build --mode=production",
     "a11y": "pa11y $(g-deploy --get-commit-url)",
     "a11y:preview": "pa11y $(g-deploy --preview --get-commit-url)",
     "a11y:local": "pa11y localhost:8080",
-    "deploy": "g-deploy --assets-prefix=https://ig.ft.com/v2/__assets/",
+    "deploy": "g-deploy --assets-prefix=https://ig.ft.com/v2/__assets/ --local-dir dist/client",
     "test": "mocha ./test/**/*.spec.cjs",
     "start": "vite --port 8080",
+    "preview": "NODE_ENV=production npm run build && vite preview",
     "lint": "eslint app/**/*.js test/**/*.js",
     "lint:fix": "eslint --fix app/**/*.js test/**/*.js",
     "prepare": "husky install"
   },
   "dependencies": {
-    "@financial-times/g-components": "^9.0.3",
+    "@financial-times/g-components": "^9.0.5",
     "@financial-times/o-colors": "^6.6.0",
     "@financial-times/o-grid": "^6.1.5",
-    "@ft-interactive/vs-components": "^2.0.1",
+    "@ft-interactive/vs-components": "^2.0.4",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   },
+  "_ssrBrowserAllowList": [
+    "@financial-times/o-toggle",
+    "@financial-times/o-overlay",
+    "@financial-times/o-grid",
+    "@financial-times/o-viewport",
+    "ftdomdelegate"
+  ],
   "lint-staged": {
     "*.js": [
       "prettier --write",
