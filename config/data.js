@@ -55,7 +55,7 @@ export default async function getData(mode = 'development') {
 if (filePath.includes(nodePath)) {
   console.log('Calling fetchData()...'); // eslint-disable-line no-console
   fetchData('cli')
-    .then((data) => fs.writeFile(dataFile, JSON.stringify(data)))
+    .then((data) => fs.writeFile(dataFile, JSON.stringify(data, undefined, 4)))
     .then(() => {
       console.log('✓ Cached results in config/data.json'); // eslint-disable-line no-console
     });
