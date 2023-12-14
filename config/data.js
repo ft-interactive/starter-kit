@@ -30,17 +30,22 @@ async function fetchData(mode) {
    * If 'mode' is either 'development' or 'production', the function is running at build time.
    * If 'mode' is 'cli', the function is running manually via "npm run download."
    *
+   * Note that this function is run both by "node" and by "vite", which means your imports
+   * need to work in both formats. You should load JSON files via fs.readFile, rather than import()
    */
 
-  return {};
+  return { test: true };
 }
 
 export default async function getData(mode = 'development') {
   // Load data from local file if available
   // Otherwise, download it live at buildtime
   try {
-    return JSON.parse(await fs.readFile(dataFile));
+    // eslint-disable-next-line import/no-unresolved
+    return import('./data.json');
   } catch (e) {
+    console.error(`Error reading from config/data.json:`, e.message);
+    console.log('Falling back to dynamic fetchData() function...');
     return fetchData(mode);
   }
 }
