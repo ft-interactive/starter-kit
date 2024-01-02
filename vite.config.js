@@ -32,8 +32,7 @@ export default defineConfig(async ({ mode }) => {
     ssr: {
       // We must compile these modules into the SSR build so the above alias rules are applied
       noExternal: ['@financial-times/g-components', '@ft-interactive/vs-components'],
-      external: ['@/config/data.json'],
     },
-    plugins: [react(), vike({ prerender: true }), dsv()],
+    plugins: [react(), dsv(), vike({ prerender: true })],
   };
 });
