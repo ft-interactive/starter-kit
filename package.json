@@ -36,18 +36,20 @@
     "npm": ">=8"
   },
   "optionalDependencies": {
-    "@financial-times/g-deploy": "^3.2.0",
+    "@financial-times/g-deploy": "^4.0.0-canary.7",
     "@financial-times/vvc": "github:financial-times/visual-vocabulary-components#prerelease",
     "react-snap": "^1.23.0"
   },
   "private": true,
   "scripts": {
     "data": "node scripts/getData.js",
-    "build": "vite build --mode=production",
-    "a11y": "pa11y $(g-deploy --get-commit-url)",
-    "a11y:preview": "pa11y $(g-deploy --preview --get-commit-url)",
+    "build": "vite build --mode=development",
+    "build:preview": "vite build --mode preview",
+    "build:prod": "vite build --mode production",
+    "a11y": "pa11y ./dist/client/index.html",
     "a11y:local": "pa11y localhost:8080",
-    "deploy": "g-deploy --assets-prefix=https://ig.ft.com/v2/__assets/ --local-dir dist/client",
+    "deploy:preview": "g-deploy --local-dir dist/client --cache-assets --preview",
+    "deploy:prod": "g-deploy --local-dir dist/client --cache-assets",
     "test": "mocha ./test/**/*.spec.cjs",
     "start": "vite --port 8080",
     "preview": "NODE_ENV=production npm run build && vite preview",
