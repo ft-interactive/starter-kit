@@ -189,5 +189,10 @@ export default (environment = 'development') => {
     config.linkPageUrl = `https://www.ft.com/content/${config.id}`;
   }
 
+  // Set the comments to open when the story publishes
+  if (!config.openCommentsAt) {
+    config.openCommentsAt = config.publishedDate;
+  }
+
   return config;
 };
