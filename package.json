@@ -56,7 +56,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@financial-times/g-components": "^9.2.0",
+    "@financial-times/g-components": "^9.3.0",
     "@financial-times/o-colors": "^6.6.0",
     "@financial-times/o-grid": "^6.1.5",
     "@ft-interactive/vs-components": "^3.1.0",
