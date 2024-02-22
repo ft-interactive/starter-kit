@@ -36,7 +36,7 @@
     "npm": ">=8"
   },
   "optionalDependencies": {
-    "@financial-times/g-deploy": "^4.0.0-canary.7",
+    "@financial-times/g-deploy": "^4.0.0-canary.9",
     "@financial-times/vvc": "github:financial-times/visual-vocabulary-components#prerelease",
     "react-snap": "^1.23.0"
   },
@@ -48,8 +48,7 @@
     "build:prod": "vite build --mode production",
     "a11y": "pa11y ./dist/client/index.html",
     "a11y:local": "pa11y localhost:8080",
-    "deploy:preview": "g-deploy --local-dir dist/client --cache-assets --preview",
-    "deploy:prod": "g-deploy --local-dir dist/client --cache-assets",
+    "deploy": "g-deploy",
     "test": "mocha ./test/**/*.spec.cjs",
     "start": "vite --port 8080",
     "preview": "NODE_ENV=production npm run build && vite preview",

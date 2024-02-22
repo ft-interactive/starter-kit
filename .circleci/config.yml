@@ -53,7 +53,7 @@ jobs:
           command: npm run build:preview
       - run:
           name: Deploying to Preview
-          command: ./doppler run --command 'AWS_ACCESS_KEY_ID=$AWS_USER_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_USER_SECRET_ACCESS_KEY npm run deploy:preview -- --confirm'
+          command: ./doppler run --command 'npm run deploy -- --preview --confirm'
   build-and-deploy-prod:
     working_directory: ~/project
     executor:
@@ -71,5 +71,5 @@ jobs:
           name: Running general QA tests
           command: npm run test
       - run:
-          name: Deploying to Prod
-          command: ./doppler run --command 'AWS_ACCESS_KEY_ID=$AWS_KEY_PROD AWS_SECRET_ACCESS_KEY=$AWS_SECRET_PROD npm run deploy:prod -- --confirm'
+          name: Deploying to Live
+          command: ./doppler run --command 'npm run deploy -- --live --confirm'
