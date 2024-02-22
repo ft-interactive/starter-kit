@@ -4,11 +4,11 @@ workflows:
     jobs:
       - build-and-deploy-preview:
           context:
-            - djd-ig-preview-prod # djd-ig-preview bucket
+            - djd-ig-preview-s3-deployment # djd-ig-preview bucket
             - djd-gh-package-install
       - build-and-deploy-prod:
           context:
-            - djd-ig-live-prod # djd-ig-live bucket
+            - djd-ig-live-s3-deployment # djd-ig-live bucket
             - djd-gh-package-install
           filters:
             tags:
