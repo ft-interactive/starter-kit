@@ -3,9 +3,13 @@ workflows:
   build-and-deploy:
     jobs:
       - build-and-deploy-preview:
-          context: djd-ig-preview-prod # djd-ig-preview bucket
+          context:
+            - djd-ig-preview-prod # djd-ig-preview bucket
+            - djd-gh-package-install
       - build-and-deploy-prod:
-          context: djd-ig-live-prod # djd-ig-live bucket
+          context:
+            - djd-ig-live-prod # djd-ig-live bucket
+            - djd-gh-package-install
           filters:
             tags:
               only: /^v.*$/
@@ -34,7 +38,7 @@ commands:
           name: Installing dependencies
           command: |
             echo "@ft-interactive:registry=https://npm.pkg.github.com/" >> .npmrc
-            ./doppler run --command 'echo "//npm.pkg.github.com/:_authToken=$GPR_AUTH_TOKEN" >> .npmrc'
+            echo "//npm.pkg.github.com/:_authToken=$GPR_AUTH_TOKEN" >> .npmrc
             npm install
       - save_cache:
           key: npm-deps-{{ checksum "package-lock.json" }}
