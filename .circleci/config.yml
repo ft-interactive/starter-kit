@@ -3,9 +3,9 @@ workflows:
   build-and-deploy:
     jobs:
       - build-and-deploy-preview:
-          context: djd-ig-preview-s3-deployment # New djd-ig-preview bucket
+          context: djd-ig-preview-prod # djd-ig-preview bucket
       - build-and-deploy-prod:
-          context: djd-starter-kit-s3-deployment # Legacy ft-ig-content-prod bucket
+          context: djd-ig-live-prod # djd-ig-live bucket
           filters:
             tags:
               only: /^v.*$/
