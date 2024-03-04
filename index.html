@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="preconnect" href="https://www.ft.com" />
-    <link rel="preconnect" href="https://cdn.polyfill.io" />
+    <link rel="preconnect" href="https://polyfill-fastly.io" />
 
     <% (context.stylesheets || []).forEach(stylesheet=> { %>
     <link rel="stylesheet" href="<%= stylesheet %>" />
@@ -65,7 +65,7 @@
       <%= JSON.stringify({ sentryEndpoint: 'https://ddbd80489ff549538250bbe37fa52bbd@sentry.io/71130'}) %>
     </script>
     <% } %>
-    <script src="https://cdn.polyfill.io/v3/polyfill.min.js?features=<%= context.polyfillFeatures %>"></script>
+    <script src="https://polyfill-fastly.io/v3/polyfill.min.js?features=<%= context.polyfillFeatures %>"></script>
 
     <script type="text/javascript">
       cutsTheMustard =
