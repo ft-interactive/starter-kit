@@ -36,7 +36,7 @@
     "npm": ">=8"
   },
   "optionalDependencies": {
-    "@financial-times/g-deploy": "^4.0.0-canary.9",
+    "@financial-times/g-deploy": "^4.0.0",
     "@financial-times/vvc": "github:financial-times/visual-vocabulary-components#prerelease",
     "react-snap": "^1.23.0"
   },
