@@ -13,7 +13,7 @@ export default function getUrl(
       return articleUrl;
     case 'preview':
       // Infer preview builds from the CircleCI environment
-      return `https://ig-preview.in.ft.com/preview/${org}/${project}/${branch}/`;
+      return `https://ig.in.ft.com/preview/${org}/${project}/${branch}/`;
     case 'development':
     default:
       // Default to a simple root URL (e.g. for 'npm run start' or 'npm run preview')
