@@ -41,7 +41,7 @@ commands:
             ./doppler run --command 'echo "//npm.pkg.github.com/:_authToken=$GPR_AUTH_TOKEN" >> .npmrc'
             npm install
       - save_cache:
-          key: npm-deps-{{ checksum "package-lock.json" }}
+          key: starter-kit-npm-deps-{{ checksum "package-lock.json" }}
           paths:
             - node_modules/
 jobs:
