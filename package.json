@@ -48,7 +48,7 @@
     "build:prod": "vite build --mode production",
     "a11y": "pa11y ./dist/client/index.html",
     "a11y:local": "pa11y localhost:8080",
-    "deploy": "g-deploy",
+    "deploy": "g-deploy ./dist/client",
     "test": "mocha ./test/**/*.spec.cjs",
     "start": "vite --port 8080",
     "preview": "NODE_ENV=production npm run build && vite preview",
