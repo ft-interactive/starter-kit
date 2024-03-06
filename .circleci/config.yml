@@ -6,7 +6,7 @@ workflows:
           context:
             - djd-ig-preview-s3-deployment
             - djd-gh-package-install
-      - build-and-deploy-prod:
+      - build-and-deploy-live:
           context:
             - djd-ig-live-s3-deployment
             - djd-gh-package-install
@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Deploying to Preview
           command: ./doppler run --command 'npm run deploy -- --preview --confirm'
-  build-and-deploy-prod:
+  build-and-deploy-live:
     working_directory: ~/project
     executor:
       name: node/default
