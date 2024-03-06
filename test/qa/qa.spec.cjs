@@ -14,9 +14,7 @@ const chai = require('chai');
 const { JSDOM } = require('jsdom');
 const { readFileSync } = require('fs');
 
-const index = readFileSync(`${__dirname}/../../dist/client/index.html`, {
-  encoding: 'utf-8',
-});
+const index = readFileSync(`${__dirname}/../../dist/client/index.html`, { encoding: 'utf-8' });
 const { document } = new JSDOM(index).window;
 
 const testCommentsUUID = '3a499586-b2e0-11e4-a058-00144feab7de';
@@ -66,7 +64,7 @@ describe('QA tests', () => {
     it('has a Canonical link tag', () => {
       const canonicalLink = document.querySelector('link[rel="canonical"]');
       should.exist(canonicalLink);
-      canonicalLink.getAttribute('href').should.not.equal('');
+      canonicalLink.getAttribute('href').should.match(/^https:\/\/ig.ft.com\/[0-9a-zA-Z-/]+$/);
     });
 
     it('has a Twitter meta url', () => {
@@ -101,12 +99,12 @@ describe('QA tests', () => {
       headline.textContent.should.not.equal('');
     });
 
-    it('has UUID set', () => {
+    it('has a correct UUID set', () => {
       const dataContentId = document.documentElement.getAttribute('data-content-id');
 
       should.exist(dataContentId);
       dataContentId.should.not.equal(testCommentsUUID);
-      dataContentId.should.not.equal('');
+      dataContentId.should.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
     });
 
     // @TODO Add Onward Journey test

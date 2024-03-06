@@ -66,6 +66,8 @@ https://djd-ig-live.s3.amazonaws.com/v3/ft-interactive/[repo]/HEAD/
 
 This `HEAD` keyword is a shortcut: it means IG Router will _always_ serve the latest version live at `https://ig.ft.com/[your-slug]`. You can also replace `HEAD` with your specific version tag like `v1.0.0`, if you'd like to ensure _only_ that version is ever served via the public URL. (This can be helpful for quickly rolling back a bug: rather than wait for CircleCI to build, you can go into IG Router and just tweak the URL.)
 
+Note that by default, tagged `live` publishes will run any tests specified in the `./test/qa` folder and require these to pass before deploying. It is _strongly suggested_ that you leave these tests in place, but you can disable them by replacing the `test` script in package.json with a no-op like `echo "Skipping tests"`.
+
 More information on deploying Starter Kit can be found [here](https://github.com/Financial-Times/visual-data-playbook/blob/main/publishing-workflow/ig-page-workflow.md#deploying).
 
 ## What do I do with images/videos/other binary assets?
