@@ -10,13 +10,13 @@ parameters:
     type: boolean
     default: FALSE
 orbs:
-  node: circleci/node@4.7.0
+  node: circleci/node@5.2.0
 jobs:
   build:
     working_directory: ~/project
     executor:
       name: node/default
-      tag: '16.13-browsers'
+      tag: '18.19.1-browsers'
     steps:
       - run:
           name: Install git-lfs
