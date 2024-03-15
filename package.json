@@ -31,10 +31,6 @@
     "vike": "^0.4.147",
     "vite": "^4.3.9"
   },
-  "engines": {
-    "node": ">=16",
-    "npm": ">=8"
-  },
   "optionalDependencies": {
     "@financial-times/g-deploy": "^3.2.0",
     "@financial-times/vvc": "github:financial-times/visual-vocabulary-components#prerelease",
