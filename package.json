@@ -31,6 +31,10 @@
     "vike": "^0.4.147",
     "vite": "^4.3.9"
   },
+  "volta": {
+    "node": "18.9.1",
+    "npm": "10.2.4"
+  },
   "optionalDependencies": {
     "@financial-times/g-deploy": "^3.2.0",
     "@financial-times/vvc": "github:financial-times/visual-vocabulary-components#prerelease",
