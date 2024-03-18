@@ -14,9 +14,9 @@ then
     # Check if git does a 'commit' update to a remote ref
     if [[ $1 == committed ]] && [[ $refname == refs/remotes/* ]]
     then
-    
-      # Run the fake hook, passing it the branch that changed
-      exec .husky/post-push $(basename $refname)
+
+      # Run the fake hook, passing it the origin + branch + commit sha
+      exec .husky/post-push $(basename $(dirname $refname)) $(basename $refname) $newvalue
       
     fi
   done
