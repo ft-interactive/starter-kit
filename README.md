@@ -15,7 +15,6 @@ Select the green `Use this template` button at the top of the page to Create a n
 You can run the following tasks from within your project directory:
 
 - `npm start` — starts up a development server and opens your app in a web browser. The dev server will automatically reload your browser when files change.
-- `npm run storybook` — loads up [StorybookJS](https://storybook.js.org/) as a development environment for building components. Stories created in the `app/components` folder will automatically show up in the storybook.
 - `npm run build` — builds your app in production and puts it in the `dist` folder.
 - `npm run preview` — builds your app in production mode and starts a webserver from the `dist` folder, to preview the production bundle
 - `npm run a11y:local` - checks accessibility of your app running locally (must be running at localhost:8080 to work)
@@ -41,7 +40,6 @@ You can run the following tasks from within your project directory:
   - Includes [Origami components](https://registry.origami.ft.com/components) and various best-practice features such as meta tags to optimise SEO and social sharing.
 - A **build system** including tasks for serving your app locally during development (auto-refreshing when you edit source files) and building an optimised HTML/CSS/JS bundle suitable for deployment.
 - A **CI configuration** that instructs CircleCI to deploy the project to S3 every time it builds.
-- A [**StorybookJS configuration**](.storybook/main.js) that looks for stories in the [`app/components`](app/components) folder (including nested folders) and also includes stories from g-components and VVC (if installed). Story files must end in `.stories.mdx` or `.stories.js/jsx/ts/tsx`.
 
 ## What do I do with images/videos/other binary assets?
 
