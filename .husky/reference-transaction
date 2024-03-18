@@ -2,14 +2,22 @@
 # This script runs whenever remote heads are updated, and triggers artificial 'post-push' and 'post-push-tag' hooks
 set -eu
 
+# First, check if we're updating refs as a result of a 'git push' command
 if [[ "$(ps -p $PPID -o command=)" =~ "git push" ]]
 then
+  
+  # Loop over the changes in this update
   while read oldvalue newvalue refname
   do
     echo "Git refs args: $1 $oldvalue $newvalue $refname"
+
+    # Check if git does a 'commit' update to a remote ref
     if [[ $1 == committed ]] && [[ $refname == refs/remotes/* ]]
     then
-      exec .husky/post-push "$(basename $refname)"
+    
+      # Run the fake hook, passing it the branch that changed
+      exec .husky/post-push $(basename $refname)
+      
     fi
   done
 fi
