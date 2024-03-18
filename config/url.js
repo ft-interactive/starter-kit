@@ -9,7 +9,7 @@ export default function getUrl(
   switch (environment) {
     case 'production':
       // Prod builds use the canonical URL
-      // (Usualy https://ig.ft.com/project-name)
+      // (Usually https://ig.ft.com/project-name)
       return articleUrl;
     case 'preview':
       // Infer preview builds from the CircleCI environment
