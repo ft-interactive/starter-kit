@@ -16,7 +16,7 @@ workflows:
             branches:
               ignore: /.*/
 orbs:
-  node: circleci/node@4.7.0
+  node: circleci/node@5.2.0
 commands:
   install:
     description: 'Installs node modules and git lfs'
@@ -49,7 +49,7 @@ jobs:
     working_directory: ~/project
     executor:
       name: node/default
-      tag: '16.13-browsers'
+      tag: '20.11.1-browsers'
     steps:
       - install
       - run:
@@ -62,7 +62,7 @@ jobs:
     working_directory: ~/project
     executor:
       name: node/default
-      tag: '16.13-browsers'
+      tag: '20.11.1-browsers'
     steps:
       - install
       - run:
