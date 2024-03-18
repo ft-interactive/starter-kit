@@ -22,7 +22,7 @@ const template = compile(indexTemplate);
 // eslint-disable-next-line import/prefer-default-export
 export async function render() {
   // Get story context and settings to pass to the client
-  const context = await getContext(import.meta.env.NODE_ENV);
+  const context = await getContext(import.meta.env.MODE);
 
   // Render React app to HTML
   const appHtml = ReactDOMServer.renderToString(<App context={context} />);
