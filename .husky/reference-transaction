@@ -6,8 +6,10 @@ if [[ "$(ps -p $PPID -o command=)" =~ "git push" ]]
 then
   while read oldvalue newvalue refname
   do
+    echo "Args: $1 $refname"
     if [[ $1 == committed ]] && [[ $refname == "refs/remotes/*" ]]
     then
+      echo "Matched $refname"
       exec ./post-push "$(basename $refname)"
     fi
   done
