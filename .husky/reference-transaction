@@ -10,7 +10,7 @@ then
     if [[ $1 == committed ]] && [[ $refname == refs/remotes/* ]]
     then
       echo "Matched $refname"
-      exec ./post-push "$(basename $refname)"
+      exec .husky/post-push "$(basename $refname)"
     fi
   done
 fi
