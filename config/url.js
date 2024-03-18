@@ -10,8 +10,16 @@ export default function getUrl(
     case 'production':
       // Prod builds use the canonical URL
       // (Usually https://ig.ft.com/project-name)
+      if (!articleUrl)
+        throw new Error("Production builds require a 'url' value in config/article.js.");
+
       return articleUrl;
     case 'preview':
+      if (!org || !project || !branch)
+        throw new Error(
+          'Preview builds require CircleCI env CIRCLE_PROJECT_USERNAME, CIRCLE_PROJECT_REPONAME, and CIRCLE_BRANCH.'
+        );
+
       // Infer preview builds from the CircleCI environment
       return `https://ig.in.ft.com/preview/${org}/${project}/${branch}/`;
     case 'development':
