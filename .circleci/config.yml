@@ -16,7 +16,7 @@ jobs:
     working_directory: ~/project
     executor:
       name: node/default
-      tag: '18.19.1-browsers'
+      tag: '20.11.1-browsers'
     steps:
       - run:
           name: Install git-lfs
