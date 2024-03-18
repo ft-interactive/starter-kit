@@ -1,0 +1,14 @@
+#!/bin/bash
+# This script runs whenever remote heads are updated, and triggers artificial 'post-push' and 'post-push-tag' hooks
+set -eu
+
+if [[ "$(ps -p $PPID -o command=)" =~ "git push" ]]
+then
+  while read oldvalue newvalue refname
+  do
+    if [[ $1 == committed ]] && [[ $refname == refs/remotes/* ]]
+    then
+      exec .husky/post-push "$(basename $refname)"
+    fi
+  done
+fi

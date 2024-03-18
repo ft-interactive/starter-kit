@@ -1,0 +1,23 @@
+#!/bin/bash
+# NOTE: This is a fake git hook, which runs after a branch is pushed to a remote
+# It is triggered by the reference-transaction hook
+
+if [[ $(git remote get-url origin) =~ ^(https|git)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+).git$ ]]; then
+  GIT_NAME="${BASH_REMATCH[4]}/${BASH_REMATCH[5]}"
+  CIRCLE_URL="https://app.circleci.com/pipelines/github/$GIT_NAME?branch=$PUSHED_BRANCH"
+else
+  exit 0
+fi
+
+echo
+echo "⏰ CircleCI should now begin building your project. Follow along here: $LIVE_URL"
+echo 
+echo -e "   \033[31;1;4m$CIRCLE_URL\033[0m"
+echo
+
+PREVIEW_URL=$(NODE_OPTIONS="--no-deprecation" AWS_SDK_JS_SUPPRESS_MAINTENANCE_MODE_MESSAGE=0 npm run --silent deploy -- --preview --get-branch-url)
+
+echo "✨ When the build finishes, preview it here:"
+echo
+echo -e "   \033[34;1;4m$PREVIEW_URL\033[0m"
+echo 

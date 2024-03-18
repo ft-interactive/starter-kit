@@ -1,0 +1,12 @@
+#!/bin/bash
+# NOTE: This is a fake git hook, which runs after a tag is pushed to a remote
+# It is triggered by the reference-transaction hook
+
+LIVE_URL=$(NODE_OPTIONS="--no-deprecation" AWS_SDK_JS_SUPPRESS_MAINTENANCE_MODE_MESSAGE=0 npm run --silent deploy -- --live --get-branch-url)
+
+echo -e "🌐 The new tag \033[1m$1\033[0m will also trigger a live build. To set up this page in IG Router, use this URL:"
+echo
+echo -e "   \033[32;1;4m$LIVE_URL\033[0m"
+echo
+echo -e "📍 To pin only this version to the IG route, replace \033[1;4mHEAD\033[0m with \033[1;4m$1\033[0m"
+echo
