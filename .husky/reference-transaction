@@ -3,21 +3,13 @@
 set -eu
 
 # First, check if we're updating refs as a result of a 'git push' command
-if [[ "$(ps -p $PPID -o command=)" =~ "git push" ]]
-then
-  
+if [[ "$(ps -p $PPID -o command=)" =~ "git push" ]]; then
   # Loop over the changes in this update
-  while read oldvalue newvalue refname
-  do
-    echo "Git refs args: $1 $oldvalue $newvalue $refname"
-
+  while read oldvalue newvalue refname; do
     # Check if git does a 'commit' update to a remote ref
-    if [[ $1 == committed ]] && [[ $refname == refs/remotes/* ]]
-    then
-
+    if [[ $1 == committed ]] && [[ $refname == refs/remotes/* ]]; then
       # Run the fake hook, passing it the origin + branch + commit sha
       exec .husky/post-push $(basename $(dirname $refname)) $(basename $refname) $newvalue
-      
     fi
   done
 fi
