@@ -56,7 +56,7 @@ CircleCI will automatically build the project whenever you add a new commit to t
 https://ig.in.ft.com/preview/ft-interactive/[repo]/[branch]/
 ```
 
-Once you're ready to publish a project to the world, it's time to create a **live build**. To do that, add a version tag to your branch (usually `main`) like `git tag v1.0.0` then push it to git using `git push --follow-tags`. The three numbers `X.Y.Z` in the tag name roughly correspond to [semver](https://semver.org) version types, either `major` (for a big change), `minor` (for a new feature that's backwards-compatible), or `patch` (for a bugfix). You can also rely on NPM to determine the next version for you, by running `npm version [major/minor/patch]`.
+Once you're ready to publish a project to the world, it's time to create a **live build**. To do that, tag the version with `npm version v1.0.0` then push it to git using `git push --follow-tags`. The three numbers `X.Y.Z` in the tag name roughly correspond to [semver](https://semver.org) version types, either `major` (for a big change), `minor` (for a new feature that's backwards-compatible), or `patch` (for a bugfix). You can also rely on NPM to determine the next version for you, by running `npm version [major/minor/patch]`.
 
 Once you push a tag to Git, CircleCI will build the project for that tag and upload it to our live bucket, where you can reference it with IG Router. To create a public route, you'll paste a URL like this into IG Router:
 
