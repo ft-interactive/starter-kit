@@ -4,6 +4,10 @@
  */
 
 export default (environment = 'development') => ({
+  summary: false,
+  bylines: false,
+  data: false,
+  mainImage: false,
   prod: environment === 'production',
   errorReporting: environment === 'production',
   analytics: environment === 'production',
