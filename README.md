@@ -41,6 +41,33 @@ You can run the following tasks from within your project directory:
 - A **build system** including tasks for serving your app locally during development (auto-refreshing when you edit source files) and building an optimised HTML/CSS/JS bundle suitable for deployment.
 - A **CI configuration** that instructs CircleCI to deploy the project to S3 every time it builds.
 
+## How do I deploy my project?
+
+Starter-Kit projects are usually deployed automatically using [CircleCI](https://circleci.com) whenever you push to Git. This repo already contains a `.circleci/config.yml` file with steps to deploy your app, so all you need to do is:
+
+1. Go to the [CircleCi dashboard](https://app.circleci.com), find your newly-created repo, and click "Set up Project." Select "Use the `.circleci/config.yml` file in my repo," select the default `main` branch, and click "Set up Pipline." _(Only the repo admin can do this step.)_
+2. Write some code, and push it to Github!
+
+CircleCI will automatically build the project whenever you add a new commit to the repo, whether on main or other branches. We call these **"preview builds"**, and they go to our okta-protected preview page - available on URLs like this (where `[repo]` is the name of your repo and `[branch]` is the name of the branch you pushed to):
+
+```
+https://ig.in.ft.com/preview/ft-interactive/[repo]/[branch]/
+```
+
+Once you're ready to publish a project to the world, it's time to create a **live build**. To do that, tag the version with `npm version v1.0.0` then push it to git using `git push --follow-tags`. The three numbers `X.Y.Z` in the tag name roughly correspond to [semver](https://semver.org) version types, either `major` (for a big change), `minor` (for a new feature that's backwards-compatible), or `patch` (for a bugfix). You can also rely on NPM to determine the next version for you, by running `npm version [major/minor/patch]`.
+
+Once you push a tag to Git, CircleCI will build the project for that tag and upload it to our live bucket, where you can reference it with IG Router. To create a public route, you'll paste a URL like this into IG Router:
+
+```
+https://djd-ig-live.s3.amazonaws.com/v3/ft-interactive/[repo]/HEAD/
+```
+
+This `HEAD` keyword is a shortcut: it means IG Router will _always_ serve the latest version live at `https://ig.ft.com/[your-slug]`. You can also replace `HEAD` with your specific version tag like `v1.0.0`, if you'd like to ensure _only_ that version is ever served via the public URL. (This can be helpful for quickly rolling back a bug: rather than wait for CircleCI to build, you can go into IG Router and just tweak the URL.)
+
+Note that by default, tagged `live` publishes will run any tests specified in the `./test/qa` folder and require these to pass before deploying. It is _strongly suggested_ that you leave these tests in place, but you can disable them by replacing the `test` script in package.json with a no-op like `echo "Skipping tests"`.
+
+More information on deploying Starter Kit can be found [here](https://github.com/Financial-Times/visual-data-playbook/blob/main/publishing-workflow/ig-page-workflow.md#deploying).
+
 ## What do I do with images/videos/other binary assets?
 
 It's generally a bad idea to store big binary files in Git repos, however, we've added support for [git-lfs (Large File Support)](https://git-lfs.github.com/) and suggest you use that to store assets
@@ -99,14 +126,6 @@ import LazyLoad from './util/LazyLoad';
 ```
 
 You can also optionally pass a custom loading message or component (displayed while waiting for the component to load) with the `loading` prop.
-
-## Understanding automatic deployment ('continuous integration')
-
-To enable continuous integration with CircleCI on a project first invite the `visual-data-journalism-admins` group to the repository and [assign them the `Admin` role](https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/managing-teams-and-people-with-access-to-your-repository#inviting-a-team-or-person). Then go to the [`ft-interactive`](https://github.com/ft-interactive/) GitHub organisation on CircleCi and click [Projects](https://app.circleci.com/projects/project-dashboard/github/ft-interactive/). Find the name of your repo and there should be a button that either says "Follow Project" or "Set Up Project", click either button. If the button was "Set up Project" a pop up should appear and specify "main" as the branch to look for the config.yml file. This will create a new project.
-
-CircleCI will build the project whenever you add a new commit to that repo (whether on main or other branches). Starter Kit includes a [`config.yml`](.circleci/config.yml) file that instructs CircleCI to run `npm run deploy` after any successful builds. This means that all you have to do is commit a change to your project, and push the commit to GitHub (or just make the change directly on the GitHub website), and it should get deployed within a few minutes. (The deploy script automatically decides what path to upload files to, based on the name of the repo on GitHub.) This process is called **continuous integration**.
-
-More information on deploying Starter Kit can be found [here](https://github.com/Financial-Times/visual-data-playbook/blob/main/publishing-workflow/ig-page-workflow.md#deploying).
 
 ## Using Visual vocabularly components or templates in a Starter Kit project
 

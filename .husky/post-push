@@ -1,0 +1,51 @@
+#!/bin/bash
+# NOTE: This is a fake git hook, which runs after a branch is pushed to a remote
+# It is triggered by the reference-transaction hook
+
+ORIGIN=$1
+BRANCH=$2
+SHA=$3
+
+# Build and print a URL for the CircleCI pipeline
+if [[ $(git remote get-url origin) =~ ^(https|git)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+).git$ ]]; then
+  GIT_NAME="${BASH_REMATCH[4]}/${BASH_REMATCH[5]}"
+  CIRCLE_URL="https://app.circleci.com/pipelines/github/$GIT_NAME?branch=$BRANCH"
+else
+  exit 0
+fi
+
+echo
+echo "⏰ CircleCI should now begin building your project. Follow along here: $LIVE_URL"
+echo 
+echo -e "   \033[31;1;4m$CIRCLE_URL\033[0m"
+echo
+
+# Build and print a URL for the ig-preview service
+PREVIEW_URL=$(NODE_OPTIONS="--no-deprecation" AWS_SDK_JS_SUPPRESS_MAINTENANCE_MODE_MESSAGE=0 npm run --silent deploy -- --preview --get-branch-url)
+
+echo "✨ When the build finishes, preview it here:"
+echo
+echo -e "   \033[34;1;4m$PREVIEW_URL\033[0m"
+echo 
+
+# If we are also pushing a tag, print the live url
+TAG=$(git tag --points-at $SHA)
+if [[ -n $TAG ]]
+then
+  # Check if we forgot to push the tag to the remote - if so, warn the user
+  REMOTE_TAG=$(git ls-remote --tags origin $TAG)
+  if [[ -z $REMOTE_TAG ]]
+  then
+    echo -e "\033[33;1mWarning:\033[0m The current commit has a tag ($TAG) which was not pushed to the remote. Did you forget the \033[1m--follow-tags\033[0m flag?"
+    echo
+  else
+    LIVE_URL=$(NODE_OPTIONS="--no-deprecation" AWS_SDK_JS_SUPPRESS_MAINTENANCE_MODE_MESSAGE=0 npm run --silent deploy -- --live --get-branch-url)
+
+    echo -e "🌐 The new tag \033[1m$TAG\033[0m will also trigger a live build. To set up this page in IG Router, use this URL:"
+    echo
+    echo -e "   \033[32;1;4m$LIVE_URL\033[0m"
+    echo
+    echo -e "📍 To pin only this version to the IG route, replace \033[1;4mHEAD\033[0m with \033[1;4m$TAG\033[0m"
+    echo
+  fi
+fi
