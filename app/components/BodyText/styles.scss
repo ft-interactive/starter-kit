@@ -1,0 +1,13 @@
+@import '@financial-times/o-grid/main';
+
+.body-text {
+  margin: 24px 0;
+
+  .extra-margin {
+    margin: 48px auto;
+
+    @include oGridRespondTo($from: L) {
+      margin: 72px auto;
+    }
+  }
+}
