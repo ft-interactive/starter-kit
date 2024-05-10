@@ -4,7 +4,7 @@ import { Card } from '@ft-interactive/vs-components';
 import { insertSpans } from './text.jsx';
 import Headline from '../components/Headline/index.jsx';
 
-const constructScrollySteps = ({
+const mapDataToSteps = ({
   docSteps,
   waypoints = [],
   highlights = [],
@@ -41,4 +41,4 @@ const constructScrollySteps = ({
     };
   });
 
-export default constructScrollySteps;
+export default mapDataToSteps;
