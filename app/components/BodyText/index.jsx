@@ -17,7 +17,13 @@ const BodyText = ({ elements, extraMargin = true }) => (
         text: str,
         element: 'a',
         props: { href: url, target: '_blank' },
-      }));
+      }))
+      .concat([
+        {
+          regex: /(\w+\s\w{1,8}.?)$/,
+          className: 'nowrap',
+        },
+      ]);
 
       const key = `${i}-${value}`;
 
