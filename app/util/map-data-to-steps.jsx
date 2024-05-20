@@ -1,8 +1,7 @@
 import React from 'react';
-import { Card } from '@ft-interactive/vs-components';
+import { Card, TopperText } from '@ft-interactive/vs-components';
 
 import { insertSpans } from './text.jsx';
-import Headline from '../components/Headline/index.jsx';
 
 const mapDataToSteps = ({
   docSteps,
@@ -32,7 +31,7 @@ const mapDataToSteps = ({
       stepGapSize,
       content:
         step.figure === 'headline' ? (
-          <Headline {...context} />
+          <TopperText {...context} />
         ) : (
           <Card cardAlignment={cardAlignment} background="light" shadow wide={wideCards}>
             {innerHtml}
