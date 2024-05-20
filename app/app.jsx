@@ -47,7 +47,7 @@
  *  See below for complete example.
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ArticleLayout as Layout, StoryTopper, Grid } from '@financial-times/g-components';
 import '@financial-times/g-components/styles.css';
