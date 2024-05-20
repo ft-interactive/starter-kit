@@ -32,7 +32,7 @@ const BodyText = ({ elements }) => (
               media={{ videoSrc, image }}
               caption={caption}
               className="extra-margin"
-              key={`video-${videoSrc}`}
+              key={videoSrc}
             />
           );
         }
@@ -47,7 +47,7 @@ const BodyText = ({ elements }) => (
               caption={imageConfig.caption}
               className="extra-margin"
               imageService={import.meta.env.MODE === 'production'}
-              key={`image-${imageConfig.src}`}
+              key={imageConfig.src}
             />
           );
         }
