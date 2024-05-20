@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import { InlineVideo, InlineImage } from '@ft-interactive/vs-components';
 import { insertSpans } from '../../util/text.jsx';
+import PropTypes from 'prop-types'; 
+import classNames from 'classnames';
 
 import './styles.scss';
 
@@ -8,7 +10,7 @@ const VIDEOS = {};
 
 const IMAGES = {};
 
-const BodyText = ({ elements }) => (
+const BodyText = ({ elements, extraMargin = true }) => (
   <div className="body-text o-editorial-layout-wrapper">
     {elements.map(({ type, value, caption, links = [] }, i) => {
       const linkSpans = links.map(({ str, url }) => ({
@@ -23,7 +25,7 @@ const BodyText = ({ elements }) => (
         case 'text':
           return <Fragment key={key}>{insertSpans(value, linkSpans)}</Fragment>;
         case 'subhed':
-          return <h2 key={key}>{value}</h2>;
+          return <h2 key={key} className={classNames("body-text__header")}>{value}</h2>;
         case 'video': {
           const videoConfig = VIDEOS[value];
           if (!videoConfig) return null;
@@ -33,7 +35,7 @@ const BodyText = ({ elements }) => (
             <InlineVideo
               media={{ videoSrc, image }}
               caption={caption}
-              className="extra-margin"
+              className={classNames("body-text__media", "body-text__media--video", extraMargin === true && "extra-margin")}
               key={videoSrc}
             />
           );
@@ -47,7 +49,7 @@ const BodyText = ({ elements }) => (
               src={imageConfig.src}
               alt={imageConfig.alt}
               caption={imageConfig.caption}
-              className="extra-margin"
+              className={classNames("body-text__media", "body-text__media--image", extraMargin === true && "extra-margin")}
               imageService={import.meta.env.MODE === 'production'}
               key={imageConfig.src}
             />
@@ -61,5 +63,10 @@ const BodyText = ({ elements }) => (
     })}
   </div>
 );
+
+BodyText.propTypes = {
+  elements: PropTypes.arrayOf(PropTypes.shape({})),
+  extraMargin: PropTypes.bool
+}
 
 export default React.memo(BodyText);
