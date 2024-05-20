@@ -10,7 +10,7 @@ const VIDEOS = {};
 
 const IMAGES = {};
 
-const BodyText = ({ elements, extraMargin = true }) => (
+const BodyText = ({ elements, maxWidowSize = 8, extraMargin = true }) => (
   <div className="body-text o-editorial-layout-wrapper">
     {elements.map(({ type, value, caption, links = [] }, i) => {
       const linkSpans = links.map(({ str, url }) => ({
@@ -20,7 +20,7 @@ const BodyText = ({ elements, extraMargin = true }) => (
       }))
       .concat([
         {
-          regex: /(\w+\s\w{1,8}.?)$/,
+          regex: new RegExp("(\w+\s\w{1," + maxWidowSize + "}.?)$"),
           className: 'nowrap',
         },
       ]);
@@ -72,6 +72,7 @@ const BodyText = ({ elements, extraMargin = true }) => (
 
 BodyText.propTypes = {
   elements: PropTypes.arrayOf(PropTypes.shape({})),
+  maxWidowSize: PropTypes.number,
   extraMargin: PropTypes.bool
 }
 
