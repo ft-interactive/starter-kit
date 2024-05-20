@@ -65,7 +65,7 @@ const App = ({ context }) => {
 
   return (
     <DimensionsProvider>
-      <LoadBlocker contentLoaded={contentLoaded}>
+      <LoadBlocker contentLoaded={contentLoaded} blurTransition={false}>
         <Layout {...context}>
           <main key="main" role="main">
             <article className="article" itemScope itemType="http://schema.org/Article">
