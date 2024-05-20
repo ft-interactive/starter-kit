@@ -16,12 +16,14 @@ const BodyText = ({ elements }) => (
         element: 'a',
         props: { href: url, target: '_blank' },
       }));
-      /* eslint-disable react/no-array-index-key */
+
+      const key = `${i}-${value}`;
+
       switch (type) {
         case 'text':
-          return <Fragment key={i}>{insertSpans(value, linkSpans)}</Fragment>;
+          return <Fragment key={key}>{insertSpans(value, linkSpans)}</Fragment>;
         case 'subhed':
-          return <h2 key={i}>{value}</h2>;
+          return <h2 key={key}>{value}</h2>;
         case 'video': {
           const videoConfig = VIDEOS[value];
           if (!videoConfig) return null;
@@ -55,7 +57,7 @@ const BodyText = ({ elements }) => (
           // eslint-disable-next-line no-console
           console.warn("Unknown element type in 'text' list:", type);
           return null;
-      } /* eslint-enable react/no-array-index-key */
+      }
     })}
   </div>
 );
