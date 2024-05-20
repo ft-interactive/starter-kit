@@ -25,12 +25,14 @@ const BodyText = ({ elements }) => (
         case 'video': {
           const videoConfig = VIDEOS[value];
           if (!videoConfig) return null;
+
+          const { caption = "", videoSrc, image } = videoConfig;
           return (
             <InlineVideo
-              media={{ videoSrc: videoConfig.videoSrc, image: videoConfig.image }}
-              caption="Footage from a drone attacking a Russian Navy Vessel in October 2022. Source: @Conflicts"
+              media={{ videoSrc, image }}
+              caption={caption}
               className="extra-margin"
-              key={`video-${videoConfig.videoSrc}`}
+              key={`video-${videoSrc}`}
             />
           );
         }
