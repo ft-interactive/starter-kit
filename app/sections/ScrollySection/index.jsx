@@ -4,12 +4,11 @@ import { Scrolly, useWindowDimensions } from '@ft-interactive/vs-components';
 import { deepCompareProps } from '@ft-interactive/vs-components/util';
 // import LazyLoad from '../../util/LazyLoad.jsx';
 
-import mapDataToSteps from '../../util/construct-scrolly-steps.jsx';
+import mapDataToSteps from '../../util/map-data-to-steps.jsx';
 
 import { waypoints as sectionWaypoints, highlights } from './config.jsx';
 
 const ScrollySection = ({ steps, sectionIdSuffix = '', context }) => {
-  // const waypoints = useSteps(steps, mapWaypoints);
   const { isTablet } = useWindowDimensions();
 
   const waypoints = mapDataToSteps({
