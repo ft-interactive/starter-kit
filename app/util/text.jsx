@@ -19,7 +19,6 @@ const findOverlappingHighlights = (matches) =>
         (start > compareStart && start < compareEnd) ||
         (end > compareStart && end < compareEnd)
       ) {
-        console.log({ start, compareStart, end, compareEnd });
         isOverlap = true;
       }
     });
