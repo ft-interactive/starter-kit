@@ -1,0 +1,7 @@
+{
+    "csv": "a,b\ntest_a,test_b\n",
+    "json": {
+        "test": true,
+        "example": true
+    }
+}
