@@ -51,7 +51,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ArticleLayout as Layout, StoryTopper } from '@financial-times/g-components';
 import '@financial-times/g-components/styles.css';
-import { Credits, GridWrapperHelper, VideoTopper, TopperText } from '@ft-interactive/vs-components';
+import { Credits, GridWrapperHelper } from '@ft-interactive/vs-components';
 import { DimensionsProvider } from '@ft-interactive/vs-components/hooks';
 
 import '@ft-interactive/vs-components/styles.css';
