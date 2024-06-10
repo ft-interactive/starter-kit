@@ -1,6 +1,6 @@
 export const waypoints = [{}];
 
-export const highlights = [];
+export const highlights = [{ text: 'ōl vola eksploðæ', className: 'highlight-black' }];
 
 // === EXAMPLE WAYPOINTS STRUCTURE (on a mapbox project) ===
 // export const waypoints = [
