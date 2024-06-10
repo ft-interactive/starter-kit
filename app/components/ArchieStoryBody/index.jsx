@@ -11,12 +11,12 @@ import LazyLoad from '../../util/LazyLoad.jsx';
 import BodyText from '../BodyText/index.jsx';
 import ScrollySection from '../../sections/ScrollySection/index.jsx';
 
-import SampleSideBySide1 from '../../images/sample_images/SampleSideBySide1.jpg';
-import SampleSideBySide2 from '../../images/sample_images/SampleSideBySide2.jpg';
+import SampleSideBySide1 from '../../media/images/sample_images/SampleSideBySide1.jpg';
+import SampleSideBySide2 from '../../media/images/sample_images/SampleSideBySide2.jpg';
 
-import SampleDesktop from '../../images/sample_images/SampleDesktop.png';
-import SampleMid from '../../images/sample_images/SampleMid.png';
-import SampleMobile from '../../images/sample_images/SampleMobile.png';
+import SampleDesktop from '../../media/images/sample_images/SampleDesktop.png';
+import SampleMid from '../../media/images/sample_images/SampleMid.png';
+import SampleMobile from '../../media/images/sample_images/SampleMobile.png';
 
 const ArchieStoryBody = ({ bodyElements = [] }) => (
   <React.Fragment>

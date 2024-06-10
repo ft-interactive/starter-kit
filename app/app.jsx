@@ -51,7 +51,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ArticleLayout as Layout, StoryTopper } from '@financial-times/g-components';
 import '@financial-times/g-components/styles.css';
-import { Credits, GridWrapperHelper } from '@ft-interactive/vs-components';
+import { Credits, GridWrapperHelper, VideoTopper, TopperText } from '@ft-interactive/vs-components';
 import { DimensionsProvider } from '@ft-interactive/vs-components/hooks';
 
 import '@ft-interactive/vs-components/styles.css';
@@ -60,14 +60,42 @@ import { ContextPropType } from './util/prop-types';
 import ArchieStoryBody from './components/ArchieStoryBody';
 import SampleStoryBody from './util/SampleStoryBody';
 
+// Sample media
+import sampleTopperVideo from './media/video/sample_topper.mp4';
+import sampleTopperVideoMobile from './media/video/sample_topper_mobile.mp4';
+
+import sampleTopperFallback from './media/images/sample_images/sample_topper_fallback.png';
+import sampleTopperFallbackMobile from './media/images/sample_images/sample_topper_fallback_mobile.png';
+
 const App = ({ context }) => (
   <DimensionsProvider>
     <Layout {...context}>
       <main key="main" role="main">
         <article className="article" itemScope itemType="http://schema.org/Article">
-          <GridWrapperHelper colspan="12 S11 Scenter M9 L8 XL7" className="article-head">
-            <StoryTopper {...context} />
-          </GridWrapperHelper>
+          {context.data?.story?.topper ? (
+            <VideoTopper
+              {...context}
+              media={{
+                videoSrc: sampleTopperVideo,
+              }}
+              mediaMobile={{
+                videoSrc: sampleTopperVideoMobile,
+              }}
+              image={{
+                alt: 'Sample fallback image',
+                sources: {
+                  small: sampleTopperFallbackMobile,
+                  medium: sampleTopperFallback,
+                  large: sampleTopperFallback,
+                },
+              }}
+              bylines={null}
+            />
+          ) : (
+            <GridWrapperHelper colspan="12 S11 Scenter M9 L8 XL7" className="article-head">
+              <StoryTopper {...context} />
+            </GridWrapperHelper>
+          )}
 
           <div className="article-body o-editorial-typography-body" itemProp="articleBody">
             {context.data?.story?.body ? (
