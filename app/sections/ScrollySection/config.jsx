@@ -76,7 +76,6 @@ export const highlights = [];
 // },
 // ];
 
-
 // === EXAMPLE HIGHLIGHTS STRUCTURE ===
 // export const highlights = [
 //   {

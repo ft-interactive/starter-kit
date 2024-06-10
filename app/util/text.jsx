@@ -2,6 +2,31 @@ import React from 'react';
 
 const escapeRegex = (text) => `(${text?.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&')})`;
 
+const findOverlappingHighlights = (matches) =>
+  matches.reduce((acc, curr, index, allHighlights) => {
+    const { start, end } = curr;
+    let isOverlap = false;
+
+    allHighlights.forEach((highlight, i) => {
+      // if this is the same highlight, skip
+      if (i === index) {
+        return;
+      }
+
+      const { start: compareStart, end: compareEnd } = highlight;
+
+      if (
+        (start > compareStart && start < compareEnd) ||
+        (end > compareStart && end < compareEnd)
+      ) {
+        console.log({ start, compareStart, end, compareEnd });
+        isOverlap = true;
+      }
+    });
+
+    return acc || isOverlap;
+  }, false);
+
 // Wraps text in a <p> and inserts spans around selected phrases
 // Highlights is a list of { regex, className } pairs - each 'regex' must have a capture group
 // Returns JSX
@@ -30,7 +55,14 @@ export function insertSpans(text, highlights, options = { p: true }) {
     return arr;
   }, []);
 
-  if (matches.length === 0) return <p>{text}</p>;
+  if (matches.length === 0) return options.p ? <p>{text}</p> : text;
+
+  // Look for overlapping highlights, which cause problems
+  const overlappingHighlights = findOverlappingHighlights(matches);
+  if (overlappingHighlights === true) {
+    // eslint-disable-next-line no-console
+    console.warn(`Found overlapping text highlights in card: ${text}`);
+  }
 
   const output = matches.reduce(
     ({ offset, __html }, match) => {
