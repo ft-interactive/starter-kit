@@ -13,6 +13,8 @@
  * the latest version on the client.
  */
 
+import getArchieDoc from '../data/getArchieDoc.js';
+
 // eslint-disable-next-line no-unused-vars
 export async function fetchData(mode) {
   /**
@@ -30,6 +32,9 @@ export async function fetchData(mode) {
    * See below for examples of how to load raw text/csv or JSON files:
    */
 
+  // const story = null;
+  const story = await getArchieDoc();
+
   // This { as: 'raw' } option imports files as plaintext
   const dataFiles = import.meta.glob('../data/*.csv', { as: 'raw' });
   const csv = await dataFiles['../data/example.csv']();
@@ -39,7 +44,7 @@ export async function fetchData(mode) {
 
   // Remote fetch() calls can also work
 
-  return { csv, json };
+  return { story, csv, json };
 }
 
 export default async function getData(mode = 'development') {

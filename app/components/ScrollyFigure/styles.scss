@@ -1,0 +1,23 @@
+@import '../../settings.scss';
+
+.vs-sample-scrolly-figure {
+  &__wrapper {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__step-counter {
+    font-size: 32px;
+    font-family: MetricWeb, Helvetica, sans-serif;
+  }
+
+  &__value-span {
+    font-weight: 600;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 28px;
+  }
+}

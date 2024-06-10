@@ -52,33 +52,34 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
             <div className="extra-margin">
               <SideBySideImages fullGridWidth>
                 <Image
-                  src={SampleSideBySide1}
+                  src={component[type] === 'sample' ? SampleSideBySide1 : ''}
                   imageService={import.meta.env.MODE === 'production'}
                   alt=""
                   maxAutoSrcWidth={1500}
                 />
                 <Image
-                  src={SampleSideBySide2}
+                  src={component[type] === 'sample' ? SampleSideBySide2 : ''}
                   imageService={import.meta.env.MODE === 'production'}
                   alt=""
                   maxAutoSrcWidth={1500}
                 />
               </SideBySideImages>
-              <InlineImage
-                fullGridWidth
-                caption="The Magura V5 sea drone is steered remotely and has a range of up to 800km © Reuters/Valentyn Ogirenko"
-              />
+              <InlineImage fullGridWidth caption="Tk tk © Tk tk" />
             </div>
           );
-        case 'magura':
+        case 'inline-image':
           return (
             <InlineImage
               fullGridWidth
-              sources={{
-                large: SampleDesktop,
-                medium: SampleMid,
-                small: SampleMobile,
-              }}
+              sources={
+                component[type] === 'sample'
+                  ? {
+                      large: SampleDesktop,
+                      medium: SampleMid,
+                      small: SampleMobile,
+                    }
+                  : { large: '', medium: '', small: '' }
+              }
               className="extra-margin"
               imageService={import.meta.env.MODE === 'production'}
               alt="Tk tk"

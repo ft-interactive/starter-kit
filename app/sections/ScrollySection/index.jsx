@@ -7,6 +7,7 @@ import { deepCompareProps } from '@ft-interactive/vs-components/util';
 import mapDataToSteps from '../../util/map-data-to-steps.jsx';
 
 import { waypoints as sectionWaypoints, highlights } from './config.jsx';
+import ScrollyFigure from '../../components/ScrollyFigure/index.jsx';
 
 const ScrollySection = ({ steps, sectionIdSuffix = '', context }) => {
   const { isTablet } = useWindowDimensions();
@@ -23,13 +24,14 @@ const ScrollySection = ({ steps, sectionIdSuffix = '', context }) => {
     <Scrolly
       scrollerId={`scrolly-${sectionIdSuffix}`}
       waypoints={waypoints}
-      progress={false}
+      progress
       threshold={4}
       offset={0.9}
       scrollToFirstStep
       bottomToTopScrollGaps
     >
-      {/* Child scrolly figure goes here */}
+      {/* Child scrolly figure goes here. Replace or adapt this example component: */}
+      <ScrollyFigure />
     </Scrolly>
   );
 };
