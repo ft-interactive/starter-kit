@@ -8,12 +8,11 @@ const mapDataToSteps = ({
   waypoints = [],
   highlights = [],
   context = {},
-  isTablet = false,
   wideCards = false,
 }) =>
   docSteps.map((step, i) => {
     const matchingWaypoint = waypoints[i] || {};
-    const cardAlignment = isTablet ? 'center' : step.figure || 'left';
+    const cardAlignment = step.figure || 'left';
 
     const stepHighlights = highlights.filter(
       (d) => typeof d.stepIndex === 'undefined' || d.stepIndex === i

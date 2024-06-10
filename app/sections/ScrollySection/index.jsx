@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Scrolly, useWindowDimensions } from '@ft-interactive/vs-components';
+import { Scrolly } from '@ft-interactive/vs-components';
 import { deepCompareProps } from '@ft-interactive/vs-components/util';
 // import LazyLoad from '../../util/LazyLoad.jsx';
 
@@ -10,13 +10,10 @@ import { waypoints as sectionWaypoints, highlights } from './config.jsx';
 import ScrollyFigure from '../../components/ScrollyFigure/index.jsx';
 
 const ScrollySection = ({ steps, sectionIdSuffix = '', context }) => {
-  const { isTablet } = useWindowDimensions();
-
   const waypoints = mapDataToSteps({
     docSteps: steps,
     waypoints: sectionWaypoints,
     highlights,
-    isTablet,
     context,
   });
 
