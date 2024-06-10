@@ -30,7 +30,7 @@ export function insertSpans(text, highlights, options = { p: true }) {
     return arr;
   }, []);
 
-  if (matches.length === 0) return <p>{text}</p>;
+  if (matches.length === 0) return options.p ? <p>{text}</p> : text;
 
   const output = matches.reduce(
     ({ offset, __html }, match) => {
