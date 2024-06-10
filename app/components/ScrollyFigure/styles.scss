@@ -8,11 +8,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+
   }
 
   &__step-counter {
     font-size: 32px;
     font-family: MetricWeb, Helvetica, sans-serif;
+
+    padding: 4px 12px;
+    border: 1px solid black;
   }
 
   &__value-span {
