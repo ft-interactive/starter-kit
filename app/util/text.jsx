@@ -16,9 +16,10 @@ const findOverlappingHighlights = (matches) =>
       const { start: compareStart, end: compareEnd } = highlight;
 
       if (
-        (start >= compareStart && start < compareEnd) ||
-        (end >= compareStart && end < compareEnd)
+        (start > compareStart && start < compareEnd) ||
+        (end > compareStart && end < compareEnd)
       ) {
+        console.log({ start, compareStart, end, compareEnd });
         isOverlap = true;
       }
     });
