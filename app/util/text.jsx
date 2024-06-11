@@ -59,8 +59,9 @@ export function insertSpans(text, highlights, options = { p: true }) {
   // Look for overlapping highlights, which cause problems
   const overlappingHighlights = findOverlappingHighlights(matches);
   if (overlappingHighlights === true) {
-    // eslint-disable-next-line no-console
-    console.warn(`Found overlapping text highlights in card: ${text}`);
+    // Throw an error if overlapping higlights are found.
+    // Just disable this if there's some reason we actually need overlapping highlights/get them to work
+    throw new Error(`Found overlapping text highlights in card: ${text}`);
   }
 
   const output = matches.reduce(
