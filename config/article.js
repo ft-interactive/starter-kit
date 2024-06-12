@@ -44,13 +44,6 @@ export default (environment = 'development') => {
       url: 'https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F3%2F3a%2F1905-03-ge-frankf-mapo.jpg?source=ig',
     },
 
-    // Byline can by a plain string, markdown, or array of authors
-    // if array of authors, url is optional
-    bylines: [
-      { name: 'Author One' /* , url: '/foo/bar' // Must be absolute path */ },
-      { name: 'Author Two' },
-    ],
-
     // Appears in the HTML <title>
     title: '',
 
