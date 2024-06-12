@@ -8,7 +8,7 @@ export default (environment = 'development') => ({
   errorReporting: environment === 'production',
   analytics: environment === 'production',
   googleAnalytics: environment === 'production',
-  ads: true,
+  ads: false,
   onwardjourney: true,
   shareButtons: true,
   header: true,

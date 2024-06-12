@@ -9,7 +9,8 @@ import { google } from 'googleapis';
 import archieml from 'archieml';
 
 // ArchieML types to be grouped together as text
-const TEXT_TYPES = ['text', 'subhed', 'video', 'image'];
+const TEXT_TYPES = ['text', 'subhed'];
+const INLINE_TYPES = ['inline-video', 'inline-image', 'inline-image-pair', 'inline-graphic'];
 
 async function getDocsText(docId) {
   const auth = await google.auth.getClient({
@@ -32,24 +33,45 @@ async function getDocsText(docId) {
   });
 
   return data.body.content.reduce(
-    ({ text, links }, content) => {
+    ({ text, links, ignored }, content) => {
       const paras = content.paragraph?.elements ?? [];
       const paraText = paras
         .map((p) => {
+          // If the text is struck through, skip it
+          if (p.textRun?.textStyle?.strikethrough) return '';
+
           const str = p.textRun?.content;
           const url = p.textRun?.textStyle?.link?.url;
-          if (str && url) {
+          if (str && url && !ignored) {
             links.push({ str, url });
           }
+
           return str ?? '';
         })
         .join('');
+
+      // Combine adjacent links with same urls
+      if (!ignored) {
+        /* eslint-disable no-param-reassign */
+        links = links.reduce((arr, link) => {
+          if (link.url === arr[arr.length - 1]?.url) {
+            arr[arr.length - 1].str += link.str;
+          } else {
+            arr.push(link);
+          }
+
+          return arr;
+        }, []);
+        /* eslint-enable no-param-reassign */
+      }
+
       return {
         text: text + paraText,
         links,
+        ignored: ignored || paraText.includes(':ignore'),
       };
     },
-    { text: '', links: [] }
+    { text: '', links: [], ignored: false }
   );
 }
 
@@ -63,56 +85,77 @@ function parseScrolly(items) {
   const steps = [];
   const figures = [];
   while (queue.length > 0) {
-    if (queue[0]?.type === 'scroll') {
-      // Insert a new figure if the keyword (i.e. first word) of the 'scroll' key doesn't match
-      const key = queue.shift().value.split(' ')[0]?.toLowerCase();
+    let figure;
+    let step;
+    const config = {};
 
-      // Gobble up any non-text keys as config for scroll
-      const config = {};
-      while (queue[0]?.type && queue[0].type !== 'text') {
-        const { type, value } = queue.shift();
-        config[type] = value;
+    // This while loop lets us manage either order, figure -> step or step -> figure
+    while (queue.length > 0 && (figure === undefined || step === undefined)) {
+      if (figure === undefined && ['scroll', 'figure'].includes(queue[0]?.type)) {
+        // Insert a new figure if the keyword (i.e. first word) of the 'scroll' key doesn't match
+        const key = queue.shift().value.split(' ')[0]?.toLowerCase();
+
+        // Gobble up any non-text keys as config for scroll
+        while (queue[0]?.type && queue[0].type !== 'text') {
+          const { type, value } = queue.shift();
+          config[type] = value;
+        }
+
+        if (figures[figures.length - 1]?.key === key) {
+          figure = figures[figures.length - 1];
+        } else {
+          figure = { key, config, steps: [] };
+        }
       }
 
-      if (figures[figures.length - 1]?.key !== key) {
-        figures.push({
-          key,
+      if (step === undefined) {
+        const cards = [];
+
+        while ([...INLINE_TYPES, ...TEXT_TYPES].includes(queue[0]?.type)) {
+          const { type, value } = queue.shift();
+          const component = {
+            [type]: value,
+          };
+
+          // Gather up any other object config keys
+          while (
+            queue[0]?.type &&
+            !['scroll', ...INLINE_TYPES, ...TEXT_TYPES].includes(queue[0].type)
+          ) {
+            const { type: k, value: v } = queue.shift();
+            component[k] = v;
+          }
+
+          cards.push(component);
+        }
+
+        if (figure?.key === 'headline' && cards.length === 0) {
+          cards.push({ headline: true });
+        }
+
+        step = {
+          step: steps.length,
+          cards,
           config,
-          steps: [],
-        });
+        };
       }
-    } else if (figures.length === 0) {
-      // In case the ArchieML doc starts with a "text" card, create a dummy figure
-      figures.push({
-        key: 'intro',
-        config: {},
-        steps: [],
-      });
     }
 
-    const cards = [];
-    while (queue[0]?.type === 'text') {
-      // Add each paragraph as a text card inside the step
-      cards.push({
-        text: queue.shift().value,
-      });
-    }
-    if (figures[figures.length - 1].key === 'headline' && cards.length === 0) {
-      cards.push({
-        headline: true,
-      });
+    // console.log('Found pair', { figure, step });
+
+    // Link together figure and step
+    step.figure = figure.key;
+    figure.steps.push(step.step);
+
+    // Persist both to their arrays
+    steps.push(step);
+    if (figures[figures.length - 1]?.key === figure.key) {
+      figures[figures.length - 1] = figure;
+    } else {
+      figures.push(figure);
     }
 
-    // Add this step number to the figure's list
-    figures[figures.length - 1].steps.push(steps.length);
-
-    // Add the step, with the list of cards, to our list
-    steps.push({
-      step: steps.length,
-      figure: figures[figures.length - 1].key,
-      config: figures[figures.length - 1].config,
-      cards,
-    });
+    // Repeat while loop if objects continue
   }
 
   // Return a separated list of steps and figures
@@ -143,24 +186,29 @@ function parseCustomSyntax(archieJson, doclinks = []) {
   // Group together non-text keys in the body for visual components
   // (This is some custom logic for this project, you may not need it in others.)
   if (json.body) {
+    let subhedId = 0;
     const queue = [...json.body];
     const components = [];
 
     while (queue.length > 0) {
       // Gather up all non-text elements into one component with key/value pairs
       const obj = {};
-      while (!TEXT_TYPES.includes(queue[0]?.type)) {
+      let typeValue;
+      while (queue.length > 0 && !TEXT_TYPES.includes(queue[0]?.type)) {
         const { type, value } = queue.shift();
         // If component type isn't explicitly set, it defaults to the first key (e.g. 'image')
         if (type !== 'type' && !obj.type) {
           obj.type = type;
+          typeValue = value;
         }
         obj[type] = value;
       }
-      if (obj.type === 'scrolly') {
+      if (obj.type?.startsWith('scrolly')) {
         components.push({
           type: obj.type,
-          ...parseScrolly(obj.scrolly),
+          ...parseScrolly(obj[obj.type]),
+          ...obj,
+          [obj.type]: typeValue,
         });
       } else if (obj.type) {
         components.push(obj);
@@ -168,14 +216,27 @@ function parseCustomSyntax(archieJson, doclinks = []) {
 
       // Group adjacent text components into a list of paragraphs
       const text = { type: 'text', paras: [] };
-      while (TEXT_TYPES.includes(queue[0]?.type)) {
+      while ([...TEXT_TYPES, ...INLINE_TYPES].includes(queue[0]?.type)) {
         const { type, value } = queue.shift();
         const element = { type, value };
+
+        // If it's an inline type, gobble up non-text types
+        if (INLINE_TYPES.includes(type)) {
+          while (!TEXT_TYPES.includes(queue[0].type)) {
+            const { type: k, value: v } = queue.shift();
+            element[k] = v;
+          }
+        }
 
         if (type === 'text') {
           // Check if any of the link strings are in this paragraph and store them
           const links = doclinks.filter(({ str }) => value.includes(str));
           if (links.length > 0) element.links = links;
+        }
+
+        if (type === 'subhed') {
+          element.id = subhedId;
+          subhedId += 1;
         }
 
         if (queue[0]?.type === 'caption') {
@@ -187,6 +248,46 @@ function parseCustomSyntax(archieJson, doclinks = []) {
     }
 
     json.body = components;
+  }
+
+  if (json.notes) {
+    const queue = [...json.notes];
+    const components = [];
+
+    while (queue.length > 0) {
+      // This is copied from the if(json.body) section above
+      // (hacky, but quick)
+
+      const obj = {};
+      while (queue.length > 0 && !TEXT_TYPES.includes(queue[0]?.type)) {
+        const { type, value } = queue.shift();
+        // If component type isn't explicitly set, it defaults to the first key (e.g. 'image')
+        if (type !== 'type' && !obj.type) {
+          obj.type = type;
+        }
+        obj[type] = value;
+      }
+
+      if (obj.type) components.push(obj);
+
+      const text = { type: 'text', paras: [] };
+      while (TEXT_TYPES.includes(queue[0]?.type)) {
+        const { type, value } = queue.shift();
+        const element = { type, value };
+
+        if (type === 'text') {
+          // Check if any of the link strings are in this paragraph and store them
+          const links = doclinks.filter(({ str }) => value.includes(str));
+          if (links.length > 0) element.links = links;
+        }
+
+        text.paras.push(element);
+      }
+
+      if (text.paras.length > 0) components.push(text);
+    }
+
+    json.notes = components;
   }
 
   return json;
