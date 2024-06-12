@@ -48,6 +48,7 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
                 props={{
                   url: component.flourish,
                   alt: component.alt ?? 'A flourish chart',
+                  ...component,
                 }}
                 loading={null}
               />
@@ -55,23 +56,18 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
           );
         case 'side-by-side':
           return (
-            <div className="extra-margin">
-              <SideBySideImages fullGridWidth>
-                <Image
-                  src={component[type] === 'sample' ? SampleSideBySide1 : ''}
-                  imageService={import.meta.env.MODE === 'production'}
-                  alt=""
-                  maxAutoSrcWidth={1500}
-                />
-                <Image
-                  src={component[type] === 'sample' ? SampleSideBySide2 : ''}
-                  imageService={import.meta.env.MODE === 'production'}
-                  alt=""
-                  maxAutoSrcWidth={1500}
-                />
-              </SideBySideImages>
-              <InlineImage fullGridWidth caption="Tk tk © Tk tk" />
-            </div>
+            <SideBySideImages fullGridWidth caption="Tk tk © Tk tk" {...component}>
+              <Image
+                src={component[type] === 'sample' ? SampleSideBySide1 : ''}
+                imageService={import.meta.env.MODE === 'production'}
+                maxAutoSrcWidth={1500}
+              />
+              <Image
+                src={component[type] === 'sample' ? SampleSideBySide2 : ''}
+                imageService={import.meta.env.MODE === 'production'}
+                maxAutoSrcWidth={1500}
+              />
+            </SideBySideImages>
           );
         case 'image':
           return (
@@ -88,32 +84,31 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
               }
               className="extra-margin"
               imageService={import.meta.env.MODE === 'production'}
-              alt="Tk tk"
+              {...component}
             />
           );
         case 'video':
           return (
-            <GridWrapperHelper key={i} className="extra-margin">
-              <LazyLoad
-                component={() => import('@ft-interactive/vs-components/InlineVideo')}
-                props={{
-                  media: { videoSrc: SampleVideo },
-                  mediaMobile: { videoSrc: SampleVideoMobile },
-                  image: {
-                    sources: {
-                      small: SampleVideoFallbackMobile,
-                      medium: SampleVideoFallback,
-                      large: SampleVideoFallback,
-                    },
-                    alt: 'Tk tk',
+            <LazyLoad
+              component={() => import('@ft-interactive/vs-components/InlineVideo')}
+              props={{
+                media: { videoSrc: SampleVideo },
+                mediaMobile: { videoSrc: SampleVideoMobile },
+                image: {
+                  sources: {
+                    small: SampleVideoFallbackMobile,
+                    medium: SampleVideoFallback,
+                    large: SampleVideoFallback,
                   },
-                  loop: true,
-                  showControls: true,
-                  includeSound: false,
-                }}
-                loading={null}
-              />
-            </GridWrapperHelper>
+                },
+                loop: true,
+                showControls: true,
+                includeSound: false,
+                fullGridWidth: true,
+                ...component,
+              }}
+              loading={null}
+            />
           );
         case 'scrolly':
           /** At the moment this is setup to use an ID (which is set in getArchieDoc.js).
