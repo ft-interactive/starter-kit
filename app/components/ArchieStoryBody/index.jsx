@@ -73,7 +73,7 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
               <InlineImage fullGridWidth caption="Tk tk © Tk tk" />
             </div>
           );
-        case 'inline-image':
+        case 'image':
           return (
             <InlineImage
               fullGridWidth
@@ -91,7 +91,7 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
               alt="Tk tk"
             />
           );
-        case 'inline-video':
+        case 'video':
           return (
             <GridWrapperHelper key={i} className="extra-margin">
               <LazyLoad
@@ -100,9 +100,12 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
                   media: { videoSrc: SampleVideo },
                   mediaMobile: { videoSrc: SampleVideoMobile },
                   image: {
-                    small: SampleVideoFallbackMobile,
-                    medium: SampleVideoFallback,
-                    large: SampleVideoFallback,
+                    sources: {
+                      small: SampleVideoFallbackMobile,
+                      medium: SampleVideoFallback,
+                      large: SampleVideoFallback,
+                    },
+                    alt: 'Tk tk',
                   },
                   loop: true,
                   showControls: true,

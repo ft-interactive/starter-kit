@@ -37,7 +37,7 @@ const BodyText = ({ elements, maxWidowSize = 8, extraMargin = true }) => (
               {value}
             </h2>
           );
-        case 'video': {
+        case 'inline-video': {
           const videoConfig = VIDEOS[value];
           if (!videoConfig) return null;
 
@@ -54,7 +54,7 @@ const BodyText = ({ elements, maxWidowSize = 8, extraMargin = true }) => (
             />
           );
         }
-        case 'image': {
+        case 'inline-image': {
           const imageConfig = IMAGES[value];
           if (!imageConfig) return null;
           return (

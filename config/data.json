@@ -4,13 +4,13 @@
             "steps": [
                 {
                     "step": 0,
-                    "figure": "headline",
-                    "config": {},
                     "cards": [
                         {
                             "text": "Ik kie neġi æpude pōsÞpriskribo\u000bIk kie neġi æpude pōsÞpriskribo, anċ ēg tiel subtegmenÞo.Giga gārði esperǣntigo vi jes. Ċit plēj esceptīnte hu, ōl vola eksploðæ poǽ"
                         }
-                    ]
+                    ],
+                    "config": {},
+                    "figure": "headline"
                 }
             ],
             "figures": [
@@ -50,33 +50,33 @@
                 "steps": [
                     {
                         "step": 0,
-                        "figure": "center",
-                        "config": {},
                         "cards": [
                             {
                                 "text": "Ik kie neġi æpude pōsÞpriskribo, anċ ēg tiel subtegmenÞo. Giga gārði esperǣntigo vi jes. Ċit plēj esceptīnte hu, ōl vola eksploðæ poǽ. Ōīð gh pǽƿjo s'joro pronomeċa, mi paki vice fiksa vir. Trǣ kibi multa ok, sur ðū īnfāno kæŭze. Om ene modō sekvanta proksimumecō, ānÞ sh tiele hiper defīnītive."
                             }
-                        ]
+                        ],
+                        "config": {},
+                        "figure": "center"
                     },
                     {
                         "step": 1,
-                        "figure": "left",
-                        "config": {},
                         "cards": [
                             {
                                 "text": "Nk sola ēsperanÞiġo obl, mulÞō ipsilono nēdifīnita ien ed. Trīliono kōmpleksa co mil, kī āġā farī onin triǣnġulo. I eŭro postā eksteren eƿd, ig nūna viro īnstruītulo anc, gē īsm mēze ƿuancilo kīlometro. Ts rīlāte nekuÞima ðārǽlȝæjdō plue."
                             }
-                        ]
+                        ],
+                        "config": {},
+                        "figure": "left"
                     },
                     {
                         "step": 2,
-                        "figure": "right",
-                        "config": {},
                         "cards": [
                             {
                                 "text": "Sēmi rolfinaĵo far nv, sūpēr sċivolema ǽfgænistāno kaj ej. LēÞēri frǽzmelodio eg plue, kiomæs sælutfrāzo ig hej. Korūso ekskluzive ǽnÞǣŭprīskrībo ȝo ena, ilī hā duonvokalō sekviƿȝēro. Lo esti adjēktivo duǣ, san simil multekostā iƿfinitīvo ēj. Is pakī rolfinaĵō sāt, kūƿ æl jaro sæmtempē, milo īmperǣtīvo ba ƿiǣ. Malebliġi esperantiġo pri rē, dum et duōno grupo sekstiliono."
                             }
-                        ]
+                        ],
+                        "config": {},
+                        "figure": "right"
                     }
                 ],
                 "figures": [
@@ -100,6 +100,32 @@
                         "steps": [
                             2
                         ]
+                    }
+                ],
+                "scrolly": [
+                    {
+                        "type": "scroll",
+                        "value": "center"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Ik kie neġi æpude pōsÞpriskribo, anċ ēg tiel subtegmenÞo. Giga gārði esperǣntigo vi jes. Ċit plēj esceptīnte hu, ōl vola eksploðæ poǽ. Ōīð gh pǽƿjo s'joro pronomeċa, mi paki vice fiksa vir. Trǣ kibi multa ok, sur ðū īnfāno kæŭze. Om ene modō sekvanta proksimumecō, ānÞ sh tiele hiper defīnītive."
+                    },
+                    {
+                        "type": "scroll",
+                        "value": "left"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Nk sola ēsperanÞiġo obl, mulÞō ipsilono nēdifīnita ien ed. Trīliono kōmpleksa co mil, kī āġā farī onin triǣnġulo. I eŭro postā eksteren eƿd, ig nūna viro īnstruītulo anc, gē īsm mēze ƿuancilo kīlometro. Ts rīlāte nekuÞima ðārǽlȝæjdō plue."
+                    },
+                    {
+                        "type": "scroll",
+                        "value": "right"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Sēmi rolfinaĵo far nv, sūpēr sċivolema ǽfgænistāno kaj ej. LēÞēri frǽzmelodio eg plue, kiomæs sælutfrāzo ig hej. Korūso ekskluzive ǽnÞǣŭprīskrībo ȝo ena, ilī hā duonvokalō sekviƿȝēro. Lo esti adjēktivo duǣ, san simil multekostā iƿfinitīvo ēj. Is pakī rolfinaĵō sāt, kūƿ æl jaro sæmtempē, milo īmperǣtīvo ba ƿiǣ. Malebliġi esperantiġo pri rē, dum et duōno grupo sekstiliono."
                     }
                 ]
             },
@@ -130,8 +156,8 @@
                 ]
             },
             {
-                "type": "inline-image",
-                "inline-image": "sample"
+                "type": "image",
+                "image": "sample"
             },
             {
                 "type": "text",
@@ -156,8 +182,8 @@
                 ]
             },
             {
-                "type": "inline-video",
-                "inline-video": "sample"
+                "type": "video",
+                "video": "sample"
             },
             {
                 "type": "text",
@@ -172,10 +198,10 @@
         "notes": [
             {
                 "type": "Sources",
-                "value": "tk tk"
+                "Sources": "tk tk"
             }
         ],
-        "updatedAt": "2024-06-12T10:21:46.855Z"
+        "updatedAt": "2024-06-12T10:35:53.737Z"
     },
     "csv": "a,b\ntest_a,test_b\n",
     "json": {
