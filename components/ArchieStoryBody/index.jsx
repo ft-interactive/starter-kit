@@ -53,8 +53,7 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
           }
           return (
             <SideBySideImages fullGridWidth caption="Tk tk © Tk tk" {...component} key={key}>
-              {Array.isArray(images[key]) &&
-                images[key].filter((v) => v.src || v.sources).map((img) => <Image {...img} />)}
+              {Array.isArray(images[key]) && images[key].map((img) => <Image {...img} />)}
             </SideBySideImages>
           );
         case 'image':
