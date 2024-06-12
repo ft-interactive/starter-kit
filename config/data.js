@@ -13,7 +13,7 @@
  * the latest version on the client.
  */
 
-import getArchieDoc from '../data/getArchieDoc.js';
+// import getArchieDoc from '../data/getArchieDoc.js';
 
 // eslint-disable-next-line no-unused-vars
 export async function fetchData(mode) {
@@ -33,8 +33,8 @@ export async function fetchData(mode) {
    */
 
   // We'll want to set story to null if not using an ArchieML doc
-  // const story = null;
-  const story = await getArchieDoc();
+  const story = null;
+  // const story = await getArchieDoc();
 
   // This { as: 'raw' } option imports files as plaintext
   const dataFiles = import.meta.glob('../data/*.csv', { as: 'raw' });
