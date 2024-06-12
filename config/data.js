@@ -32,6 +32,7 @@ export async function fetchData(mode) {
    * See below for examples of how to load raw text/csv or JSON files:
    */
 
+  // We'll want to set story to null if not using an ArchieML doc
   // const story = null;
   const story = await getArchieDoc();
 
