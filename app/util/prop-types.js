@@ -25,12 +25,6 @@ export const ContextPropType = {
     credit: PropTypes.string,
     url: PropTypes.string,
   }),
-  bylines: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      url: PropTypes.string,
-    })
-  ).isRequired,
   title: PropTypes.string,
   description: PropTypes.string,
   twitterCard: PropTypes.string,

@@ -16,9 +16,10 @@ import videos from '../../media/videos';
 
 const ArchieStoryBody = ({ bodyElements = [] }) => (
   <React.Fragment>
-    {bodyElements.map((component, i) => {
+    {bodyElements.map((component) => {
       const type = component.type.toLowerCase();
-      const key = component.value?.toLowerCase().trim().replace(' ', '-');
+      const value = component.value || component[component.type];
+      const key = value?.toString().toLowerCase().trim().replace(' ', '-');
 
       switch (type) {
         case 'text':
@@ -27,8 +28,6 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
               <BodyText elements={component.paras} />
             </GridWrapperHelper>
           );
-        case 'subhed':
-          return <h2 key={key}>{component.value}</h2>;
         case 'flourish':
           return (
             <GridWrapperHelper key={key} className="extra-margin">
@@ -54,9 +53,8 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
           }
           return (
             <SideBySideImages fullGridWidth caption="Tk tk © Tk tk" {...component} key={key}>
-              {images[key].map((img) => (
-                <Image {...img} />
-              ))}
+              {Array.isArray(images[key]) &&
+                images[key].filter((v) => v.src || v.sources).map((img) => <Image {...img} />)}
             </SideBySideImages>
           );
         case 'image':
