@@ -4,15 +4,17 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { insertSpans } from '../../util/text.jsx';
 
+import images from '../../media/images';
+import videos from '../../media/videos';
+
 import './styles.scss';
-
-const VIDEOS = {};
-
-const IMAGES = {};
 
 const BodyText = ({ elements, maxWidowSize = 8, extraMargin = true }) => (
   <div className="body-text o-editorial-layout-wrapper">
-    {elements.map(({ type, value, caption, links = [] }, i) => {
+    {elements.map((component) => {
+      const { type, value, links = [] } = component;
+      const key = value?.toLowerCase().trim().replace(' ', '-');
+
       const linkSpans = links
         .map(({ str, url }) => ({
           text: str,
@@ -26,50 +28,53 @@ const BodyText = ({ elements, maxWidowSize = 8, extraMargin = true }) => (
           },
         ]);
 
-      const key = `${i}-${value}`;
-
       switch (type) {
         case 'text':
           return <Fragment key={key}>{insertSpans(value, linkSpans)}</Fragment>;
         case 'subhed':
           return (
-            <h2 key={key} className={classNames('body-text__header')}>
+            <h2 className={classNames('body-text__header')} key={key}>
               {value}
             </h2>
           );
         case 'inline-video': {
-          const videoConfig = VIDEOS[value];
-          if (!videoConfig) return null;
+          // eslint-disable-next-line no-console
+          if (!videos[key]) console.warn('No image asset found for key', key);
 
           return (
             <InlineVideo
-              media={videoConfig}
-              caption={videoConfig.caption}
               className={classNames(
                 'body-text__media',
                 'body-text__media--video',
-                extraMargin === true && 'extra-margin'
+                extraMargin === true && 'extra-margin',
+                component.float && `body-text__media--float-${component.float}`
               )}
-              key={videoConfig.videoSrc}
+              {...videos[key]}
+              image={{
+                sizes: '(min-width: 1220px) 680px, (min-width: 740px) 70vw, 100vw',
+                ...videos[key].image,
+              }}
+              {...component}
+              key={key}
             />
           );
         }
         case 'inline-image': {
-          const imageConfig = IMAGES[value];
-          if (!imageConfig) return null;
+          // eslint-disable-next-line no-console
+          if (!images[key]) console.warn('No video asset found for key', key);
+
           return (
             <InlineImage
-              fullGridWidth={false}
-              src={imageConfig.src}
-              alt={imageConfig.alt}
-              caption={imageConfig.caption}
               className={classNames(
                 'body-text__media',
                 'body-text__media--image',
-                extraMargin === true && 'extra-margin'
+                extraMargin === true && 'extra-margin',
+                component.float && `body-text__media--float-${component.float}`
               )}
-              imageService={import.meta.env.MODE === 'production'}
-              key={imageConfig.src}
+              sizes="(min-width: 1220px) 680px, (min-width: 740px) 70vw, 100vw"
+              {...images[key]}
+              {...component}
+              key={key}
             />
           );
         }
