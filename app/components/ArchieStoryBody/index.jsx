@@ -18,6 +18,12 @@ import SampleDesktop from '../../media/images/sample_images/SampleDesktop.png';
 import SampleMid from '../../media/images/sample_images/SampleMid.png';
 import SampleMobile from '../../media/images/sample_images/SampleMobile.png';
 
+import SampleVideo from '../../media/video/sample_video.mp4';
+import SampleVideoMobile from '../../media/video/sample_video.mp4';
+
+import SampleVideoFallback from '../../media/images/sample_images/sample_video_fallback.mp4';
+import SampleVideoFallbackMobile from '../../media/images/sample_images/sample_video_fallback.mp4';
+
 const ArchieStoryBody = ({ bodyElements = [] }) => (
   <React.Fragment>
     {bodyElements.map((component, i) => {
@@ -83,6 +89,25 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
               className="extra-margin"
               imageService={import.meta.env.MODE === 'production'}
               alt="Tk tk"
+            />
+          );
+        case 'video':
+          return (
+            <LazyLoad
+              component={() => import('@ft-interactive/vs-components/InlineVideo')}
+              props={{
+                media: { videoSrc: SampleVideo },
+                mediaMobile: { videoSrc: SampleVideoMobile },
+                image: {
+                  small: SampleVideoFallbackMobile,
+                  medium: SampleVideoFallback,
+                  large: SampleVideoFallback,
+                },
+                loop: true,
+                showControls: true,
+                includeSound: false,
+              }}
+              loading={null}
             />
           );
         case 'scrolly':
