@@ -54,7 +54,7 @@
     "@financial-times/g-components": "^9.5.2",
     "@financial-times/o-colors": "^6.6.0",
     "@financial-times/o-grid": "^6.1.5",
-    "@ft-interactive/vs-components": "^5.0.0",
+    "@ft-interactive/vs-components": "^5.0.0-canary.7",
     "ftdomdelegate": "^5.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

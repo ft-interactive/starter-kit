@@ -11,36 +11,27 @@ import LazyLoad from '../../util/LazyLoad.jsx';
 import BodyText from '../BodyText/index.jsx';
 import ScrollySection from '../ScrollySection/index.jsx';
 
-import SampleSideBySide1 from '../../media/images/sample_images/SampleSideBySide1.jpg';
-import SampleSideBySide2 from '../../media/images/sample_images/SampleSideBySide2.jpg';
-
-import SampleDesktop from '../../media/images/sample_images/SampleDesktop.png';
-import SampleMid from '../../media/images/sample_images/SampleMid.png';
-import SampleMobile from '../../media/images/sample_images/SampleMobile.png';
-
-import SampleVideo from '../../media/video/sample_video.mp4';
-import SampleVideoMobile from '../../media/video/sample_video_mobile.mp4';
-
-import SampleVideoFallback from '../../media/images/sample_images/sample_video_fallback.png';
-import SampleVideoFallbackMobile from '../../media/images/sample_images/sample_video_fallback_mobile.png';
+import images from '../../media/images';
+import videos from '../../media/videos';
 
 const ArchieStoryBody = ({ bodyElements = [] }) => (
   <React.Fragment>
     {bodyElements.map((component, i) => {
       const type = component.type.toLowerCase();
-      /* eslint-disable react/no-array-index-key */
+      const key = component.value?.toLowerCase().trim().replace(' ', '-');
+
       switch (type) {
         case 'text':
           return (
-            <GridWrapperHelper key={i} className="extra-margin">
+            <GridWrapperHelper key={key} className="extra-margin">
               <BodyText elements={component.paras} />
             </GridWrapperHelper>
           );
         case 'subhed':
-          return <h2 key={i}>{component.value}</h2>;
+          return <h2 key={key}>{component.value}</h2>;
         case 'flourish':
           return (
-            <GridWrapperHelper key={i} className="extra-margin">
+            <GridWrapperHelper key={key} className="extra-margin">
               {/* Need to lazy load in the flourish embed here. Without it, it never seems...
                ...to resize correctly on first load and so always has height of 600px  */}
               <LazyLoad
@@ -55,72 +46,56 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
             </GridWrapperHelper>
           );
         case 'side-by-side':
+          // eslint-disable-next-line no-console
+          if (!images[key]) console.warn('No image asset found for', key);
+          if (!Array.isArray(images[key])) {
+            // eslint-disable-next-line no-console
+            console.warn('Side-by-side images should be named like <name>.0.jpg, <name>.1.jpg');
+          }
           return (
-            <SideBySideImages fullGridWidth caption="Tk tk © Tk tk" {...component}>
-              <Image
-                src={component[type] === 'sample' ? SampleSideBySide1 : ''}
-                imageService={import.meta.env.MODE === 'production'}
-                maxAutoSrcWidth={1500}
-              />
-              <Image
-                src={component[type] === 'sample' ? SampleSideBySide2 : ''}
-                imageService={import.meta.env.MODE === 'production'}
-                maxAutoSrcWidth={1500}
-              />
+            <SideBySideImages fullGridWidth caption="Tk tk © Tk tk" {...component} key={key}>
+              {images[key].map((img) => (
+                <Image {...img} />
+              ))}
             </SideBySideImages>
           );
         case 'image':
+          // eslint-disable-next-line no-console
+          if (!images[key]) console.warn('No image asset found for', key);
           return (
             <InlineImage
               fullGridWidth
-              sources={
-                component[type] === 'sample'
-                  ? {
-                      large: SampleDesktop,
-                      medium: SampleMid,
-                      small: SampleMobile,
-                    }
-                  : { large: '', medium: '', small: '' }
-              }
               className="extra-margin"
-              imageService={import.meta.env.MODE === 'production'}
+              {...images[key]}
               {...component}
+              key={key}
             />
           );
         case 'video':
+          // eslint-disable-next-line no-console
+          if (!videos[key]) console.warn('No video asset found for', key);
           return (
             <LazyLoad
               component={() => import('@ft-interactive/vs-components/InlineVideo')}
               props={{
-                media: { videoSrc: SampleVideo },
-                mediaMobile: { videoSrc: SampleVideoMobile },
-                image: {
-                  sources: {
-                    small: SampleVideoFallbackMobile,
-                    medium: SampleVideoFallback,
-                    large: SampleVideoFallback,
-                  },
-                },
-                loop: true,
-                showControls: true,
-                includeSound: false,
                 fullGridWidth: true,
+                ...videos[key],
                 ...component,
               }}
               loading={null}
+              key={key}
             />
           );
         case 'scrolly':
           /** At the moment this is setup to use an ID (which is set in getArchieDoc.js).
            * Which means if you switch the positions of the scrolly's in the google doc you'll
            * also need to update this */
-          return <ScrollySection steps={component.steps} />;
+          return <ScrollySection steps={component.steps} key={key} />;
         default:
           // eslint-disable-next-line no-console
-          console.warn('Unknown ArchieML type:', component.type);
+          console.warn('Unknown ArchieML type:', type);
           return null;
       }
-      /* eslint-enable react/no-array-index-key */
     })}
   </React.Fragment>
 );
