@@ -19,10 +19,10 @@ import SampleMid from '../../media/images/sample_images/SampleMid.png';
 import SampleMobile from '../../media/images/sample_images/SampleMobile.png';
 
 import SampleVideo from '../../media/video/sample_video.mp4';
-import SampleVideoMobile from '../../media/video/sample_video.mp4';
+import SampleVideoMobile from '../../media/video/sample_video_mobile.mp4';
 
-import SampleVideoFallback from '../../media/images/sample_images/sample_video_fallback.mp4';
-import SampleVideoFallbackMobile from '../../media/images/sample_images/sample_video_fallback.mp4';
+import SampleVideoFallback from '../../media/images/sample_images/sample_video_fallback.png';
+import SampleVideoFallbackMobile from '../../media/images/sample_images/sample_video_fallback_mobile.png';
 
 const ArchieStoryBody = ({ bodyElements = [] }) => (
   <React.Fragment>
@@ -91,24 +91,26 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
               alt="Tk tk"
             />
           );
-        case 'video':
+        case 'inline-video':
           return (
-            <LazyLoad
-              component={() => import('@ft-interactive/vs-components/InlineVideo')}
-              props={{
-                media: { videoSrc: SampleVideo },
-                mediaMobile: { videoSrc: SampleVideoMobile },
-                image: {
-                  small: SampleVideoFallbackMobile,
-                  medium: SampleVideoFallback,
-                  large: SampleVideoFallback,
-                },
-                loop: true,
-                showControls: true,
-                includeSound: false,
-              }}
-              loading={null}
-            />
+            <GridWrapperHelper key={i} className="extra-margin">
+              <LazyLoad
+                component={() => import('@ft-interactive/vs-components/InlineVideo')}
+                props={{
+                  media: { videoSrc: SampleVideo },
+                  mediaMobile: { videoSrc: SampleVideoMobile },
+                  image: {
+                    small: SampleVideoFallbackMobile,
+                    medium: SampleVideoFallback,
+                    large: SampleVideoFallback,
+                  },
+                  loop: true,
+                  showControls: true,
+                  includeSound: false,
+                }}
+                loading={null}
+              />
+            </GridWrapperHelper>
           );
         case 'scrolly':
           /** At the moment this is setup to use an ID (which is set in getArchieDoc.js).
