@@ -1,7 +1,6 @@
 import { sortFiles, ALT } from '../util';
 
 const DEFAULT_IMAGE_PROPS = {
-  sources: {},
   imageService: import.meta.env.MODE === 'production',
   // Add any other story-default image props here
   // alt: ''
@@ -16,6 +15,7 @@ const images = sortFiles(import.meta.glob('./*.{png,jpg,jpeg,gif}', { eager: tru
     if (!acc[name] || (count && !acc[name][c])) {
       const data = {
         ...DEFAULT_IMAGE_PROPS,
+        sources: {},
         alt: ALT[name],
       };
 
