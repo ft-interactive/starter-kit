@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, TopperText } from '@ft-interactive/vs-components';
+import Card from '@ft-interactive/vs-components/Card';
+import TopperText from '@ft-interactive/vs-components/TopperText';
 
 import { insertSpans } from './text.jsx';
 

@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  GridWrapperHelper,
-  SideBySideImages,
-  Image,
-  InlineImage,
-} from '@ft-interactive/vs-components';
+import GridWrapperHelper from '@ft-interactive/vs-components/GridWrapperHelper';
+import SideBySideImages from '@ft-interactive/vs-components/SideBySideImages';
+import Image from '@ft-interactive/vs-components/Image';
+import InlineImage from '@ft-interactive/vs-components/InlineImage';
+
 import LazyLoad from '../../util/LazyLoad.jsx';
 import BodyText from '../BodyText/index.jsx';
 import ScrollySection from '../ScrollySection/index.jsx';
