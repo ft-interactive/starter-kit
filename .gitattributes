@@ -1,6 +1,6 @@
 # Comment the following if you don't need/want LFS for binary files
-# *.png filter=lfs diff=lfs merge=lfs -text
-# *.jpg filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
 *.jpeg filter=lfs diff=lfs merge=lfs -text
 *.psd filter=lfs diff=lfs merge=lfs -text
 *.ai filter=lfs diff=lfs merge=lfs -text
