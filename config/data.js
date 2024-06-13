@@ -34,7 +34,10 @@ export async function fetchData(mode) {
 
   // We'll want to set story to null if not using an ArchieML doc
   const story = null;
-  // const story = await getArchieDoc();
+
+  // This will use the ArchieML doc setup. The string passed in is for the template doc
+  // Replace it or null it after adding a new doc ID to the .env file
+  // const story = await getArchieDoc("1Oau3L_yCHpq1yv7MiNWTR1AdlgShLDE6r-36uXO1Vhc");
 
   // This { as: 'raw' } option imports files as plaintext
   const dataFiles = import.meta.glob('../data/*.csv', { as: 'raw' });

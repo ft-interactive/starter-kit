@@ -312,6 +312,12 @@ export default async function getArchieDoc(id = process.env.G_DOC_ID, customSynt
     throw new Error("You must provide an 'id' or set G_DOC_ID in the environment to load ArchieML");
   }
 
+  if (process.env.G_DOC_ID && id !== process.env.G_DOC_ID) {
+    throw new Error(
+      "You have provided an 'id' that is different from the G_DOC_ID environment variable"
+    );
+  }
+
   const { text, links } = await getDocsText(id);
 
   let json = archieml.load(text);
