@@ -16,5 +16,5 @@
 *.mp3 filter=lfs diff=lfs merge=lfs -text
 *.ogg filter=lfs diff=lfs merge=lfs -text
 
-app/media/images/sample_images/*  !filter !diff !merge text 
-app/media/video/sample_video*  !filter !diff !merge text 
+app/media/images/sample_images/*  !filter !diff !merge -text eol=lf
+app/media/video/sample_video*  !filter !diff !merge -text eol=lf
