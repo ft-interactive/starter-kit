@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { useScrollyContext } from '@ft-interactive/vs-components';
+import { useScrollyContext } from '@ft-interactive/vs-components/Scrolly';
 
 import './styles.scss';
 

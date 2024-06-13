@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import { InlineVideo, InlineImage } from '@ft-interactive/vs-components';
+import InlineImage from '@ft-interactive/vs-components/InlineImage';
+import InlineVideo from '@ft-interactive/vs-components/InlineVideo';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { insertSpans } from '../../util/text.jsx';
