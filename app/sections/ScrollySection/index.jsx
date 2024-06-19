@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Scrolly } from '@ft-interactive/vs-components';
+import Scrolly from '@ft-interactive/vs-components/Scrolly';
 import { deepCompareProps } from '@ft-interactive/vs-components/util';
 // import LazyLoad from '../../util/LazyLoad.jsx';
 
