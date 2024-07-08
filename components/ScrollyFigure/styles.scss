@@ -1,4 +1,4 @@
-@import '../../settings.scss';
+@import '../settings.scss';
 
 .vs-sample-scrolly-figure {
   &__wrapper {
@@ -8,8 +8,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-
   }
 
   &__step-counter {

@@ -56,9 +56,9 @@ import { DimensionsProvider } from '@ft-interactive/vs-components/hooks';
 
 import '@ft-interactive/vs-components/styles.css';
 
-import { ContextPropType } from './util/prop-types';
-import ArchieStoryBody from './components/ArchieStoryBody';
-import SampleStoryBody from './util/SampleStoryBody';
+import { ContextPropType } from '../../util/prop-types';
+import ArchieStoryBody from '../../components/ArchieStoryBody';
+import SampleStoryBody from '../../util/SampleStoryBody';
 
 const App = ({ context }) => (
   <DimensionsProvider>

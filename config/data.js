@@ -13,7 +13,7 @@
  * the latest version on the client.
  */
 
-// import getArchieDoc from '../data/getArchieDoc.js';
+// import getArchieDoc from '../util/getArchieDoc.js';
 
 // eslint-disable-next-line no-unused-vars
 export async function fetchData(mode) {
