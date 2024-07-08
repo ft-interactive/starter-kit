@@ -14,6 +14,7 @@ export default (environment = 'development') => ({
   header: true,
   footer: true,
   dark: false, // Dark theme support requires g-components >= 2.2.x
+  mainImage: true,
   /*
     NOTE ABOUT COMMENTS:
 
@@ -32,5 +33,5 @@ export default (environment = 'development') => ({
     3a499586-b2e0-11e4-a058-00144feab7de
 
   */
-  comments: true,
+  comments: environment === 'production',
 });

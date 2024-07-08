@@ -12,20 +12,17 @@ import { compile } from 'ejs';
 
 // eslint-disable-next-line import/no-unresolved
 import indexTemplate from './index.html?raw';
-
-import App from './app/app';
-
 import getContext from './config/index.js';
 
 const template = compile(indexTemplate);
 
 // eslint-disable-next-line import/prefer-default-export
-export async function render() {
+export async function onRenderHtml({ Page }) {
   // Get story context and settings to pass to the client
   const context = await getContext(import.meta.env.MODE);
 
   // Render React app to HTML
-  const appHtml = ReactDOMServer.renderToString(<App context={context} />);
+  const appHtml = ReactDOMServer.renderToString(<Page context={context} />);
 
   // Insert context and appHtml into the full page
   // (We override Vite's escaping here because EJS already escapes it)
@@ -36,6 +33,3 @@ export async function render() {
     pageContext: { context },
   };
 }
-
-// Vike requires us to select which pageContext keys are available in the client
-export const passToClient = ['context'];

@@ -7,7 +7,7 @@
 import article from './article.js';
 import getFlags from './flags.js';
 import getUrl from './url.js';
-import getOnwardJourney from './onward-journey.js';
+import relatedContent from './onward-journey.js';
 import getData from './data.js';
 
 export default async (environment = 'development', options = { withData: true }) => {
@@ -15,7 +15,6 @@ export default async (environment = 'development', options = { withData: true })
   const url = await getUrl(metadata.url, environment);
   const data = options.withData ? await getData(environment) : {};
   const flags = await getFlags(environment);
-  const { relatedContent } = await getOnwardJourney(environment);
 
   /**
    * @NB if you want pull some remote data into the app, here is probably

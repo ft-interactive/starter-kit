@@ -9,7 +9,7 @@ import {
 } from '@ft-interactive/vs-components';
 import LazyLoad from '../../util/LazyLoad.jsx';
 import BodyText from '../BodyText/index.jsx';
-import ScrollySection from '../../sections/ScrollySection/index.jsx';
+import ScrollySection from '../ScrollySection/index.jsx';
 
 import SampleSideBySide1 from '../../media/images/sample_images/SampleSideBySide1.jpg';
 import SampleSideBySide2 from '../../media/images/sample_images/SampleSideBySide2.jpg';

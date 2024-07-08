@@ -47,11 +47,11 @@
     <meta name="theme-color" content="#fff1e5" />
     <% if (context.flags.data && context.dataMeta) { %>
     <script type="application/ld+json">
-      <%= JSON.stringify(context.dataMeta) %>
+      <%- JSON.stringify(context.dataMeta) %>
     </script>
     <% } %>
     <script type="application/ld+json">
-      <%= JSON.stringify({
+      <%- JSON.stringify({
           '@context': 'http://schema.org',
           '@type': 'WebSite',
           name: 'Financial Times',
@@ -61,7 +61,7 @@
     </script>
     <% if (context.flags.errorReporting) { %>
     <script type="application/json" data-o-errors-config>
-      <%= JSON.stringify({ sentryEndpoint: 'https://ddbd80489ff549538250bbe37fa52bbd@sentry.io/71130'}) %>
+      <%- JSON.stringify({ sentryEndpoint: 'https://ddbd80489ff549538250bbe37fa52bbd@sentry.io/71130'}) %>
     </script>
     <% } %>
 
@@ -136,6 +136,7 @@
     <meta property="fb:pages" content="23117544640" />
     <meta property="fb:pages" content="293710391064899" />
   </head>
+
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"><%- appHtml %></div>

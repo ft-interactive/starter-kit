@@ -28,7 +28,7 @@
     "prettier": "^2.8.8",
     "prop-types": "^15.8.1",
     "sass": "^1.62.1",
-    "vike": "^0.4.147",
+    "vike": "^0.4.179",
     "vite": "^4.3.9"
   },
   "volta": {
@@ -37,8 +37,7 @@
   },
   "optionalDependencies": {
     "@financial-times/g-deploy": "^4.0.1",
-    "@financial-times/vvc": "github:financial-times/visual-vocabulary-components#prerelease",
-    "react-snap": "^1.23.0"
+    "@financial-times/vvc": "github:financial-times/visual-vocabulary-components#prerelease"
   },
   "private": true,
   "scripts": {
