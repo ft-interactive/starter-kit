@@ -5,6 +5,7 @@ import GridWrapperHelper from '@ft-interactive/vs-components/GridWrapperHelper';
 import SideBySideImages from '@ft-interactive/vs-components/SideBySideImages';
 import Image from '@ft-interactive/vs-components/Image';
 import InlineImage from '@ft-interactive/vs-components/InlineImage';
+import InlineGraphic from '@ft-interactive/vs-components/InlineGraphic';
 
 import LazyLoad from '../../util/LazyLoad.jsx';
 import BodyText from '../BodyText/index.jsx';
@@ -12,6 +13,7 @@ import ScrollySection from '../ScrollySection/index.jsx';
 
 import images from '../../media/images';
 import videos from '../../media/videos';
+import graphics from '../../media/graphics';
 
 const ArchieStoryBody = ({ bodyElements = [] }) => (
   <React.Fragment>
@@ -63,6 +65,18 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
               fullGridWidth
               className="extra-margin"
               {...images[key]}
+              {...component}
+              key={key}
+            />
+          );
+        case 'graphic':
+          // eslint-disable-next-line no-console
+          if (!graphics[key]) console.warn('No ai2html asset found for', key);
+          return (
+            <InlineGraphic
+              fullGridWidth
+              className="extra-margin"
+              {...graphics[key]}
               {...component}
               key={key}
             />
