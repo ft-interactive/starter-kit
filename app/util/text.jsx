@@ -30,29 +30,33 @@ const findOverlappingHighlights = (matches) =>
 // Highlights is a list of { regex, className } pairs - each 'regex' must have a capture group
 // Returns JSX
 export function insertSpans(text, highlights, options = { p: true }) {
-  const matches = highlights.reduce((arr, highlight) => {
-    if (!(highlight.text || highlight.regex))
-      throw new Error('insertSpan(): Each span must have either highlight.text or highlight.regex');
+  const matches = highlights
+    .reduce((arr, highlight) => {
+      if (!(highlight.text || highlight.regex))
+        throw new Error(
+          'insertSpan(): Each span must have either highlight.text or highlight.regex'
+        );
 
-    const regexStr = highlight.regex || escapeRegex(highlight.text);
-    const regex = new RegExp(regexStr, 'igd');
+      const regexStr = highlight.regex || escapeRegex(highlight.text);
+      const regex = new RegExp(regexStr, 'igd');
 
-    let match;
-    // eslint-disable-next-line no-cond-assign
-    while ((match = regex.exec(text))) {
-      // Add all capture groups (but not the whole string) to the list
-      const { indices } = match;
-      arr.push(
-        ...match.slice(1).map((group, i) => ({
-          ...highlight,
-          match: group,
-          start: indices[i + 1][0],
-          end: indices[i + 1][1],
-        }))
-      );
-    }
-    return arr;
-  }, []);
+      let match;
+      // eslint-disable-next-line no-cond-assign
+      while ((match = regex.exec(text))) {
+        // Add all capture groups (but not the whole string) to the list
+        const { indices } = match;
+        arr.push(
+          ...match.slice(1).map((group, i) => ({
+            ...highlight,
+            match: group,
+            start: indices[i + 1][0],
+            end: indices[i + 1][1],
+          }))
+        );
+      }
+      return arr;
+    }, [])
+    .sort((a, b) => a.start - b.start);
 
   if (matches.length === 0) return options.p ? <p>{text}</p> : text;
 
