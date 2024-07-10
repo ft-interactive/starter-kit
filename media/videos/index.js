@@ -11,7 +11,9 @@ const DEFAULT_IMAGE_PROPS = {
 
 const videos = sortFiles(import.meta.glob('./*.mp4*', { eager: true })).reduce(
   (dict, [file, src]) => {
-    const [, name, size, isStill] = file.match(/\/([-_\w]+)\.?([A-Z]+)?\.mp4(\.jpe?g|\.png)?$/);
+    const [, name, size, isStill] = file.match(
+      /\/([-_\w]+)\.?([A-Z]+)?\.mp4(\.jpe?g|\.png|\.gif)?$/
+    );
 
     const fields = dict[name] || DEFAULT_VIDEO_PROPS;
 

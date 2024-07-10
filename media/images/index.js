@@ -9,7 +9,7 @@ const DEFAULT_IMAGE_PROPS = {
 const images = sortFiles(import.meta.glob('./*.{png,jpg,jpeg,gif}', { eager: true })).reduce(
   (acc, [k, v]) => {
     const [, name, count, size] =
-      k.match(/\/([-_\w]+)\.([0-9]+)?\.?([SMLX]+)?\.?(png|jpe?g)$/) || [];
+      k.match(/\/([-_\w]+)\.([0-9]+)?\.?([SMLX]+)?\.?(png|jpe?g|gif)$/) || [];
     const c = parseInt(count || '0', 10);
 
     if (!acc[name] || (count && !acc[name][c])) {

@@ -23,10 +23,10 @@ const htmlFiles = import.meta.glob('./*/*.html', {
   import: 'default',
 });
 
-const imageFiles = import.meta.glob('./*/*.{png,jpg}', { eager: true, import: 'default' });
+const imageFiles = import.meta.glob('./*/*.{png,jpg,jpeg,gif}', { eager: true, import: 'default' });
 
 const imageMap = Object.entries(imageFiles).reduce((acc, [file, img]) => {
-  const name = file.match(/^\.\/[\w-_]+\/([^/]+\.(?:png|jpg))$/)[1];
+  const name = file.match(/^\.\/[\w-_]+\/([^/]+\.(?:png|jpg|jpeg|gif))$/)[1];
   return {
     ...acc,
     [name]: img,
