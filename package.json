@@ -6,12 +6,8 @@
     "@types/react-dom": "^18.2.4",
     "@vitejs/plugin-react": "^4.0.0",
     "archieml": "^0.5.0",
-    "axios": "^1.4.0",
     "chai": "^4.3.7",
-    "classnames": "^2.3.2",
-    "d3-time-format": "^4.1.0",
     "dotenv": "^16.3.1",
-    "ejs": "^3.1.9",
     "eslint": "^8.41.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.8.0",
@@ -20,7 +16,6 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "googleapis": "^129.0.0",
     "husky": "^8.0.3",
     "jsdom": "^22.1.0",
     "mocha": "^10.2.0",
@@ -62,7 +57,9 @@
     "@ft-interactive/vs-components": "^5.0.0",
     "ftdomdelegate": "^5.0.0",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "vike-react": "^0.4.17",
+    "classnames": "^2.3.2"
   },
   "_ssrBrowserAllowList": [
     "@financial-times/o-toggle",

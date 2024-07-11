@@ -16,11 +16,6 @@ export default async (environment = 'development', options = { withData: true })
   const data = options.withData ? await getData(environment) : {};
   const flags = await getFlags(environment);
 
-  /**
-   * @NB if you want pull some remote data into the app, here is probably
-   * a good place to do it.
-   */
-
   return {
     ...metadata,
     url,
