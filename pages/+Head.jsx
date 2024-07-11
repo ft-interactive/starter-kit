@@ -42,40 +42,58 @@ export const Head = () => {
       <meta name="copyright" content="Financial Times" />
       <meta name="theme-color" content="#fff1e5" />
 
+      {/* eslint-disable */}
       {context.flags.data && context.dataMeta && (
-        <script type="application/ld+json">{JSON.stringify(context.dataMeta)}</script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(context.dataMeta) }}
+        ></script>
       )}
 
-      <script type="application/ld+json">
-        {JSON.stringify({
-          '@context': 'http://schema.org',
-          '@type': 'WebSite',
-          name: 'Financial Times',
-          alternateName: 'FT.com',
-          url: 'http://www.ft.com',
-        })}
-      </script>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'http://schema.org',
+            '@type': 'WebSite',
+            name: 'Financial Times',
+            alternateName: 'FT.com',
+            url: 'http://www.ft.com',
+          }),
+        }}
+      ></script>
 
       {context.flags.errorReporting && (
-        <script type="application/json" data-o-errors-config>
-          {JSON.stringify({
-            sentryEndpoint: 'https://ddbd80489ff549538250bbe37fa52bbd@sentry.io/71130',
-          })}
-        </script>
+        <script
+          type="application/json"
+          data-o-errors-config
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              sentryEndpoint: 'https://ddbd80489ff549538250bbe37fa52bbd@sentry.io/71130',
+            }),
+          }}
+        ></script>
       )}
 
-      <script type="text/javascript">{`
-      cutsTheMustard =
-        'querySelector' in document &&
-        'localStorage' in window &&
-        'addEventListener' in window &&
-        typeof Function.prototype.bind !== 'undefined';
-      if (cutsTheMustard)
-        document.documentElement.className = document.documentElement.className.replace(
-          /core/g,
-          'enhanced'
-        );
-    `}</script>
+      <script
+        type="text/javascript"
+        dangerouslySetInnerHTML={{
+          __html: `
+  window.cutsTheMustard =
+    'querySelector' in document &&
+    'localStorage' in window &&
+    'addEventListener' in window &&
+    typeof Function.prototype.bind !== 'undefined';
+
+  if (window.cutsTheMustard)
+    document.documentElement.className = document.documentElement.className.replace(
+      /core/g,
+      'enhanced'
+    );
+        `,
+        }}
+      ></script>
+      {/* eslint-enable */}
 
       {context.flags.analytics && (
         <Fragment>
