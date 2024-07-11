@@ -59,40 +59,45 @@ import '@ft-interactive/vs-components/styles.css';
 import { ContextPropType } from '../../util/prop-types';
 import ArchieStoryBody from '../../components/ArchieStoryBody';
 import SampleStoryBody from '../../util/SampleStoryBody';
+import { useData } from 'vike-react/useData';
 
-const App = ({ context }) => (
-  <DimensionsProvider>
-    <Layout {...context}>
-      <main key="main" role="main">
-        <article className="article" itemScope itemType="http://schema.org/Article">
-          <GridWrapperHelper colspan="12 S11 Scenter M9 L8 XL7" className="article-head">
-            <StoryTopper {...context} />
-          </GridWrapperHelper>
+const App = () => {
+  const context = useData();
 
-          <div className="article-body o-editorial-typography-body" itemProp="articleBody">
-            {context.data?.story?.body ? (
-              <ArchieStoryBody bodyElements={context.data?.story?.body} />
-            ) : (
-              <SampleStoryBody />
-            )}
-
-            <GridWrapperHelper colspan="12 S11 Scenter M9 L8 XL7">
-              <Credits
-                share={{
-                  url: context.url,
-                  socialHeadline: context.socialHeadline || context.headline,
-                  tweetText: context.tweetText || context.twitterHeadline,
-                  facebookHeadline: context.facebookHeadline,
-                }}
-                dark={context.flags.dark}
-              />
+  return (
+    <DimensionsProvider>
+      <Layout {...context}>
+        <main key="main" role="main">
+          <article className="article" itemScope itemType="http://schema.org/Article">
+            <GridWrapperHelper colspan="12 S11 Scenter M9 L8 XL7" className="article-head">
+              <StoryTopper {...context} />
             </GridWrapperHelper>
-          </div>
-        </article>
-      </main>
-    </Layout>
-  </DimensionsProvider>
-);
+
+            <div className="article-body o-editorial-typography-body" itemProp="articleBody">
+              {context.data?.story?.body ? (
+                <ArchieStoryBody bodyElements={context.data?.story?.body} />
+              ) : (
+                <SampleStoryBody />
+              )}
+
+              <GridWrapperHelper colspan="12 S11 Scenter M9 L8 XL7">
+                <Credits
+                  share={{
+                    url: context.url,
+                    socialHeadline: context.socialHeadline || context.headline,
+                    tweetText: context.tweetText || context.twitterHeadline,
+                    facebookHeadline: context.facebookHeadline,
+                  }}
+                  dark={context.flags.dark}
+                />
+              </GridWrapperHelper>
+            </div>
+          </article>
+        </main>
+      </Layout>
+    </DimensionsProvider>
+  );
+};
 
 App.propTypes = {
   context: PropTypes.shape(ContextPropType),
