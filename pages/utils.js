@@ -11,13 +11,11 @@
  */
 export function sendSpoorEvent(category, action, extraDetail) {
   const event = new CustomEvent('oTracking.event', {
-    detail: Object.assign(
-      {
-        category,
+    detail: {
+      category,
         action,
-      },
-      extraDetail,
-    ),
+      ...extraDetail
+    },
     bubbles: true,
   });
   document.body.dispatchEvent(event);

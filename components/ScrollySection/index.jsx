@@ -7,7 +7,7 @@ import { deepCompareProps } from '@ft-interactive/vs-components/util';
 import mapDataToSteps from '../../util/map-data-to-steps.jsx';
 
 import { waypoints as sectionWaypoints, highlights } from './config.jsx';
-import ScrollyFigure from '../../components/ScrollyFigure/index.jsx';
+import ScrollyFigure from '../ScrollyFigure/index.jsx';
 
 const ScrollySection = ({ steps, sectionIdSuffix = '', context }) => {
   const waypoints = mapDataToSteps({
