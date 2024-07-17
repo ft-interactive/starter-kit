@@ -1,12 +1,15 @@
 import React, { Fragment } from 'react';
-import InlineImage from '@ft-interactive/vs-components/InlineImage';
-import InlineVideo from '@ft-interactive/vs-components/InlineVideo';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+
+import InlineWrapper from '@ft-interactive/vs-components/InlineWrapper';
+import Image from '@ft-interactive/vs-components/Image';
+
+import LazyLoad from '../../util/LazyLoad.jsx';
 import { insertSpans } from '../../util/text.jsx';
 
-import images from '../../media/images';
-import videos from '../../media/videos';
+import images from '../../assets/images';
+import videos from '../../assets/videos';
 
 import './styles.scss';
 
@@ -41,42 +44,49 @@ const BodyText = ({ elements, maxWidowSize = 8, extraMargin = true }) => (
         case 'inline-video': {
           // eslint-disable-next-line no-console
           if (!videos[key]) console.warn('No image asset found for key', key);
-
           return (
-            <InlineVideo
+            <InlineWrapper
               className={classNames(
                 'body-text__media',
                 'body-text__media--video',
                 extraMargin === true && 'extra-margin',
                 component.float && `body-text__media--float-${component.float}`
               )}
-              {...videos[key]}
-              image={{
-                sizes: '(min-width: 1220px) 680px, (min-width: 740px) 70vw, 100vw',
-                ...videos[key].image,
-              }}
               {...component}
               key={key}
-            />
+            >
+              <LazyLoad
+                component={() => import('@ft-interactive/vs-components/Video')}
+                props={{
+                  ...videos[key],
+                  ...component,
+                }}
+                loading={null}
+                key={key}
+              />
+            </InlineWrapper>
           );
         }
         case 'inline-image': {
           // eslint-disable-next-line no-console
           if (!images[key]) console.warn('No video asset found for key', key);
-
           return (
-            <InlineImage
+            <InlineWrapper
               className={classNames(
                 'body-text__media',
                 'body-text__media--image',
                 extraMargin === true && 'extra-margin',
                 component.float && `body-text__media--float-${component.float}`
               )}
-              sizes="(min-width: 1220px) 680px, (min-width: 740px) 70vw, 100vw"
-              {...images[key]}
               {...component}
               key={key}
-            />
+            >
+              <Image
+                sizes="(min-width: 1220px) 680px, (min-width: 740px) 70vw, 100vw"
+                {...images[key]}
+                {...component}
+              />
+            </InlineWrapper>
           );
         }
         default:

@@ -54,12 +54,12 @@
     "@financial-times/g-components": "^9.5.2",
     "@financial-times/o-colors": "^6.6.0",
     "@financial-times/o-grid": "^6.1.5",
-    "@ft-interactive/vs-components": "^5.0.0-canary.7",
+    "@ft-interactive/vs-components": "^6.0.0",
+    "classnames": "^2.3.2",
     "ftdomdelegate": "^5.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "vike-react": "^0.4.17",
-    "classnames": "^2.3.2"
+    "vike-react": "^0.4.17"
   },
   "_ssrBrowserAllowList": [
     "@financial-times/o-toggle",

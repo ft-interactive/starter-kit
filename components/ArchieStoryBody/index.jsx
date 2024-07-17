@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 import GridWrapperHelper from '@ft-interactive/vs-components/GridWrapperHelper';
 import SideBySideImages from '@ft-interactive/vs-components/SideBySideImages';
 import Image from '@ft-interactive/vs-components/Image';
-import InlineImage from '@ft-interactive/vs-components/InlineImage';
-import InlineGraphic from '@ft-interactive/vs-components/InlineGraphic';
+import InlineWrapper from '@ft-interactive/vs-components/InlineWrapper';
+import Ai2Html from '@ft-interactive/vs-components/Ai2Html';
 
 import LazyLoad from '../../util/LazyLoad.jsx';
 import BodyText from '../BodyText/index.jsx';
 import ScrollySection from '../ScrollySection/index.jsx';
 
-import images from '../../media/images';
-import videos from '../../media/videos';
-import graphics from '../../media/graphics';
+import images from '../../assets/images';
+import videos from '../../assets/videos';
+import graphics from '../../assets/graphics';
 
 const ArchieStoryBody = ({ bodyElements = [] }) => (
   <React.Fragment>
@@ -61,40 +61,33 @@ const ArchieStoryBody = ({ bodyElements = [] }) => (
           // eslint-disable-next-line no-console
           if (!images[key]) console.warn('No image asset found for', key);
           return (
-            <InlineImage
-              fullGridWidth
-              className="extra-margin"
-              {...images[key]}
-              {...component}
-              key={key}
-            />
+            <InlineWrapper fullGridWidth className="extra-margin" {...component} key={key}>
+              <Image {...images[key]} {...component} />
+            </InlineWrapper>
           );
         case 'graphic':
           // eslint-disable-next-line no-console
           if (!graphics[key]) console.warn('No ai2html asset found for', key);
           return (
-            <InlineGraphic
-              fullGridWidth
-              className="extra-margin"
-              {...graphics[key]}
-              {...component}
-              key={key}
-            />
+            <InlineWrapper fullGridWidth className="extra-margin" {...component} key={key}>
+              <Ai2Html {...graphics[key]} {...component} />
+            </InlineWrapper>
           );
         case 'video':
           // eslint-disable-next-line no-console
           if (!videos[key]) console.warn('No video asset found for', key);
           return (
-            <LazyLoad
-              component={() => import('@ft-interactive/vs-components/InlineVideo')}
-              props={{
-                fullGridWidth: true,
-                ...videos[key],
-                ...component,
-              }}
-              loading={null}
-              key={key}
-            />
+            <InlineWrapper fullGridWidth className="extra-margin" {...component} key={key}>
+              <LazyLoad
+                component={() => import('@ft-interactive/vs-components/Video')}
+                props={{
+                  ...videos[key],
+                  ...component,
+                }}
+                loading={null}
+                key={key}
+              />
+            </InlineWrapper>
           );
         case 'scrolly':
           /** At the moment this is setup to use an ID (which is set in getArchieDoc.js).
