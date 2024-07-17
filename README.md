@@ -25,7 +25,8 @@ You can run the following tasks from within your project directory:
 
 #### Key directories
 
-- [`app`](app) — the main files that make up your front end, including `index.html` and some Sass and JS files. You should mostly be working in here.
+- [`assets`](assets) - Images, videos, or ai2html graphics you will want to import to your project
+- [`components`](components) — A set of React components that will render elements of your front end
 - [`config`](config) — scripts that pull together some configuration details for your project, including basic facts (UUID, title, etc.) and 'onward journey' story links. These details are used to populate parts of the templates.
   - [`article.js`](config/article.js) — article metadata which replicates most metadata found on FT.com. Add or remove required polyfills here with the `polyfillFeatures` attribute
   - [`flags.js`](config/flags.js) — flags to control page behaviour including ads and comments
@@ -33,6 +34,7 @@ You can run the following tasks from within your project directory:
   - [`data.js`](config/data.js) — an empty method where you can add data-fetching or -loading logic
   - [`index.js`](config/index.js) — the function that collects together all the configuration files in this folder and makes it available to the app inside the `context` provider
 - `dist` — the optimsed HTML/CSS/JS bundle, generated automatically every time you run `npm run build`. You shouldn't edit files in here manually, as any manual changes would just get overwritten next time you build.
+- [`pages/index`](pages/index) - These are the main files that render your page at `/`. (If you want to create pages for other routes, duplicate this under `pages/` and set the directory name to the name of your sub-path.)
 
 ## What's included in Starter Kit?
 
@@ -74,7 +76,23 @@ It's generally a bad idea to store big binary files in Git repos, however, we've
 that are critical to generating a build of your project. You'll be prompted to install git-lfs after cloning the repo if you don't have it already, please install it before committing large binary files.
 The file types managed by git-lfs are all defined within `.gitattributes` in the project root; feel free to edit that if you need to adjust how large files are stored (e.g., adding a new file type).
 
-To use such files in your project, import them in your code like you would a JavaScript module:
+Starter-Kit offers helpers to make them easy to import images, videos, and ai2html graphics that feed into our vs-components for rendering those. To use the helpers, drop your assets in the appropriate `assets/videos/`, `assets/images/`, or `assets/graphics/` folder, then import and use them like so:
+
+```jsx
+import images from './assets/images';
+
+<Image {...images.sample} />;
+
+import videos from './assets/videos';
+<Video {...videos.sample_video} />;
+
+import graphics from './assets/graphics';
+<Ai2Html {...graphics.sample_graphic} />;
+```
+
+This will automatically bundle up different images for different sizes (e.g. `XL.png` / `.L.png` / `.M.png` / `.S.png`, according to the Origami grid breakpoints), and apply poster images to videos (e.g. `sample_video.mp4` and `sample_video.mp4.jpg`). To use an ai2html graphic you can simply drag the entire `projectname-ai2html` folder into `assets/graphics/`, then import it like `graphics.projectname` and it will automatically manage responsive resizing etc for you.
+
+However, you can also import the files directly to get their URL if you want to use them in a lower-level component:
 
 ```jsx
 import file from './image.png';
