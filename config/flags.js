@@ -14,7 +14,7 @@ export default (environment = 'development') => ({
   header: true,
   footer: true,
   dark: false, // Dark theme support requires g-components >= 2.2.x
-  mainImage: true,
+  mainImage: false,
   /*
     NOTE ABOUT COMMENTS:
 
