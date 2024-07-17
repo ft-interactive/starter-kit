@@ -33,7 +33,7 @@ const imageMap = Object.entries(imageFiles).reduce((acc, [file, img]) => {
   };
 }, {});
 
-const graphics = Object.entries(htmlFiles).reduce((acc, [file, ai2html]) => {
+const graphics = Object.entries(htmlFiles).reduce((acc, [file, html]) => {
   // Extract the ai2html embed name from the file
   const name = file.match(/^\.\/[\w-_]+\/([^/]+)\.html$/)[1];
 
@@ -53,7 +53,7 @@ const graphics = Object.entries(htmlFiles).reduce((acc, [file, ai2html]) => {
     ...acc,
     [name.toLowerCase()]: {
       ...DEFAULT_GRAPHIC_PROPS,
-      ai2html,
+      html,
       images,
       alt: ALT[name],
       id: `vs-g-${name}`,
