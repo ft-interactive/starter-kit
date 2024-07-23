@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Scrolly } from '@ft-interactive/vs-components';
+import Scrolly from '@ft-interactive/vs-components/Scrolly';
 import { deepCompareProps } from '@ft-interactive/vs-components/util';
 // import LazyLoad from '../../util/LazyLoad.jsx';
 
 import mapDataToSteps from '../../util/map-data-to-steps.jsx';
 
 import { waypoints as sectionWaypoints, highlights } from './config.jsx';
-import ScrollyFigure from '../../components/ScrollyFigure/index.jsx';
+import ScrollyFigure from '../ScrollyFigure/index.jsx';
 
 const ScrollySection = ({ steps, sectionIdSuffix = '', context }) => {
   const waypoints = mapDataToSteps({

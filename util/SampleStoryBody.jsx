@@ -1,5 +1,5 @@
 import React from 'react';
-import { GridWrapperHelper } from '@ft-interactive/vs-components';
+import GridWrapperHelper from '@ft-interactive/vs-components/GridWrapperHelper';
 
 const SampleStoryBody = () => (
   <GridWrapperHelper colspan="12 S11 Scenter M9 L8 XL7">

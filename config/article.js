@@ -8,6 +8,8 @@
 // eslint-disable-next-line no-unused-vars
 export default (environment = 'development') => {
   const config = {
+    bylines: [],
+
     // link file UUID
     id: '', // @TODO put the UUID from Methode story/link file here
 
