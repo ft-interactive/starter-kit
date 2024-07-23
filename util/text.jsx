@@ -47,50 +47,54 @@ const findOverlappingHighlights = (matches) =>
 // Highlights is a list of { regex, className } pairs - each 'regex' must have a capture group
 // Returns JSX
 export function insertSpans(text, highlights, options = { p: true }) {
-  const matches = highlights.reduce((arr, highlight) => {
-    if (!(highlight.text || highlight.regex))
-      throw new Error('insertSpan(): Each span must have either highlight.text or highlight.regex');
+  const matches = highlights
+    .reduce((arr, highlight) => {
+      if (!(highlight.text || highlight.regex))
+        throw new Error(
+          'insertSpan(): Each span must have either highlight.text or highlight.regex'
+        );
 
-    const regexStr = highlight.regex || escapeRegex(highlight.text);
-    let regex;
-    try {
-      regex = new RegExp(regexStr, 'igd');
-    } catch {
-      // error handling in case of old safari, which doesn't accept `d` flag for regex
-      regex = new RegExp(regexStr, 'ig');
-    }
+      const regexStr = highlight.regex || escapeRegex(highlight.text);
+      let regex;
+      try {
+        regex = new RegExp(regexStr, 'igd');
+      } catch {
+        // error handling in case of old safari, which doesn't accept `d` flag for regex
+        regex = new RegExp(regexStr, 'ig');
+      }
 
-    let match;
-    // eslint-disable-next-line no-cond-assign
-    while ((match = regex.exec(text))) {
-      const regexText = match[0];
+      let match;
+      // eslint-disable-next-line no-cond-assign
+      while ((match = regex.exec(text))) {
+        const regexText = match[0];
 
-      // Add all capture groups (but not the whole string) to the list
-      const { indices = null, index } = match;
-      arr.push(
-        ...match.slice(1).map((group, i) => {
-          const { start, end } = getIndices({ i, regexText, group, indices, index });
+        // Add all capture groups (but not the whole string) to the list
+        const { indices = null, index } = match;
 
-          return {
-            ...highlight,
-            match: group,
-            start,
-            end,
-          };
-        })
-      );
-    }
-    return arr;
-  }, []);
+        arr.push(
+          ...match.slice(1).map((group, i) => {
+            const { start, end } = getIndices({ i, regexText, group, indices, index });
+
+            return {
+              ...highlight,
+              match: group,
+              start,
+              end,
+            };
+          })
+        );
+      }
+      return arr;
+    }, [])
+    .sort((a, b) => a.start - b.start);
 
   if (matches.length === 0) return options.p ? <p>{text}</p> : text;
 
   // Look for overlapping highlights, which cause problems
   const overlappingHighlights = findOverlappingHighlights(matches);
   if (overlappingHighlights === true) {
-    // Throw an error if overlapping higlights are found.
-    // Just disable this if there's some reason we actually need overlapping highlights/get them to work
-    throw new Error(`Found overlapping text highlights in card: ${text}`);
+    // eslint-disable-next-line no-console
+    console.warn(`Found overlapping text highlights in card: ${text}`);
   }
 
   const output = matches.reduce(
