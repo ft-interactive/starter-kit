@@ -2,6 +2,23 @@ import React from 'react';
 
 const escapeRegex = (text) => `(${text?.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&')})`;
 
+const getIndices = ({ i, regexText, group, indices, index }) => {
+  let start;
+  let end;
+
+  if (indices === null) {
+    start = regexText.indexOf(group) + index;
+    end = start + group.length;
+  } else {
+    // eslint-disable-next-line prefer-destructuring
+    start = indices[i + 1][0];
+    // eslint-disable-next-line prefer-destructuring
+    end = indices[i + 1][1];
+  }
+
+  return { start, end };
+};
+
 const findOverlappingHighlights = (matches) =>
   matches.reduce((acc, curr, index, allHighlights) => {
     const { start, end } = curr;
@@ -30,33 +47,41 @@ const findOverlappingHighlights = (matches) =>
 // Highlights is a list of { regex, className } pairs - each 'regex' must have a capture group
 // Returns JSX
 export function insertSpans(text, highlights, options = { p: true }) {
-  const matches = highlights
-    .reduce((arr, highlight) => {
-      if (!(highlight.text || highlight.regex))
-        throw new Error(
-          'insertSpan(): Each span must have either highlight.text or highlight.regex'
-        );
+  const matches = highlights.reduce((arr, highlight) => {
+    if (!(highlight.text || highlight.regex))
+      throw new Error('insertSpan(): Each span must have either highlight.text or highlight.regex');
 
-      const regexStr = highlight.regex || escapeRegex(highlight.text);
-      const regex = new RegExp(regexStr, 'igd');
+    const regexStr = highlight.regex || escapeRegex(highlight.text);
+    let regex;
+    try {
+      regex = new RegExp(regexStr, 'igd');
+    } catch {
+      // error handling in case of old safari, which doesn't accept `d` flag for regex
+      regex = new RegExp(regexStr, 'ig');
+    }
 
-      let match;
-      // eslint-disable-next-line no-cond-assign
-      while ((match = regex.exec(text))) {
-        // Add all capture groups (but not the whole string) to the list
-        const { indices } = match;
-        arr.push(
-          ...match.slice(1).map((group, i) => ({
+    let match;
+    // eslint-disable-next-line no-cond-assign
+    while ((match = regex.exec(text))) {
+      const regexText = match[0];
+
+      // Add all capture groups (but not the whole string) to the list
+      const { indices = null, index } = match;
+      arr.push(
+        ...match.slice(1).map((group, i) => {
+          const { start, end } = getIndices({ i, regexText, group, indices, index });
+
+          return {
             ...highlight,
             match: group,
-            start: indices[i + 1][0],
-            end: indices[i + 1][1],
-          }))
-        );
-      }
-      return arr;
-    }, [])
-    .sort((a, b) => a.start - b.start);
+            start,
+            end,
+          };
+        })
+      );
+    }
+    return arr;
+  }, []);
 
   if (matches.length === 0) return options.p ? <p>{text}</p> : text;
 
