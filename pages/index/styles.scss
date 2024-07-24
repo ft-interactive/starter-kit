@@ -16,4 +16,8 @@ $system-code: 'ig-projects';
                 - template.html
 */
 
-
+@include oGridRespondTo($until: 'M') {
+  .grid-toggle {
+    display: none;
+  }
+}

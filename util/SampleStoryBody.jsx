@@ -14,6 +14,7 @@ const SampleStoryBody = () => {
       subtitle="(At inline grid width)"
       caption="FT Graphic: Your Name"
       fullGridWidth={fullGrid}
+      showStabRule
     >
       <Ai2Html {...graphics['west-bank']} />
     </InlineWrapper>
@@ -42,7 +43,7 @@ const SampleStoryBody = () => {
             mēze ƿuancilo kīlometro. Ts rīlāte nekuÞima ðārǽlȝæjdō plue.
           </p>
 
-          <div className="o-button-group" style={{ marginBottom: '32px' }}>
+          <div className="o-button-group grid-toggle" style={{ marginBottom: '32px' }}>
             <Button selected={!fullGrid} onClick={() => setFullGrid(false)}>
               Inline
             </Button>

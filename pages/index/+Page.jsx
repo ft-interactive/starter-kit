@@ -49,6 +49,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useData } from 'vike-react/useData';
+
 import { ArticleLayout as Layout, StoryTopper } from '@financial-times/g-components';
 import '@financial-times/g-components/styles.css';
 
@@ -60,9 +62,9 @@ import { DimensionsProvider } from '@ft-interactive/vs-components/hooks';
 import '@ft-interactive/vs-components/styles.css';
 
 import { ContextPropType } from '../../util/prop-types';
-import ArchieStoryBody from '../../components/ArchieStoryBody';
 import SampleStoryBody from '../../util/SampleStoryBody';
-import { useData } from 'vike-react/useData';
+
+import './styles.scss';
 
 const App = () => {
   const context = useData();
@@ -77,11 +79,7 @@ const App = () => {
             </GridWrapperHelper>
 
             <div className="article-body o-editorial-typography-body" itemProp="articleBody">
-              {context.data?.story?.body ? (
-                <ArchieStoryBody bodyElements={context.data?.story?.body} />
-              ) : (
-                <SampleStoryBody />
-              )}
+              <SampleStoryBody />
 
               <GridWrapperHelper colspan="12 S11 Scenter M9 L8 XL7">
                 <Credits
