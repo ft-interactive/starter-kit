@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html
+  class="<%= context.pageClasses %>"
+  lang="en-gb"
+  data-buildtime="<%= context.buildTime %>"
+  data-content-id="<%= context.id %>"
+>
+  <head>
+    <meta charset="utf-8" />
+    <title><%= context.title %></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://www.ft.com" />
+    <link rel="preconnect" href="https://cdn.polyfill.io" />
+
+    <meta property="fb:app_id" content="429755910551755" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=ig-projects"
+    />
+    <link
+      rel="alternate icon"
+      type="image/png"
+      href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=ig-projects&width=32&height=32&format=png"
+      sizes="32x32"
+    />
+    <link
+      rel="alternate icon"
+      type="image/png"
+      href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=ig-projects&width=194&height=194&format=png"
+      sizes="194x194"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=ig-projects&width=180&height=180&format=png"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="robots" content="index,follow" />
+    <meta name="copyright" content="Financial Times" />
+    <meta name="theme-color" content="#fff1e5" />
+
+    <script src="https://cdn.polyfill.io/v3/polyfill.min.js?features=<%= context.polyfillFeatures %>"></script>
+
+    <script type="text/javascript">
+      cutsTheMustard =
+        'querySelector' in document &&
+        'localStorage' in window &&
+        'addEventListener' in window &&
+        typeof Function.prototype.bind !== 'undefined';
+      if (cutsTheMustard)
+        document.documentElement.className = document.documentElement.className.replace(
+          /core/g,
+          'enhanced'
+        );
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <template id="__ai2html__">{{ai2htmlPartial}}</template>
+    <script type="application/json" id="__context__">
+      <%- JSON.stringify(context) %>
+    </script>
+    <script type="module" src="/app/index.jsx"></script>
+  </body>
+</html>

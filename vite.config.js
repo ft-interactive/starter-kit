@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dsv from '@rollup/plugin-dsv';
-import vike from 'vike/plugin';
 import { resolve } from 'node:path';
+import { ViteEjsPlugin } from 'vite-plugin-ejs';
+import { viteSingleFile } from 'vite-plugin-singlefile';
 
 import { _ssrBrowserAllowList } from './package.json';
 import getContext from './config/index.js';
@@ -33,6 +34,16 @@ export default defineConfig(async ({ mode }) => {
       // We must compile these modules into the SSR build so the above alias rules are applied
       noExternal: ['@financial-times/g-components', '@ft-interactive/vs-components'],
     },
-    plugins: [react(), dsv(), vike({ prerender: true })],
+    plugins: [
+      ViteEjsPlugin(context, {
+        ejs: {
+          _with: false,
+          localsName: 'context',
+        },
+      }),
+      react(),
+      dsv(),
+      viteSingleFile({ removeViteModuleLoader: true }),
+    ],
   };
 });

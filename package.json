@@ -24,7 +24,10 @@
     "prop-types": "^15.8.1",
     "sass": "^1.62.1",
     "vike": "^0.4.179",
-    "vite": "^4.3.9"
+    "vite": "^5.3.4",
+    "vite-plugin-add-scripts": "^0.0.9",
+    "vite-plugin-ejs": "^1.7.0",
+    "vite-plugin-singlefile": "^2.0.2"
   },
   "volta": {
     "node": "20.11.1",
@@ -40,9 +43,9 @@
     "build": "vite build --mode=development",
     "build:preview": "vite build --mode preview",
     "build:prod": "vite build --mode production",
-    "a11y": "pa11y ./dist/client/index.html",
+    "a11y": "pa11y ./dist/index.html",
     "a11y:local": "pa11y localhost:8080",
-    "deploy": "g-deploy ./dist/client",
+    "deploy": "g-deploy ./dist",
     "test": "mocha ./test/**/*.spec.cjs",
     "start": "vite --port 8080",
     "preview": "NODE_ENV=production npm run build && vite preview",

@@ -1,12 +1,17 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Button } from '@financial-times/g-components/button';
 import GridWrapperHelper from '@ft-interactive/vs-components/GridWrapperHelper';
 import InlineWrapper from '@ft-interactive/vs-components/InlineWrapper';
 import Ai2Html from '@ft-interactive/vs-components/Ai2Html';
-import graphics from '../assets/graphics';
 
 const SampleStoryBody = () => {
   const [fullGrid, setFullGrid] = useState(false);
+  const [ai2html, setAi2html] = useState('');
+
+  useEffect(() => {
+    const html = document.getElementById('__ai2html__').innerHTML;
+    setAi2html(html);
+  }, []);
 
   let wrappedGraphic = (
     <InlineWrapper
@@ -16,7 +21,7 @@ const SampleStoryBody = () => {
       fullGridWidth={fullGrid}
       showStabRule
     >
-      <Ai2Html {...graphics['west-bank']} />
+      <Ai2Html html={ai2html} />
     </InlineWrapper>
   );
 

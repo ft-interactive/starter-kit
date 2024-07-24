@@ -1,0 +1,23 @@
+$system-code: 'ig-projects';
+@import '@financial-times/o-colors/main';
+@import '@financial-times/o-grid/main';
+
+/*
+      TODO: delete this comment
+
+      Write your code here - keep it neat!
+      Split logical parts of you project into components e.g.
+
+      /client
+        - /components
+            - /component-name
+                - styles.scss
+                - index.js
+                - template.html
+*/
+
+@include oGridRespondTo($until: 'M') {
+  .grid-toggle {
+    display: none;
+  }
+}
