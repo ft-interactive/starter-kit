@@ -17,7 +17,7 @@ const DEFAULT_GRAPHIC_PROPS = {
   // alt: ''
 };
 
-const htmlFiles = import.meta.glob('./*/*.html', {
+const htmlFiles = import.meta.glob(['./*/*.html', '!*.preview.html'], {
   eager: true,
   query: '?raw',
   import: 'default',
