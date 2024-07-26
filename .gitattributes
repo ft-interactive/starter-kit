@@ -15,3 +15,5 @@
 *.webm filter=lfs diff=lfs merge=lfs -text
 *.mp3 filter=lfs diff=lfs merge=lfs -text
 *.ogg filter=lfs diff=lfs merge=lfs -text
+assets/images/sample_images/*  !filter !diff !merge -text eol=lf
+assets/video/sample_video*  !filter !diff !merge -text eol=lf
