@@ -36,7 +36,6 @@ export const ContextPropType = {
   tracking: PropTypes.any,
   flags: PropTypes.shape({
     prod: PropTypes.bool,
-    errorReporting: PropTypes.bool,
     analytics: PropTypes.bool,
     googleAnalytics: PropTypes.bool,
     ads: PropTypes.bool,
