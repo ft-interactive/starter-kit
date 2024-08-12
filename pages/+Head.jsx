@@ -63,18 +63,6 @@ export const Head = () => {
         }}
       ></script>
 
-      {context.flags.errorReporting && (
-        <script
-          type="application/json"
-          data-o-errors-config
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              sentryEndpoint: 'https://ddbd80489ff549538250bbe37fa52bbd@sentry.io/71130',
-            }),
-          }}
-        ></script>
-      )}
-
       <script
         type="text/javascript"
         dangerouslySetInnerHTML={{

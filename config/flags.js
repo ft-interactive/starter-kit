@@ -5,7 +5,6 @@
 
 export default (environment = 'development') => ({
   prod: environment === 'production',
-  errorReporting: environment === 'production',
   analytics: environment === 'production',
   googleAnalytics: environment === 'production',
   ads: false,
