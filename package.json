@@ -24,8 +24,8 @@
     "prettier": "^2.8.8",
     "prop-types": "^15.8.1",
     "sass": "^1.62.1",
-    "vike": "^0.4.179",
-    "vite": "^4.3.9"
+    "vike": "^0.4.184",
+    "vite": "^5.4.0"
   },
   "volta": {
     "node": "20.11.1",
@@ -60,7 +60,7 @@
     "ftdomdelegate": "^5.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "vike-react": "^0.4.17"
+    "vike-react": "^0.5.2"
   },
   "_ssrBrowserAllowList": [
     "@financial-times/o-toggle",
