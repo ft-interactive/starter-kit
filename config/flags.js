@@ -7,7 +7,7 @@ export default (environment = 'development') => ({
   prod: environment === 'production',
   analytics: environment === 'production',
   googleAnalytics: environment === 'production',
-  ads: false,
+  ads: true,
   onwardjourney: true,
   shareButtons: true,
   header: true,
