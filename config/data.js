@@ -36,8 +36,8 @@ export async function fetchData(mode) {
   const story = null;
   // const story = await getArchieDoc();
 
-  // This { as: 'raw' } option imports files as plaintext
-  const dataFiles = import.meta.glob('../data/*.csv', { as: 'raw' });
+  // This { query: '?raw' } option imports files as plaintext
+  const dataFiles = import.meta.glob('../data/*.csv', { query: '?raw', import: 'default' });
   const csv = await dataFiles['../data/example.csv']();
 
   // JSON files can be import()-ed directly
