@@ -90,16 +90,6 @@ export default (environment = 'development') => {
     // facebookHeadline: '',
     // facebookDescription: '',
 
-    // ADVERTISING
-    ads: {
-      // Ad unit hierarchy makes ads more granular.
-      gptSite: 'ft.com/world',
-      // Start with ft.com and /companies /markets /world as appropriate to your story. The default is /world
-      gptZone: false,
-      // granular targeting is optional and will be specified by the ads team
-      targeting: false,
-    },
-
     tracking: {
       /*
 

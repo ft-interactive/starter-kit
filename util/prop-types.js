@@ -28,11 +28,6 @@ export const ContextPropType = {
   title: PropTypes.string,
   description: PropTypes.string,
   twitterCard: PropTypes.string,
-  ads: PropTypes.shape({
-    gptSite: PropTypes.string,
-    gptZone: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    dfpTargeting: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  }).isRequired,
   tracking: PropTypes.any,
   flags: PropTypes.shape({
     prod: PropTypes.bool,
