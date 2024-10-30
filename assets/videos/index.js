@@ -15,7 +15,7 @@ const videos = sortFiles(import.meta.glob('./**/*.mp4*', { eager: true })).reduc
       /\/([-_\w]+)\.?([A-Z]+)?\.mp4(\.jpe?g|\.png|\.gif)?$/
     );
 
-    const fields = dict[name] || DEFAULT_VIDEO_PROPS;
+    const fields = dict[name] || { ...DEFAULT_VIDEO_PROPS };
 
     if (isStill) {
       // ".mp4.jpg" files are the first frame stills
