@@ -9,7 +9,7 @@ const DEFAULT_IMAGE_PROPS = {
   // Add any other story-default video still props here
 };
 
-const videos = sortFiles(import.meta.glob('./*.mp4*', { eager: true })).reduce(
+const videos = sortFiles(import.meta.glob('./**/*.mp4*', { eager: true })).reduce(
   (dict, [file, src]) => {
     const [, name, size, isStill] = file.match(
       /\/([-_\w]+)\.?([A-Z]+)?\.mp4(\.jpe?g|\.png|\.gif)?$/
