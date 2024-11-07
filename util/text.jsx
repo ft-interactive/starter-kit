@@ -2,95 +2,89 @@ import React from 'react';
 
 const escapeRegex = (text) => `(${text?.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&')})`;
 
-const findOverlappingHighlights = (matches) =>
-  matches.reduce((acc, curr, index, allHighlights) => {
-    const { start, end } = curr;
-    let isOverlap = false;
+const getIndices = ({ i, regexText, group, indices, index }) => {
+  let start;
+  let end;
 
-    allHighlights.forEach((highlight, i) => {
-      // if this is the same highlight, skip
-      if (i === index) {
-        return;
-      }
+  if (indices === null) {
+    start = regexText.indexOf(group) + index;
+    end = start + group.length;
+  } else {
+    // eslint-disable-next-line prefer-destructuring
+    start = indices[i + 1][0];
+    // eslint-disable-next-line prefer-destructuring
+    end = indices[i + 1][1];
+  }
 
-      const { start: compareStart, end: compareEnd } = highlight;
-
-      if (
-        (start > compareStart && start < compareEnd) ||
-        (end > compareStart && end < compareEnd)
-      ) {
-        isOverlap = true;
-      }
-    });
-
-    return acc || isOverlap;
-  }, false);
+  return { start, end };
+};
 
 // Wraps text in a <p> and inserts spans around selected phrases
 // Highlights is a list of { regex, className } pairs - each 'regex' must have a capture group
 // Returns JSX
 export function insertSpans(text, highlights, options = { p: true }) {
-  const matches = highlights
-    .reduce((arr, highlight) => {
-      if (!(highlight.text || highlight.regex))
-        throw new Error(
-          'insertSpan(): Each span must have either highlight.text or highlight.regex'
-        );
+  // 1. Locate matches within the text
+  const matches = highlights.reduce((arr, highlight) => {
+    if (!(highlight.text || highlight.regex))
+      throw new Error('insertSpan(): Each span must have either highlight.text or highlight.regex');
 
-      const regexStr = highlight.regex || escapeRegex(highlight.text);
-      const regex = new RegExp(regexStr, 'igd');
+    const regexStr = highlight.regex || escapeRegex(highlight.text);
+    let regex;
+    try {
+      regex = new RegExp(regexStr, 'gd');
+    } catch {
+      // error handling in case of old safari, which doesn't accept `d` flag for regex
+      regex = new RegExp(regexStr, 'g');
+    }
 
-      let match;
-      // eslint-disable-next-line no-cond-assign
-      while ((match = regex.exec(text))) {
-        // Add all capture groups (but not the whole string) to the list
-        const { indices } = match;
-        arr.push(
-          ...match.slice(1).map((group, i) => ({
+    let match;
+    // eslint-disable-next-line no-cond-assign
+    while ((match = regex.exec(text))) {
+      const regexText = match[0];
+
+      // Add all capture groups (but not the whole string) to the list
+      const { indices = null, index } = match;
+
+      arr.push(
+        ...match.slice(1).map((group, i) => {
+          const { start, end } = getIndices({ i, regexText, group, indices, index });
+
+          return {
             ...highlight,
             match: group,
-            start: indices[i + 1][0],
-            end: indices[i + 1][1],
-          }))
-        );
-      }
-      return arr;
-    }, [])
-    .sort((a, b) => a.start - b.start);
+            start,
+            end,
+          };
+        })
+      );
+    }
+    return arr;
+  }, []);
 
   if (matches.length === 0) return options.p ? <p>{text}</p> : text;
 
-  // Look for overlapping highlights, which cause problems
-  const overlappingHighlights = findOverlappingHighlights(matches);
-  if (overlappingHighlights === true) {
-    // Throw an error if overlapping higlights are found.
-    // Just disable this if there's some reason we actually need overlapping highlights/get them to work
-    throw new Error(`Found overlapping text highlights in card: ${text}`);
-  }
-
-  const output = matches.reduce(
-    ({ offset, __html }, match) => {
+  // 2. Compile a set of HTML tags for the matches, sorted by insertion index
+  const tags = matches
+    .map((match) => {
       const el = match.element || 'span';
       const props = Object.entries(match.props || { class: match.className })
         .map(([k, v]) => (k && v ? `${k}="${v?.replace('"', '\\"')}"` : ''))
         .join(' ');
 
-      const opening = `<${el} ${props}>`;
-      const closing = `</${el}>`;
-      const start = match.start + offset;
-      const end = match.end + offset;
+      return [
+        { tag: `<${el} ${props}>`, index: match.start },
+        { tag: `</${el}>`, index: match.end },
+      ];
+    })
+    .flat()
+    .sort((a, b) => a.index - b.index);
 
-      return {
-        offset: offset + opening.length + closing.length,
-        __html: [
-          __html.slice(0, start),
-          opening,
-          __html.slice(start, end),
-          closing,
-          __html.slice(end),
-        ].join(''),
-      };
-    },
+  // 3. Insert the HTML tags into the string
+  const output = tags.reduce(
+    ({ offset, __html }, { tag, index }) => ({
+      offset: offset + tag.length,
+      __html: __html.slice(0, index + offset) + tag + __html.slice(index + offset),
+    }),
     { offset: 0, __html: text }
   );
 

@@ -9,8 +9,14 @@ import { google } from 'googleapis';
 import archieml from 'archieml';
 
 // ArchieML types to be grouped together as text
-const TEXT_TYPES = ['text', 'subhed'];
-const INLINE_TYPES = ['inline-video', 'inline-image', 'inline-image-pair', 'inline-graphic'];
+const TEXT_TYPES = ['text', 'subhed', 'promo'];
+const INLINE_TYPES = [
+  'inline-video',
+  'inline-image',
+  'inline-image-pair',
+  'inline-graphic',
+  'promo',
+];
 
 async function getDocsText(docId) {
   const auth = await google.auth.getClient({
@@ -33,53 +39,72 @@ async function getDocsText(docId) {
   });
 
   return data.body.content.reduce(
-    ({ text, links, ignored }, content) => {
+    ({ text, spans, ignored }, content) => {
       const paras = content.paragraph?.elements ?? [];
-      const paraText = paras
-        .map((p) => {
-          // If the text is struck through, skip it
-          if (p.textRun?.textStyle?.strikethrough) return '';
+      const paraText = paras.reduce((acc, p) => {
+        // If the text is struck through, skip it
+        if (p.textRun?.textStyle?.strikethrough) {
+          return acc;
+        }
 
-          const str = p.textRun?.content;
-          const url = p.textRun?.textStyle?.link?.url;
-          if (str && url && !ignored) {
-            links.push({ str, url });
-          }
+        const str = p.textRun?.content?.replace('\n', '');
+        const url = p.textRun?.textStyle?.link?.url;
+        if (str && url && !ignored) {
+          spans.push({
+            text: str,
+            element: 'a',
+            props: { href: url, target: url.includes('ft.com/') ? undefined : '_blank' },
+            context: acc.match(/^(?:[\w_-]+: )?(.*)/)[1], // strip out archieml tags paragraph from context
+          });
+        }
 
-          return str ?? '';
-        })
-        .join('');
+        if (str && p.textRun?.textStyle.italic && !ignored) {
+          spans.push({ text: str, element: 'i', context: acc });
+        }
+        if (str && p.textRun?.textStyle.bold && !ignored) {
+          spans.push({ text: str, element: 'b', context: acc });
+        }
 
-      // Combine adjacent links with same urls
+        return acc + (str ?? '');
+      }, '');
+
+      // Combine adjacent spans with same urls
       if (!ignored) {
         /* eslint-disable no-param-reassign */
-        links = links.reduce((arr, link) => {
-          if (link.url === arr[arr.length - 1]?.url) {
-            arr[arr.length - 1].str += link.str;
+        spans = spans.reduce((arr, span) => {
+          const prev = arr[arr.length - 1];
+          if (
+            span.element === prev?.element &&
+            span.props?.href === prev?.props?.href &&
+            span.context.endsWith(prev?.text)
+          ) {
+            arr[arr.length - 1].text += span.text;
           } else {
-            arr.push(link);
+            arr.push(span);
           }
-
           return arr;
         }, []);
         /* eslint-enable no-param-reassign */
       }
 
       return {
-        text: text + paraText,
-        links,
+        text: text + paraText + (paraText.endsWith('\n') ? '' : '\n'),
+        spans,
         ignored: ignored || paraText.includes(':ignore'),
       };
     },
-    { text: '', links: [], ignored: false }
+    { text: '', spans: [], ignored: false }
   );
 }
 
-/*
+/**
+ * @function parseScrolly
  * This is some custom logic to parse scroll cards into a nested structure.
  * You may not need it in every project.
+ * (To use it, call it from "parseCustomSyntax".)
  */
-function parseScrolly(items) {
+// eslint-disable-next-line no-unused-vars
+function parseScrolly(items, spans) {
   const queue = [...items];
 
   const steps = [];
@@ -141,8 +166,6 @@ function parseScrolly(items) {
       }
     }
 
-    // console.log('Found pair', { figure, step });
-
     // Link together figure and step
     step.figure = figure.key;
     figure.steps.push(step.step);
@@ -166,128 +189,102 @@ function parseScrolly(items) {
 }
 
 /**
- * This method extends ArchieML syntax for our projects. It currently
- * does a few things:
- * - Structures scrolly sections (either via [+topper] or [+.scrolly])
+ * @function parseBody
+ * This method is used to structure ArchieML body text into our custom structure. It:
  * - Groups together non-text keys
- * - Adds links to body text
+ * - Compiles type: "text" list of paragraphs
+ * - Adds decorators (<a>, <b>, <i>) to body text
+ * @param {array} body An array of ArchieML elements
+ * @param {array} spans A list of span inserts
+ * @returns
  */
-function parseCustomSyntax(archieJson, doclinks = []) {
-  const json = {
-    ...archieJson,
-    updatedAt: new Date().toISOString(),
-  };
+function parseBody(body, spans) {
+  let subhedId = 0;
+  const queue = [...body];
+  const components = [];
 
-  // Format the topper into groups of steps divided by 'scroll' keys
-  if (json.topper) {
-    json.topper = parseScrolly(json.topper);
-  }
-
-  // Group together non-text keys in the body for visual components
-  // (This is some custom logic for this project, you may not need it in others.)
-  if (json.body) {
-    let subhedId = 0;
-    const queue = [...json.body];
-    const components = [];
-
-    while (queue.length > 0) {
-      // Gather up all non-text elements into one component with key/value pairs
-      const obj = {};
-      let typeValue;
-      while (queue.length > 0 && !TEXT_TYPES.includes(queue[0]?.type)) {
-        const { type, value } = queue.shift();
-        // If component type isn't explicitly set, it defaults to the first key (e.g. 'image')
-        if (type !== 'type' && !obj.type) {
-          obj.type = type;
-          typeValue = value;
-        }
-        obj[type] = value;
+  while (queue.length > 0) {
+    // Gather up all non-text elements into one component with key/value pairs
+    const obj = {};
+    while (queue.length > 0 && !TEXT_TYPES.includes(queue[0]?.type)) {
+      const { type, value } = queue.shift();
+      // If component type isn't explicitly set, it defaults to the first key (e.g. 'image')
+      if (type !== 'type' && !obj.type) {
+        obj.type = type;
       }
-      if (obj.type?.startsWith('scrolly')) {
-        components.push({
-          type: obj.type,
-          ...parseScrolly(obj[obj.type]),
-          ...obj,
-          [obj.type]: typeValue,
-        });
-      } else if (obj.type) {
-        components.push(obj);
-      }
-
-      // Group adjacent text components into a list of paragraphs
-      const text = { type: 'text', paras: [] };
-      while ([...TEXT_TYPES, ...INLINE_TYPES].includes(queue[0]?.type)) {
-        const { type, value } = queue.shift();
-        const element = { type, value };
-
-        // If it's an inline type, gobble up non-text types
-        if (INLINE_TYPES.includes(type)) {
-          while (!TEXT_TYPES.includes(queue[0].type)) {
-            const { type: k, value: v } = queue.shift();
-            element[k] = v;
-          }
-        }
-
-        if (type === 'text') {
-          // Check if any of the link strings are in this paragraph and store them
-          const links = doclinks.filter(({ str }) => value.includes(str));
-          if (links.length > 0) element.links = links;
-        }
-
-        if (type === 'subhed') {
-          element.id = subhedId;
-          subhedId += 1;
-        }
-
-        if (queue[0]?.type === 'caption') {
-          element.caption = queue.shift().value;
-        }
-        text.paras.push(element);
-      }
-      if (text.paras.length > 0) components.push(text);
+      obj[type] = value;
+    }
+    if (obj.type) {
+      components.push(obj);
     }
 
-    json.body = components;
+    // Group adjacent text components into a list of paragraphs
+    const text = { type: 'text', paras: [] };
+    while (queue[0] && [...TEXT_TYPES, ...INLINE_TYPES].includes(queue[0]?.type)) {
+      const { type, value } = queue.shift();
+      const element = { type, value };
+
+      // If it's an inline type, gobble up non-text types
+      if (INLINE_TYPES.includes(type)) {
+        while (queue[0] && !TEXT_TYPES.includes(queue[0]?.type)) {
+          const { type: k, value: v } = queue.shift();
+          element[k] = v;
+        }
+      }
+
+      if (TEXT_TYPES.includes(type)) {
+        // matches 'text', 'subhead', etc
+        // Check if any of the link strings are in this paragraph and store them
+        const pSpans = spans
+          .filter(({ text: t, context: c }) => value.includes(c) && value.includes(t))
+          .map(({ context, ...d }) => d);
+        if (pSpans.length > 0) element.spans = pSpans;
+      }
+
+      if (type === 'subhed') {
+        element.id = subhedId;
+        subhedId += 1;
+      }
+
+      text.paras.push(element);
+    }
+    if (text.paras.length > 0) components.push(text);
+  }
+
+  return components;
+}
+
+/**
+ * @function parseCustomSyntax
+ * This method extends ArchieML syntax for our projects.
+ * Based on specific keys, it either calls
+ * - "parseBody" (to group together text keys and embeds)
+ * - "parseScrolly" (to group together scroll steps and background figures)
+ *
+ * NOTE: This is likely where you'll do custom transformations for your project
+ */
+function parseCustomSyntax({ json, spans = [] }) {
+  // eslint-disable-next-line no-param-reassign
+  json.updatedAt = new Date().toISOString();
+
+  if (json.topper) {
+    /* NOTE:
+       If your topper is more like paragraphs than a scrolly,
+       switch the line below call "parseBody()"
+    */
+
+    // eslint-disable-next-line no-param-reassign
+    json.topper = parseScrolly(json.topper, spans);
+  }
+
+  if (json.body) {
+    // eslint-disable-next-line no-param-reassign
+    json.body = parseBody(json.body, spans);
   }
 
   if (json.notes) {
-    const queue = [...json.notes];
-    const components = [];
-
-    while (queue.length > 0) {
-      // This is copied from the if(json.body) section above
-      // (hacky, but quick)
-
-      const obj = {};
-      while (queue.length > 0 && !TEXT_TYPES.includes(queue[0]?.type)) {
-        const { type, value } = queue.shift();
-        // If component type isn't explicitly set, it defaults to the first key (e.g. 'image')
-        if (type !== 'type' && !obj.type) {
-          obj.type = type;
-        }
-        obj[type] = value;
-      }
-
-      if (obj.type) components.push(obj);
-
-      const text = { type: 'text', paras: [] };
-      while (TEXT_TYPES.includes(queue[0]?.type)) {
-        const { type, value } = queue.shift();
-        const element = { type, value };
-
-        if (type === 'text') {
-          // Check if any of the link strings are in this paragraph and store them
-          const links = doclinks.filter(({ str }) => value.includes(str));
-          if (links.length > 0) element.links = links;
-        }
-
-        text.paras.push(element);
-      }
-
-      if (text.paras.length > 0) components.push(text);
-    }
-
-    json.notes = components;
+    // eslint-disable-next-line no-param-reassign
+    json.notes = parseBody(json.notes, spans);
   }
 
   return json;
@@ -312,11 +309,11 @@ export default async function getArchieDoc(id = process.env.G_DOC_ID, customSynt
     throw new Error("You must provide an 'id' or set G_DOC_ID in the environment to load ArchieML");
   }
 
-  const { text, links } = await getDocsText(id);
+  const { text, spans } = await getDocsText(id);
 
   let json = archieml.load(text);
   if (customSyntax) {
-    json = parseCustomSyntax(json, links);
+    json = parseCustomSyntax({ json, spans });
   }
 
   return json;
