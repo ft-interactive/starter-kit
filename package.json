@@ -16,6 +16,7 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "googleapis": "^144.0.0",
     "husky": "^8.0.3",
     "jsdom": "^22.1.0",
     "lint-staged": "^15.2.7",
@@ -53,10 +54,10 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@financial-times/g-components": "^11.0.0",
+    "@financial-times/g-components": "^11.2.0",
     "@financial-times/o-colors": "^6.6.0",
     "@financial-times/o-grid": "^6.1.5",
-    "@ft-interactive/vs-components": "^6.3.0",
+    "@ft-interactive/vs-components": "^7.0.0",
     "classnames": "^2.3.2",
     "ftdomdelegate": "^5.0.0",
     "react": "^18.1.0",

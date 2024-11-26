@@ -16,25 +16,19 @@ import './styles.scss';
 const BodyText = ({ elements, maxWidowSize = 8, extraMargin = true }) => (
   <div className="body-text o-editorial-layout-wrapper">
     {elements.map((component) => {
-      const { type, value, links = [] } = component;
+      const { type, value, spans = [] } = component;
       const key = value?.toLowerCase().trim().replace(' ', '-');
 
-      const linkSpans = links
-        .map(({ str, url }) => ({
-          text: str,
-          element: 'a',
-          props: { href: url, target: '_blank' },
-        }))
-        .concat([
-          {
-            regex: new RegExp(`(\w+\s\w{1,${maxWidowSize}}.?)$`),
-            className: 'nowrap',
-          },
-        ]);
+      const tSpans = spans.concat([
+        {
+          regex: new RegExp(`(\\w+\\s\\w{1,${maxWidowSize}}.?)$`),
+          className: 'nowrap',
+        },
+      ]);
 
       switch (type) {
         case 'text':
-          return <Fragment key={key}>{insertSpans(value, linkSpans)}</Fragment>;
+          return <Fragment key={key}>{insertSpans(value, tSpans)}</Fragment>;
         case 'subhed':
           return (
             <h2 className={classNames('body-text__header')} key={key}>

@@ -49,20 +49,20 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useData } from 'vike-react/useData';
+
 import { ArticleLayout as Layout, StoryTopper } from '@financial-times/g-components';
 import '@financial-times/g-components/styles.css';
 
 import Credits from '@ft-interactive/vs-components/Credits';
 import GridWrapperHelper from '@ft-interactive/vs-components/GridWrapperHelper';
-
 import { DimensionsProvider } from '@ft-interactive/vs-components/hooks';
-
 import '@ft-interactive/vs-components/styles.css';
 
 import { ContextPropType } from '../../util/prop-types';
 import ArchieStoryBody from '../../components/ArchieStoryBody';
 import SampleStoryBody from '../../util/SampleStoryBody';
-import { useData } from 'vike-react/useData';
+import BodyText from '../../components/BodyText';
 
 const App = () => {
   const context = useData();
@@ -92,7 +92,12 @@ const App = () => {
                     facebookHeadline: context.facebookHeadline,
                   }}
                   dark={context.flags.dark}
-                />
+                >
+                  {context.data?.story?.notes?.map((p, i) =>
+                    // eslint-disable-next-line react/no-array-index-key
+                    p.type === 'text' ? <BodyText elements={p.paras} key={i} /> : null
+                  )}
+                </Credits>
               </GridWrapperHelper>
             </div>
           </article>
