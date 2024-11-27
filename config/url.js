@@ -2,7 +2,7 @@
 export default function getUrl(
   articleUrl,
   environment = 'development',
-  org = process.env.CIRCLE_PROJECT_USERNAME,
+  org = process.env.CIRCLE_PROJECT_USERNAME?.toLowerCase(),
   project = process.env.CIRCLE_PROJECT_REPONAME,
   branch = process.env.CIRCLE_BRANCH
 ) {
