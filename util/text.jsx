@@ -78,9 +78,9 @@ export function insertSpans(text, highlights, options = { p: true }) {
       ];
 
       // Add a special "replace" tag if necessary
-      if (match.innerText)
+      if (match.replace)
         matchTags.push({
-          tag: match.innerText,
+          tag: match.replace,
           index: match.start,
           replace: match.end - match.start,
         });
