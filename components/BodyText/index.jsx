@@ -26,7 +26,7 @@ const BodyText = ({ elements, maxWidowSize = 8, extraMargin = true }) => (
         },
         {
           regex: /(…|\.\s?\.\s?\.)/,
-          className: 'ellipses',
+          className: 'nowrap',
           innerText: '. . .',
         },
       ]);
