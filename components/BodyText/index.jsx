@@ -24,6 +24,11 @@ const BodyText = ({ elements, maxWidowSize = 8, extraMargin = true }) => (
           regex: new RegExp(`(\\w+\\s\\w{1,${maxWidowSize}}.?)$`),
           className: 'nowrap',
         },
+        {
+          regex: /(…|\.\s?\.\s?\.)/,
+          className: 'nowrap',
+          replace: '. . .',
+        },
       ]);
 
       switch (type) {

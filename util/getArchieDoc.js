@@ -214,7 +214,13 @@ function parseBody(body, spans) {
       }
       obj[type] = value;
     }
-    if (obj.type) {
+
+    if (obj.type?.startsWith('scrolly')) {
+      components.push({
+        ...parseScrolly(obj[obj.type]),
+        ...obj,
+      });
+    } else if (obj.type) {
       components.push(obj);
     }
 
