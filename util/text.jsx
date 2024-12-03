@@ -71,19 +71,30 @@ export function insertSpans(text, highlights, options = { p: true }) {
         .map(([k, v]) => (k && v ? `${k}="${v?.replace('"', '\\"')}"` : ''))
         .join(' ');
 
-      return [
+      // Add the start/end tags to the queue
+      const matchTags = [
         { tag: `<${el} ${props}>`, index: match.start },
         { tag: `</${el}>`, index: match.end },
       ];
+
+      // Add a special "replace" tag if necessary
+      if (match.innerText)
+        matchTags.push({
+          tag: match.innerText,
+          index: match.start,
+          replace: match.end - match.start,
+        });
+
+      return matchTags;
     })
     .flat()
     .sort((a, b) => a.index - b.index);
 
   // 3. Insert the HTML tags into the string
   const output = tags.reduce(
-    ({ offset, __html }, { tag, index }) => ({
-      offset: offset + tag.length,
-      __html: __html.slice(0, index + offset) + tag + __html.slice(index + offset),
+    ({ offset, __html }, { tag, index, replace = 0 }) => ({
+      offset: offset + tag.length - replace,
+      __html: __html.slice(0, index + offset) + tag + __html.slice(index + offset + replace),
     }),
     { offset: 0, __html: text }
   );
